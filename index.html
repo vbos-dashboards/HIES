@@ -921,12 +921,6 @@
             function acName(code) { return AC_LOOKUP[code] || code; }
 
 
-            // Village & area council name lookups (populated in embedded/built version)
-            const VILLAGE_LOOKUP = (typeof EMBEDDED_DATA !== 'undefined' && EMBEDDED_DATA.villageLookup) || {};
-            const AC_LOOKUP = (typeof EMBEDDED_DATA !== 'undefined' && EMBEDDED_DATA.areaCouncilLookup) || {};
-            function villageName(code) { return VILLAGE_LOOKUP[code] || code; }
-            function acName(code) { return AC_LOOKUP[code] || code; }
-
             // ---- Shared lookups ----
             const totalInterviews = mainData.length;
             const totalMembers = memberData.length;
