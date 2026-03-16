@@ -59,9 +59,53 @@
             font-weight: 600;
         }
 
+        /* Navigation */
+        .nav-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 0 30px;
+            display: flex;
+            gap: 2px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            overflow-x: auto;
+        }
+
+        .nav-bar a {
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 12px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .nav-bar a:hover {
+            color: #e2e8f0;
+            background: #334155;
+        }
+
+        .nav-bar a.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Stats */
         .top-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 16px;
             padding: 20px 30px;
         }
@@ -150,6 +194,7 @@
             color: #64748b;
         }
 
+        /* Grid & panels */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
@@ -191,11 +236,16 @@
             height: 320px;
         }
 
-        #gpsMap {
+        .chart-lg {
             height: 400px;
+        }
+
+        #gpsMap {
+            height: 500px;
             border-radius: 8px;
         }
 
+        /* Tables */
         table.data-table {
             width: 100%;
             border-collapse: collapse;
@@ -223,6 +273,7 @@
             background: #334155;
         }
 
+        /* Status badges */
         .status-badge {
             display: inline-block;
             padding: 2px 8px;
@@ -251,6 +302,51 @@
             color: #f87171;
         }
 
+        /* Matrix table */
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+        }
+
+        .matrix-table th,
+        .matrix-table td {
+            padding: 10px 14px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+
+        .matrix-table th {
+            background: #0f172a;
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+        }
+
+        .matrix-table td {
+            color: #cbd5e1;
+        }
+
+        .matrix-table td.row-label {
+            text-align: left;
+            font-weight: 600;
+            color: #e2e8f0;
+            background: #0f172a;
+        }
+
+        .matrix-table tr:hover td {
+            background: #334155;
+        }
+
+        .matrix-table .total-row td {
+            background: #0f172a;
+            font-weight: 700;
+            color: #e2e8f0;
+            border-top: 2px solid #3b82f6;
+        }
+
+        /* Error items */
         .error-item {
             background: #1a1a2e;
             border-left: 3px solid #ef4444;
@@ -276,6 +372,7 @@
             margin-top: 4px;
         }
 
+        /* Progress bars */
         .progress-bar-bg {
             background: #334155;
             border-radius: 6px;
@@ -288,77 +385,6 @@
             height: 100%;
             border-radius: 6px;
             transition: width 0.5s ease;
-        }
-
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 200px;
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-
-        .spinner {
-            width: 24px;
-            height: 24px;
-            border: 3px solid #334155;
-            border-top-color: #3b82f6;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .file-input-section {
-            background: #1e293b;
-            border: 2px dashed #334155;
-            border-radius: 12px;
-            padding: 30px;
-            margin: 20px 30px;
-            text-align: center;
-            display: none;
-        }
-
-        .file-input-section.visible {
-            display: block;
-        }
-
-        .file-input-section input[type="file"] {
-            display: block;
-            margin: 10px auto;
-        }
-
-        .file-input-section p {
-            color: #94a3b8;
-            margin-bottom: 10px;
-        }
-
-        .tab-buttons {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 16px;
-        }
-
-        .tab-btn {
-            background: #0f172a;
-            border: 1px solid #334155;
-            color: #94a3b8;
-            padding: 6px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.75rem;
-        }
-
-        .tab-btn.active {
-            background: #3b82f6;
-            color: #fff;
-            border-color: #3b82f6;
         }
 
         /* Tooltips */
@@ -445,49 +471,6 @@
             background: #475569;
             color: #e2e8f0;
         }
-
-        /* Navigation Menu */
-        .nav-bar {
-            background: #1e293b;
-            border-bottom: 1px solid #334155;
-            padding: 0 30px;
-            display: flex;
-            gap: 4px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            overflow-x: auto;
-        }
-
-        .nav-bar a {
-            color: #94a3b8;
-            text-decoration: none;
-            padding: 12px 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s;
-            white-space: nowrap;
-            cursor: pointer;
-        }
-
-        .nav-bar a:hover {
-            color: #e2e8f0;
-            background: #334155;
-        }
-
-        .nav-bar a.active {
-            color: #3b82f6;
-            border-bottom-color: #3b82f6;
-        }
-
-        .page-section {
-            display: none;
-        }
-
-        .page-section.active {
-            display: block;
-        }
     </style>
 </head>
 
@@ -504,116 +487,73 @@
     </div>
 
     <div class="nav-bar" id="navBar">
-        <a data-page="overview" class="active">Overview</a>
-        <a data-page="demographics">Demographics</a>
-        <a data-page="fieldops">Field Operations</a>
-        <a data-page="quality">Data Quality</a>
-        <a data-page="foodsec">Food Security</a>
+        <a data-page="surveys" class="active">Surveys and Statuses</a>
+        <a data-page="teams">Teams and Statuses</a>
+        <a data-page="statusduration">Status Duration</a>
+        <a data-page="devices">Devices/Interviewers</a>
+        <a data-page="map">Map Report</a>
+        <a data-page="cumulative">Cumulative Interview Chart</a>
+        <a data-page="quantity">Quantity</a>
+        <a data-page="speed">Speed</a>
+        <a data-page="statistics">Survey Statistics</a>
     </div>
 
-    <!-- ===== OVERVIEW PAGE ===== -->
-    <div class="page-section active" id="page-overview">
-
-        <div class="top-stats" id="topStats">
-            <div class="stat-card blue"
-                data-tooltip="Total number of household interviews completed or in progress in this data export.">
+    <!-- ===== 1. SURVEYS AND STATUSES ===== -->
+    <div class="page-section active" id="page-surveys">
+        <div class="top-stats">
+            <div class="stat-card blue" data-tooltip="Total number of household interviews in this data export.">
                 <div class="label">Total Interviews</div>
                 <div class="value" id="totalInterviews">-</div>
                 <div class="detail" id="interviewDetail">Loading...</div>
             </div>
-            <div class="stat-card green"
-                data-tooltip="Total individuals enumerated across all interviewed households. Average household size shown below.">
-                <div class="label">Household Members</div>
-                <div class="value" id="totalMembers">-</div>
-                <div class="detail" id="memberDetail">Loading...</div>
+            <div class="stat-card green" data-tooltip="Interviews approved by supervisor or HQ.">
+                <div class="label">Approved</div>
+                <div class="value" id="totalApproved">-</div>
+                <div class="detail" id="approvedDetail"></div>
             </div>
-            <div class="stat-card amber"
-                data-tooltip="Average time spent per interview from start to completion. Range shows shortest and longest interview.">
-                <div class="label">Avg Duration</div>
-                <div class="value" id="avgDuration">-</div>
-                <div class="detail" id="durationDetail">Loading...</div>
+            <div class="stat-card amber" data-tooltip="Interviews completed by interviewer but not yet approved.">
+                <div class="label">Completed</div>
+                <div class="value" id="totalCompleted">-</div>
+                <div class="detail" id="completedDetail"></div>
             </div>
-            <div class="stat-card red"
-                data-tooltip="Total validation errors flagged by Survey Solutions. Includes GPS accuracy warnings and data consistency checks.">
-                <div class="label">Total Errors</div>
-                <div class="value" id="totalErrors">-</div>
-                <div class="detail" id="errorDetail">Loading...</div>
-            </div>
-            <div class="stat-card purple"
-                data-tooltip="Number of questions left unanswered across all interviews. High counts may indicate incomplete interviews.">
-                <div class="label">Unanswered Qs</div>
-                <div class="value" id="totalUnanswered">-</div>
-                <div class="detail" id="unansweredDetail">Loading...</div>
-            </div>
-            <div class="stat-card cyan"
-                data-tooltip="Number of distinct field teams and interviewers who have submitted data in this export.">
-                <div class="label">Active Teams</div>
-                <div class="value" id="totalTeams">-</div>
-                <div class="detail" id="teamDetail">Loading...</div>
+            <div class="stat-card red" data-tooltip="Interviews rejected by supervisor or HQ.">
+                <div class="label">Rejected</div>
+                <div class="value" id="totalRejected">-</div>
+                <div class="detail" id="rejectedDetail"></div>
             </div>
         </div>
-
         <div class="dashboard-grid">
-            <!-- Interview Status -->
-            <div class="panel" id="panel-status">
+            <div class="panel">
                 <h3>Interview Status Distribution <i class="info-icon"
                         data-tooltip="Breakdown of interview workflow stages: Completed, Approved by Supervisor, Approved by HQ, or Rejected.">?</i>
                 </h3>
-                <div class="chart-container chart-sm">
-                    <canvas id="statusChart"></canvas>
-                </div>
+                <div class="chart-container chart-sm"><canvas id="statusChart"></canvas></div>
             </div>
-
-            <!-- Province Distribution -->
-            <div class="panel" id="panel-province">
-                <h3>Interviews by Province <i class="info-icon"
-                        data-tooltip="Number of interviews collected per province. Vanuatu has 6 provinces: Torba, Sanma, Penama, Malampa, Shefa, and Tafea.">?</i>
-                </h3>
-                <div class="chart-container chart-sm">
-                    <canvas id="provinceChart"></canvas>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- end overview page -->
-
-    <!-- ===== DEMOGRAPHICS PAGE ===== -->
-    <div class="page-section" id="page-demographics">
-        <div class="dashboard-grid">
-
-            <!-- Demographics Overview -->
             <div class="panel">
-                <h3>Population Pyramid (Age &amp; Sex) <i class="info-icon"
-                        data-tooltip="Age-sex distribution of all enumerated household members. Males shown left (blue), females right (pink). Grouped in 5-year age bins.">?</i>
+                <h3>Status by Province <i class="info-icon"
+                        data-tooltip="Number of interviews per province colored by their current workflow status.">?</i>
                 </h3>
-                <div class="chart-container chart-md">
-                    <canvas id="pyramidChart"></canvas>
-                </div>
+                <div class="chart-container chart-sm"><canvas id="statusProvinceChart"></canvas></div>
             </div>
-
-            <!-- Interview Detail Table -->
             <div class="panel full-width">
                 <h3>Interview Details <i class="info-icon"
                         data-tooltip="Full list of all interviews with geographic details, household size, interviewer, timing, error count and workflow status.">?</i>
                 </h3>
                 <div style="overflow-x:auto;">
-                    <table class="data-table" id="interviewTable2">
+                    <table class="data-table" id="interviewTable">
                         <thead>
                             <tr>
-                                <th data-tooltip="Unique interview identifier in Survey Solutions">Interview Key</th>
+                                <th data-tooltip="Unique interview identifier">Interview Key</th>
                                 <th data-tooltip="Province where the interview was conducted">Province</th>
                                 <th data-tooltip="Area council within the province">Area Council</th>
-                                <th data-tooltip="Enumeration area code from the sampling frame">EA</th>
-                                <th data-tooltip="Village name where the household is located">Village</th>
-                                <th data-tooltip="Number of household members listed in the roster">HH Size</th>
+                                <th data-tooltip="Enumeration area code">EA</th>
+                                <th data-tooltip="Village name">Village</th>
+                                <th data-tooltip="Number of household members">HH Size</th>
                                 <th data-tooltip="Interviewer who conducted the interview">Interviewer</th>
                                 <th data-tooltip="Date the interview was started">Date</th>
-                                <th data-tooltip="Total time from starting to completing the interview">Duration</th>
-                                <th data-tooltip="Number of validation errors flagged">Errors</th>
-                                <th
-                                    data-tooltip="Current workflow status: Completed → Approved by Supervisor → Approved by HQ">
-                                    Status</th>
+                                <th data-tooltip="Total interview duration">Duration</th>
+                                <th data-tooltip="Number of validation errors">Errors</th>
+                                <th data-tooltip="Current workflow status">Status</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -622,32 +562,84 @@
             </div>
         </div>
     </div>
-    <!-- end demographics page -->
 
-    <!-- ===== FIELD OPERATIONS PAGE ===== -->
-    <div class="page-section" id="page-fieldops">
+    <!-- ===== 2. TEAMS AND STATUSES ===== -->
+    <div class="page-section" id="page-teams">
         <div class="dashboard-grid">
-
-            <!-- Interview Duration -->
-            <div class="panel">
-                <h3>Interview Duration by Interviewer <i class="info-icon"
-                        data-tooltip="Average interview duration in minutes per interviewer. Very short or very long durations may indicate data quality concerns.">?</i>
+            <div class="panel full-width">
+                <h3>Team &times; Status Matrix <i class="info-icon"
+                        data-tooltip="Cross-tabulation showing the number of interviews in each workflow status per field team.">?</i>
                 </h3>
-                <div class="chart-container chart-md">
-                    <canvas id="durationChart"></canvas>
+                <div style="overflow-x:auto;">
+                    <table class="matrix-table" id="teamStatusMatrix">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
-
-            <!-- GPS Map -->
             <div class="panel full-width">
-                <h3>Interview Locations (GPS) <i class="info-icon"
-                        data-tooltip="Map of all interview GPS coordinates. Marker colors indicate status: green=Completed, blue=Approved by Supervisor, purple=Approved by HQ. Click markers for details.">?</i>
+                <h3>Team Status Distribution <i class="info-icon"
+                        data-tooltip="Stacked bar chart showing the composition of interview statuses within each team.">?</i>
                 </h3>
-                <div id="gpsMap"></div>
+                <div class="chart-container chart-md"><canvas id="teamStatusChart"></canvas></div>
             </div>
+        </div>
+    </div>
 
-            <!-- Interviewer Performance Table -->
-            <div class="panel" id="panel-interviewer">
+    <!-- ===== 3. STATUS DURATION ===== -->
+    <div class="page-section" id="page-statusduration">
+        <div class="dashboard-grid">
+            <div class="panel full-width">
+                <h3>Average Time in Each Status <i class="info-icon"
+                        data-tooltip="Average time interviews spend in each workflow status before transitioning. Computed from the interview actions log.">?</i>
+                </h3>
+                <div class="chart-container chart-md"><canvas id="statusDurationChart"></canvas></div>
+            </div>
+            <div class="panel full-width">
+                <h3>Status Transition Timeline <i class="info-icon"
+                        data-tooltip="Detailed timeline of all status transitions per interview, showing when each workflow action occurred.">?</i>
+                </h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="statusTimelineTable">
+                        <thead>
+                            <tr>
+                                <th>Interview Key</th>
+                                <th>Action</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Originator</th>
+                                <th>Role</th>
+                                <th>Time Since Previous</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 4. DEVICES / INTERVIEWERS ===== -->
+    <div class="page-section" id="page-devices">
+        <div class="top-stats">
+            <div class="stat-card blue" data-tooltip="Number of distinct field teams active in this export.">
+                <div class="label">Active Teams</div>
+                <div class="value" id="devTeams">-</div>
+                <div class="detail" id="devTeamsDetail"></div>
+            </div>
+            <div class="stat-card green" data-tooltip="Number of distinct interviewers who have submitted data.">
+                <div class="label">Interviewers</div>
+                <div class="value" id="devInterviewers">-</div>
+                <div class="detail" id="devIntDetail"></div>
+            </div>
+            <div class="stat-card purple" data-tooltip="Number of distinct supervisors who appear in the actions log.">
+                <div class="label">Supervisors</div>
+                <div class="value" id="devSupervisors">-</div>
+                <div class="detail" id="devSupDetail"></div>
+            </div>
+        </div>
+        <div class="dashboard-grid">
+            <div class="panel full-width">
                 <h3>Interviewer Performance <i class="info-icon"
                         data-tooltip="Summary per interviewer showing total interviews, validation errors, average duration, and current approval status.">?</i>
                 </h3>
@@ -655,75 +647,196 @@
                     <table class="data-table" id="interviewerTable">
                         <thead>
                             <tr>
-                                <th data-tooltip="Interviewer ID assigned in Survey Solutions">Interviewer</th>
-                                <th data-tooltip="Field team the interviewer belongs to">Team</th>
-                                <th data-tooltip="Number of interviews completed by this interviewer">Interviews</th>
-                                <th data-tooltip="Total validation errors across all interviews">Errors</th>
-                                <th data-tooltip="Average time from start to completion">Avg Duration</th>
-                                <th data-tooltip="Current workflow status of interviews">Status</th>
+                                <th data-tooltip="Interviewer ID">Interviewer</th>
+                                <th data-tooltip="Field team">Team</th>
+                                <th data-tooltip="Total interviews">Interviews</th>
+                                <th data-tooltip="Total errors">Errors</th>
+                                <th data-tooltip="Unanswered questions">Unanswered</th>
+                                <th data-tooltip="Average duration">Avg Duration</th>
+                                <th data-tooltip="Last activity date">Last Active</th>
+                                <th data-tooltip="Interview statuses">Status</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
                 </div>
             </div>
-
+            <div class="panel full-width">
+                <h3>Supervisor Activity <i class="info-icon"
+                        data-tooltip="Supervisor approvals and rejections from the actions log.">?</i></h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="supervisorTable">
+                        <thead>
+                            <tr>
+                                <th>Supervisor</th>
+                                <th>Approvals</th>
+                                <th>Rejections</th>
+                                <th>Last Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- end fieldops page -->
 
-    <!-- ===== DATA QUALITY PAGE ===== -->
-    <div class="page-section" id="page-quality">
+    <!-- ===== 5. MAP REPORT ===== -->
+    <div class="page-section" id="page-map">
         <div class="dashboard-grid">
-
-            <!-- Error Details -->
-            <div class="panel">
-                <h3>Validation Errors &amp; Warnings <i class="info-icon"
-                        data-tooltip="All validation errors triggered during data collection, including GPS accuracy warnings and data consistency checks.">?</i>
+            <div class="panel full-width">
+                <h3>Interview Locations (GPS) <i class="info-icon"
+                        data-tooltip="Map of all interview GPS coordinates. Marker colors indicate status: green=Completed, blue=Approved by Supervisor, purple=Approved by HQ.">?</i>
                 </h3>
-                <div id="errorList"></div>
+                <div id="gpsMap"></div>
             </div>
+            <div class="panel">
+                <h3>GPS Quality <i class="info-icon"
+                        data-tooltip="GPS accuracy metrics for all interviews with valid coordinates.">?</i></h3>
+                <div id="gpsQuality"></div>
+            </div>
+            <div class="panel">
+                <h3>Interviews by Province <i class="info-icon"
+                        data-tooltip="Number of interviews collected per province.">?</i></h3>
+                <div class="chart-container chart-sm"><canvas id="provinceChart"></canvas></div>
+            </div>
+        </div>
+    </div>
 
-            <!-- Data Quality -->
+    <!-- ===== 6. CUMULATIVE INTERVIEW CHART ===== -->
+    <div class="page-section" id="page-cumulative">
+        <div class="dashboard-grid">
+            <div class="panel full-width">
+                <h3>Cumulative Interviews Over Time <i class="info-icon"
+                        data-tooltip="Line chart showing the cumulative number of interviews created over time, based on the interview actions log.">?</i>
+                </h3>
+                <div class="chart-container chart-lg"><canvas id="cumulativeChart"></canvas></div>
+            </div>
+            <div class="panel full-width">
+                <h3>Daily Interview Count <i class="info-icon"
+                        data-tooltip="Number of interviews started per day, showing the daily data collection rate.">?</i>
+                </h3>
+                <div class="chart-container chart-md"><canvas id="dailyChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 7. QUANTITY ===== -->
+    <div class="page-section" id="page-quantity">
+        <div class="dashboard-grid">
+            <div class="panel">
+                <h3>Interviews by Interviewer <i class="info-icon"
+                        data-tooltip="Number of interviews completed by each interviewer.">?</i></h3>
+                <div class="chart-container chart-md"><canvas id="qtyInterviewerChart"></canvas></div>
+            </div>
+            <div class="panel">
+                <h3>Interviews by Team <i class="info-icon"
+                        data-tooltip="Number of interviews completed by each field team.">?</i></h3>
+                <div class="chart-container chart-md"><canvas id="qtyTeamChart"></canvas></div>
+            </div>
+            <div class="panel">
+                <h3>Household Members by Province <i class="info-icon"
+                        data-tooltip="Number of household members enumerated per province.">?</i></h3>
+                <div class="chart-container chart-md"><canvas id="qtyMemberProvinceChart"></canvas></div>
+            </div>
+            <div class="panel">
+                <h3>Household Size Distribution <i class="info-icon"
+                        data-tooltip="Distribution of household sizes across all interviewed households.">?</i></h3>
+                <div class="chart-container chart-md"><canvas id="qtyHHSizeChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 8. SPEED ===== -->
+    <div class="page-section" id="page-speed">
+        <div class="top-stats" id="speedStats"></div>
+        <div class="dashboard-grid">
+            <div class="panel full-width">
+                <h3>Interview Duration by Interviewer <i class="info-icon"
+                        data-tooltip="Average, minimum, and maximum interview duration per interviewer.">?</i></h3>
+                <div class="chart-container chart-md"><canvas id="durationChart"></canvas></div>
+            </div>
+            <div class="panel full-width">
+                <h3>Speed Details by Interview <i class="info-icon"
+                        data-tooltip="Duration and speed metrics for each individual interview.">?</i></h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="speedTable">
+                        <thead>
+                            <tr>
+                                <th>Interview Key</th>
+                                <th>Interviewer</th>
+                                <th>Team</th>
+                                <th>Duration</th>
+                                <th>Errors</th>
+                                <th>Unanswered</th>
+                                <th>Rejections</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 9. SURVEY STATISTICS ===== -->
+    <div class="page-section" id="page-statistics">
+        <div class="top-stats">
+            <div class="stat-card blue" data-tooltip="Total number of household interviews in this data export.">
+                <div class="label">Interviews</div>
+                <div class="value" id="statInterviews">-</div>
+                <div class="detail" id="statIntDetail"></div>
+            </div>
+            <div class="stat-card green" data-tooltip="Total individuals enumerated across all interviewed households.">
+                <div class="label">HH Members</div>
+                <div class="value" id="statMembers">-</div>
+                <div class="detail" id="statMemDetail"></div>
+            </div>
+            <div class="stat-card red" data-tooltip="Total validation errors flagged by Survey Solutions.">
+                <div class="label">Total Errors</div>
+                <div class="value" id="statErrors">-</div>
+                <div class="detail" id="statErrDetail"></div>
+            </div>
+            <div class="stat-card purple" data-tooltip="Number of questions left unanswered across all interviews.">
+                <div class="label">Unanswered</div>
+                <div class="value" id="statUnanswered">-</div>
+                <div class="detail" id="statUnDetail"></div>
+            </div>
+        </div>
+        <div class="dashboard-grid">
             <div class="panel">
                 <h3>Data Quality Indicators <i class="info-icon"
-                        data-tooltip="Key quality metrics: error-free rate, supervisor rejection rate, GPS accuracy compliance (target: ≤20m), and comment coverage.">?</i>
+                        data-tooltip="Key quality metrics: error-free rate, rejection rate, GPS accuracy compliance, and comment coverage.">?</i>
                 </h3>
                 <div id="qualityMetrics"></div>
             </div>
-
-        </div>
-    </div>
-    <!-- end quality page -->
-
-    <!-- ===== FOOD SECURITY PAGE ===== -->
-    <div class="page-section" id="page-foodsec">
-        <div class="dashboard-grid">
-
-            <!-- Food Security (FIES) -->
             <div class="panel">
-                <h3>Food Insecurity (FIES Responses) <i class="info-icon"
-                        data-tooltip="Food Insecurity Experience Scale (FIES) — 8 standard questions measuring food access. Higher counts indicate more households experiencing food insecurity.">?</i>
-                </h3>
-                <div class="chart-container chart-sm">
-                    <canvas id="fiesChart"></canvas>
-                </div>
+                <h3>Population Pyramid (Age &amp; Sex) <i class="info-icon"
+                        data-tooltip="Age-sex distribution of all enumerated household members.">?</i></h3>
+                <div class="chart-container chart-md"><canvas id="pyramidChart"></canvas></div>
             </div>
-
-            <!-- Comments Timeline -->
+            <div class="panel">
+                <h3>Food Insecurity (FIES) <i class="info-icon"
+                        data-tooltip="Food Insecurity Experience Scale — 8 standard questions measuring food access.">?</i>
+                </h3>
+                <div class="chart-container chart-sm"><canvas id="fiesChart"></canvas></div>
+            </div>
+            <div class="panel">
+                <h3>Validation Errors &amp; Warnings <i class="info-icon"
+                        data-tooltip="All validation errors triggered during data collection.">?</i></h3>
+                <div id="errorList" style="max-height: 400px; overflow-y: auto;"></div>
+            </div>
             <div class="panel full-width">
                 <h3>Recent Comments &amp; Notes <i class="info-icon"
-                        data-tooltip="Interviewer comments and field notes entered during data collection. Useful for understanding context and flagging issues.">?</i>
-                </h3>
+                        data-tooltip="Interviewer comments and field notes entered during data collection.">?</i></h3>
                 <div id="commentsList" style="max-height: 350px; overflow-y: auto;"></div>
             </div>
         </div>
     </div>
-    <!-- end foodsec page -->
 
     <script>
         // ============================================================
-        //  UTILITY: Parse Tab-separated data
+        //  UTILITIES
         // ============================================================
         function parseTSV(text) {
             const lines = text.trim().split('\n');
@@ -737,10 +850,7 @@
             });
         }
 
-        // Province mapping for Vanuatu
         const PROVINCES = { '1': 'Torba', '2': 'Sanma', '3': 'Penama', '4': 'Malampa', '5': 'Shefa', '6': 'Tafea' };
-
-        // Interview status mapping (Survey Solutions)
         const STATUS_MAP = {
             '0': 'Created', '20': 'InterviewerAssigned', '40': 'SupervisorAssigned',
             '60': 'Completed', '65': 'ApprovedBySupervisor', '100': 'Completed',
@@ -751,11 +861,44 @@
             'Completed': '#22c55e', 'ApprovedBySupervisor': '#3b82f6',
             'ApprovedByHQ': '#a855f7', 'Rejected by HQ': '#ef4444', 'RejectedBySup': '#ef4444'
         };
+        const ACTION_MAP = {
+            '0': 'Created', '1': 'SupervisorAssigned', '3': 'ApprovedBySupervisor',
+            '4': 'RejectedBySupervisor', '5': 'ApprovedByHQ', '7': 'RejectedByHQ',
+            '12': 'InterviewerAssigned', '17': 'OpenedBySupervisor', '18': 'ClosedBySupervisor',
+            '20': 'ReceivedByInterviewer'
+        };
 
-        // Chart.js defaults
         Chart.defaults.color = '#94a3b8';
         Chart.defaults.borderColor = '#334155';
         Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+
+        function parseDuration(durStr) {
+            const m = (durStr || '').match(/(\d+)\.(\d+):(\d+):(\d+)/);
+            if (!m) return 0;
+            return parseInt(m[1]) * 1440 + parseInt(m[2]) * 60 + parseInt(m[3]) + parseInt(m[4]) / 60;
+        }
+
+        function formatMinutes(min) {
+            if (!min || !isFinite(min)) return '-';
+            const h = Math.floor(min / 60);
+            const m = Math.round(min % 60);
+            return h > 0 ? `${h}h ${m}m` : `${m}m`;
+        }
+
+        function sanitize(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function formatTimeDiff(minutes) {
+            if (!minutes || !isFinite(minutes) || minutes < 0) return '-';
+            if (minutes < 60) return `${Math.round(minutes)}m`;
+            if (minutes < 1440) return `${Math.floor(minutes / 60)}h ${Math.round(minutes % 60)}m`;
+            const days = Math.floor(minutes / 1440);
+            const hrs = Math.floor((minutes % 1440) / 60);
+            return `${days}d ${hrs}h`;
+        }
 
         // ==========================================================
         //  EMBEDDED DATA (for GitHub Pages / standalone deployment)
@@ -774,406 +917,523 @@
             const actionData = EMBEDDED_DATA.actionData;
 
 
-            // ---- TOP STATS ----
+            // ---- Shared lookups ----
             const totalInterviews = mainData.length;
             const totalMembers = memberData.length;
             const avgHHSize = totalInterviews > 0 ? (totalMembers / totalInterviews).toFixed(1) : 0;
-
-            // Duration parsing
-            const durations = diagData.map(d => {
-                const m = (d.interview__duration || '').match(/(\d+)\.(\d+):(\d+):(\d+)/);
-                if (!m) return 0;
-                return parseInt(m[1]) * 1440 + parseInt(m[2]) * 60 + parseInt(m[3]) + parseInt(m[4]) / 60;
-            }).filter(d => d > 0);
-            const avgDurMin = durations.length > 0 ? (durations.reduce((a, b) => a + b, 0) / durations.length) : 0;
-
             const totalErrors = errorData.length;
             const totalUnanswered = diagData.reduce((s, d) => s + parseInt(d.n_questions_unanswered || 0), 0);
 
-            const teams = new Set(mainData.map(d => d.team_id).filter(Boolean));
-            const interviewers = new Set(diagData.map(d => d.responsible).filter(Boolean));
+            const durations = diagData.map(d => parseDuration(d.interview__duration)).filter(d => d > 0);
+            const avgDurMin = durations.length > 0 ? (durations.reduce((a, b) => a + b, 0) / durations.length) : 0;
 
-            document.getElementById('totalInterviews').textContent = totalInterviews;
-            document.getElementById('interviewDetail').textContent = `${avgHHSize} avg HH size`;
-            document.getElementById('totalMembers').textContent = totalMembers;
-            document.getElementById('memberDetail').textContent = `Across ${totalInterviews} households`;
-            document.getElementById('avgDuration').textContent = formatMinutes(avgDurMin);
-            document.getElementById('durationDetail').textContent = `Range: ${formatMinutes(Math.min(...durations))} - ${formatMinutes(Math.max(...durations))}`;
-            document.getElementById('totalErrors').textContent = totalErrors;
-            document.getElementById('errorDetail').textContent = `${(totalInterviews > 0 ? (totalErrors / totalInterviews).toFixed(1) : 0)} per interview`;
-            document.getElementById('totalUnanswered').textContent = totalUnanswered;
-            document.getElementById('unansweredDetail').textContent = `${(totalInterviews > 0 ? (totalUnanswered / totalInterviews).toFixed(1) : 0)} per interview`;
-            document.getElementById('totalTeams').textContent = teams.size;
-            document.getElementById('teamDetail').textContent = `${interviewers.size} interviewers active`;
+            const diagMap = {};
+            diagData.forEach(d => { diagMap[d.interview__key] = d; });
+            const hhSizeMap = {};
+            memberData.forEach(d => { hhSizeMap[d.interview__key] = (hhSizeMap[d.interview__key] || 0) + 1; });
+            const intToTeam = {};
+            mainData.forEach(d => { if (d.interviewer_id) intToTeam[d.interviewer_id] = d.team_id; });
 
-            // ---- INTERVIEW STATUS CHART ----
+            // province lookup per interview
+            const interviewProvince = {};
+            mainData.forEach(d => { interviewProvince[d.interview__key] = d.province; });
+
+            // ============================================================
+            //  1. SURVEYS AND STATUSES
+            // ============================================================
             const statusCounts = {};
             diagData.forEach(d => {
-                const s = STATUS_MAP[d.interview__status] || `Code ${d.interview__status}`;
+                const s = STATUS_MAP[d.interview__status] || 'Code ' + d.interview__status;
                 statusCounts[s] = (statusCounts[s] || 0) + 1;
             });
+
+            const approvedCount = (statusCounts['ApprovedBySupervisor'] || 0) + (statusCounts['ApprovedByHQ'] || 0);
+            const completedCount = statusCounts['Completed'] || 0;
+            const rejectedCount = (statusCounts['Rejected by HQ'] || 0) + (statusCounts['RejectedBySup'] || 0);
+
+            document.getElementById('totalInterviews').textContent = totalInterviews;
+            document.getElementById('interviewDetail').textContent = avgHHSize + ' avg HH size';
+            document.getElementById('totalApproved').textContent = approvedCount;
+            document.getElementById('approvedDetail').textContent = (totalInterviews > 0 ? ((approvedCount / totalInterviews) * 100).toFixed(0) : 0) + '% of total';
+            document.getElementById('totalCompleted').textContent = completedCount;
+            document.getElementById('completedDetail').textContent = 'Awaiting approval';
+            document.getElementById('totalRejected').textContent = rejectedCount;
+            document.getElementById('rejectedDetail').textContent = rejectedCount > 0 ? 'Need correction' : 'None';
+
+            // Status doughnut
             new Chart(document.getElementById('statusChart'), {
                 type: 'doughnut',
                 data: {
                     labels: Object.keys(statusCounts),
-                    datasets: [{
-                        data: Object.values(statusCounts),
-                        backgroundColor: Object.keys(statusCounts).map(s => STATUS_COLORS[s] || '#64748b'),
-                        borderWidth: 0
-                    }]
+                    datasets: [{ data: Object.values(statusCounts), backgroundColor: Object.keys(statusCounts).map(s => STATUS_COLORS[s] || '#64748b'), borderWidth: 0 }]
                 },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { padding: 14, usePointStyle: true, pointStyleWidth: 12 } }
-                    },
-                    cutout: '55%'
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 14, usePointStyle: true, pointStyleWidth: 12 } } }, cutout: '55%' }
+            });
+
+            // Status by Province stacked bar
+            const provStatusData = {};
+            const allStatuses = [...new Set(Object.keys(statusCounts))];
+            mainData.forEach(d => {
+                const prov = PROVINCES[d.province] || 'Province ' + d.province;
+                const status = STATUS_MAP[d.interview__status] || 'Code ' + d.interview__status;
+                if (!provStatusData[prov]) provStatusData[prov] = {};
+                provStatusData[prov][status] = (provStatusData[prov][status] || 0) + 1;
+            });
+            new Chart(document.getElementById('statusProvinceChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(provStatusData),
+                    datasets: allStatuses.map(s => ({
+                        label: s, data: Object.keys(provStatusData).map(p => provStatusData[p][s] || 0),
+                        backgroundColor: STATUS_COLORS[s] || '#64748b', borderRadius: 4
+                    }))
+                },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', scales: { x: { stacked: true, beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, y: { stacked: true, grid: { display: false } } }, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } } } }
+            });
+
+            // Interview detail table
+            const itBody = document.querySelector('#interviewTable tbody');
+            mainData.forEach(d => {
+                const diag = diagMap[d.interview__key] || {};
+                const status = STATUS_MAP[d.interview__status] || d.interview__status;
+                const cls = status.includes('Approved') ? (status.includes('HQ') ? 'approved-hq' : 'approved-sup') : status === 'Completed' ? 'completed' : 'rejected';
+                const row = itBody.insertRow();
+                row.innerHTML = '<td>' + d.interview__key + '</td><td>' + (PROVINCES[d.province] || d.province) + '</td><td>' + d.area_council + '</td><td>' + d.enumeration_area + '</td><td>' + d.village + '</td><td>' + (hhSizeMap[d.interview__key] || '-') + '</td><td>' + (diag.responsible || d.interviewer_id) + '</td><td>' + (d.datetime_interview || '').substring(0, 10) + '</td><td>' + (diag.interview__duration || '-') + '</td><td>' + (diag.entities__errors || '0') + '</td><td><span class="status-badge ' + cls + '">' + status + '</span></td>';
+            });
+
+            // ============================================================
+            //  2. TEAMS AND STATUSES
+            // ============================================================
+            const teamStatus = {};
+            const allTeams = [...new Set(mainData.map(d => d.team_id).filter(Boolean))].sort();
+            mainData.forEach(d => {
+                const team = d.team_id || 'Unknown';
+                const status = STATUS_MAP[d.interview__status] || 'Code ' + d.interview__status;
+                if (!teamStatus[team]) teamStatus[team] = {};
+                teamStatus[team][status] = (teamStatus[team][status] || 0) + 1;
+            });
+
+            // Matrix table
+            const matHead = document.querySelector('#teamStatusMatrix thead');
+            const matBody = document.querySelector('#teamStatusMatrix tbody');
+            var hRow = '<tr><th>Team</th>';
+            allStatuses.forEach(function (s) { hRow += '<th>' + s + '</th>'; });
+            hRow += '<th>Total</th></tr>';
+            matHead.innerHTML = hRow;
+            const totals = {};
+            allStatuses.forEach(function (s) { totals[s] = 0; });
+            var grandTotal = 0;
+            allTeams.forEach(function (team) {
+                var rowTotal = 0;
+                var html = '<td class="row-label">Team ' + team + '</td>';
+                allStatuses.forEach(function (s) {
+                    var cnt = (teamStatus[team] || {})[s] || 0;
+                    rowTotal += cnt;
+                    totals[s] += cnt;
+                    html += '<td>' + (cnt || '-') + '</td>';
+                });
+                grandTotal += rowTotal;
+                html += '<td><strong>' + rowTotal + '</strong></td>';
+                var row = matBody.insertRow();
+                row.innerHTML = html;
+            });
+            var totalRow = matBody.insertRow();
+            totalRow.className = 'total-row';
+            var totalHtml = '<td class="row-label">Total</td>';
+            allStatuses.forEach(function (s) { totalHtml += '<td>' + totals[s] + '</td>'; });
+            totalHtml += '<td><strong>' + grandTotal + '</strong></td>';
+            totalRow.innerHTML = totalHtml;
+
+            // Team stacked bar chart
+            new Chart(document.getElementById('teamStatusChart'), {
+                type: 'bar',
+                data: {
+                    labels: allTeams.map(function (t) { return 'Team ' + t; }),
+                    datasets: allStatuses.map(function (s) {
+                        return {
+                            label: s,
+                            data: allTeams.map(function (t) { return (teamStatus[t] || {})[s] || 0; }),
+                            backgroundColor: STATUS_COLORS[s] || '#64748b', borderRadius: 4
+                        };
+                    })
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true, grid: { display: false } }, y: { stacked: true, beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } } }, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } } } }
+            });
+
+            // ============================================================
+            //  3. STATUS DURATION
+            // ============================================================
+            const actionsByInterview = {};
+            actionData.forEach(function (a) {
+                var key = a.interview__key;
+                if (!actionsByInterview[key]) actionsByInterview[key] = [];
+                actionsByInterview[key].push(a);
+            });
+
+            const statusDurations = {};
+            const timelineRows = [];
+            Object.entries(actionsByInterview).forEach(function ([key, actions]) {
+                actions.sort(function (a, b) {
+                    return new Date(a.date + 'T' + a.time) - new Date(b.date + 'T' + b.time);
+                });
+                var prevTime = null;
+                actions.forEach(function (a, i) {
+                    var actionName = ACTION_MAP[a.action] || 'Action ' + a.action;
+                    var curTime = new Date(a.date + 'T' + a.time);
+                    var timeSincePrev = null;
+                    if (prevTime && !isNaN(curTime) && !isNaN(prevTime)) {
+                        timeSincePrev = (curTime - prevTime) / 60000;
+                        var prevActionName = ACTION_MAP[actions[i - 1].action] || 'Action ' + actions[i - 1].action;
+                        if (!statusDurations[prevActionName]) statusDurations[prevActionName] = [];
+                        statusDurations[prevActionName].push(timeSincePrev);
+                    }
+                    timelineRows.push({ key: key, actionName: actionName, date: a.date, time: a.time, originator: a.originator, role: a.role === '1' ? 'Interviewer' : a.role === '2' ? 'Supervisor' : a.role === '4' ? 'HQ' : a.role, timeSincePrev: timeSincePrev });
+                    prevTime = curTime;
+                });
+            });
+
+            // Status duration chart
+            var durLabels = Object.keys(statusDurations);
+            var avgDurs = durLabels.map(function (s) {
+                var arr = statusDurations[s];
+                return arr.reduce(function (a, b) { return a + b; }, 0) / arr.length;
+            });
+            var durColors = durLabels.map(function (s) { return STATUS_COLORS[s] || '#64748b'; });
+            new Chart(document.getElementById('statusDurationChart'), {
+                type: 'bar',
+                data: {
+                    labels: durLabels,
+                    datasets: [{ label: 'Avg Duration (minutes)', data: avgDurs, backgroundColor: durColors, borderRadius: 6, barPercentage: 0.5 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Minutes' }, grid: { color: '#1e293b' } }, x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45 } } } }
+            });
+
+            // Timeline table
+            var tlBody = document.querySelector('#statusTimelineTable tbody');
+            timelineRows.forEach(function (r) {
+                var row = tlBody.insertRow();
+                row.innerHTML = '<td>' + r.key + '</td><td>' + r.actionName + '</td><td>' + r.date + '</td><td>' + r.time + '</td><td>' + r.originator + '</td><td>' + r.role + '</td><td>' + formatTimeDiff(r.timeSincePrev) + '</td>';
+            });
+
+            // ============================================================
+            //  4. DEVICES / INTERVIEWERS
+            // ============================================================
+            const teams = new Set(mainData.map(function (d) { return d.team_id; }).filter(Boolean));
+            const interviewerSet = new Set(diagData.map(function (d) { return d.responsible; }).filter(Boolean));
+            const supervisorSet = new Set(actionData.filter(function (a) { return a.role === '2'; }).map(function (a) { return a.originator; }).filter(Boolean));
+
+            document.getElementById('devTeams').textContent = teams.size;
+            document.getElementById('devTeamsDetail').textContent = 'Active in this export';
+            document.getElementById('devInterviewers').textContent = interviewerSet.size;
+            document.getElementById('devIntDetail').textContent = 'Collecting data';
+            document.getElementById('devSupervisors').textContent = supervisorSet.size;
+            document.getElementById('devSupDetail').textContent = 'Reviewing data';
+
+            // Interviewer performance table
+            const intrvPerf = {};
+            diagData.forEach(function (d) {
+                var intv = d.responsible || 'Unknown';
+                if (!intrvPerf[intv]) intrvPerf[intv] = { count: 0, errors: 0, unanswered: 0, durations: [], statuses: [], lastDate: '' };
+                intrvPerf[intv].count++;
+                intrvPerf[intv].errors += parseInt(d.entities__errors || 0);
+                intrvPerf[intv].unanswered += parseInt(d.n_questions_unanswered || 0);
+                intrvPerf[intv].statuses.push(STATUS_MAP[d.interview__status] || d.interview__status);
+                intrvPerf[intv].durations.push(parseDuration(d.interview__duration));
+            });
+            actionData.forEach(function (a) {
+                if (a.role === '1' && a.originator && intrvPerf[a.originator]) {
+                    if (a.date > (intrvPerf[a.originator].lastDate || '')) intrvPerf[a.originator].lastDate = a.date;
                 }
             });
 
-            // ---- PROVINCE CHART ----
-            const provCounts = {};
-            mainData.forEach(d => {
-                const prov = PROVINCES[d.province] || `Province ${d.province}`;
-                provCounts[prov] = (provCounts[prov] || 0) + 1;
+            var perfBody = document.querySelector('#interviewerTable tbody');
+            Object.entries(intrvPerf).forEach(function ([intv, perf]) {
+                var validDur = perf.durations.filter(function (d) { return d > 0; });
+                var avgD = validDur.length > 0 ? validDur.reduce(function (a, b) { return a + b; }, 0) / validDur.length : 0;
+                var teamId = intToTeam[intv.replace('Int', '')] || '-';
+                var statusBadges = perf.statuses.map(function (s) {
+                    var cls = s.includes('Approved') ? (s.includes('HQ') ? 'approved-hq' : 'approved-sup') : s === 'Completed' ? 'completed' : 'rejected';
+                    return '<span class="status-badge ' + cls + '">' + s + '</span>';
+                }).join(' ');
+                var row = perfBody.insertRow();
+                row.innerHTML = '<td>' + intv + '</td><td>Team ' + teamId + '</td><td>' + perf.count + '</td><td>' + perf.errors + '</td><td>' + perf.unanswered + '</td><td>' + formatMinutes(avgD) + '</td><td>' + (perf.lastDate || '-') + '</td><td>' + statusBadges + '</td>';
             });
-            const provColors = ['#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#a855f7', '#06b6d4'];
+
+            // Supervisor activity table
+            const supActivity = {};
+            actionData.forEach(function (a) {
+                if (a.role !== '2') return;
+                var sup = a.originator;
+                if (!sup) return;
+                if (!supActivity[sup]) supActivity[sup] = { approvals: 0, rejections: 0, lastDate: '' };
+                if (a.action === '3') supActivity[sup].approvals++;
+                if (a.action === '4') supActivity[sup].rejections++;
+                if (a.date > supActivity[sup].lastDate) supActivity[sup].lastDate = a.date;
+            });
+            var supBody = document.querySelector('#supervisorTable tbody');
+            Object.entries(supActivity).forEach(function ([sup, data]) {
+                var row = supBody.insertRow();
+                row.innerHTML = '<td>' + sup + '</td><td>' + data.approvals + '</td><td>' + data.rejections + '</td><td>' + data.lastDate + '</td>';
+            });
+
+            // ============================================================
+            //  5. MAP REPORT
+            // ============================================================
+            var mapCenter = [-16.5, 168.0];
+            var map = L.map('gpsMap').setView(mapCenter, 6);
+            window._gpsMap = map;
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors', maxZoom: 19 }).addTo(map);
+
+            var statusColor = function (s) { if (s === '120') return '#a855f7'; if (s === '65') return '#3b82f6'; if (s === '100') return '#22c55e'; return '#fbbf24'; };
+
+            mainData.forEach(function (d) {
+                var lat = parseFloat(d.gps__Latitude), lng = parseFloat(d.gps__Longitude);
+                if (isNaN(lat) || isNaN(lng) || lat === 0) return;
+                var color = statusColor(d.interview__status);
+                L.circleMarker([lat, lng], { radius: 8, color: color, fillColor: color, fillOpacity: 0.8, weight: 2 }).addTo(map).bindPopup(
+                    '<strong>' + d.interview__key + '</strong><br>Province: ' + (PROVINCES[d.province] || d.province) + '<br>Village: ' + d.village + '<br>Interviewer: ' + d.interviewer_id + '<br>Status: ' + (STATUS_MAP[d.interview__status] || d.interview__status) + '<br>Date: ' + (d.datetime_interview || '').substring(0, 10)
+                );
+            });
+            var validCoords = mainData.map(function (d) { return [parseFloat(d.gps__Latitude), parseFloat(d.gps__Longitude)]; }).filter(function (c) { return !isNaN(c[0]) && !isNaN(c[1]) && c[0] !== 0; });
+            if (validCoords.length > 0) map.fitBounds(validCoords, { padding: [30, 30] });
+
+            // GPS Quality
+            var gpsAccuracies = mainData.map(function (d) { return parseFloat(d.gps__Accuracy); }).filter(function (v) { return !isNaN(v) && v > 0; });
+            var avgGPS = gpsAccuracies.length > 0 ? (gpsAccuracies.reduce(function (a, b) { return a + b; }, 0) / gpsAccuracies.length).toFixed(1) : '-';
+            var gpsWithin20 = gpsAccuracies.filter(function (a) { return a <= 20; }).length;
+            var gpsTotal = gpsAccuracies.length;
+            document.getElementById('gpsQuality').innerHTML =
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Interviews with GPS</span><span>' + gpsTotal + '/' + totalInterviews + '</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + (totalInterviews > 0 ? (gpsTotal / totalInterviews) * 100 : 0) + '%;background:#3b82f6;"></div></div></div>' +
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>GPS Accuracy \u2264 20m</span><span style="color:' + (gpsTotal > 0 ? (gpsWithin20 / gpsTotal > 0.8 ? '#4ade80' : '#fbbf24') : '#64748b') + '">' + (gpsTotal > 0 ? ((gpsWithin20 / gpsTotal) * 100).toFixed(0) : 0) + '% (' + gpsWithin20 + '/' + gpsTotal + ')</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + (gpsTotal > 0 ? (gpsWithin20 / gpsTotal) * 100 : 0) + '%;background:#f59e0b;"></div></div></div>' +
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Average GPS Accuracy</span><span>' + avgGPS + 'm</span></div></div>' +
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Best Accuracy</span><span>' + (gpsAccuracies.length > 0 ? Math.min.apply(null, gpsAccuracies).toFixed(1) : '-') + 'm</span></div></div>' +
+                '<div><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Worst Accuracy</span><span>' + (gpsAccuracies.length > 0 ? Math.max.apply(null, gpsAccuracies).toFixed(1) : '-') + 'm</span></div></div>';
+
+            // Province chart
+            var provCounts = {};
+            mainData.forEach(function (d) { var p = PROVINCES[d.province] || 'Province ' + d.province; provCounts[p] = (provCounts[p] || 0) + 1; });
+            var provColors = ['#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#a855f7', '#06b6d4'];
             new Chart(document.getElementById('provinceChart'), {
                 type: 'bar',
-                data: {
-                    labels: Object.keys(provCounts),
-                    datasets: [{
-                        label: 'Interviews',
-                        data: Object.values(provCounts),
-                        backgroundColor: Object.keys(provCounts).map((_, i) => provColors[i % provColors.length]),
-                        borderRadius: 6,
-                        barPercentage: 0.6
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    indexAxis: 'y',
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } },
-                        y: { grid: { display: false } }
+                data: { labels: Object.keys(provCounts), datasets: [{ label: 'Interviews', data: Object.values(provCounts), backgroundColor: Object.keys(provCounts).map(function (_, i) { return provColors[i % provColors.length]; }), borderRadius: 6, barPercentage: 0.6 }] },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, y: { grid: { display: false } } } }
+            });
+
+            // ============================================================
+            //  6. CUMULATIVE INTERVIEW CHART
+            // ============================================================
+            var interviewDates = {};
+            actionData.forEach(function (a) {
+                if (a.action === '0' || a.action === '12') {
+                    var key = a.interview__key;
+                    if (!interviewDates[key] || a.date < interviewDates[key]) {
+                        interviewDates[key] = a.date;
                     }
                 }
             });
+            mainData.forEach(function (d) {
+                if (!interviewDates[d.interview__key] && d.datetime_interview) {
+                    interviewDates[d.interview__key] = d.datetime_interview.substring(0, 10);
+                }
+            });
 
-            // ---- POPULATION PYRAMID ----
-            const ageBins = ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65+'];
-            const maleAges = new Array(14).fill(0);
-            const femaleAges = new Array(14).fill(0);
-            memberData.forEach(d => {
-                const age = parseInt(d.age);
-                const sex = d.sex;
+            var dateCounts = {};
+            Object.values(interviewDates).forEach(function (date) { dateCounts[date] = (dateCounts[date] || 0) + 1; });
+            var sortedDates = Object.keys(dateCounts).sort();
+            var cumul = 0;
+            var cumulativeData = sortedDates.map(function (date) { cumul += dateCounts[date]; return { x: date, y: cumul }; });
+            var dailyData = sortedDates.map(function (date) { return { x: date, y: dateCounts[date] }; });
+
+            new Chart(document.getElementById('cumulativeChart'), {
+                type: 'line',
+                data: { datasets: [{ label: 'Cumulative Interviews', data: cumulativeData, borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.1)', fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: '#3b82f6' }] },
+                options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'category', title: { display: true, text: 'Date' }, grid: { color: '#1e293b' } }, y: { beginAtZero: true, title: { display: true, text: 'Interviews' }, grid: { color: '#1e293b' }, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } } }
+            });
+            new Chart(document.getElementById('dailyChart'), {
+                type: 'bar',
+                data: { datasets: [{ label: 'Interviews per Day', data: dailyData, backgroundColor: '#22c55e', borderRadius: 6, barPercentage: 0.6 }] },
+                options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'category', title: { display: true, text: 'Date' }, grid: { color: '#1e293b' } }, y: { beginAtZero: true, title: { display: true, text: 'Count' }, grid: { color: '#1e293b' }, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } } }
+            });
+
+            // ============================================================
+            //  7. QUANTITY
+            // ============================================================
+            var intrvCounts = {};
+            diagData.forEach(function (d) { var n = d.responsible || 'Unknown'; intrvCounts[n] = (intrvCounts[n] || 0) + 1; });
+            new Chart(document.getElementById('qtyInterviewerChart'), {
+                type: 'bar',
+                data: { labels: Object.keys(intrvCounts), datasets: [{ label: 'Interviews', data: Object.values(intrvCounts), backgroundColor: '#3b82f6', borderRadius: 6, barPercentage: 0.5 }] },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, y: { grid: { display: false } } } }
+            });
+
+            var teamCounts = {};
+            mainData.forEach(function (d) { var t = d.team_id ? 'Team ' + d.team_id : 'Unknown'; teamCounts[t] = (teamCounts[t] || 0) + 1; });
+            new Chart(document.getElementById('qtyTeamChart'), {
+                type: 'bar',
+                data: { labels: Object.keys(teamCounts), datasets: [{ label: 'Interviews', data: Object.values(teamCounts), backgroundColor: '#a855f7', borderRadius: 6, barPercentage: 0.5 }] },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, y: { grid: { display: false } } } }
+            });
+
+            var memberProv = {};
+            memberData.forEach(function (d) {
+                var prov = PROVINCES[interviewProvince[d.interview__key]] || 'Unknown';
+                memberProv[prov] = (memberProv[prov] || 0) + 1;
+            });
+            new Chart(document.getElementById('qtyMemberProvinceChart'), {
+                type: 'bar',
+                data: { labels: Object.keys(memberProv), datasets: [{ label: 'Members', data: Object.values(memberProv), backgroundColor: '#22c55e', borderRadius: 6, barPercentage: 0.5 }] },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, y: { grid: { display: false } } } }
+            });
+
+            var hhSizeDist = {};
+            Object.values(hhSizeMap).forEach(function (sz) { hhSizeDist[sz] = (hhSizeDist[sz] || 0) + 1; });
+            var hhSizeLabels = Object.keys(hhSizeDist).sort(function (a, b) { return a - b; });
+            new Chart(document.getElementById('qtyHHSizeChart'), {
+                type: 'bar',
+                data: { labels: hhSizeLabels.map(function (s) { return s + ' members'; }), datasets: [{ label: 'Households', data: hhSizeLabels.map(function (s) { return hhSizeDist[s]; }), backgroundColor: '#f59e0b', borderRadius: 6, barPercentage: 0.6 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, x: { grid: { display: false } } } }
+            });
+
+            // ============================================================
+            //  8. SPEED
+            // ============================================================
+            var speedStats = document.getElementById('speedStats');
+            var minDur = durations.length > 0 ? Math.min.apply(null, durations) : 0;
+            var maxDur = durations.length > 0 ? Math.max.apply(null, durations) : 0;
+            var sortedDur = durations.slice().sort(function (a, b) { return a - b; });
+            var medianDur = sortedDur.length > 0 ? sortedDur[Math.floor(sortedDur.length / 2)] : 0;
+            speedStats.innerHTML =
+                '<div class="stat-card blue" data-tooltip="Average interview duration across all interviews."><div class="label">Avg Duration</div><div class="value" style="color:#60a5fa">' + formatMinutes(avgDurMin) + '</div><div class="detail">Across ' + durations.length + ' interviews</div></div>' +
+                '<div class="stat-card green" data-tooltip="Shortest interview recorded."><div class="label">Fastest</div><div class="value" style="color:#4ade80">' + formatMinutes(minDur) + '</div><div class="detail">Minimum duration</div></div>' +
+                '<div class="stat-card red" data-tooltip="Longest interview recorded."><div class="label">Slowest</div><div class="value" style="color:#f87171">' + formatMinutes(maxDur) + '</div><div class="detail">Maximum duration</div></div>' +
+                '<div class="stat-card purple" data-tooltip="Median interview duration."><div class="label">Median</div><div class="value" style="color:#c084fc">' + formatMinutes(medianDur) + '</div><div class="detail">50th percentile</div></div>';
+
+            // Duration by interviewer
+            var intrvDuration = {};
+            diagData.forEach(function (d) {
+                var m = parseDuration(d.interview__duration);
+                if (m <= 0) return;
+                var intName = d.responsible || 'Unknown';
+                if (!intrvDuration[intName]) intrvDuration[intName] = [];
+                intrvDuration[intName].push(m);
+            });
+            var intNames = Object.keys(intrvDuration);
+            new Chart(document.getElementById('durationChart'), {
+                type: 'bar',
+                data: {
+                    labels: intNames,
+                    datasets: [
+                        { label: 'Avg Duration (min)', data: intNames.map(function (n) { return intrvDuration[n].reduce(function (a, b) { return a + b; }, 0) / intrvDuration[n].length; }), backgroundColor: '#3b82f6', borderRadius: 6, barPercentage: 0.4 },
+                        { label: 'Min Duration', data: intNames.map(function (n) { return Math.min.apply(null, intrvDuration[n]); }), backgroundColor: '#22c55e', borderRadius: 6, barPercentage: 0.4 },
+                        { label: 'Max Duration', data: intNames.map(function (n) { return Math.max.apply(null, intrvDuration[n]); }), backgroundColor: '#ef4444', borderRadius: 6, barPercentage: 0.4 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Minutes' }, grid: { color: '#1e293b' } }, x: { grid: { display: false } } } }
+            });
+
+            // Speed detail table
+            var spdBody = document.querySelector('#speedTable tbody');
+            diagData.forEach(function (d) {
+                var dur = parseDuration(d.interview__duration);
+                var teamId = intToTeam[(d.responsible || '').replace('Int', '')] || '-';
+                var row = spdBody.insertRow();
+                row.innerHTML = '<td>' + d.interview__key + '</td><td>' + (d.responsible || '-') + '</td><td>Team ' + teamId + '</td><td>' + formatMinutes(dur) + '</td><td>' + (d.entities__errors || '0') + '</td><td>' + (d.n_questions_unanswered || '0') + '</td><td>' + ((parseInt(d.rejections__sup || 0) + parseInt(d.rejections__hq || 0))) + '</td>';
+            });
+
+            // ============================================================
+            //  9. SURVEY STATISTICS
+            // ============================================================
+            document.getElementById('statInterviews').textContent = totalInterviews;
+            document.getElementById('statIntDetail').textContent = avgHHSize + ' avg HH size';
+            document.getElementById('statMembers').textContent = totalMembers;
+            document.getElementById('statMemDetail').textContent = 'Across ' + totalInterviews + ' households';
+            document.getElementById('statErrors').textContent = totalErrors;
+            document.getElementById('statErrDetail').textContent = (totalInterviews > 0 ? (totalErrors / totalInterviews).toFixed(1) : 0) + ' per interview';
+            document.getElementById('statUnanswered').textContent = totalUnanswered;
+            document.getElementById('statUnDetail').textContent = (totalInterviews > 0 ? (totalUnanswered / totalInterviews).toFixed(1) : 0) + ' per interview';
+
+            // Data quality
+            var qualDiv = document.getElementById('qualityMetrics');
+            var errRate = totalInterviews > 0 ? ((diagData.filter(function (d) { return parseInt(d.entities__errors) > 0; }).length / totalInterviews) * 100).toFixed(0) : 0;
+            var rejRate = totalInterviews > 0 ? ((diagData.filter(function (d) { return parseInt(d.rejections__sup) > 0; }).length / totalInterviews) * 100).toFixed(0) : 0;
+            qualDiv.innerHTML =
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Error-free interviews</span><span style="color:#4ade80">' + (100 - errRate) + '%</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + (100 - errRate) + '%;background:#22c55e;"></div></div></div>' +
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Rejection rate</span><span style="color:' + (rejRate > 20 ? '#f87171' : '#4ade80') + '">' + rejRate + '%</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + rejRate + '%;background:' + (rejRate > 20 ? '#ef4444' : '#22c55e') + ';"></div></div></div>' +
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>GPS Accuracy \u2264 20m</span><span style="color:' + (gpsTotal > 0 ? (gpsWithin20 / gpsTotal > 0.8 ? '#4ade80' : '#fbbf24') : '#64748b') + '">' + (gpsTotal > 0 ? ((gpsWithin20 / gpsTotal) * 100).toFixed(0) : 0) + '%</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + (gpsTotal > 0 ? (gpsWithin20 / gpsTotal) * 100 : 0) + '%;background:#f59e0b;"></div></div></div>' +
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Avg GPS Accuracy</span><span>' + avgGPS + 'm</span></div></div>' +
+                '<div><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Interviews with comments</span><span>' + new Set(commentData.map(function (c) { return c.interview__key; })).size + '/' + totalInterviews + '</span></div></div>';
+
+            // Population pyramid
+            var ageBins = ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65+'];
+            var maleAges = new Array(14).fill(0), femaleAges = new Array(14).fill(0);
+            memberData.forEach(function (d) {
+                var age = parseInt(d.age), sex = d.sex;
                 if (isNaN(age)) return;
-                let bin = Math.min(Math.floor(age / 5), 13);
+                var bin = Math.min(Math.floor(age / 5), 13);
                 if (sex === '1') maleAges[bin]++;
                 else if (sex === '2') femaleAges[bin]++;
             });
             new Chart(document.getElementById('pyramidChart'), {
                 type: 'bar',
                 data: {
-                    labels: ageBins,
-                    datasets: [
-                        { label: 'Male', data: maleAges.map(v => -v), backgroundColor: '#3b82f6', borderRadius: 4, barPercentage: 0.8 },
+                    labels: ageBins, datasets: [
+                        { label: 'Male', data: maleAges.map(function (v) { return -v; }), backgroundColor: '#3b82f6', borderRadius: 4, barPercentage: 0.8 },
                         { label: 'Female', data: femaleAges, backgroundColor: '#ec4899', borderRadius: 4, barPercentage: 0.8 }
                     ]
                 },
-                options: {
-                    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-                    scales: {
-                        x: {
-                            ticks: { callback: v => Math.abs(v) },
-                            grid: { color: '#1e293b' }
-                        },
-                        y: { grid: { display: false }, stacked: true }
-                    },
-                    plugins: {
-                        legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } },
-                        tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${Math.abs(ctx.raw)}` } }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', scales: { x: { ticks: { callback: function (v) { return Math.abs(v); } }, grid: { color: '#1e293b' } }, y: { grid: { display: false }, stacked: true } }, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } }, tooltip: { callbacks: { label: function (ctx) { return ctx.dataset.label + ': ' + Math.abs(ctx.raw); } } } } }
             });
 
-            // ---- DURATION BY INTERVIEWER ----
-            const intrvDuration = {};
-            diagData.forEach(d => {
-                const m = (d.interview__duration || '').match(/(\d+)\.(\d+):(\d+):(\d+)/);
-                if (!m) return;
-                const mins = parseInt(m[1]) * 1440 + parseInt(m[2]) * 60 + parseInt(m[3]) + parseInt(m[4]) / 60;
-                const intName = d.responsible || 'Unknown';
-                if (!intrvDuration[intName]) intrvDuration[intName] = [];
-                intrvDuration[intName].push(mins);
-            });
-            new Chart(document.getElementById('durationChart'), {
+            // FIES chart
+            var fiesLabels = ['Worried not enough food', 'Unable to eat healthy', 'Ate only a few kinds', 'Skipped a meal', 'Ate less than should', 'Ran out of food', 'Hungry but did not eat', 'Went without eating'];
+            var fiesFields = ['fies_1', 'fies_2', 'fies_3', 'fies_4', 'fies_5', 'fies_7', 'fies_8', 'fies_9'];
+            var fiesYes = fiesFields.map(function (f) { return mainData.filter(function (d) { return d[f] === '1'; }).length; });
+            new Chart(document.getElementById('fiesChart'), {
                 type: 'bar',
-                data: {
-                    labels: Object.keys(intrvDuration),
-                    datasets: [{
-                        label: 'Duration (min)',
-                        data: Object.values(intrvDuration).map(arr => arr.reduce((a, b) => a + b, 0) / arr.length),
-                        backgroundColor: '#3b82f6',
-                        borderRadius: 6,
-                        barPercentage: 0.5
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, title: { display: true, text: 'Minutes' }, grid: { color: '#1e293b' } },
-                        x: { grid: { display: false } }
-                    }
-                }
+                data: { labels: fiesLabels, datasets: [{ label: 'Yes', data: fiesYes, backgroundColor: '#ef4444', borderRadius: 4, barPercentage: 0.6 }] },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, y: { grid: { display: false }, ticks: { font: { size: 10 } } } } }
             });
 
-            // ---- GPS MAP ----
-            const mapCenter = [-16.5, 168.0]; // Vanuatu center
-            const map = L.map('gpsMap').setView(mapCenter, 6);
-            window._gpsMap = map;
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors',
-                maxZoom: 19
-            }).addTo(map);
-
-            const statusColor = s => {
-                if (s === '120') return '#a855f7';
-                if (s === '65') return '#3b82f6';
-                if (s === '100') return '#22c55e';
-                return '#fbbf24';
-            };
-
-            mainData.forEach(d => {
-                const lat = parseFloat(d.gps__Latitude);
-                const lng = parseFloat(d.gps__Longitude);
-                if (isNaN(lat) || isNaN(lng) || lat === 0) return;
-                const color = statusColor(d.interview__status);
-                L.circleMarker([lat, lng], {
-                    radius: 8, color: color, fillColor: color, fillOpacity: 0.8, weight: 2
-                }).addTo(map).bindPopup(
-                    `<strong>${d.interview__key}</strong><br>` +
-                    `Province: ${PROVINCES[d.province] || d.province}<br>` +
-                    `Village: ${d.village}<br>` +
-                    `Interviewer: ${d.interviewer_id}<br>` +
-                    `Status: ${STATUS_MAP[d.interview__status] || d.interview__status}<br>` +
-                    `Date: ${(d.datetime_interview || '').substring(0, 10)}`
-                );
-            });
-
-            // Auto-fit bounds if we have points
-            const validCoords = mainData
-                .map(d => [parseFloat(d.gps__Latitude), parseFloat(d.gps__Longitude)])
-                .filter(([lat, lng]) => !isNaN(lat) && !isNaN(lng) && lat !== 0);
-            if (validCoords.length > 0) {
-                map.fitBounds(validCoords, { padding: [30, 30] });
-            }
-
-            // ---- INTERVIEWER PERFORMANCE TABLE ----
-            const intrvPerf = {};
-            diagData.forEach(d => {
-                const intv = d.responsible || 'Unknown';
-                if (!intrvPerf[intv]) intrvPerf[intv] = { count: 0, errors: 0, durations: [], statuses: [] };
-                intrvPerf[intv].count++;
-                intrvPerf[intv].errors += parseInt(d.entities__errors || 0);
-                intrvPerf[intv].statuses.push(STATUS_MAP[d.interview__status] || d.interview__status);
-                const m = (d.interview__duration || '').match(/(\d+)\.(\d+):(\d+):(\d+)/);
-                if (m) intrvPerf[intv].durations.push(parseInt(m[1]) * 1440 + parseInt(m[2]) * 60 + parseInt(m[3]));
-            });
-
-            // Match team_id from main data
-            const intToTeam = {};
-            mainData.forEach(d => { if (d.interviewer_id) intToTeam[d.interviewer_id] = d.team_id; });
-
-            const tbody = document.querySelector('#interviewerTable tbody');
-            Object.entries(intrvPerf).forEach(([intv, perf]) => {
-                const avgD = perf.durations.length > 0 ? perf.durations.reduce((a, b) => a + b, 0) / perf.durations.length : 0;
-                const teamId = intToTeam[intv.replace('Int', '')] || '-';
-                const statusBadges = perf.statuses.map(s => {
-                    const cls = s.includes('Approved') ? (s.includes('HQ') ? 'approved-hq' : 'approved-sup') : s === 'Completed' ? 'completed' : 'rejected';
-                    return `<span class="status-badge ${cls}">${s}</span> `;
-                }).join('');
-                const row = tbody.insertRow();
-                row.innerHTML = `<td>${intv}</td><td>Team ${teamId}</td><td>${perf.count}</td><td>${perf.errors}</td><td>${formatMinutes(avgD)}</td><td>${statusBadges}</td>`;
-            });
-
-            // ---- ERROR DETAILS ----
-            const errorList = document.getElementById('errorList');
+            // Error list
+            var errorList = document.getElementById('errorList');
             if (errorData.length === 0) {
-                errorList.innerHTML = '<p style="color:#64748b; text-align:center; padding:20px;">No errors found</p>';
+                errorList.innerHTML = '<p style="color:#64748b;text-align:center;padding:20px;">No errors found</p>';
             } else {
-                errorData.forEach(e => {
-                    const div = document.createElement('div');
+                errorData.forEach(function (e) {
+                    var div = document.createElement('div');
                     div.className = 'error-item';
-                    div.innerHTML = `
-                    <div class="error-key">${e.interview__key}</div>
-                    <div class="error-var">${e.variable || 'General'} ${e.roster ? '(' + e.roster + ')' : ''}</div>
-                    <div class="error-msg">${e.message}</div>
-                `;
+                    div.innerHTML = '<div class="error-key">' + e.interview__key + '</div><div class="error-var">' + (e.variable || 'General') + (e.roster ? ' (' + e.roster + ')' : '') + '</div><div class="error-msg">' + e.message + '</div>';
                     errorList.appendChild(div);
                 });
             }
 
-            // ---- INTERVIEW DETAIL TABLE ----
-            const itBody = document.querySelector('#interviewTable2 tbody');
-            // Build HH size lookup
-            const hhSizeMap = {};
-            memberData.forEach(d => {
-                const key = d.interview__key;
-                hhSizeMap[key] = (hhSizeMap[key] || 0) + 1;
-            });
-            // Build diag lookup
-            const diagMap = {};
-            diagData.forEach(d => { diagMap[d.interview__key] = d; });
-
-            mainData.forEach(d => {
-                const diag = diagMap[d.interview__key] || {};
-                const status = STATUS_MAP[d.interview__status] || d.interview__status;
-                const cls = status.includes('Approved') ? (status.includes('HQ') ? 'approved-hq' : 'approved-sup') : status === 'Completed' ? 'completed' : 'rejected';
-                const dur = diag.interview__duration || '-';
-                const row = itBody.insertRow();
-                row.innerHTML = `
-                <td>${d.interview__key}</td>
-                <td>${PROVINCES[d.province] || d.province}</td>
-                <td>${d.area_council}</td>
-                <td>${d.enumeration_area}</td>
-                <td>${d.village}</td>
-                <td>${hhSizeMap[d.interview__key] || '-'}</td>
-                <td>${diag.responsible || d.interviewer_id}</td>
-                <td>${(d.datetime_interview || '').substring(0, 10)}</td>
-                <td>${dur}</td>
-                <td>${diag.entities__errors || '0'}</td>
-                <td><span class="status-badge ${cls}">${status}</span></td>
-            `;
-            });
-
-            // ---- DATA QUALITY INDICATORS ----
-            const qualDiv = document.getElementById('qualityMetrics');
-            const errRate = totalInterviews > 0 ? ((diagData.filter(d => parseInt(d.entities__errors) > 0).length / totalInterviews) * 100).toFixed(0) : 0;
-            const rejRate = totalInterviews > 0 ? ((diagData.filter(d => parseInt(d.rejections__sup) > 0).length / totalInterviews) * 100).toFixed(0) : 0;
-            const gpsAccuracies = mainData.map(d => parseFloat(d.gps__Accuracy)).filter(v => !isNaN(v) && v > 0);
-            const avgGPS = gpsAccuracies.length > 0 ? (gpsAccuracies.reduce((a, b) => a + b, 0) / gpsAccuracies.length).toFixed(1) : '-';
-            const gpsWithin20 = gpsAccuracies.filter(a => a <= 20).length;
-            const gpsTotal = gpsAccuracies.length;
-
-            qualDiv.innerHTML = `
-            <div style="margin-bottom: 16px;">
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
-                    <span>Error-free interviews</span>
-                    <span style="color:#4ade80">${100 - errRate}%</span>
-                </div>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${100 - errRate}%; background:#22c55e;"></div></div>
-            </div>
-            <div style="margin-bottom: 16px;">
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
-                    <span>Rejection rate</span>
-                    <span style="color:${rejRate > 20 ? '#f87171' : '#4ade80'}">${rejRate}%</span>
-                </div>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${rejRate}%; background:${rejRate > 20 ? '#ef4444' : '#22c55e'};"></div></div>
-            </div>
-            <div style="margin-bottom: 16px;">
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
-                    <span>GPS Accuracy &le; 20m</span>
-                    <span style="color:${gpsTotal > 0 ? (gpsWithin20 / gpsTotal > 0.8 ? '#4ade80' : '#fbbf24') : '#64748b'}">${gpsTotal > 0 ? ((gpsWithin20 / gpsTotal) * 100).toFixed(0) : 0}% (${gpsWithin20}/${gpsTotal})</span>
-                </div>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${gpsTotal > 0 ? (gpsWithin20 / gpsTotal) * 100 : 0}%; background:#f59e0b;"></div></div>
-            </div>
-            <div style="margin-bottom: 16px;">
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
-                    <span>Avg GPS Accuracy</span>
-                    <span>${avgGPS}m</span>
-                </div>
-            </div>
-            <div style="margin-bottom: 16px;">
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
-                    <span>Interviews with comments</span>
-                    <span>${new Set(commentData.map(c => c.interview__key)).size}/${totalInterviews}</span>
-                </div>
-            </div>
-        `;
-
-            // ---- FIES CHART ----
-            const fiesLabels = [
-                'Worried not enough food', 'Unable to eat healthy',
-                'Ate only a few kinds', 'Skipped a meal',
-                'Ate less than should', 'Ran out of food',
-                'Hungry but did not eat', 'Went without eating'
-            ];
-            const fiesFields = ['fies_1', 'fies_2', 'fies_3', 'fies_4', 'fies_5', 'fies_7', 'fies_8', 'fies_9'];
-            const fiesYes = fiesFields.map(f => mainData.filter(d => d[f] === '1').length);
-            new Chart(document.getElementById('fiesChart'), {
-                type: 'bar',
-                data: {
-                    labels: fiesLabels,
-                    datasets: [{
-                        label: 'Yes',
-                        data: fiesYes,
-                        backgroundColor: '#ef4444',
-                        borderRadius: 4,
-                        barPercentage: 0.6
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } },
-                        y: { grid: { display: false }, ticks: { font: { size: 10 } } }
-                    }
-                }
-            });
-
-            // ---- COMMENTS LIST ----
-            const commDiv = document.getElementById('commentsList');
+            // Comments list
+            var commDiv = document.getElementById('commentsList');
             if (commentData.length === 0) {
-                commDiv.innerHTML = '<p style="color:#64748b; text-align:center; padding:20px;">No comments yet</p>';
+                commDiv.innerHTML = '<p style="color:#64748b;text-align:center;padding:20px;">No comments yet</p>';
             } else {
-                commentData.forEach(c => {
-                    const div = document.createElement('div');
-                    div.style.cssText = 'background:#0f172a; border-radius:8px; padding:12px; margin-bottom:8px; border-left:3px solid #3b82f6;';
-                    div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                        <span style="color:#60a5fa; font-weight:600; font-size:0.75rem;">${c.originator || ''} (${c.interview__key})</span>
-                        <span style="color:#64748b; font-size:0.7rem;">${c.date || ''} ${c.time || ''}</span>
-                    </div>
-                    <div style="color:#94a3b8; font-size:0.7rem; margin-bottom:2px;">${c.variable || 'General'} ${c.roster ? '• ' + c.roster : ''}</div>
-                    <div style="color:#e2e8f0; font-size:0.8rem;">${sanitize(c.comment || '')}</div>
-                `;
+                commentData.forEach(function (c) {
+                    var div = document.createElement('div');
+                    div.style.cssText = 'background:#0f172a;border-radius:8px;padding:12px;margin-bottom:8px;border-left:3px solid #3b82f6;';
+                    div.innerHTML = '<div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="color:#60a5fa;font-weight:600;font-size:0.75rem;">' + (c.originator || '') + ' (' + c.interview__key + ')</span><span style="color:#64748b;font-size:0.7rem;">' + (c.date || '') + ' ' + (c.time || '') + '</span></div><div style="color:#94a3b8;font-size:0.7rem;margin-bottom:2px;">' + (c.variable || 'General') + (c.roster ? ' \u2022 ' + c.roster : '') + '</div><div style="color:#e2e8f0;font-size:0.8rem;">' + sanitize(c.comment || '') + '</div>';
                     commDiv.appendChild(div);
                 });
             }
         }
 
-        function formatMinutes(min) {
-            if (!min || !isFinite(min)) return '-';
-            const h = Math.floor(min / 60);
-            const m = Math.round(min % 60);
-            return h > 0 ? `${h}h ${m}m` : `${m}m`;
-        }
-
-        function sanitize(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
         // ---- NAVIGATION ----
-        document.querySelectorAll('.nav-bar a').forEach(link => {
+        document.querySelectorAll('.nav-bar a').forEach(function (link) {
             link.addEventListener('click', function () {
-                document.querySelectorAll('.nav-bar a').forEach(a => a.classList.remove('active'));
-                document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('.nav-bar a').forEach(function (a) { a.classList.remove('active'); });
+                document.querySelectorAll('.page-section').forEach(function (s) { s.classList.remove('active'); });
                 this.classList.add('active');
                 document.getElementById('page-' + this.dataset.page).classList.add('active');
-                // Trigger Leaflet invalidateSize when showing map
-                if (this.dataset.page === 'fieldops' && window._gpsMap) {
-                    setTimeout(() => window._gpsMap.invalidateSize(), 100);
+                if (this.dataset.page === 'map' && window._gpsMap) {
+                    setTimeout(function () { window._gpsMap.invalidateSize(); }, 100);
                 }
             });
         });
 
-        // Initialize on load
         window.addEventListener('DOMContentLoaded', initDashboard);
     </script>
 </body>
