@@ -445,6 +445,49 @@
             background: #475569;
             color: #e2e8f0;
         }
+
+        /* Navigation Menu */
+        .nav-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 0 30px;
+            display: flex;
+            gap: 4px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            overflow-x: auto;
+        }
+
+        .nav-bar a {
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 12px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .nav-bar a:hover {
+            color: #e2e8f0;
+            background: #334155;
+        }
+
+        .nav-bar a.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
     </style>
 </head>
 
@@ -460,149 +503,223 @@
         </div>
     </div>
 
-    <div class="top-stats" id="topStats">
-        <div class="stat-card blue" data-tooltip="Total number of household interviews completed or in progress in this data export.">
-            <div class="label">Total Interviews</div>
-            <div class="value" id="totalInterviews">-</div>
-            <div class="detail" id="interviewDetail">Loading...</div>
-        </div>
-        <div class="stat-card green" data-tooltip="Total individuals enumerated across all interviewed households. Average household size shown below.">
-            <div class="label">Household Members</div>
-            <div class="value" id="totalMembers">-</div>
-            <div class="detail" id="memberDetail">Loading...</div>
-        </div>
-        <div class="stat-card amber" data-tooltip="Average time spent per interview from start to completion. Range shows shortest and longest interview.">
-            <div class="label">Avg Duration</div>
-            <div class="value" id="avgDuration">-</div>
-            <div class="detail" id="durationDetail">Loading...</div>
-        </div>
-        <div class="stat-card red" data-tooltip="Total validation errors flagged by Survey Solutions. Includes GPS accuracy warnings and data consistency checks.">
-            <div class="label">Total Errors</div>
-            <div class="value" id="totalErrors">-</div>
-            <div class="detail" id="errorDetail">Loading...</div>
-        </div>
-        <div class="stat-card purple" data-tooltip="Number of questions left unanswered across all interviews. High counts may indicate incomplete interviews.">
-            <div class="label">Unanswered Qs</div>
-            <div class="value" id="totalUnanswered">-</div>
-            <div class="detail" id="unansweredDetail">Loading...</div>
-        </div>
-        <div class="stat-card cyan" data-tooltip="Number of distinct field teams and interviewers who have submitted data in this export.">
-            <div class="label">Active Teams</div>
-            <div class="value" id="totalTeams">-</div>
-            <div class="detail" id="teamDetail">Loading...</div>
-        </div>
+    <div class="nav-bar" id="navBar">
+        <a data-page="overview" class="active">Overview</a>
+        <a data-page="demographics">Demographics</a>
+        <a data-page="fieldops">Field Operations</a>
+        <a data-page="quality">Data Quality</a>
+        <a data-page="foodsec">Food Security</a>
     </div>
 
-    <div class="dashboard-grid">
-        <!-- Interview Status -->
-        <div class="panel">
-            <h3>Interview Status Distribution <i class="info-icon" data-tooltip="Breakdown of interview workflow stages: Completed, Approved by Supervisor, Approved by HQ, or Rejected.">?</i></h3>
-            <div class="chart-container chart-sm">
-                <canvas id="statusChart"></canvas>
+    <!-- ===== OVERVIEW PAGE ===== -->
+    <div class="page-section active" id="page-overview">
+
+        <div class="top-stats" id="topStats">
+            <div class="stat-card blue"
+                data-tooltip="Total number of household interviews completed or in progress in this data export.">
+                <div class="label">Total Interviews</div>
+                <div class="value" id="totalInterviews">-</div>
+                <div class="detail" id="interviewDetail">Loading...</div>
+            </div>
+            <div class="stat-card green"
+                data-tooltip="Total individuals enumerated across all interviewed households. Average household size shown below.">
+                <div class="label">Household Members</div>
+                <div class="value" id="totalMembers">-</div>
+                <div class="detail" id="memberDetail">Loading...</div>
+            </div>
+            <div class="stat-card amber"
+                data-tooltip="Average time spent per interview from start to completion. Range shows shortest and longest interview.">
+                <div class="label">Avg Duration</div>
+                <div class="value" id="avgDuration">-</div>
+                <div class="detail" id="durationDetail">Loading...</div>
+            </div>
+            <div class="stat-card red"
+                data-tooltip="Total validation errors flagged by Survey Solutions. Includes GPS accuracy warnings and data consistency checks.">
+                <div class="label">Total Errors</div>
+                <div class="value" id="totalErrors">-</div>
+                <div class="detail" id="errorDetail">Loading...</div>
+            </div>
+            <div class="stat-card purple"
+                data-tooltip="Number of questions left unanswered across all interviews. High counts may indicate incomplete interviews.">
+                <div class="label">Unanswered Qs</div>
+                <div class="value" id="totalUnanswered">-</div>
+                <div class="detail" id="unansweredDetail">Loading...</div>
+            </div>
+            <div class="stat-card cyan"
+                data-tooltip="Number of distinct field teams and interviewers who have submitted data in this export.">
+                <div class="label">Active Teams</div>
+                <div class="value" id="totalTeams">-</div>
+                <div class="detail" id="teamDetail">Loading...</div>
             </div>
         </div>
 
-        <!-- Province Distribution -->
-        <div class="panel">
-            <h3>Interviews by Province <i class="info-icon" data-tooltip="Number of interviews collected per province. Vanuatu has 6 provinces: Torba, Sanma, Penama, Malampa, Shefa, and Tafea.">?</i></h3>
-            <div class="chart-container chart-sm">
-                <canvas id="provinceChart"></canvas>
+        <div class="dashboard-grid">
+            <!-- Interview Status -->
+            <div class="panel" id="panel-status">
+                <h3>Interview Status Distribution <i class="info-icon"
+                        data-tooltip="Breakdown of interview workflow stages: Completed, Approved by Supervisor, Approved by HQ, or Rejected.">?</i>
+                </h3>
+                <div class="chart-container chart-sm">
+                    <canvas id="statusChart"></canvas>
+                </div>
             </div>
-        </div>
 
-        <!-- Demographics Overview -->
-        <div class="panel">
-            <h3>Population Pyramid (Age &amp; Sex) <i class="info-icon" data-tooltip="Age-sex distribution of all enumerated household members. Males shown left (blue), females right (pink). Grouped in 5-year age bins.">?</i></h3>
-            <div class="chart-container chart-md">
-                <canvas id="pyramidChart"></canvas>
+            <!-- Province Distribution -->
+            <div class="panel" id="panel-province">
+                <h3>Interviews by Province <i class="info-icon"
+                        data-tooltip="Number of interviews collected per province. Vanuatu has 6 provinces: Torba, Sanma, Penama, Malampa, Shefa, and Tafea.">?</i>
+                </h3>
+                <div class="chart-container chart-sm">
+                    <canvas id="provinceChart"></canvas>
+                </div>
             </div>
-        </div>
 
-        <!-- Interview Duration -->
-        <div class="panel">
-            <h3>Interview Duration by Interviewer <i class="info-icon" data-tooltip="Average interview duration in minutes per interviewer. Very short or very long durations may indicate data quality concerns.">?</i></h3>
-            <div class="chart-container chart-md">
-                <canvas id="durationChart"></canvas>
-            </div>
-        </div>
-
-        <!-- GPS Map -->
-        <div class="panel full-width">
-            <h3>Interview Locations (GPS) <i class="info-icon" data-tooltip="Map of all interview GPS coordinates. Marker colors indicate status: green=Completed, blue=Approved by Supervisor, purple=Approved by HQ. Click markers for details.">?</i></h3>
-            <div id="gpsMap"></div>
-        </div>
-
-        <!-- Interviewer Performance Table -->
-        <div class="panel">
-            <h3>Interviewer Performance <i class="info-icon" data-tooltip="Summary per interviewer showing total interviews, validation errors, average duration, and current approval status.">?</i></h3>
-            <div style="overflow-x:auto;">
-                <table class="data-table" id="interviewerTable">
-                    <thead>
-                        <tr>
-                            <th data-tooltip="Interviewer ID assigned in Survey Solutions">Interviewer</th>
-                            <th data-tooltip="Field team the interviewer belongs to">Team</th>
-                            <th data-tooltip="Number of interviews completed by this interviewer">Interviews</th>
-                            <th data-tooltip="Total validation errors across all interviews">Errors</th>
-                            <th data-tooltip="Average time from start to completion">Avg Duration</th>
-                            <th data-tooltip="Current workflow status of interviews">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Error Details -->
-        <div class="panel">
-            <h3>Validation Errors &amp; Warnings <i class="info-icon" data-tooltip="All validation errors triggered during data collection, including GPS accuracy warnings and data consistency checks.">?</i></h3>
-            <div id="errorList"></div>
-        </div>
-
-        <!-- Interview Detail Table -->
-        <div class="panel full-width">
-            <h3>Interview Details <i class="info-icon" data-tooltip="Full list of all interviews with geographic details, household size, interviewer, timing, error count and workflow status.">?</i></h3>
-            <div style="overflow-x:auto;">
-                <table class="data-table" id="interviewTable">
-                    <thead>
-                        <tr>
-                            <th data-tooltip="Unique interview identifier in Survey Solutions">Interview Key</th>
-                            <th data-tooltip="Province where the interview was conducted">Province</th>
-                            <th data-tooltip="Area council within the province">Area Council</th>
-                            <th data-tooltip="Enumeration area code from the sampling frame">EA</th>
-                            <th data-tooltip="Village name where the household is located">Village</th>
-                            <th data-tooltip="Number of household members listed in the roster">HH Size</th>
-                            <th data-tooltip="Interviewer who conducted the interview">Interviewer</th>
-                            <th data-tooltip="Date the interview was started">Date</th>
-                            <th data-tooltip="Total time from starting to completing the interview">Duration</th>
-                            <th data-tooltip="Number of validation errors flagged">Errors</th>
-                            <th data-tooltip="Current workflow status: Completed → Approved by Supervisor → Approved by HQ">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Data Quality -->
-        <div class="panel">
-            <h3>Data Quality Indicators <i class="info-icon" data-tooltip="Key quality metrics: error-free rate, supervisor rejection rate, GPS accuracy compliance (target: ≤20m), and comment coverage.">?</i></h3>
-            <div id="qualityMetrics"></div>
-        </div>
-
-        <!-- Food Security (FIES) -->
-        <div class="panel">
-            <h3>Food Insecurity (FIES Responses) <i class="info-icon" data-tooltip="Food Insecurity Experience Scale (FIES) — 8 standard questions measuring food access. Higher counts indicate more households experiencing food insecurity.">?</i></h3>
-            <div class="chart-container chart-sm">
-                <canvas id="fiesChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Comments Timeline -->
-        <div class="panel full-width">
-            <h3>Recent Comments &amp; Notes <i class="info-icon" data-tooltip="Interviewer comments and field notes entered during data collection. Useful for understanding context and flagging issues.">?</i></h3>
-            <div id="commentsList" style="max-height: 350px; overflow-y: auto;"></div>
         </div>
     </div>
+    <!-- end overview page -->
+
+    <!-- ===== DEMOGRAPHICS PAGE ===== -->
+    <div class="page-section" id="page-demographics">
+        <div class="dashboard-grid">
+
+            <!-- Demographics Overview -->
+            <div class="panel">
+                <h3>Population Pyramid (Age &amp; Sex) <i class="info-icon"
+                        data-tooltip="Age-sex distribution of all enumerated household members. Males shown left (blue), females right (pink). Grouped in 5-year age bins.">?</i>
+                </h3>
+                <div class="chart-container chart-md">
+                    <canvas id="pyramidChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Interview Detail Table -->
+            <div class="panel full-width">
+                <h3>Interview Details <i class="info-icon"
+                        data-tooltip="Full list of all interviews with geographic details, household size, interviewer, timing, error count and workflow status.">?</i>
+                </h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="interviewTable2">
+                        <thead>
+                            <tr>
+                                <th data-tooltip="Unique interview identifier in Survey Solutions">Interview Key</th>
+                                <th data-tooltip="Province where the interview was conducted">Province</th>
+                                <th data-tooltip="Area council within the province">Area Council</th>
+                                <th data-tooltip="Enumeration area code from the sampling frame">EA</th>
+                                <th data-tooltip="Village name where the household is located">Village</th>
+                                <th data-tooltip="Number of household members listed in the roster">HH Size</th>
+                                <th data-tooltip="Interviewer who conducted the interview">Interviewer</th>
+                                <th data-tooltip="Date the interview was started">Date</th>
+                                <th data-tooltip="Total time from starting to completing the interview">Duration</th>
+                                <th data-tooltip="Number of validation errors flagged">Errors</th>
+                                <th
+                                    data-tooltip="Current workflow status: Completed → Approved by Supervisor → Approved by HQ">
+                                    Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end demographics page -->
+
+    <!-- ===== FIELD OPERATIONS PAGE ===== -->
+    <div class="page-section" id="page-fieldops">
+        <div class="dashboard-grid">
+
+            <!-- Interview Duration -->
+            <div class="panel">
+                <h3>Interview Duration by Interviewer <i class="info-icon"
+                        data-tooltip="Average interview duration in minutes per interviewer. Very short or very long durations may indicate data quality concerns.">?</i>
+                </h3>
+                <div class="chart-container chart-md">
+                    <canvas id="durationChart"></canvas>
+                </div>
+            </div>
+
+            <!-- GPS Map -->
+            <div class="panel full-width">
+                <h3>Interview Locations (GPS) <i class="info-icon"
+                        data-tooltip="Map of all interview GPS coordinates. Marker colors indicate status: green=Completed, blue=Approved by Supervisor, purple=Approved by HQ. Click markers for details.">?</i>
+                </h3>
+                <div id="gpsMap"></div>
+            </div>
+
+            <!-- Interviewer Performance Table -->
+            <div class="panel" id="panel-interviewer">
+                <h3>Interviewer Performance <i class="info-icon"
+                        data-tooltip="Summary per interviewer showing total interviews, validation errors, average duration, and current approval status.">?</i>
+                </h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="interviewerTable">
+                        <thead>
+                            <tr>
+                                <th data-tooltip="Interviewer ID assigned in Survey Solutions">Interviewer</th>
+                                <th data-tooltip="Field team the interviewer belongs to">Team</th>
+                                <th data-tooltip="Number of interviews completed by this interviewer">Interviews</th>
+                                <th data-tooltip="Total validation errors across all interviews">Errors</th>
+                                <th data-tooltip="Average time from start to completion">Avg Duration</th>
+                                <th data-tooltip="Current workflow status of interviews">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- end fieldops page -->
+
+    <!-- ===== DATA QUALITY PAGE ===== -->
+    <div class="page-section" id="page-quality">
+        <div class="dashboard-grid">
+
+            <!-- Error Details -->
+            <div class="panel">
+                <h3>Validation Errors &amp; Warnings <i class="info-icon"
+                        data-tooltip="All validation errors triggered during data collection, including GPS accuracy warnings and data consistency checks.">?</i>
+                </h3>
+                <div id="errorList"></div>
+            </div>
+
+            <!-- Data Quality -->
+            <div class="panel">
+                <h3>Data Quality Indicators <i class="info-icon"
+                        data-tooltip="Key quality metrics: error-free rate, supervisor rejection rate, GPS accuracy compliance (target: ≤20m), and comment coverage.">?</i>
+                </h3>
+                <div id="qualityMetrics"></div>
+            </div>
+
+        </div>
+    </div>
+    <!-- end quality page -->
+
+    <!-- ===== FOOD SECURITY PAGE ===== -->
+    <div class="page-section" id="page-foodsec">
+        <div class="dashboard-grid">
+
+            <!-- Food Security (FIES) -->
+            <div class="panel">
+                <h3>Food Insecurity (FIES Responses) <i class="info-icon"
+                        data-tooltip="Food Insecurity Experience Scale (FIES) — 8 standard questions measuring food access. Higher counts indicate more households experiencing food insecurity.">?</i>
+                </h3>
+                <div class="chart-container chart-sm">
+                    <canvas id="fiesChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Comments Timeline -->
+            <div class="panel full-width">
+                <h3>Recent Comments &amp; Notes <i class="info-icon"
+                        data-tooltip="Interviewer comments and field notes entered during data collection. Useful for understanding context and flagging issues.">?</i>
+                </h3>
+                <div id="commentsList" style="max-height: 350px; overflow-y: auto;"></div>
+            </div>
+        </div>
+    </div>
+    <!-- end foodsec page -->
 
     <script>
         // ============================================================
@@ -816,6 +933,7 @@
             // ---- GPS MAP ----
             const mapCenter = [-16.5, 168.0]; // Vanuatu center
             const map = L.map('gpsMap').setView(mapCenter, 6);
+            window._gpsMap = map;
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors',
                 maxZoom: 19
@@ -899,7 +1017,7 @@
             }
 
             // ---- INTERVIEW DETAIL TABLE ----
-            const itBody = document.querySelector('#interviewTable tbody');
+            const itBody = document.querySelector('#interviewTable2 tbody');
             // Build HH size lookup
             const hhSizeMap = {};
             memberData.forEach(d => {
@@ -1040,6 +1158,20 @@
             div.textContent = str;
             return div.innerHTML;
         }
+
+        // ---- NAVIGATION ----
+        document.querySelectorAll('.nav-bar a').forEach(link => {
+            link.addEventListener('click', function () {
+                document.querySelectorAll('.nav-bar a').forEach(a => a.classList.remove('active'));
+                document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('page-' + this.dataset.page).classList.add('active');
+                // Trigger Leaflet invalidateSize when showing map
+                if (this.dataset.page === 'fieldops' && window._gpsMap) {
+                    setTimeout(() => window._gpsMap.invalidateSize(), 100);
+                }
+            });
+        });
 
         // Initialize on load
         window.addEventListener('DOMContentLoaded', initDashboard);
