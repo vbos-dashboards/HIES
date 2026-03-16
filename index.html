@@ -1538,27 +1538,87 @@
             var pageH = pdf.internal.pageSize.getHeight();
             var margin = 10;
             var contentW = pageW - margin * 2;
-            var isFirst = true;
 
             // Save current page state
             var currentActive = document.querySelector('.nav-bar a.active');
             var currentPage = currentActive ? currentActive.dataset.page : 'surveys';
 
+            // ---- COVER PAGE ----
+            pdf.setFillColor(15, 23, 42);
+            pdf.rect(0, 0, pageW, pageH, 'F');
+            // Top accent bar
+            pdf.setFillColor(30, 58, 95);
+            pdf.rect(0, 0, pageW, 4, 'F');
+            pdf.setFillColor(59, 130, 246);
+            pdf.rect(0, 4, pageW, 2, 'F');
+            // Title
+            pdf.setFontSize(28);
+            pdf.setTextColor(226, 232, 240);
+            pdf.text('Vanuatu HIES 2026', pageW / 2, pageH * 0.35, { align: 'center' });
+            pdf.setFontSize(16);
+            pdf.setTextColor(148, 163, 184);
+            pdf.text('Monitoring Report', pageW / 2, pageH * 0.35 + 14, { align: 'center' });
+            // Divider line
+            pdf.setDrawColor(59, 130, 246);
+            pdf.setLineWidth(0.5);
+            pdf.line(pageW * 0.3, pageH * 0.35 + 22, pageW * 0.7, pageH * 0.35 + 22);
+            // Report details
+            pdf.setFontSize(10);
+            pdf.setTextColor(148, 163, 184);
+            pdf.text('Generated: ' + new Date().toLocaleString(), pageW / 2, pageH * 0.55, { align: 'center' });
+            var sectionNames = {
+                surveys: 'Surveys and Statuses', teams: 'Teams and Statuses',
+                statusduration: 'Status Duration', devices: 'Devices / Interviewers',
+                map: 'Map Report', cumulative: 'Cumulative Interview Chart',
+                quantity: 'Quantity', speed: 'Speed', statistics: 'Survey Statistics'
+            };
+            pdf.setFontSize(9);
+            pdf.text('Sections included:', pageW / 2, pageH * 0.62, { align: 'center' });
+            pdf.setFontSize(8);
+            pdf.setTextColor(100, 116, 139);
+            selected.forEach(function (s, idx) {
+                pdf.text((idx + 1) + '. ' + (sectionNames[s] || s), pageW / 2, pageH * 0.66 + idx * 5, { align: 'center' });
+            });
+            // Bottom bar
+            pdf.setFillColor(30, 58, 95);
+            pdf.rect(0, pageH - 6, pageW, 6, 'F');
+            pdf.setFontSize(7);
+            pdf.setTextColor(100, 116, 139);
+            pdf.text('Vanuatu National Statistics Office', pageW / 2, pageH - 2, { align: 'center' });
+
+            // Helper: render header bar on each content page
+            function drawPageHeader(sectionTitle) {
+                pdf.setFillColor(30, 58, 95);
+                pdf.rect(0, 0, pageW, 14, 'F');
+                pdf.setFontSize(10);
+                pdf.setTextColor(255, 255, 255);
+                pdf.text('Vanuatu HIES 2026 — ' + sectionTitle, margin, 9);
+                pdf.setFontSize(7);
+                pdf.setTextColor(148, 163, 184);
+                pdf.text('Generated: ' + new Date().toLocaleString(), pageW - margin, 9, { align: 'right' });
+            }
+
+            // ---- CAPTURE EACH SECTION (one at a time) ----
             for (var i = 0; i < selected.length; i++) {
                 var sectionId = selected[i];
-                progressText.textContent = 'Capturing: ' + sectionId + ' (' + (i + 1) + '/' + selected.length + ')';
-                progressBar.style.width = ((i / selected.length) * 100) + '%';
+                var sectionTitle = sectionNames[sectionId] || sectionId;
+                progressText.textContent = 'Capturing: ' + sectionTitle + ' (' + (i + 1) + '/' + selected.length + ')';
+                progressBar.style.width = (((i + 0.5) / selected.length) * 100) + '%';
 
-                // Show the section
-                document.querySelectorAll('.page-section').forEach(function (s) { s.classList.add('active'); s.style.display = 'block'; });
+                // Show ONLY this section
+                document.querySelectorAll('.page-section').forEach(function (s) { s.classList.remove('active'); s.style.display = 'none'; });
                 var section = document.getElementById('page-' + sectionId);
                 if (!section) continue;
+                section.classList.add('active');
+                section.style.display = 'block';
 
-                // If map, invalidate size first
+                // If map, invalidate size and wait for tiles
                 if (sectionId === 'map' && window._gpsMap) {
                     window._gpsMap.invalidateSize();
-                    await new Promise(function (r) { setTimeout(r, 500); });
+                    await new Promise(function (r) { setTimeout(r, 800); });
                 }
+                // Give charts/layout a moment to render
+                await new Promise(function (r) { setTimeout(r, 300); });
 
                 try {
                     var canvas = await html2canvas(section, {
@@ -1566,21 +1626,13 @@
                         scale: 2,
                         useCORS: true,
                         logging: false,
-                        windowWidth: 1400
+                        windowWidth: 1400,
+                        scrollX: 0,
+                        scrollY: -window.scrollY
                     });
 
-                    if (!isFirst) pdf.addPage();
-                    isFirst = false;
-
-                    // Add header to each page
-                    pdf.setFillColor(30, 58, 95);
-                    pdf.rect(0, 0, pageW, 14, 'F');
-                    pdf.setFontSize(11);
-                    pdf.setTextColor(255, 255, 255);
-                    pdf.text('Vanuatu HIES 2026 - Monitoring Report', margin, 9);
-                    pdf.setFontSize(7);
-                    pdf.setTextColor(148, 163, 184);
-                    pdf.text('Generated: ' + new Date().toLocaleString(), pageW - margin, 9, { align: 'right' });
+                    pdf.addPage();
+                    drawPageHeader(sectionTitle);
 
                     // Scale image to fit page
                     var imgW = contentW;
@@ -1596,14 +1648,7 @@
                         while (srcY < canvas.height) {
                             if (pageIdx > 0) {
                                 pdf.addPage();
-                                pdf.setFillColor(30, 58, 95);
-                                pdf.rect(0, 0, pageW, 14, 'F');
-                                pdf.setFontSize(11);
-                                pdf.setTextColor(255, 255, 255);
-                                pdf.text('Vanuatu HIES 2026 - Monitoring Report', margin, 9);
-                                pdf.setFontSize(7);
-                                pdf.setTextColor(148, 163, 184);
-                                pdf.text('Generated: ' + new Date().toLocaleString(), pageW - margin, 9, { align: 'right' });
+                                drawPageHeader(sectionTitle + ' (cont.)');
                             }
                             var sliceH = Math.min(srcPageH, canvas.height - srcY);
                             var sliceCanvas = document.createElement('canvas');
@@ -1627,14 +1672,17 @@
             // Restore original page
             document.querySelectorAll('.page-section').forEach(function (s) { s.classList.remove('active'); s.style.display = ''; });
             document.getElementById('page-' + currentPage).classList.add('active');
+            if (currentPage === 'map' && window._gpsMap) {
+                setTimeout(function () { window._gpsMap.invalidateSize(); }, 100);
+            }
 
-            // Add page numbers
+            // Add page numbers (skip cover page = page 1)
             var totalPages = pdf.internal.getNumberOfPages();
-            for (var p = 1; p <= totalPages; p++) {
+            for (var p = 2; p <= totalPages; p++) {
                 pdf.setPage(p);
                 pdf.setFontSize(7);
                 pdf.setTextColor(100, 116, 139);
-                pdf.text('Page ' + p + ' of ' + totalPages, pageW / 2, pageH - 4, { align: 'center' });
+                pdf.text('Page ' + (p - 1) + ' of ' + (totalPages - 1), pageW / 2, pageH - 4, { align: 'center' });
             }
 
             progressText.textContent = 'Complete!';
