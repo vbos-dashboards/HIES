@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VUTHIES 2026 - Survey Monitoring Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #0c2340 100%);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid #3b82f6;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .header .subtitle {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 2px;
+        }
+
+        .header .refresh-info {
+            color: #64748b;
+            font-size: 0.75rem;
+            text-align: right;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: #3b82f6;
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin-left: 10px;
+            font-weight: 600;
+        }
+
+        .top-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            padding: 20px 30px;
+        }
+
+        .stat-card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #334155;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .stat-card.blue::before {
+            background: #3b82f6;
+        }
+
+        .stat-card.green::before {
+            background: #22c55e;
+        }
+
+        .stat-card.amber::before {
+            background: #f59e0b;
+        }
+
+        .stat-card.red::before {
+            background: #ef4444;
+        }
+
+        .stat-card.purple::before {
+            background: #a855f7;
+        }
+
+        .stat-card.cyan::before {
+            background: #06b6d4;
+        }
+
+        .stat-card .label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 6px 0;
+        }
+
+        .stat-card.blue .value {
+            color: #60a5fa;
+        }
+
+        .stat-card.green .value {
+            color: #4ade80;
+        }
+
+        .stat-card.amber .value {
+            color: #fbbf24;
+        }
+
+        .stat-card.red .value {
+            color: #f87171;
+        }
+
+        .stat-card.purple .value {
+            color: #c084fc;
+        }
+
+        .stat-card.cyan .value {
+            color: #22d3ee;
+        }
+
+        .stat-card .detail {
+            font-size: 0.7rem;
+            color: #64748b;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+            padding: 0 30px 30px;
+        }
+
+        .panel {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #334155;
+        }
+
+        .panel h3 {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .panel.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .chart-sm {
+            height: 260px;
+        }
+
+        .chart-md {
+            height: 320px;
+        }
+
+        #gpsMap {
+            height: 400px;
+            border-radius: 8px;
+        }
+
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        table.data-table th {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+        }
+
+        table.data-table td {
+            padding: 10px 12px;
+            border-top: 1px solid #334155;
+            color: #cbd5e1;
+        }
+
+        table.data-table tr:hover {
+            background: #334155;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .status-badge.completed {
+            background: #166534;
+            color: #4ade80;
+        }
+
+        .status-badge.approved-sup {
+            background: #1e3a5f;
+            color: #60a5fa;
+        }
+
+        .status-badge.approved-hq {
+            background: #581c87;
+            color: #c084fc;
+        }
+
+        .status-badge.rejected {
+            background: #7f1d1d;
+            color: #f87171;
+        }
+
+        .error-item {
+            background: #1a1a2e;
+            border-left: 3px solid #ef4444;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.8rem;
+        }
+
+        .error-item .error-key {
+            color: #f87171;
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        .error-item .error-var {
+            color: #fbbf24;
+            font-size: 0.7rem;
+        }
+
+        .error-item .error-msg {
+            color: #cbd5e1;
+            margin-top: 4px;
+        }
+
+        .progress-bar-bg {
+            background: #334155;
+            border-radius: 6px;
+            height: 10px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #334155;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .file-input-section {
+            background: #1e293b;
+            border: 2px dashed #334155;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .file-input-section.visible {
+            display: block;
+        }
+
+        .file-input-section input[type="file"] {
+            display: block;
+            margin: 10px auto;
+        }
+
+        .file-input-section p {
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+        }
+
+        .tab-btn {
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .tab-btn.active {
+            background: #3b82f6;
+            color: #fff;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div>
+            <h1>Vanuatu HIES 2026 <span class="badge">MONITORING</span></h1>
+            <div class="subtitle">Survey Data Collection Monitoring Dashboard</div>
+        </div>
+        <div class="refresh-info">
+            <div id="lastUpdate"></div>
+            <div>Data exported: 16 Mar 2026</div>
+        </div>
+    </div>
+
+    <div class="top-stats" id="topStats">
+        <div class="stat-card blue">
+            <div class="label">Total Interviews</div>
+            <div class="value" id="totalInterviews">-</div>
+            <div class="detail" id="interviewDetail">Loading...</div>
+        </div>
+        <div class="stat-card green">
+            <div class="label">Household Members</div>
+            <div class="value" id="totalMembers">-</div>
+            <div class="detail" id="memberDetail">Loading...</div>
+        </div>
+        <div class="stat-card amber">
+            <div class="label">Avg Duration</div>
+            <div class="value" id="avgDuration">-</div>
+            <div class="detail" id="durationDetail">Loading...</div>
+        </div>
+        <div class="stat-card red">
+            <div class="label">Total Errors</div>
+            <div class="value" id="totalErrors">-</div>
+            <div class="detail" id="errorDetail">Loading...</div>
+        </div>
+        <div class="stat-card purple">
+            <div class="label">Unanswered Qs</div>
+            <div class="value" id="totalUnanswered">-</div>
+            <div class="detail" id="unansweredDetail">Loading...</div>
+        </div>
+        <div class="stat-card cyan">
+            <div class="label">Active Teams</div>
+            <div class="value" id="totalTeams">-</div>
+            <div class="detail" id="teamDetail">Loading...</div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <!-- Interview Status -->
+        <div class="panel">
+            <h3>Interview Status Distribution</h3>
+            <div class="chart-container chart-sm">
+                <canvas id="statusChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Province Distribution -->
+        <div class="panel">
+            <h3>Interviews by Province</h3>
+            <div class="chart-container chart-sm">
+                <canvas id="provinceChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Demographics Overview -->
+        <div class="panel">
+            <h3>Population Pyramid (Age &amp; Sex)</h3>
+            <div class="chart-container chart-md">
+                <canvas id="pyramidChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Interview Duration -->
+        <div class="panel">
+            <h3>Interview Duration by Interviewer</h3>
+            <div class="chart-container chart-md">
+                <canvas id="durationChart"></canvas>
+            </div>
+        </div>
+
+        <!-- GPS Map -->
+        <div class="panel full-width">
+            <h3>Interview Locations (GPS)</h3>
+            <div id="gpsMap"></div>
+        </div>
+
+        <!-- Interviewer Performance Table -->
+        <div class="panel">
+            <h3>Interviewer Performance</h3>
+            <div style="overflow-x:auto;">
+                <table class="data-table" id="interviewerTable">
+                    <thead>
+                        <tr>
+                            <th>Interviewer</th>
+                            <th>Team</th>
+                            <th>Interviews</th>
+                            <th>Errors</th>
+                            <th>Avg Duration</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Error Details -->
+        <div class="panel">
+            <h3>Validation Errors &amp; Warnings</h3>
+            <div id="errorList"></div>
+        </div>
+
+        <!-- Interview Detail Table -->
+        <div class="panel full-width">
+            <h3>Interview Details</h3>
+            <div style="overflow-x:auto;">
+                <table class="data-table" id="interviewTable">
+                    <thead>
+                        <tr>
+                            <th>Interview Key</th>
+                            <th>Province</th>
+                            <th>Area Council</th>
+                            <th>EA</th>
+                            <th>Village</th>
+                            <th>HH Size</th>
+                            <th>Interviewer</th>
+                            <th>Date</th>
+                            <th>Duration</th>
+                            <th>Errors</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Data Quality -->
+        <div class="panel">
+            <h3>Data Quality Indicators</h3>
+            <div id="qualityMetrics"></div>
+        </div>
+
+        <!-- Food Security (FIES) -->
+        <div class="panel">
+            <h3>Food Insecurity (FIES Responses)</h3>
+            <div class="chart-container chart-sm">
+                <canvas id="fiesChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Comments Timeline -->
+        <div class="panel full-width">
+            <h3>Recent Comments &amp; Notes</h3>
+            <div id="commentsList" style="max-height: 350px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  UTILITY: Parse Tab-separated data
+        // ============================================================
+        function parseTSV(text) {
+            const lines = text.trim().split('\n');
+            if (lines.length < 1) return [];
+            const headers = lines[0].split('\t');
+            return lines.slice(1).map(line => {
+                const vals = line.split('\t');
+                const obj = {};
+                headers.forEach((h, i) => { obj[h.trim()] = (vals[i] || '').trim(); });
+                return obj;
+            });
+        }
+
+        // Province mapping for Vanuatu
+        const PROVINCES = { '1': 'Torba', '2': 'Sanma', '3': 'Penama', '4': 'Malampa', '5': 'Shefa', '6': 'Tafea' };
+
+        // Interview status mapping (Survey Solutions)
+        const STATUS_MAP = {
+            '0': 'Created', '20': 'InterviewerAssigned', '40': 'SupervisorAssigned',
+            '60': 'Completed', '65': 'ApprovedBySupervisor', '100': 'Completed',
+            '120': 'ApprovedByHQ', '125': 'Rejected by HQ', '130': 'RejectedBySup'
+        };
+        const STATUS_COLORS = {
+            'Created': '#64748b', 'InterviewerAssigned': '#fbbf24', 'SupervisorAssigned': '#f97316',
+            'Completed': '#22c55e', 'ApprovedBySupervisor': '#3b82f6',
+            'ApprovedByHQ': '#a855f7', 'Rejected by HQ': '#ef4444', 'RejectedBySup': '#ef4444'
+        };
+
+        // Chart.js defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = '#334155';
+        Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+
+        // ==========================================================
+        //  EMBEDDED DATA (for GitHub Pages / standalone deployment)
+        // ==========================================================
+        const EMBEDDED_DATA = {"mainData":[{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","province":"2","area_council":"206","enumeration_area":"2060111","household_serial_no":"37","village":"206005","datetime_interview":"2026-03-16T13:18:34","team_id":"22","interviewer_id":"221","gps__Latitude":"-15.519739450000001","gps__Longitude":"167.23597916666665","gps__Accuracy":"76.5","interview__status":"65","fies_1":"2","fies_2":"2","fies_3":"2","fies_4":"2","fies_5":"2","fies_7":"2","fies_8":"2","fies_9":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","province":"5","area_council":"513","enumeration_area":"5130092","household_serial_no":"36","village":"513042","datetime_interview":"2026-03-16T14:43:02","team_id":"71","interviewer_id":"711","gps__Latitude":"-17.7025772","gps__Longitude":"168.32234856666668","gps__Accuracy":"80.30000305175781","interview__status":"120","fies_1":"2","fies_2":"2","fies_3":"2","fies_4":"2","fies_5":"2","fies_7":"2","fies_8":"2","fies_9":"2"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","province":"3","area_council":"305","enumeration_area":"3050101","household_serial_no":"19","village":"305013","datetime_interview":"2026-03-16T11:10:16","team_id":"31","interviewer_id":"-999999999","gps__Latitude":"-14.969811966666668","gps__Longitude":"168.05783671666669","gps__Accuracy":"66.4000015258789","interview__status":"100","fies_1":"2","fies_2":"2","fies_3":"2","fies_4":"2","fies_5":"2","fies_7":"1","fies_8":"2","fies_9":"2"},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","province":"6","area_council":"605","enumeration_area":"6050271","household_serial_no":"48","village":"605082","datetime_interview":"2026-03-16T14:11:53","team_id":"62","interviewer_id":"622","gps__Latitude":"-19.546367416666666","gps__Longitude":"169.3317709833333","gps__Accuracy":"12","interview__status":"100","fies_1":"2","fies_2":"2","fies_3":"2","fies_4":"2","fies_5":"2","fies_7":"2","fies_8":"2","fies_9":"2"}],"memberData":[{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","hm_basic__id":"1","name":"Jason Bule","sex":"1","age":"25","relat":"1","maritalStat":"5"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","hm_basic__id":"2","name":"Saraviana Weiru","sex":"2","age":"23","relat":"2","maritalStat":"5"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","hm_basic__id":"1","name":"Philip luata","sex":"1","age":"60","relat":"1","maritalStat":"7"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","hm_basic__id":"1","name":"Roy","sex":"1","age":"69","relat":"1","maritalStat":"1"},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","hm_basic__id":"1","name":"Matthew nakat","sex":"1","age":"34","relat":"1","maritalStat":"3"},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","hm_basic__id":"2","name":"serah Matthew","sex":"2","age":"30","relat":"2","maritalStat":"3"},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","hm_basic__id":"3","name":"Jimmy Matthew","sex":"1","age":"7","relat":"3","maritalStat":""},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","hm_basic__id":"4","name":"Fredrick Matthew","sex":"1","age":"6","relat":"3","maritalStat":""},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","hm_basic__id":"5","name":"lucy Matthew","sex":"2","age":"11","relat":"3","maritalStat":""},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","hm_basic__id":"6","name":"Elen Matthew","sex":"2","age":"0","relat":"3","maritalStat":""}],"diagData":[{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","interview__status":"65","responsible":"Int221","interviewers":"1","rejections__sup":"1","rejections__hq":"0","entities__errors":"2","questions__comments":"2","interview__duration":"00.02:24:49","n_questions_unanswered":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","interview__status":"120","responsible":"Int711","interviewers":"1","rejections__sup":"0","rejections__hq":"0","entities__errors":"3","questions__comments":"2","interview__duration":"00.03:05:22","n_questions_unanswered":"0"},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","interview__status":"100","responsible":"Int622","interviewers":"1","rejections__sup":"0","rejections__hq":"0","entities__errors":"1","questions__comments":"0","interview__duration":"00.03:24:45","n_questions_unanswered":"1"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","interview__status":"100","responsible":"Int321","interviewers":"1","rejections__sup":"0","rejections__hq":"0","entities__errors":"2","questions__comments":"9","interview__duration":"00.04:59:59","n_questions_unanswered":"2"}],"errorData":[{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","roster":"","id1":"","id2":"","id3":"","variable":"gps","type":"2","message__number":"1","message":"GPS has to be within 20m"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","roster":"","id1":"","id2":"","id3":"","variable":"","type":"3","message__number":"1","message":"Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","roster":"","id1":"","id2":"","id3":"","variable":"gps","type":"2","message__number":"1","message":"GPS has to be within 20m"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","roster":"","id1":"","id2":"","id3":"","variable":"","type":"3","message__number":"1","message":"Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","roster":"oth_income_ros","id1":"21000","id2":"","id3":"","variable":"amount_cashIncome","type":"2","message__number":"1","message":"The 12 months value entered for %rostertitle% seems unlikely. Please verify."},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"","id1":"","id2":"","id3":"","variable":"gps","type":"2","message__number":"1","message":"GPS has to be within 20m"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"","id1":"","id2":"","id3":"","variable":"","type":"3","message__number":"1","message":"Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days"},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","roster":"","id1":"","id2":"","id3":"","variable":"","type":"3","message__number":"1","message":"Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days"}],"commentData":[{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","roster":"oth_income_ros","id1":"21000","id2":"","id3":"","variable":"amount_cashIncome","order":"1","date":"2026-03-16","time":"03:31:24","originator":"Int711","role":"1","comment":"He owns a renting house consisting of 4 rooms and and each rooms cost 15000vt for one month. so 15,000 vt \u00d712 months = 720000vt"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","roster":"","id1":"","id2":"","id3":"","variable":"type_deposit","order":"2","date":"2026-03-16","time":"03:58:27","originator":"Int711","role":"1","comment":"He does not save money in any financial institution. But the next drop down questions appear"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"trip_details_roster","id1":"0","id2":"","id3":"","variable":"hh_spend_DomLandtransport","order":"1","date":"2026-03-16","time":"04:05:04","originator":"Int321","role":"1","comment":"free land transport provide by families "},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"trip_details_roster","id1":"0","id2":"","id3":"","variable":"hh_spend_domRestaurant","order":"2","date":"2026-03-16","time":"04:06:26","originator":"Int321","role":"1","comment":"kava gift from another household"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"trip_details_roster","id1":"0","id2":"","id3":"","variable":"hh_spend_domAccom","order":"3","date":"2026-03-16","time":"04:08:11","originator":"Int321","role":"1","comment":"sleep  for free with family members"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"trip_details_roster","id1":"0","id2":"","id3":"","variable":"hh_spend_domGTransport","order":"4","date":"2026-03-16","time":"04:09:11","originator":"Int321","role":"1","comment":"free transport provided by host families "},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"trip_details_roster","id1":"0","id2":"","id3":"","variable":"hh_spend_other_domExp","order":"5","date":"2026-03-16","time":"04:09:39","originator":"Int321","role":"1","comment":"none"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","roster":"asset_details_roster","id1":"551159005","id2":"","id3":"","variable":"number_asset_owned","order":"1","date":"2026-03-16","time":"04:22:43","originator":"Int221","role":"1","comment":"2 Knifes"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"vegetable_roster","id1":"117045032","id2":"","id3":"","variable":"qty_veggiesSold","order":"6","date":"2026-03-16","time":"04:35:03","originator":"Int321","role":"1","comment":"none was sold,just for HW consumption "},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"","id1":"","id2":"","id3":"","variable":"type_vegetables","order":"7","date":"2026-03-16","time":"04:41:51","originator":"Int321","role":"1","comment":"hemi havest lo garden blo boss blem hemi just blo household consumption blem.hemi nogat garden hemi full time work lo Karen blon boss blem"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"hm_details","id1":"1","id2":"","id3":"","variable":"tablet_recharge_amount","order":"8","date":"2026-03-16","time":"04:57:04","originator":"Int321","role":"1","comment":"no tablet owned"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"hm_details","id1":"1","id2":"","id3":"","variable":"wifi_recharge_amount","order":"9","date":"2026-03-16","time":"04:57:26","originator":"Int321","role":"1","comment":"respondents does not own a wifi"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","roster":"","id1":"","id2":"","id3":"","variable":"gps","order":"2","date":"2026-03-16","time":"05:02:52","originator":"Int221","role":"1","comment":"Mi tekem GPS 2 time be still gat Error. "},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"","id1":"","id2":"","id3":"","variable":"@@Completed","order":"10","date":"2026-03-16","time":"05:08:36","originator":"Int321","role":"1","comment":"ID 321 eno stap inside long list"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","roster":"","id1":"","id2":"","id3":"","variable":"@@Completed","order":"3","date":"2026-03-16","time":"05:22:11","originator":"Int221","role":"1","comment":"Error lo GPS ia look mi comment but Co-ordinate it's ok "},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","roster":"","id1":"","id2":"","id3":"","variable":"@@Completed","order":"11","date":"2026-03-16","time":"07:44:21","originator":"Int321","role":"1","comment":"ID 321 eno stap inside long list"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","roster":"","id1":"","id2":"","id3":"","variable":"@@ApprovedBySupervisor","order":"3","date":"2026-03-16","time":"08:34:02","originator":"Sup710","role":"2","comment":"Traem checkm interview Iya,  GPS i red from rain n cloudy be coordinates i come out , total money hemi karem lo 12months ating I over lo range [ 720,000vt ] "},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","roster":"","id1":"","id2":"","id3":"","variable":"@@RejectedBySupervisor","order":"4","date":"2026-03-16","time":"08:58:22","originator":"Sup220","role":"2","comment":"Check all flagged questions  E322, C366, F426, F422, F424, V633, H692/H6916 S372 plant crops to earn money or just for home consumption.. please check "}],"actionData":[{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"00:47:26","action":"12","originator":"Int221","role":"1","responsible__name":"Int221","responsible__role":"1"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"00:47:26","action":"0","originator":"Int221","role":"1","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"00:47:27","action":"20","originator":"Int221","role":"1","responsible__name":"Int221","responsible__role":"1"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"00:47:26","action":"1","originator":"Int221","role":"1","responsible__name":"Int221","responsible__role":"1"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"00:51:45","action":"3","originator":"Int221","role":"1","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"00:51:58","action":"4","originator":"Int221","role":"1","responsible__name":"Int221","responsible__role":"1"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"05:22:11","action":"3","originator":"Int221","role":"1","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:09:45","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:11:07","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:13:14","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:15:56","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:15:57","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:17:06","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:17:07","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:18:13","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:18:14","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:38:33","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:38:34","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:40:25","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"07:40:26","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:10:09","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:10:10","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:26:40","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:26:41","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:28:30","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:28:31","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:35:38","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:35:39","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:39:59","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:40:00","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:41:38","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:41:39","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:42:42","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:42:43","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:44:01","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:44:02","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:50:34","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:50:35","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:51:52","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:51:54","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:58:22","action":"7","originator":"Sup220","role":"2","responsible__name":"Int221","responsible__role":"1"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"08:58:23","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"10:44:08","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"10:47:33","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"10:47:34","action":"17","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"16-08-61-30","interview__id":"30d8cccf35b34e06a1b4c7d30cea04f3","date":"2026-03-16","time":"10:48:38","action":"18","originator":"Sup220","role":"2","responsible__name":"Sup220","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-15","time":"23:48:58","action":"12","originator":"Int711","role":"1","responsible__name":"Int711","responsible__role":"1"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-15","time":"23:48:58","action":"0","originator":"Int711","role":"1","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-15","time":"23:48:59","action":"20","originator":"Int711","role":"1","responsible__name":"Int711","responsible__role":"1"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-15","time":"23:48:58","action":"1","originator":"Int711","role":"1","responsible__name":"Int711","responsible__role":"1"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"04:42:18","action":"3","originator":"Int711","role":"1","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"06:59:23","action":"17","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"07:11:05","action":"18","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"07:20:54","action":"17","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"07:33:55","action":"18","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"07:33:55","action":"17","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"07:36:50","action":"18","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"07:36:50","action":"17","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"07:46:25","action":"18","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"08:18:27","action":"17","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"08:23:48","action":"18","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"08:26:20","action":"17","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"08:28:28","action":"18","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"08:28:29","action":"17","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"08:34:02","action":"5","originator":"Sup710","role":"2","responsible__name":"any headquarters","responsible__role":"3"},{"interview__key":"09-05-48-03","interview__id":"369b4ec8785a4a32a0cc7057936f1d54","date":"2026-03-16","time":"08:34:02","action":"18","originator":"Sup710","role":"2","responsible__name":"Sup710","responsible__role":"2"},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","date":"2026-03-16","time":"03:08:57","action":"12","originator":"Int622","role":"1","responsible__name":"Int622","responsible__role":"1"},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","date":"2026-03-16","time":"03:08:57","action":"0","originator":"Int622","role":"1","responsible__name":"Sup620","responsible__role":"2"},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","date":"2026-03-16","time":"03:08:57","action":"20","originator":"Int622","role":"1","responsible__name":"Int622","responsible__role":"1"},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","date":"2026-03-16","time":"03:08:57","action":"1","originator":"Int622","role":"1","responsible__name":"Int622","responsible__role":"1"},{"interview__key":"89-91-74-12","interview__id":"773fa39304b342d3b425f421540e8e47","date":"2026-03-16","time":"10:39:37","action":"3","originator":"Int622","role":"1","responsible__name":"Sup620","responsible__role":"2"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","date":"2026-03-16","time":"00:00:04","action":"12","originator":"Int321","role":"1","responsible__name":"Int321","responsible__role":"1"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","date":"2026-03-16","time":"00:00:04","action":"0","originator":"Int321","role":"1","responsible__name":"Sup320","responsible__role":"2"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","date":"2026-03-16","time":"00:00:05","action":"20","originator":"Int321","role":"1","responsible__name":"Int321","responsible__role":"1"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","date":"2026-03-16","time":"00:00:04","action":"1","originator":"Int321","role":"1","responsible__name":"Int321","responsible__role":"1"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","date":"2026-03-16","time":"05:08:36","action":"3","originator":"Int321","role":"1","responsible__name":"Sup320","responsible__role":"2"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","date":"2026-03-16","time":"07:00:07","action":"4","originator":"Int321","role":"1","responsible__name":"Int321","responsible__role":"1"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","date":"2026-03-16","time":"07:44:21","action":"3","originator":"Int321","role":"1","responsible__name":"Sup320","responsible__role":"2"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","date":"2026-03-16","time":"07:36:23","action":"0","originator":"Int321","role":"1","responsible__name":"Sup310","responsible__role":"2"},{"interview__key":"42-66-74-70","interview__id":"7ae173d340864222998f3bfc38206d10","date":"2026-03-16","time":"07:36:23","action":"1","originator":"Int321","role":"1","responsible__name":"Int321","responsible__role":"1"}]};
+
+        async function initDashboard() {
+            document.getElementById('lastUpdate').textContent = 'Loaded: ' + new Date().toLocaleString();
+
+            // Use embedded data
+            const mainData = EMBEDDED_DATA.mainData;
+            const memberData = EMBEDDED_DATA.memberData;
+            const diagData = EMBEDDED_DATA.diagData;
+            const errorData = EMBEDDED_DATA.errorData;
+            const commentData = EMBEDDED_DATA.commentData;
+            const actionData = EMBEDDED_DATA.actionData;
+
+
+            // ---- TOP STATS ----
+            const totalInterviews = mainData.length;
+            const totalMembers = memberData.length;
+            const avgHHSize = totalInterviews > 0 ? (totalMembers / totalInterviews).toFixed(1) : 0;
+
+            // Duration parsing
+            const durations = diagData.map(d => {
+                const m = (d.interview__duration || '').match(/(\d+)\.(\d+):(\d+):(\d+)/);
+                if (!m) return 0;
+                return parseInt(m[1]) * 1440 + parseInt(m[2]) * 60 + parseInt(m[3]) + parseInt(m[4]) / 60;
+            }).filter(d => d > 0);
+            const avgDurMin = durations.length > 0 ? (durations.reduce((a, b) => a + b, 0) / durations.length) : 0;
+
+            const totalErrors = errorData.length;
+            const totalUnanswered = diagData.reduce((s, d) => s + parseInt(d.n_questions_unanswered || 0), 0);
+
+            const teams = new Set(mainData.map(d => d.team_id).filter(Boolean));
+            const interviewers = new Set(diagData.map(d => d.responsible).filter(Boolean));
+
+            document.getElementById('totalInterviews').textContent = totalInterviews;
+            document.getElementById('interviewDetail').textContent = `${avgHHSize} avg HH size`;
+            document.getElementById('totalMembers').textContent = totalMembers;
+            document.getElementById('memberDetail').textContent = `Across ${totalInterviews} households`;
+            document.getElementById('avgDuration').textContent = formatMinutes(avgDurMin);
+            document.getElementById('durationDetail').textContent = `Range: ${formatMinutes(Math.min(...durations))} - ${formatMinutes(Math.max(...durations))}`;
+            document.getElementById('totalErrors').textContent = totalErrors;
+            document.getElementById('errorDetail').textContent = `${(totalInterviews > 0 ? (totalErrors / totalInterviews).toFixed(1) : 0)} per interview`;
+            document.getElementById('totalUnanswered').textContent = totalUnanswered;
+            document.getElementById('unansweredDetail').textContent = `${(totalInterviews > 0 ? (totalUnanswered / totalInterviews).toFixed(1) : 0)} per interview`;
+            document.getElementById('totalTeams').textContent = teams.size;
+            document.getElementById('teamDetail').textContent = `${interviewers.size} interviewers active`;
+
+            // ---- INTERVIEW STATUS CHART ----
+            const statusCounts = {};
+            diagData.forEach(d => {
+                const s = STATUS_MAP[d.interview__status] || `Code ${d.interview__status}`;
+                statusCounts[s] = (statusCounts[s] || 0) + 1;
+            });
+            new Chart(document.getElementById('statusChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(statusCounts),
+                    datasets: [{
+                        data: Object.values(statusCounts),
+                        backgroundColor: Object.keys(statusCounts).map(s => STATUS_COLORS[s] || '#64748b'),
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { padding: 14, usePointStyle: true, pointStyleWidth: 12 } }
+                    },
+                    cutout: '55%'
+                }
+            });
+
+            // ---- PROVINCE CHART ----
+            const provCounts = {};
+            mainData.forEach(d => {
+                const prov = PROVINCES[d.province] || `Province ${d.province}`;
+                provCounts[prov] = (provCounts[prov] || 0) + 1;
+            });
+            const provColors = ['#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#a855f7', '#06b6d4'];
+            new Chart(document.getElementById('provinceChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(provCounts),
+                    datasets: [{
+                        label: 'Interviews',
+                        data: Object.values(provCounts),
+                        backgroundColor: Object.keys(provCounts).map((_, i) => provColors[i % provColors.length]),
+                        borderRadius: 6,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // ---- POPULATION PYRAMID ----
+            const ageBins = ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65+'];
+            const maleAges = new Array(14).fill(0);
+            const femaleAges = new Array(14).fill(0);
+            memberData.forEach(d => {
+                const age = parseInt(d.age);
+                const sex = d.sex;
+                if (isNaN(age)) return;
+                let bin = Math.min(Math.floor(age / 5), 13);
+                if (sex === '1') maleAges[bin]++;
+                else if (sex === '2') femaleAges[bin]++;
+            });
+            new Chart(document.getElementById('pyramidChart'), {
+                type: 'bar',
+                data: {
+                    labels: ageBins,
+                    datasets: [
+                        { label: 'Male', data: maleAges.map(v => -v), backgroundColor: '#3b82f6', borderRadius: 4, barPercentage: 0.8 },
+                        { label: 'Female', data: femaleAges, backgroundColor: '#ec4899', borderRadius: 4, barPercentage: 0.8 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                    scales: {
+                        x: {
+                            ticks: { callback: v => Math.abs(v) },
+                            grid: { color: '#1e293b' }
+                        },
+                        y: { grid: { display: false }, stacked: true }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } },
+                        tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${Math.abs(ctx.raw)}` } }
+                    }
+                }
+            });
+
+            // ---- DURATION BY INTERVIEWER ----
+            const intrvDuration = {};
+            diagData.forEach(d => {
+                const m = (d.interview__duration || '').match(/(\d+)\.(\d+):(\d+):(\d+)/);
+                if (!m) return;
+                const mins = parseInt(m[1]) * 1440 + parseInt(m[2]) * 60 + parseInt(m[3]) + parseInt(m[4]) / 60;
+                const intName = d.responsible || 'Unknown';
+                if (!intrvDuration[intName]) intrvDuration[intName] = [];
+                intrvDuration[intName].push(mins);
+            });
+            new Chart(document.getElementById('durationChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(intrvDuration),
+                    datasets: [{
+                        label: 'Duration (min)',
+                        data: Object.values(intrvDuration).map(arr => arr.reduce((a, b) => a + b, 0) / arr.length),
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 6,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'Minutes' }, grid: { color: '#1e293b' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // ---- GPS MAP ----
+            const mapCenter = [-16.5, 168.0]; // Vanuatu center
+            const map = L.map('gpsMap').setView(mapCenter, 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            const statusColor = s => {
+                if (s === '120') return '#a855f7';
+                if (s === '65') return '#3b82f6';
+                if (s === '100') return '#22c55e';
+                return '#fbbf24';
+            };
+
+            mainData.forEach(d => {
+                const lat = parseFloat(d.gps__Latitude);
+                const lng = parseFloat(d.gps__Longitude);
+                if (isNaN(lat) || isNaN(lng) || lat === 0) return;
+                const color = statusColor(d.interview__status);
+                L.circleMarker([lat, lng], {
+                    radius: 8, color: color, fillColor: color, fillOpacity: 0.8, weight: 2
+                }).addTo(map).bindPopup(
+                    `<strong>${d.interview__key}</strong><br>` +
+                    `Province: ${PROVINCES[d.province] || d.province}<br>` +
+                    `Village: ${d.village}<br>` +
+                    `Interviewer: ${d.interviewer_id}<br>` +
+                    `Status: ${STATUS_MAP[d.interview__status] || d.interview__status}<br>` +
+                    `Date: ${(d.datetime_interview || '').substring(0, 10)}`
+                );
+            });
+
+            // Auto-fit bounds if we have points
+            const validCoords = mainData
+                .map(d => [parseFloat(d.gps__Latitude), parseFloat(d.gps__Longitude)])
+                .filter(([lat, lng]) => !isNaN(lat) && !isNaN(lng) && lat !== 0);
+            if (validCoords.length > 0) {
+                map.fitBounds(validCoords, { padding: [30, 30] });
+            }
+
+            // ---- INTERVIEWER PERFORMANCE TABLE ----
+            const intrvPerf = {};
+            diagData.forEach(d => {
+                const intv = d.responsible || 'Unknown';
+                if (!intrvPerf[intv]) intrvPerf[intv] = { count: 0, errors: 0, durations: [], statuses: [] };
+                intrvPerf[intv].count++;
+                intrvPerf[intv].errors += parseInt(d.entities__errors || 0);
+                intrvPerf[intv].statuses.push(STATUS_MAP[d.interview__status] || d.interview__status);
+                const m = (d.interview__duration || '').match(/(\d+)\.(\d+):(\d+):(\d+)/);
+                if (m) intrvPerf[intv].durations.push(parseInt(m[1]) * 1440 + parseInt(m[2]) * 60 + parseInt(m[3]));
+            });
+
+            // Match team_id from main data
+            const intToTeam = {};
+            mainData.forEach(d => { if (d.interviewer_id) intToTeam[d.interviewer_id] = d.team_id; });
+
+            const tbody = document.querySelector('#interviewerTable tbody');
+            Object.entries(intrvPerf).forEach(([intv, perf]) => {
+                const avgD = perf.durations.length > 0 ? perf.durations.reduce((a, b) => a + b, 0) / perf.durations.length : 0;
+                const teamId = intToTeam[intv.replace('Int', '')] || '-';
+                const statusBadges = perf.statuses.map(s => {
+                    const cls = s.includes('Approved') ? (s.includes('HQ') ? 'approved-hq' : 'approved-sup') : s === 'Completed' ? 'completed' : 'rejected';
+                    return `<span class="status-badge ${cls}">${s}</span> `;
+                }).join('');
+                const row = tbody.insertRow();
+                row.innerHTML = `<td>${intv}</td><td>Team ${teamId}</td><td>${perf.count}</td><td>${perf.errors}</td><td>${formatMinutes(avgD)}</td><td>${statusBadges}</td>`;
+            });
+
+            // ---- ERROR DETAILS ----
+            const errorList = document.getElementById('errorList');
+            if (errorData.length === 0) {
+                errorList.innerHTML = '<p style="color:#64748b; text-align:center; padding:20px;">No errors found</p>';
+            } else {
+                errorData.forEach(e => {
+                    const div = document.createElement('div');
+                    div.className = 'error-item';
+                    div.innerHTML = `
+                    <div class="error-key">${e.interview__key}</div>
+                    <div class="error-var">${e.variable || 'General'} ${e.roster ? '(' + e.roster + ')' : ''}</div>
+                    <div class="error-msg">${e.message}</div>
+                `;
+                    errorList.appendChild(div);
+                });
+            }
+
+            // ---- INTERVIEW DETAIL TABLE ----
+            const itBody = document.querySelector('#interviewTable tbody');
+            // Build HH size lookup
+            const hhSizeMap = {};
+            memberData.forEach(d => {
+                const key = d.interview__key;
+                hhSizeMap[key] = (hhSizeMap[key] || 0) + 1;
+            });
+            // Build diag lookup
+            const diagMap = {};
+            diagData.forEach(d => { diagMap[d.interview__key] = d; });
+
+            mainData.forEach(d => {
+                const diag = diagMap[d.interview__key] || {};
+                const status = STATUS_MAP[d.interview__status] || d.interview__status;
+                const cls = status.includes('Approved') ? (status.includes('HQ') ? 'approved-hq' : 'approved-sup') : status === 'Completed' ? 'completed' : 'rejected';
+                const dur = diag.interview__duration || '-';
+                const row = itBody.insertRow();
+                row.innerHTML = `
+                <td>${d.interview__key}</td>
+                <td>${PROVINCES[d.province] || d.province}</td>
+                <td>${d.area_council}</td>
+                <td>${d.enumeration_area}</td>
+                <td>${d.village}</td>
+                <td>${hhSizeMap[d.interview__key] || '-'}</td>
+                <td>${diag.responsible || d.interviewer_id}</td>
+                <td>${(d.datetime_interview || '').substring(0, 10)}</td>
+                <td>${dur}</td>
+                <td>${diag.entities__errors || '0'}</td>
+                <td><span class="status-badge ${cls}">${status}</span></td>
+            `;
+            });
+
+            // ---- DATA QUALITY INDICATORS ----
+            const qualDiv = document.getElementById('qualityMetrics');
+            const errRate = totalInterviews > 0 ? ((diagData.filter(d => parseInt(d.entities__errors) > 0).length / totalInterviews) * 100).toFixed(0) : 0;
+            const rejRate = totalInterviews > 0 ? ((diagData.filter(d => parseInt(d.rejections__sup) > 0).length / totalInterviews) * 100).toFixed(0) : 0;
+            const gpsAccuracies = mainData.map(d => parseFloat(d.gps__Accuracy)).filter(v => !isNaN(v) && v > 0);
+            const avgGPS = gpsAccuracies.length > 0 ? (gpsAccuracies.reduce((a, b) => a + b, 0) / gpsAccuracies.length).toFixed(1) : '-';
+            const gpsWithin20 = gpsAccuracies.filter(a => a <= 20).length;
+            const gpsTotal = gpsAccuracies.length;
+
+            qualDiv.innerHTML = `
+            <div style="margin-bottom: 16px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
+                    <span>Error-free interviews</span>
+                    <span style="color:#4ade80">${100 - errRate}%</span>
+                </div>
+                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${100 - errRate}%; background:#22c55e;"></div></div>
+            </div>
+            <div style="margin-bottom: 16px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
+                    <span>Rejection rate</span>
+                    <span style="color:${rejRate > 20 ? '#f87171' : '#4ade80'}">${rejRate}%</span>
+                </div>
+                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${rejRate}%; background:${rejRate > 20 ? '#ef4444' : '#22c55e'};"></div></div>
+            </div>
+            <div style="margin-bottom: 16px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
+                    <span>GPS Accuracy &le; 20m</span>
+                    <span style="color:${gpsTotal > 0 ? (gpsWithin20 / gpsTotal > 0.8 ? '#4ade80' : '#fbbf24') : '#64748b'}">${gpsTotal > 0 ? ((gpsWithin20 / gpsTotal) * 100).toFixed(0) : 0}% (${gpsWithin20}/${gpsTotal})</span>
+                </div>
+                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${gpsTotal > 0 ? (gpsWithin20 / gpsTotal) * 100 : 0}%; background:#f59e0b;"></div></div>
+            </div>
+            <div style="margin-bottom: 16px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
+                    <span>Avg GPS Accuracy</span>
+                    <span>${avgGPS}m</span>
+                </div>
+            </div>
+            <div style="margin-bottom: 16px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
+                    <span>Interviews with comments</span>
+                    <span>${new Set(commentData.map(c => c.interview__key)).size}/${totalInterviews}</span>
+                </div>
+            </div>
+        `;
+
+            // ---- FIES CHART ----
+            const fiesLabels = [
+                'Worried not enough food', 'Unable to eat healthy',
+                'Ate only a few kinds', 'Skipped a meal',
+                'Ate less than should', 'Ran out of food',
+                'Hungry but did not eat', 'Went without eating'
+            ];
+            const fiesFields = ['fies_1', 'fies_2', 'fies_3', 'fies_4', 'fies_5', 'fies_7', 'fies_8', 'fies_9'];
+            const fiesYes = fiesFields.map(f => mainData.filter(d => d[f] === '1').length);
+            new Chart(document.getElementById('fiesChart'), {
+                type: 'bar',
+                data: {
+                    labels: fiesLabels,
+                    datasets: [{
+                        label: 'Yes',
+                        data: fiesYes,
+                        backgroundColor: '#ef4444',
+                        borderRadius: 4,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } },
+                        y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // ---- COMMENTS LIST ----
+            const commDiv = document.getElementById('commentsList');
+            if (commentData.length === 0) {
+                commDiv.innerHTML = '<p style="color:#64748b; text-align:center; padding:20px;">No comments yet</p>';
+            } else {
+                commentData.forEach(c => {
+                    const div = document.createElement('div');
+                    div.style.cssText = 'background:#0f172a; border-radius:8px; padding:12px; margin-bottom:8px; border-left:3px solid #3b82f6;';
+                    div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                        <span style="color:#60a5fa; font-weight:600; font-size:0.75rem;">${c.originator || ''} (${c.interview__key})</span>
+                        <span style="color:#64748b; font-size:0.7rem;">${c.date || ''} ${c.time || ''}</span>
+                    </div>
+                    <div style="color:#94a3b8; font-size:0.7rem; margin-bottom:2px;">${c.variable || 'General'} ${c.roster ? '• ' + c.roster : ''}</div>
+                    <div style="color:#e2e8f0; font-size:0.8rem;">${sanitize(c.comment || '')}</div>
+                `;
+                    commDiv.appendChild(div);
+                });
+            }
+        }
+
+        function formatMinutes(min) {
+            if (!min || !isFinite(min)) return '-';
+            const h = Math.floor(min / 60);
+            const m = Math.round(min % 60);
+            return h > 0 ? `${h}h ${m}m` : `${m}m`;
+        }
+
+        function sanitize(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+
+</html>
