@@ -23,9 +23,8 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DOWNLOADS = os.path.join(os.path.expanduser("~"), "Downloads")
 QUESTIONNAIRE = "VUTHIES_2026"
 
-# Lookup files (in Downloads)
-VILLAGE_LOOKUP = os.path.join(DOWNLOADS, "Options-in-question-Q1.5. Please select village name or urban area..xlsx")
-AREA_COUNCIL_CSV = os.path.join(DOWNLOADS, "Area_Council.csv")
+# Master lookup file (in Downloads)
+HIES_VILLAGES_XLSX = os.path.join(DOWNLOADS, "HIES_Villages.xlsx")
 
 # The .tab files we need
 TAB_FILES = {
@@ -68,40 +67,44 @@ def find_export_folder():
 
 
 def load_lookups():
-    """Load village and area council name lookups."""
+    """Load village, area council, and EA lookups from HIES_Villages.xlsx."""
     villages = {}
     area_councils = {}
+    ea_lookup = {}
 
-    # Village names from Excel
-    if os.path.exists(VILLAGE_LOOKUP):
+    if os.path.exists(HIES_VILLAGES_XLSX):
         try:
             import openpyxl
-            wb = openpyxl.load_workbook(VILLAGE_LOOKUP, read_only=True)
-            ws = wb.active
+            wb = openpyxl.load_workbook(HIES_VILLAGES_XLSX, read_only=True)
+            # Use the combined sheet
+            if '1&2_Append' in wb.sheetnames:
+                ws = wb['1&2_Append']
+            else:
+                ws = wb.active
+            # Headers: VID, Village, Province, Province ID, ACID22, ACNAME22, EA2022, EAHIES
             for row in ws.iter_rows(min_row=2, values_only=True):
-                val, title = row[0], row[1]
-                if val and title:
-                    villages[str(val)] = str(title)
+                vid, village_name = row[0], row[1]
+                acid22, acname22 = row[4], row[5]
+                eahies = row[7]
+                if vid and village_name:
+                    villages[str(int(vid))] = str(village_name)
+                if acid22 and acname22:
+                    area_councils[str(int(acid22))] = str(acname22)
+                if eahies and village_name:
+                    ea_key = str(int(eahies))
+                    if ea_key not in ea_lookup:
+                        ea_lookup[ea_key] = []
+                    ea_lookup[ea_key].append(str(village_name))
             wb.close()
             print(f"  Village lookup: {len(villages)} entries")
+            print(f"  Area council lookup: {len(area_councils)} entries")
+            print(f"  EA lookup: {len(ea_lookup)} EAs")
         except ImportError:
             print("  WARNING: openpyxl not installed — run: pip install openpyxl")
     else:
-        print(f"  WARNING: Village lookup not found at {VILLAGE_LOOKUP}")
+        print(f"  WARNING: HIES_Villages.xlsx not found at {HIES_VILLAGES_XLSX}")
 
-    # Area council names from CSV
-    if os.path.exists(AREA_COUNCIL_CSV):
-        with open(AREA_COUNCIL_CSV, "r", encoding="utf-8-sig") as f:
-            reader = csv.reader(f)
-            header = next(reader, None)
-            for row in reader:
-                if len(row) >= 2:
-                    area_councils[row[0].strip()] = row[1].strip()
-        print(f"  Area council lookup: {len(area_councils)} entries")
-    else:
-        print(f"  WARNING: Area council CSV not found at {AREA_COUNCIL_CSV}")
-
-    return villages, area_councils
+    return villages, area_councils, ea_lookup
 
 
 def load_data(src_dir):
@@ -118,9 +121,10 @@ def load_data(src_dir):
             data[key] = []
 
     # Load and embed lookups
-    villages, area_councils = load_lookups()
+    villages, area_councils, ea_lookup = load_lookups()
     data["villageLookup"] = villages
     data["areaCouncilLookup"] = area_councils
+    data["eaLookup"] = ea_lookup
 
     return data
 
@@ -170,8 +174,10 @@ def build_html(data, src_dir):
         "            const actionData = EMBEDDED_DATA.actionData;\n"
         "            const VILLAGE_LOOKUP = EMBEDDED_DATA.villageLookup || {};\n"
         "            const AC_LOOKUP = EMBEDDED_DATA.areaCouncilLookup || {};\n"
+        "            const EA_LOOKUP = EMBEDDED_DATA.eaLookup || {};\n"
         "            function villageName(code) { return VILLAGE_LOOKUP[code] || code; }\n"
         "            function acName(code) { return AC_LOOKUP[code] || code; }\n"
+        "            function eaVillages(code) { return (EA_LOOKUP[code] || []).join(', ') || code; }\n"
     )
 
     new_html = html[:prev_line_start] + replacement + html[end_pos:]
