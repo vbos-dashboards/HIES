@@ -8,6 +8,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -480,9 +482,45 @@
             <h1>Vanuatu HIES 2026 <span class="badge">MONITORING</span></h1>
             <div class="subtitle">Survey Data Collection Monitoring Dashboard</div>
         </div>
-        <div class="refresh-info">
-            <div id="lastUpdate"></div>
-            <div>Data exported: 16 Mar 2026</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+            <button id="exportPdfBtn" onclick="document.getElementById('pdfModal').style.display='flex'" style="background:#3b82f6;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background 0.2s;" onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#3b82f6'">&#128196; Export PDF</button>
+            <div class="refresh-info">
+                <div id="lastUpdate"></div>
+                <div>Data exported: 16 Mar 2026</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Export Modal -->
+    <div id="pdfModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;">
+        <div style="background:#1e293b;border-radius:16px;padding:28px;width:480px;max-width:92vw;max-height:85vh;overflow-y:auto;border:1px solid #334155;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                <h2 style="color:#e2e8f0;font-size:1.1rem;margin:0;">&#128196; Export PDF Report</h2>
+                <button onclick="document.getElementById('pdfModal').style.display='none'" style="background:none;border:none;color:#94a3b8;font-size:1.4rem;cursor:pointer;padding:4px 8px;">&times;</button>
+            </div>
+            <p style="color:#94a3b8;font-size:0.8rem;margin-bottom:16px;">Select the sections to include in your PDF report:</p>
+            <div style="margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #334155;">
+                <label style="display:flex;align-items:center;gap:8px;color:#60a5fa;font-size:0.82rem;cursor:pointer;font-weight:600;"><input type="checkbox" id="pdfSelectAll" checked onchange="document.querySelectorAll('.pdf-section-cb').forEach(function(c){c.checked=this.checked}.bind(this))"> Select / Deselect All</label>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;" id="pdfSections">
+                <label style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input type="checkbox" class="pdf-section-cb" value="surveys" checked> Surveys and Statuses</label>
+                <label style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input type="checkbox" class="pdf-section-cb" value="teams" checked> Teams and Statuses</label>
+                <label style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input type="checkbox" class="pdf-section-cb" value="statusduration" checked> Status Duration</label>
+                <label style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input type="checkbox" class="pdf-section-cb" value="devices" checked> Devices / Interviewers</label>
+                <label style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input type="checkbox" class="pdf-section-cb" value="map" checked> Map Report</label>
+                <label style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input type="checkbox" class="pdf-section-cb" value="cumulative" checked> Cumulative Interview Chart</label>
+                <label style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input type="checkbox" class="pdf-section-cb" value="quantity" checked> Quantity</label>
+                <label style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input type="checkbox" class="pdf-section-cb" value="speed" checked> Speed</label>
+                <label style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input type="checkbox" class="pdf-section-cb" value="statistics" checked> Survey Statistics</label>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;">
+                <button onclick="document.getElementById('pdfModal').style.display='none'" style="background:#334155;color:#cbd5e1;border:none;padding:9px 20px;border-radius:8px;font-size:0.82rem;cursor:pointer;">Cancel</button>
+                <button id="pdfGenerateBtn" onclick="generatePDF()" style="background:#3b82f6;color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;">Generate PDF</button>
+            </div>
+            <div id="pdfProgress" style="display:none;margin-top:16px;">
+                <div style="display:flex;align-items:center;gap:10px;color:#94a3b8;font-size:0.8rem;"><span id="pdfProgressText">Generating...</span></div>
+                <div style="background:#334155;border-radius:6px;height:6px;margin-top:8px;overflow:hidden;"><div id="pdfProgressBar" style="height:100%;background:#3b82f6;border-radius:6px;width:0%;transition:width 0.3s;"></div></div>
+            </div>
         </div>
     </div>
 
@@ -1439,6 +1477,139 @@
         });
 
         window.addEventListener('DOMContentLoaded', initDashboard);
+
+        // ---- PDF EXPORT ----
+        async function generatePDF() {
+            var selected = [];
+            document.querySelectorAll('.pdf-section-cb:checked').forEach(function (cb) { selected.push(cb.value); });
+            if (selected.length === 0) { alert('Please select at least one section.'); return; }
+
+            var genBtn = document.getElementById('pdfGenerateBtn');
+            var progress = document.getElementById('pdfProgress');
+            var progressText = document.getElementById('pdfProgressText');
+            var progressBar = document.getElementById('pdfProgressBar');
+            genBtn.disabled = true;
+            genBtn.textContent = 'Generating...';
+            progress.style.display = 'block';
+            progressBar.style.width = '0%';
+
+            var jsPDF = window.jspdf.jsPDF;
+            var pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+            var pageW = pdf.internal.pageSize.getWidth();
+            var pageH = pdf.internal.pageSize.getHeight();
+            var margin = 10;
+            var contentW = pageW - margin * 2;
+            var isFirst = true;
+
+            // Save current page state
+            var currentActive = document.querySelector('.nav-bar a.active');
+            var currentPage = currentActive ? currentActive.dataset.page : 'surveys';
+
+            for (var i = 0; i < selected.length; i++) {
+                var sectionId = selected[i];
+                progressText.textContent = 'Capturing: ' + sectionId + ' (' + (i + 1) + '/' + selected.length + ')';
+                progressBar.style.width = ((i / selected.length) * 100) + '%';
+
+                // Show the section
+                document.querySelectorAll('.page-section').forEach(function (s) { s.classList.add('active'); s.style.display = 'block'; });
+                var section = document.getElementById('page-' + sectionId);
+                if (!section) continue;
+
+                // If map, invalidate size first
+                if (sectionId === 'map' && window._gpsMap) {
+                    window._gpsMap.invalidateSize();
+                    await new Promise(function (r) { setTimeout(r, 500); });
+                }
+
+                try {
+                    var canvas = await html2canvas(section, {
+                        backgroundColor: '#0f172a',
+                        scale: 2,
+                        useCORS: true,
+                        logging: false,
+                        windowWidth: 1400
+                    });
+
+                    if (!isFirst) pdf.addPage();
+                    isFirst = false;
+
+                    // Add header to each page
+                    pdf.setFillColor(30, 58, 95);
+                    pdf.rect(0, 0, pageW, 14, 'F');
+                    pdf.setFontSize(11);
+                    pdf.setTextColor(255, 255, 255);
+                    pdf.text('Vanuatu HIES 2026 - Monitoring Report', margin, 9);
+                    pdf.setFontSize(7);
+                    pdf.setTextColor(148, 163, 184);
+                    pdf.text('Generated: ' + new Date().toLocaleString(), pageW - margin, 9, { align: 'right' });
+
+                    // Scale image to fit page
+                    var imgW = contentW;
+                    var imgH = (canvas.height / canvas.width) * imgW;
+                    var yStart = 18;
+                    var maxH = pageH - yStart - margin;
+
+                    if (imgH > maxH) {
+                        // Split across multiple pages
+                        var srcY = 0;
+                        var srcPageH = Math.floor((maxH / imgH) * canvas.height);
+                        var pageIdx = 0;
+                        while (srcY < canvas.height) {
+                            if (pageIdx > 0) {
+                                pdf.addPage();
+                                pdf.setFillColor(30, 58, 95);
+                                pdf.rect(0, 0, pageW, 14, 'F');
+                                pdf.setFontSize(11);
+                                pdf.setTextColor(255, 255, 255);
+                                pdf.text('Vanuatu HIES 2026 - Monitoring Report', margin, 9);
+                                pdf.setFontSize(7);
+                                pdf.setTextColor(148, 163, 184);
+                                pdf.text('Generated: ' + new Date().toLocaleString(), pageW - margin, 9, { align: 'right' });
+                            }
+                            var sliceH = Math.min(srcPageH, canvas.height - srcY);
+                            var sliceCanvas = document.createElement('canvas');
+                            sliceCanvas.width = canvas.width;
+                            sliceCanvas.height = sliceH;
+                            var ctx = sliceCanvas.getContext('2d');
+                            ctx.drawImage(canvas, 0, srcY, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+                            var sliceImgH = (sliceH / canvas.width) * imgW;
+                            pdf.addImage(sliceCanvas.toDataURL('image/jpeg', 0.92), 'JPEG', margin, yStart, imgW, sliceImgH);
+                            srcY += sliceH;
+                            pageIdx++;
+                        }
+                    } else {
+                        pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', margin, yStart, imgW, imgH);
+                    }
+                } catch (e) {
+                    console.warn('PDF capture error for ' + sectionId + ':', e);
+                }
+            }
+
+            // Restore original page
+            document.querySelectorAll('.page-section').forEach(function (s) { s.classList.remove('active'); s.style.display = ''; });
+            document.getElementById('page-' + currentPage).classList.add('active');
+
+            // Add page numbers
+            var totalPages = pdf.internal.getNumberOfPages();
+            for (var p = 1; p <= totalPages; p++) {
+                pdf.setPage(p);
+                pdf.setFontSize(7);
+                pdf.setTextColor(100, 116, 139);
+                pdf.text('Page ' + p + ' of ' + totalPages, pageW / 2, pageH - 4, { align: 'center' });
+            }
+
+            progressText.textContent = 'Complete!';
+            progressBar.style.width = '100%';
+
+            pdf.save('VUTHIES_2026_Report_' + new Date().toISOString().slice(0, 10) + '.pdf');
+
+            setTimeout(function () {
+                genBtn.disabled = false;
+                genBtn.textContent = 'Generate PDF';
+                progress.style.display = 'none';
+                document.getElementById('pdfModal').style.display = 'none';
+            }, 1000);
+        }
     </script>
 </body>
 
