@@ -131,9 +131,12 @@ def load_data(src_dir):
 
 def build_html(data, src_dir):
     """Inject data into dashboard.html to create self-contained index.html."""
-    dashboard_path = os.path.join(src_dir, "dashboard.html")
+    # Look in script dir first, then in the data export folder
+    dashboard_path = os.path.join(SCRIPT_DIR, "dashboard.html")
     if not os.path.exists(dashboard_path):
-        sys.exit(f"ERROR: dashboard.html not found in {src_dir}")
+        dashboard_path = os.path.join(src_dir, "dashboard.html")
+    if not os.path.exists(dashboard_path):
+        sys.exit(f"ERROR: dashboard.html not found in {SCRIPT_DIR} or {src_dir}")
 
     with open(dashboard_path, "r", encoding="utf-8") as f:
         html = f.read()
