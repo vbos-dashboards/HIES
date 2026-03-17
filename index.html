@@ -1599,31 +1599,28 @@
             }
 
             // ---- CAPTURE EACH SECTION (one at a time) ----
+            // Show all sections at once so charts are already rendered
+            document.querySelectorAll('.page-section').forEach(function (s) { s.style.display = 'block'; s.classList.add('active'); });
+            // Map needs invalidateSize when made visible
+            if (selected.indexOf('map') >= 0 && window._gpsMap) {
+                window._gpsMap.invalidateSize();
+            }
+            // Single wait for everything to settle
+            await new Promise(function (r) { setTimeout(r, 400); });
+
             for (var i = 0; i < selected.length; i++) {
                 var sectionId = selected[i];
                 var sectionTitle = sectionNames[sectionId] || sectionId;
                 progressText.textContent = 'Capturing: ' + sectionTitle + ' (' + (i + 1) + '/' + selected.length + ')';
                 progressBar.style.width = (((i + 0.5) / selected.length) * 100) + '%';
 
-                // Show ONLY this section
-                document.querySelectorAll('.page-section').forEach(function (s) { s.classList.remove('active'); s.style.display = 'none'; });
                 var section = document.getElementById('page-' + sectionId);
                 if (!section) continue;
-                section.classList.add('active');
-                section.style.display = 'block';
-
-                // If map, invalidate size and wait for tiles
-                if (sectionId === 'map' && window._gpsMap) {
-                    window._gpsMap.invalidateSize();
-                    await new Promise(function (r) { setTimeout(r, 800); });
-                }
-                // Give charts/layout a moment to render
-                await new Promise(function (r) { setTimeout(r, 300); });
 
                 try {
                     var canvas = await html2canvas(section, {
                         backgroundColor: '#0f172a',
-                        scale: 2,
+                        scale: 1.5,
                         useCORS: true,
                         logging: false,
                         windowWidth: 1400,
@@ -1657,12 +1654,12 @@
                             var ctx = sliceCanvas.getContext('2d');
                             ctx.drawImage(canvas, 0, srcY, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
                             var sliceImgH = (sliceH / canvas.width) * imgW;
-                            pdf.addImage(sliceCanvas.toDataURL('image/jpeg', 0.92), 'JPEG', margin, yStart, imgW, sliceImgH);
+                            pdf.addImage(sliceCanvas.toDataURL('image/jpeg', 0.8), 'JPEG', margin, yStart, imgW, sliceImgH);
                             srcY += sliceH;
                             pageIdx++;
                         }
                     } else {
-                        pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', margin, yStart, imgW, imgH);
+                        pdf.addImage(canvas.toDataURL('image/jpeg', 0.8), 'JPEG', margin, yStart, imgW, imgH);
                     }
                 } catch (e) {
                     console.warn('PDF capture error for ' + sectionId + ':', e);
