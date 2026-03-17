@@ -473,6 +473,84 @@
             background: #475569;
             color: #e2e8f0;
         }
+
+        /* ---- Mobile responsive ---- */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 14px 16px;
+                gap: 10px;
+                text-align: center;
+            }
+            .header h1 { font-size: 1.15rem; }
+            .header .subtitle { font-size: 0.75rem; }
+            .header .refresh-info { text-align: center; }
+            .header > div:last-child {
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+            }
+            #exportPdfBtn { width: 100%; justify-content: center; }
+
+            .nav-bar {
+                padding: 0 8px;
+                gap: 0;
+                -webkit-overflow-scrolling: touch;
+            }
+            .nav-bar a {
+                padding: 10px 12px;
+                font-size: 0.72rem;
+            }
+
+            .top-stats {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 12px 12px;
+                gap: 10px;
+            }
+            .stat-card {
+                padding: 14px;
+            }
+            .stat-card .value { font-size: 1.5rem; }
+            .stat-card .label { font-size: 0.68rem; }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                padding: 0 12px 20px;
+                gap: 14px;
+            }
+
+            .panel { padding: 14px; }
+            .panel h3 { font-size: 0.8rem; margin-bottom: 12px; }
+
+            .chart-sm { height: 200px; }
+            .chart-md { height: 240px; }
+            .chart-lg { height: 280px; }
+            #gpsMap { height: 350px; }
+
+            table.data-table { font-size: 0.7rem; }
+            table.data-table th,
+            table.data-table td { padding: 7px 8px; }
+            .matrix-table { font-size: 0.68rem; }
+            .matrix-table th,
+            .matrix-table td { padding: 7px 8px; }
+
+            /* Make tables horizontally scrollable */
+            .panel { overflow-x: auto; }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 { font-size: 1rem; }
+            .header .badge { font-size: 0.6rem; padding: 2px 8px; margin-left: 6px; }
+            .top-stats {
+                grid-template-columns: 1fr 1fr;
+                padding: 10px 10px;
+                gap: 8px;
+            }
+            .stat-card .value { font-size: 1.3rem; }
+            .dashboard-grid { padding: 0 10px 16px; }
+            .nav-bar a { padding: 9px 10px; font-size: 0.68rem; }
+            #gpsMap { height: 280px; }
+        }
     </style>
 </head>
 
