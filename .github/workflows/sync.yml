@@ -47,7 +47,12 @@ jobs:
           SS_WORKSPACE: ${{ secrets.SS_WORKSPACE }}
           SS_USER: ${{ secrets.SS_USER }}
           SS_PASSWORD: ${{ secrets.SS_PASSWORD }}
-        run: python sync.py --push
+        run: |
+          if [ -z "$SS_URL" ]; then
+            echo "⚠️  SS_URL secret not set — skipping sync. Configure secrets in repo Settings → Secrets."
+            exit 0
+          fi
+          python sync.py --push
 
       - name: Commit and push (if changes)
         run: |
