@@ -10,6 +10,11 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         * {
             margin: 0;
@@ -17,25 +22,50 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
             background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0c1426;
             color: #e2e8f0;
+            font-size: 14px;
+            line-height: 1.55;
         }
 
         .header {
-            background: linear-gradient(135deg, #1e3a5f 0%, #0c2340 100%);
-            padding: 20px 30px;
+            background: linear-gradient(135deg, #1a3a5c 0%, #0c1e36 60%, #091428 100%);
+            padding: 18px 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 3px solid #3b82f6;
+            border-bottom: 2px solid #1d4ed8;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(59, 130, 246, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1100;
         }
 
         .header h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: 1.5rem;
+            font-weight: 800;
             color: #fff;
+            letter-spacing: -0.02em;
         }
 
         .header .subtitle {
@@ -63,37 +93,51 @@
 
         /* Navigation */
         .nav-bar {
-            background: #1e293b;
-            border-bottom: 1px solid #334155;
-            padding: 0 30px;
+            background: #111d30;
+            border-bottom: 1px solid #1e2d45;
+            padding: 0 24px;
             display: flex;
-            gap: 2px;
+            gap: 0;
             position: sticky;
-            top: 0;
+            top: 76px;
             z-index: 1000;
             overflow-x: auto;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav-bar::-webkit-scrollbar {
+            height: 0;
         }
 
         .nav-bar a {
-            color: #94a3b8;
+            color: #64748b;
             text-decoration: none;
-            padding: 12px 16px;
-            font-size: 0.8rem;
+            padding: 13px 15px;
+            font-size: 0.75rem;
             font-weight: 600;
             border-bottom: 3px solid transparent;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             white-space: nowrap;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.01em;
+        }
+
+        .nav-bar a i {
+            font-size: 0.95rem;
         }
 
         .nav-bar a:hover {
-            color: #e2e8f0;
-            background: #334155;
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .nav-bar a.active {
-            color: #3b82f6;
+            color: #60a5fa;
             border-bottom-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.07);
         }
 
         .page-section {
@@ -113,12 +157,19 @@
         }
 
         .stat-card {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #334155;
+            background: linear-gradient(145deg, #1a2540 0%, #1e293b 100%);
+            border-radius: 14px;
+            padding: 20px 22px;
+            border: 1px solid #1e3051;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
         }
 
         .stat-card::before {
@@ -131,40 +182,72 @@
         }
 
         .stat-card.blue::before {
-            background: #3b82f6;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
         }
 
         .stat-card.green::before {
-            background: #22c55e;
+            background: linear-gradient(90deg, #22c55e, #4ade80);
         }
 
         .stat-card.amber::before {
-            background: #f59e0b;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
         }
 
         .stat-card.red::before {
-            background: #ef4444;
+            background: linear-gradient(90deg, #ef4444, #f87171);
         }
 
         .stat-card.purple::before {
-            background: #a855f7;
+            background: linear-gradient(90deg, #a855f7, #c084fc);
         }
 
         .stat-card.cyan::before {
-            background: #06b6d4;
+            background: linear-gradient(90deg, #06b6d4, #22d3ee);
+        }
+
+        .stat-card.blue:hover {
+            box-shadow: 0 8px 28px rgba(59, 130, 246, 0.25);
+            border-color: #1d4ed8;
+        }
+
+        .stat-card.green:hover {
+            box-shadow: 0 8px 28px rgba(34, 197, 94, 0.22);
+            border-color: #166534;
+        }
+
+        .stat-card.amber:hover {
+            box-shadow: 0 8px 28px rgba(245, 158, 11, 0.22);
+            border-color: #92400e;
+        }
+
+        .stat-card.red:hover {
+            box-shadow: 0 8px 28px rgba(239, 68, 68, 0.22);
+            border-color: #7f1d1d;
+        }
+
+        .stat-card.purple:hover {
+            box-shadow: 0 8px 28px rgba(168, 85, 247, 0.22);
+            border-color: #581c87;
+        }
+
+        .stat-card.cyan:hover {
+            box-shadow: 0 8px 28px rgba(6, 182, 212, 0.22);
+            border-color: #164e63;
         }
 
         .stat-card .label {
-            font-size: 0.75rem;
-            color: #94a3b8;
+            font-size: 0.68rem;
+            color: #64748b;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.07em;
+            font-weight: 600;
         }
 
         .stat-card .value {
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 6px 0;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 8px 0 4px;
+            letter-spacing: -0.02em;
         }
 
         .stat-card.blue .value {
@@ -205,20 +288,31 @@
         }
 
         .panel {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #334155;
+            background: linear-gradient(160deg, #1b2740 0%, #1a2437 100%);
+            border-radius: 14px;
+            padding: 22px;
+            border: 1px solid #1e2d45;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .panel:hover {
+            border-color: #2d4a6b;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
         }
 
         .panel h3 {
-            font-size: 0.9rem;
-            color: #94a3b8;
+            font-size: 0.78rem;
+            color: #64748b;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
+            font-weight: 700;
             margin-bottom: 16px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #334155;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #1e2d45;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .panel.full-width {
@@ -255,53 +349,68 @@
         }
 
         table.data-table th {
-            background: #0f172a;
-            color: #94a3b8;
-            padding: 10px 12px;
+            background: #0a1120;
+            color: #64748b;
+            padding: 11px 13px;
             text-align: left;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            font-size: 0.7rem;
-            letter-spacing: 0.05em;
+            font-size: 0.65rem;
+            letter-spacing: 0.07em;
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
 
         table.data-table td {
-            padding: 10px 12px;
-            border-top: 1px solid #334155;
+            padding: 10px 13px;
+            border-top: 1px solid #172033;
             color: #cbd5e1;
+            font-size: 0.8rem;
         }
 
-        table.data-table tr:hover {
-            background: #334155;
+        table.data-table tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.018);
+        }
+
+        table.data-table tr:hover td {
+            background: rgba(59, 130, 246, 0.07);
         }
 
         /* Status badges */
         .status-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.7rem;
-            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
         }
 
         .status-badge.completed {
-            background: #166534;
+            background: rgba(22, 101, 52, 0.5);
             color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.2);
         }
 
         .status-badge.approved-sup {
-            background: #1e3a5f;
+            background: rgba(30, 58, 95, 0.5);
             color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.2);
         }
 
         .status-badge.approved-hq {
-            background: #581c87;
+            background: rgba(88, 28, 135, 0.5);
             color: #c084fc;
+            border: 1px solid rgba(192, 132, 252, 0.2);
         }
 
         .status-badge.rejected {
-            background: #7f1d1d;
+            background: rgba(127, 29, 29, 0.5);
             color: #f87171;
+            border: 1px solid rgba(248, 113, 113, 0.2);
         }
 
         /* Matrix table */
@@ -672,8 +781,10 @@
         </div>
         <div style="display:flex;align-items:center;gap:12px;">
             <button id="exportPdfBtn" onclick="document.getElementById('pdfModal').style.display='flex'"
-                style="background:#3b82f6;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background 0.2s;"
-                onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#3b82f6'">&#128196;
+                style="background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border:none;padding:9px 20px;border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all 0.2s;box-shadow:0 4px 14px rgba(59,130,246,0.35);letter-spacing:0.02em;"
+                onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(59,130,246,0.5)'"
+                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 14px rgba(59,130,246,0.35)'"><i
+                    class="bi bi-file-earmark-pdf-fill" style="font-size:0.95rem;"></i>
                 Export PDF</button>
             <div class="refresh-info">
                 <div id="lastUpdate"></div>
@@ -753,16 +864,16 @@
     </div>
 
     <div class="nav-bar" id="navBar">
-        <a data-page="surveys" class="active">Surveys and Statuses</a>
-        <a data-page="teams">Teams and Statuses</a>
-        <a data-page="progress">Field Progress</a>
-        <a data-page="statusduration">Status Duration</a>
-        <a data-page="devices">Devices/Interviewers</a>
-        <a data-page="map">Map Report</a>
-        <a data-page="cumulative">Cumulative Interview Chart</a>
-        <a data-page="quantity">Quantity</a>
-        <a data-page="speed">Speed</a>
-        <a data-page="statistics">Survey Statistics</a>
+        <a data-page="surveys" class="active"><i class="bi bi-clipboard-data-fill"></i>Surveys &amp; Statuses</a>
+        <a data-page="teams"><i class="bi bi-people-fill"></i>Teams &amp; Statuses</a>
+        <a data-page="progress"><i class="bi bi-map-fill"></i>Field Progress</a>
+        <a data-page="statusduration"><i class="bi bi-clock-history"></i>Status Duration</a>
+        <a data-page="devices"><i class="bi bi-phone-fill"></i>Devices / Interviewers</a>
+        <a data-page="map"><i class="bi bi-geo-alt-fill"></i>Map Report</a>
+        <a data-page="cumulative"><i class="bi bi-graph-up-arrow"></i>Cumulative Chart</a>
+        <a data-page="quantity"><i class="bi bi-bar-chart-fill"></i>Quantity</a>
+        <a data-page="speed"><i class="bi bi-speedometer2"></i>Speed</a>
+        <a data-page="statistics"><i class="bi bi-pie-chart-fill"></i>Survey Statistics</a>
     </div>
 
     <!-- ===== 1. SURVEYS AND STATUSES ===== -->
@@ -922,7 +1033,8 @@
             </div>
             <div class="panel full-width">
                 <h3>Interviews by Interviewer
-                    <i class="info-icon" data-tooltip="Number of interviews conducted per interviewer, broken down by status. Respects the filters above.">?</i>
+                    <i class="info-icon"
+                        data-tooltip="Number of interviews conducted per interviewer, broken down by status. Respects the filters above.">?</i>
                 </h3>
                 <div style="overflow-x:auto;">
                     <table class="data-table" id="progressIntTable">
@@ -1970,7 +2082,7 @@
 
                 // ---- Interviews by Interviewer ----
                 var intMap = {};
-                filtered.forEach(function(d) {
+                filtered.forEach(function (d) {
                     var resp = (diagMap[d.interview__key] || {}).responsible || 'Unknown';
                     if (!intMap[resp]) intMap[resp] = Object.assign(makeStats(), { teams: new Set(), provinces: new Set(), eas: new Set() });
                     var im = intMap[resp];
@@ -1983,13 +2095,13 @@
                 var iBody = document.querySelector('#progressIntTable tbody');
                 iBody.innerHTML = '';
                 var intTot = makeStats();
-                Object.keys(intMap).sort().forEach(function(intv) {
+                Object.keys(intMap).sort().forEach(function (intv) {
                     var im = intMap[intv];
-                    intTot.total+=im.total; intTot.completed+=im.completed; intTot.approvedSup+=im.approvedSup;
-                    intTot.approvedHQ+=im.approvedHQ; intTot.rejected+=im.rejected; intTot.inProgress+=im.inProgress;
-                    var provNames = Array.from(im.provinces).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).map(function(p){return PROVINCES[p]||p;}).join(', ');
+                    intTot.total += im.total; intTot.completed += im.completed; intTot.approvedSup += im.approvedSup;
+                    intTot.approvedHQ += im.approvedHQ; intTot.rejected += im.rejected; intTot.inProgress += im.inProgress;
+                    var provNames = Array.from(im.provinces).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); }).map(function (p) { return PROVINCES[p] || p; }).join(', ');
                     var eaList = Array.from(im.eas).sort().join(', ');
-                    var teamList = Array.from(im.teams).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).map(function(t){return 'Team '+t;}).join(', ');
+                    var teamList = Array.from(im.teams).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); }).map(function (t) { return 'Team ' + t; }).join(', ');
                     var row = iBody.insertRow();
                     row.innerHTML = '<td class="row-label"><strong>' + intv + '</strong></td>' +
                         '<td>' + teamList + '</td>' +
