@@ -884,12 +884,21 @@
                     <i class="info-icon"
                         data-tooltip="Hierarchical view: Province → Area Council → Enumeration Area → Team. Interview counts and completion rate at each level. EAs marked Done have no rejections and no in-progress interviews.">?</i>
                 </h3>
-                <div id="progressFilters" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center;">
+                <div id="progressFilters"
+                    style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center;">
                     <span class="progress-filter-label">Filter by:</span>
-                    <select id="pfProv" class="progress-filter"><option value="">All Provinces</option></select>
-                    <select id="pfAC" class="progress-filter"><option value="">All Area Councils</option></select>
-                    <select id="pfEA" class="progress-filter"><option value="">All EAs</option></select>
-                    <select id="pfTeam" class="progress-filter"><option value="">All Teams</option></select>
+                    <select id="pfProv" class="progress-filter">
+                        <option value="">All Provinces</option>
+                    </select>
+                    <select id="pfAC" class="progress-filter">
+                        <option value="">All Area Councils</option>
+                    </select>
+                    <select id="pfEA" class="progress-filter">
+                        <option value="">All EAs</option>
+                    </select>
+                    <select id="pfTeam" class="progress-filter">
+                        <option value="">All Teams</option>
+                    </select>
                     <button id="pfClear" class="progress-filter-clear">&#10005; Clear</button>
                 </div>
                 <div style="overflow-x:auto;">
@@ -898,6 +907,31 @@
                             <tr>
                                 <th style="min-width:240px">Province / AC / EA / Team</th>
                                 <th>Interviewers</th>
+                                <th>Total</th>
+                                <th>Completed</th>
+                                <th>Approved (Sup)</th>
+                                <th>Approved (HQ)</th>
+                                <th>Rejected</th>
+                                <th>In Progress</th>
+                                <th>Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel full-width">
+                <h3>Interviews by Interviewer
+                    <i class="info-icon" data-tooltip="Number of interviews conducted per interviewer, broken down by status. Respects the filters above.">?</i>
+                </h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="progressIntTable">
+                        <thead>
+                            <tr>
+                                <th>Interviewer</th>
+                                <th>Team</th>
+                                <th>Province(s)</th>
+                                <th>EA(s)</th>
                                 <th>Total</th>
                                 <th>Completed</th>
                                 <th>Approved (Sup)</th>
@@ -1758,7 +1792,7 @@
             //  10. FIELD PROGRESS (Hierarchy: Province → Area Council → EA → Team)
             // ============================================================
 
-            function makeStats() { return { total:0,completed:0,approvedSup:0,approvedHQ:0,rejected:0,inProgress:0 }; }
+            function makeStats() { return { total: 0, completed: 0, approvedSup: 0, approvedHQ: 0, rejected: 0, inProgress: 0 }; }
             function bumpStat(obj, sl) {
                 obj.total++;
                 if (sl === 'Completed') obj.completed++;
@@ -1783,12 +1817,12 @@
 
             // Populate Province dropdown once
             var pfProv = document.getElementById('pfProv');
-            var pfAC   = document.getElementById('pfAC');
-            var pfEA   = document.getElementById('pfEA');
+            var pfAC = document.getElementById('pfAC');
+            var pfEA = document.getElementById('pfEA');
             var pfTeam = document.getElementById('pfTeam');
             var provsSeen = {};
-            mainData.forEach(function(d) { provsSeen[d.province || 'Unknown'] = 1; });
-            Object.keys(provsSeen).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).forEach(function(p) {
+            mainData.forEach(function (d) { provsSeen[d.province || 'Unknown'] = 1; });
+            Object.keys(provsSeen).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); }).forEach(function (p) {
                 var o = document.createElement('option');
                 o.value = p; o.textContent = PROVINCES[p] || 'Province ' + p;
                 pfProv.appendChild(o);
@@ -1799,7 +1833,7 @@
                 var prevAC = pfAC.value, prevEA = pfEA.value, prevTeam = pfTeam.value;
                 pfAC.length = 1; pfEA.length = 1; pfTeam.length = 1;
                 var acSet = {}, eaSet = {}, teamSet = {};
-                mainData.forEach(function(d) {
+                mainData.forEach(function (d) {
                     if (fProv && d.province !== fProv) return;
                     acSet[d.area_council || 'Unknown'] = acName(d.area_council) || d.area_council || 'Unknown';
                     if (!fAC || d.area_council === fAC) {
@@ -1807,28 +1841,28 @@
                         teamSet[d.team_id || 'Unknown'] = 1;
                     }
                 });
-                Object.keys(acSet).sort().forEach(function(ac) {
+                Object.keys(acSet).sort().forEach(function (ac) {
                     var o = document.createElement('option'); o.value = ac;
                     o.textContent = acSet[ac]; pfAC.appendChild(o);
                 });
-                Object.keys(eaSet).sort().forEach(function(ea) {
+                Object.keys(eaSet).sort().forEach(function (ea) {
                     var o = document.createElement('option'); o.value = ea; o.textContent = ea; pfEA.appendChild(o);
                 });
-                Object.keys(teamSet).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).forEach(function(t) {
+                Object.keys(teamSet).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); }).forEach(function (t) {
                     var o = document.createElement('option'); o.value = t; o.textContent = 'Team ' + t; pfTeam.appendChild(o);
                 });
-                if (prevAC && Array.from(pfAC.options).some(function(o){return o.value===prevAC;})) pfAC.value = prevAC;
-                if (prevEA && Array.from(pfEA.options).some(function(o){return o.value===prevEA;})) pfEA.value = prevEA;
-                if (prevTeam && Array.from(pfTeam.options).some(function(o){return o.value===prevTeam;})) pfTeam.value = prevTeam;
+                if (prevAC && Array.from(pfAC.options).some(function (o) { return o.value === prevAC; })) pfAC.value = prevAC;
+                if (prevEA && Array.from(pfEA.options).some(function (o) { return o.value === prevEA; })) pfEA.value = prevEA;
+                if (prevTeam && Array.from(pfTeam.options).some(function (o) { return o.value === prevTeam; })) pfTeam.value = prevTeam;
             }
             populateSubFilters('', '');
 
             function renderFieldHier() {
                 var fProv = pfProv.value, fAC = pfAC.value, fEA = pfEA.value, fTeam = pfTeam.value;
-                var filtered = mainData.filter(function(d) {
+                var filtered = mainData.filter(function (d) {
                     if (fProv && d.province !== fProv) return false;
-                    if (fAC   && d.area_council !== fAC) return false;
-                    if (fEA   && d.enumeration_area !== fEA) return false;
+                    if (fAC && d.area_council !== fAC) return false;
+                    if (fEA && d.enumeration_area !== fEA) return false;
                     if (fTeam && d.team_id !== fTeam) return false;
                     return true;
                 });
@@ -1836,21 +1870,21 @@
                 // Build hierarchy from filtered rows
                 var hier = {};
                 var filteredTeams = new Set();
-                filtered.forEach(function(d) {
+                filtered.forEach(function (d) {
                     var prov = d.province || 'Unknown';
-                    var ac   = d.area_council || 'Unknown';
-                    var ea   = d.enumeration_area || 'Unknown';
+                    var ac = d.area_council || 'Unknown';
+                    var ea = d.enumeration_area || 'Unknown';
                     var team = d.team_id || 'Unknown';
-                    var sl   = STATUS_MAP[d.interview__status] || '';
+                    var sl = STATUS_MAP[d.interview__status] || '';
                     filteredTeams.add(team);
-                    if (!hier[prov]) hier[prov] = Object.assign(makeStats(), { acs:{} });
+                    if (!hier[prov]) hier[prov] = Object.assign(makeStats(), { acs: {} });
                     bumpStat(hier[prov], sl);
-                    if (!hier[prov].acs[ac]) hier[prov].acs[ac] = Object.assign(makeStats(), { eas:{} });
+                    if (!hier[prov].acs[ac]) hier[prov].acs[ac] = Object.assign(makeStats(), { eas: {} });
                     bumpStat(hier[prov].acs[ac], sl);
-                    if (!hier[prov].acs[ac].eas[ea]) hier[prov].acs[ac].eas[ea] = Object.assign(makeStats(), { teams:{} });
+                    if (!hier[prov].acs[ac].eas[ea]) hier[prov].acs[ac].eas[ea] = Object.assign(makeStats(), { teams: {} });
                     bumpStat(hier[prov].acs[ac].eas[ea], sl);
                     if (!hier[prov].acs[ac].eas[ea].teams[team])
-                        hier[prov].acs[ac].eas[ea].teams[team] = Object.assign(makeStats(), { interviewers:new Set() });
+                        hier[prov].acs[ac].eas[ea].teams[team] = Object.assign(makeStats(), { interviewers: new Set() });
                     bumpStat(hier[prov].acs[ac].eas[ea].teams[team], sl);
                     var resp = (diagMap[d.interview__key] || {}).responsible;
                     if (resp) hier[prov].acs[ac].eas[ea].teams[team].interviewers.add(resp);
@@ -1858,9 +1892,9 @@
 
                 // Update stat cards
                 var allEAsCount = 0, doneEAsCount = 0;
-                Object.keys(hier).forEach(function(p) {
-                    Object.keys(hier[p].acs).forEach(function(a) {
-                        Object.keys(hier[p].acs[a].eas).forEach(function(e) {
+                Object.keys(hier).forEach(function (p) {
+                    Object.keys(hier[p].acs).forEach(function (a) {
+                        Object.keys(hier[p].acs[a].eas).forEach(function (e) {
                             allEAsCount++;
                             var ep = hier[p].acs[a].eas[e];
                             if (ep.rejected === 0 && ep.inProgress === 0) doneEAsCount++;
@@ -1886,21 +1920,21 @@
                 }
 
                 var GT = makeStats();
-                Object.keys(hier).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).forEach(function(prov) {
+                Object.keys(hier).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); }).forEach(function (prov) {
                     var HP = hier[prov];
-                    GT.total+=HP.total; GT.completed+=HP.completed; GT.approvedSup+=HP.approvedSup;
-                    GT.approvedHQ+=HP.approvedHQ; GT.rejected+=HP.rejected; GT.inProgress+=HP.inProgress;
+                    GT.total += HP.total; GT.completed += HP.completed; GT.approvedSup += HP.approvedSup;
+                    GT.approvedHQ += HP.approvedHQ; GT.rejected += HP.rejected; GT.inProgress += HP.inProgress;
                     var pr = hBody.insertRow();
                     pr.className = 'progress-level-province';
                     pr.innerHTML = '<td colspan="2"><strong>' + (PROVINCES[prov] || 'Province ' + prov) + '</strong></td>' + statCells(HP);
 
-                    Object.keys(HP.acs).sort().forEach(function(ac) {
+                    Object.keys(HP.acs).sort().forEach(function (ac) {
                         var HAC = HP.acs[ac];
                         var acr = hBody.insertRow();
                         acr.className = 'progress-level-ac';
                         acr.innerHTML = '<td colspan="2" style="padding-left:1.4rem;">' + (acName(ac) || ac) + '</td>' + statCells(HAC);
 
-                        Object.keys(HAC.eas).sort().forEach(function(ea) {
+                        Object.keys(HAC.eas).sort().forEach(function (ea) {
                             var HEA = HAC.eas[ea];
                             var allDoneEA = HEA.rejected === 0 && HEA.inProgress === 0;
                             var eaBadge = HEA.rejected > 0
@@ -1910,7 +1944,7 @@
                             ear.className = 'progress-level-ea';
                             ear.innerHTML = '<td colspan="2" style="padding-left:2.8rem;font-style:italic;">' + ea + eaBadge + '</td>' + statCells(HEA);
 
-                            Object.keys(HEA.teams).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).forEach(function(team) {
+                            Object.keys(HEA.teams).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); }).forEach(function (team) {
                                 var HT = HEA.teams[team];
                                 var tr2 = hBody.insertRow();
                                 tr2.className = 'progress-level-team';
@@ -1923,23 +1957,56 @@
                 var gtr = hBody.insertRow();
                 gtr.className = 'total-row';
                 gtr.innerHTML = '<td colspan="2"><strong>Grand Total</strong></td>' + statCells(GT);
+
+                // ---- Interviews by Interviewer ----
+                var intMap = {};
+                filtered.forEach(function(d) {
+                    var resp = (diagMap[d.interview__key] || {}).responsible || 'Unknown';
+                    if (!intMap[resp]) intMap[resp] = Object.assign(makeStats(), { teams: new Set(), provinces: new Set(), eas: new Set() });
+                    var im = intMap[resp];
+                    im.teams.add(d.team_id || '?');
+                    im.provinces.add(d.province || '?');
+                    im.eas.add(d.enumeration_area || '?');
+                    var sl = STATUS_MAP[d.interview__status] || '';
+                    bumpStat(im, sl);
+                });
+                var iBody = document.querySelector('#progressIntTable tbody');
+                iBody.innerHTML = '';
+                var intTot = makeStats();
+                Object.keys(intMap).sort().forEach(function(intv) {
+                    var im = intMap[intv];
+                    intTot.total+=im.total; intTot.completed+=im.completed; intTot.approvedSup+=im.approvedSup;
+                    intTot.approvedHQ+=im.approvedHQ; intTot.rejected+=im.rejected; intTot.inProgress+=im.inProgress;
+                    var provNames = Array.from(im.provinces).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).map(function(p){return PROVINCES[p]||p;}).join(', ');
+                    var eaList = Array.from(im.eas).sort().join(', ');
+                    var teamList = Array.from(im.teams).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).map(function(t){return 'Team '+t;}).join(', ');
+                    var row = iBody.insertRow();
+                    row.innerHTML = '<td class="row-label"><strong>' + intv + '</strong></td>' +
+                        '<td>' + teamList + '</td>' +
+                        '<td>' + provNames + '</td>' +
+                        '<td style="font-size:0.72rem;color:#94a3b8;">' + eaList + '</td>' +
+                        statCells(im);
+                });
+                var itTotRow = iBody.insertRow();
+                itTotRow.className = 'total-row';
+                itTotRow.innerHTML = '<td><strong>Total</strong></td><td></td><td></td><td></td>' + statCells(intTot);
             }
 
             // Wire up filter events
-            pfProv.addEventListener('change', function() {
-                pfAC.value=''; pfEA.value=''; pfTeam.value='';
+            pfProv.addEventListener('change', function () {
+                pfAC.value = ''; pfEA.value = ''; pfTeam.value = '';
                 populateSubFilters(pfProv.value, '');
                 renderFieldHier();
             });
-            pfAC.addEventListener('change', function() {
-                pfEA.value=''; pfTeam.value='';
+            pfAC.addEventListener('change', function () {
+                pfEA.value = ''; pfTeam.value = '';
                 populateSubFilters(pfProv.value, pfAC.value);
                 renderFieldHier();
             });
             pfEA.addEventListener('change', renderFieldHier);
             pfTeam.addEventListener('change', renderFieldHier);
-            document.getElementById('pfClear').addEventListener('click', function() {
-                pfProv.value=''; pfAC.value=''; pfEA.value=''; pfTeam.value='';
+            document.getElementById('pfClear').addEventListener('click', function () {
+                pfProv.value = ''; pfAC.value = ''; pfEA.value = ''; pfTeam.value = '';
                 populateSubFilters('', '');
                 renderFieldHier();
             });
