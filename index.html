@@ -348,6 +348,14 @@
             border-top: 2px solid #3b82f6;
         }
 
+        /* Field Progress hierarchy rows */
+        .progress-level-province td { background: #0b1e3d; color: #93c5fd; font-weight: 700; border-top: 2px solid #2563eb !important; }
+        .progress-level-ac td { background: #0f1e33; color: #bfdbfe; font-weight: 600; border-top: 1px solid #1e3a5f !important; }
+        .progress-level-ea td { background: #121c2e; color: #94a3b8; border-top: 1px dashed #1e3a5f !important; }
+        .progress-level-team td { background: #0d1526; color: #cbd5e1; }
+        .progress-level-province:hover td, .progress-level-ac:hover td,
+        .progress-level-ea:hover td, .progress-level-team:hover td { filter: brightness(1.15); }
+
         /* Error items */
         .error-item {
             background: #1a1a2e;
@@ -847,14 +855,14 @@
         </div>
         <div class="dashboard-grid">
             <div class="panel full-width">
-                <h3>Results by Team <i class="info-icon"
-                        data-tooltip="Interview counts and completion breakdown per field team.">?</i></h3>
+                <h3>Field Progress by Province / Area Council / EA / Team
+                    <i class="info-icon" data-tooltip="Hierarchical view: Province → Area Council → Enumeration Area → Team. Interview counts and completion rate at each level. EAs marked Done have no rejections and no in-progress interviews.">?</i>
+                </h3>
                 <div style="overflow-x:auto;">
-                    <table class="data-table" id="progressTeamTable">
+                    <table class="data-table" id="progressHierTable">
                         <thead>
                             <tr>
-                                <th>Team</th>
-                                <th>Province(s)</th>
+                                <th style="min-width:240px">Province / AC / EA / Team</th>
                                 <th>Interviewers</th>
                                 <th>Total</th>
                                 <th>Completed</th>
@@ -863,52 +871,6 @@
                                 <th>Rejected</th>
                                 <th>In Progress</th>
                                 <th>Rate</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="panel full-width">
-                <h3>Results by Province <i class="info-icon"
-                        data-tooltip="Interview counts and completion breakdown per province.">?</i></h3>
-                <div style="overflow-x:auto;">
-                    <table class="data-table" id="progressProvinceTable">
-                        <thead>
-                            <tr>
-                                <th>Province</th>
-                                <th>Total</th>
-                                <th>Completed</th>
-                                <th>Approved (Sup)</th>
-                                <th>Approved (HQ)</th>
-                                <th>Rejected</th>
-                                <th>In Progress</th>
-                                <th>EAs Active</th>
-                                <th>Rate</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="panel full-width">
-                <h3>Completed EAs <i class="info-icon"
-                        data-tooltip="Each Enumeration Area visited, showing interview counts and completion status.">?</i>
-                </h3>
-                <div style="overflow-x:auto;">
-                    <table class="data-table" id="progressEATable">
-                        <thead>
-                            <tr>
-                                <th>EA Code</th>
-                                <th>EA Name / Villages</th>
-                                <th>Province</th>
-                                <th>Area Council</th>
-                                <th>Team</th>
-                                <th>Interviews</th>
-                                <th>Completed</th>
-                                <th>Approved</th>
-                                <th>Rejected</th>
-                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -1759,165 +1721,125 @@
             }
 
             // ============================================================
-            //  10. FIELD PROGRESS (by Team, by Province, completed EAs)
+            //  10. FIELD PROGRESS (Hierarchy: Province → Area Council → EA → Team)
             // ============================================================
 
-            // ---- By Team ----
-            const teamProgress = {};
-            mainData.forEach(function (d) {
-                var team = d.team_id || 'Unknown';
-                if (!teamProgress[team]) teamProgress[team] = { provinces: new Set(), interviewers: new Set(), total: 0, completed: 0, approvedSup: 0, approvedHQ: 0, rejected: 0, inProgress: 0 };
-                var tp = teamProgress[team];
-                tp.total++;
-                tp.provinces.add(d.province);
-                var resp = (diagMap[d.interview__key] || {}).responsible;
-                if (resp) tp.interviewers.add(resp);
-                var sl = STATUS_MAP[d.interview__status] || '';
-                if (sl === 'Completed') tp.completed++;
-                else if (sl === 'ApprovedBySupervisor') tp.approvedSup++;
-                else if (sl === 'ApprovedByHQ') tp.approvedHQ++;
-                else if (sl.indexOf('Rejected') >= 0) tp.rejected++;
-                else tp.inProgress++;
-            });
+            // Build hierarchy
+            function makeStats() { return { total:0, completed:0, approvedSup:0, approvedHQ:0, rejected:0, inProgress:0 }; }
+            var fieldHier = {};
+            var allFieldTeams = new Set();
 
-            document.getElementById('progTeams').textContent = Object.keys(teamProgress).length;
-            document.getElementById('progTeamsDetail').textContent = 'Field teams active';
-
-            var ptBody = document.querySelector('#progressTeamTable tbody');
-            var teamSorted = Object.keys(teamProgress).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); });
-            var teamTotals = { total: 0, completed: 0, approvedSup: 0, approvedHQ: 0, rejected: 0, inProgress: 0 };
-            teamSorted.forEach(function (team) {
-                var d = teamProgress[team];
-                var done = d.completed + d.approvedSup + d.approvedHQ;
-                var rate = d.total > 0 ? Math.round((done / d.total) * 100) : 0;
-                var rateColor = rate >= 80 ? '#4ade80' : rate >= 50 ? '#fbbf24' : '#f87171';
-                var provNames = Array.from(d.provinces).map(function (p) { return PROVINCES[p] || p; }).join(', ');
-                var row = ptBody.insertRow();
-                row.innerHTML = '<td class="row-label">Team ' + team + '</td>' +
-                    '<td>' + provNames + '</td>' +
-                    '<td>' + d.interviewers.size + '</td>' +
-                    '<td><strong>' + d.total + '</strong></td>' +
-                    '<td>' + d.completed + '</td>' +
-                    '<td>' + d.approvedSup + '</td>' +
-                    '<td>' + d.approvedHQ + '</td>' +
-                    '<td>' + (d.rejected > 0 ? '<span style="color:#f87171">' + d.rejected + '</span>' : '0') + '</td>' +
-                    '<td>' + d.inProgress + '</td>' +
-                    '<td><span style="color:' + rateColor + ';font-weight:600;">' + rate + '%</span></td>';
-                teamTotals.total += d.total; teamTotals.completed += d.completed;
-                teamTotals.approvedSup += d.approvedSup; teamTotals.approvedHQ += d.approvedHQ;
-                teamTotals.rejected += d.rejected; teamTotals.inProgress += d.inProgress;
-            });
-            var ttDone = teamTotals.completed + teamTotals.approvedSup + teamTotals.approvedHQ;
-            var ttRate = teamTotals.total > 0 ? Math.round((ttDone / teamTotals.total) * 100) : 0;
-            var tTotRow = ptBody.insertRow();
-            tTotRow.className = 'total-row';
-            tTotRow.innerHTML = '<td class="row-label">Total</td><td></td><td></td>' +
-                '<td><strong>' + teamTotals.total + '</strong></td>' +
-                '<td>' + teamTotals.completed + '</td><td>' + teamTotals.approvedSup + '</td>' +
-                '<td>' + teamTotals.approvedHQ + '</td><td>' + (teamTotals.rejected > 0 ? '<span style="color:#f87171">' + teamTotals.rejected + '</span>' : '0') + '</td>' +
-                '<td>' + teamTotals.inProgress + '</td>' +
-                '<td><strong>' + ttRate + '%</strong></td>';
-
-            // ---- By Province ----
-            var provProgress = {};
-            mainData.forEach(function (d) {
+            mainData.forEach(function(d) {
                 var prov = d.province || 'Unknown';
-                if (!provProgress[prov]) provProgress[prov] = { total: 0, completed: 0, approvedSup: 0, approvedHQ: 0, rejected: 0, inProgress: 0, eas: new Set() };
-                var pp = provProgress[prov];
-                pp.total++;
-                pp.eas.add(d.enumeration_area);
+                var ac   = d.area_council || 'Unknown';
+                var ea   = d.enumeration_area || 'Unknown';
+                var team = d.team_id || 'Unknown';
+                allFieldTeams.add(team);
+                if (!fieldHier[prov]) fieldHier[prov] = Object.assign(makeStats(), { acs: {} });
+                var HP = fieldHier[prov];
+                if (!HP.acs[ac]) HP.acs[ac] = Object.assign(makeStats(), { eas: {} });
+                var HAC = HP.acs[ac];
+                if (!HAC.eas[ea]) HAC.eas[ea] = Object.assign(makeStats(), { teams: {} });
+                var HEA = HAC.eas[ea];
+                if (!HEA.teams[team]) HEA.teams[team] = Object.assign(makeStats(), { interviewers: new Set() });
+                var HT = HEA.teams[team];
+                var resp = (diagMap[d.interview__key] || {}).responsible;
+                if (resp) HT.interviewers.add(resp);
                 var sl = STATUS_MAP[d.interview__status] || '';
-                if (sl === 'Completed') pp.completed++;
-                else if (sl === 'ApprovedBySupervisor') pp.approvedSup++;
-                else if (sl === 'ApprovedByHQ') pp.approvedHQ++;
-                else if (sl.indexOf('Rejected') >= 0) pp.rejected++;
-                else pp.inProgress++;
+                function bumpStat(obj) {
+                    obj.total++;
+                    if (sl === 'Completed') obj.completed++;
+                    else if (sl === 'ApprovedBySupervisor') obj.approvedSup++;
+                    else if (sl === 'ApprovedByHQ') obj.approvedHQ++;
+                    else if (sl.indexOf('Rejected') >= 0) obj.rejected++;
+                    else obj.inProgress++;
+                }
+                bumpStat(HT); bumpStat(HEA); bumpStat(HAC); bumpStat(HP);
             });
 
-            document.getElementById('progProvinces').textContent = Object.keys(provProgress).length;
+            // Stat cards
+            document.getElementById('progTeams').textContent = allFieldTeams.size;
+            document.getElementById('progTeamsDetail').textContent = 'Field teams active';
+            document.getElementById('progProvinces').textContent = Object.keys(fieldHier).length;
             document.getElementById('progProvDetail').textContent = 'Provinces with data';
-
-            var ppBody = document.querySelector('#progressProvinceTable tbody');
-            var provSorted = Object.keys(provProgress).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); });
-            var provTotals = { total: 0, completed: 0, approvedSup: 0, approvedHQ: 0, rejected: 0, inProgress: 0, eas: 0 };
-            provSorted.forEach(function (prov) {
-                var d = provProgress[prov];
-                var done = d.completed + d.approvedSup + d.approvedHQ;
-                var rate = d.total > 0 ? Math.round((done / d.total) * 100) : 0;
-                var rateColor = rate >= 80 ? '#4ade80' : rate >= 50 ? '#fbbf24' : '#f87171';
-                var row = ppBody.insertRow();
-                row.innerHTML = '<td class="row-label">' + (PROVINCES[prov] || prov) + '</td>' +
-                    '<td><strong>' + d.total + '</strong></td>' +
-                    '<td>' + d.completed + '</td>' +
-                    '<td>' + d.approvedSup + '</td>' +
-                    '<td>' + d.approvedHQ + '</td>' +
-                    '<td>' + (d.rejected > 0 ? '<span style="color:#f87171">' + d.rejected + '</span>' : '0') + '</td>' +
-                    '<td>' + d.inProgress + '</td>' +
-                    '<td>' + d.eas.size + '</td>' +
-                    '<td><span style="color:' + rateColor + ';font-weight:600;">' + rate + '%</span></td>';
-                provTotals.total += d.total; provTotals.completed += d.completed;
-                provTotals.approvedSup += d.approvedSup; provTotals.approvedHQ += d.approvedHQ;
-                provTotals.rejected += d.rejected; provTotals.inProgress += d.inProgress;
-                provTotals.eas += d.eas.size;
+            var allEAsCount = 0, doneEAsCount = 0;
+            Object.keys(fieldHier).forEach(function(p) {
+                Object.keys(fieldHier[p].acs).forEach(function(a) {
+                    Object.keys(fieldHier[p].acs[a].eas).forEach(function(e) {
+                        allEAsCount++;
+                        var ep = fieldHier[p].acs[a].eas[e];
+                        if (ep.rejected === 0 && ep.inProgress === 0) doneEAsCount++;
+                    });
+                });
             });
-            var ptDone = provTotals.completed + provTotals.approvedSup + provTotals.approvedHQ;
-            var ptRate = provTotals.total > 0 ? Math.round((ptDone / provTotals.total) * 100) : 0;
-            var ppTotRow = ppBody.insertRow();
-            ppTotRow.className = 'total-row';
-            ppTotRow.innerHTML = '<td class="row-label">Total</td>' +
-                '<td><strong>' + provTotals.total + '</strong></td>' +
-                '<td>' + provTotals.completed + '</td><td>' + provTotals.approvedSup + '</td>' +
-                '<td>' + provTotals.approvedHQ + '</td><td>' + (provTotals.rejected > 0 ? '<span style="color:#f87171">' + provTotals.rejected + '</span>' : '0') + '</td>' +
-                '<td>' + provTotals.inProgress + '</td><td>' + provTotals.eas + '</td>' +
-                '<td><strong>' + ptRate + '%</strong></td>';
-
-            // ---- EA Progress ----
-            var eaProgress = {};
-            mainData.forEach(function (d) {
-                var ea = d.enumeration_area || 'Unknown';
-                if (!eaProgress[ea]) eaProgress[ea] = { province: d.province, ac: d.area_council, team: d.team_id, total: 0, completed: 0, approved: 0, rejected: 0, inProgress: 0 };
-                var ep = eaProgress[ea];
-                ep.total++;
-                var sl = STATUS_MAP[d.interview__status] || '';
-                if (sl === 'Completed') ep.completed++;
-                else if (sl === 'ApprovedBySupervisor' || sl === 'ApprovedByHQ') ep.approved++;
-                else if (sl.indexOf('Rejected') >= 0) ep.rejected++;
-                else ep.inProgress++;
-            });
-
-            var eaKeys = Object.keys(eaProgress);
-            var eaDoneCount = eaKeys.filter(function (ea) {
-                var d = eaProgress[ea];
-                return d.rejected === 0 && d.inProgress === 0 && (d.completed + d.approved) === d.total;
-            }).length;
-            document.getElementById('progEAsActive').textContent = eaKeys.length;
+            document.getElementById('progEAsActive').textContent = allEAsCount;
             document.getElementById('progEAActiveDetail').textContent = 'EAs with interviews';
-            document.getElementById('progEAsDone').textContent = eaDoneCount;
-            document.getElementById('progEADoneDetail').textContent = eaDoneCount + ' of ' + eaKeys.length + ' EAs';
+            document.getElementById('progEAsDone').textContent = doneEAsCount;
+            document.getElementById('progEADoneDetail').textContent = doneEAsCount + ' of ' + allEAsCount + ' EAs';
 
-            var peBody = document.querySelector('#progressEATable tbody');
-            eaKeys.sort().forEach(function (ea) {
-                var d = eaProgress[ea];
-                var allDone = d.rejected === 0 && d.inProgress === 0;
-                var hasRejected = d.rejected > 0;
-                var statusBadge = hasRejected
-                    ? '<span class="status-badge rejected">Has Rejected</span>'
-                    : allDone
-                        ? '<span class="status-badge approved-hq">Completed</span>'
-                        : '<span class="status-badge">In Progress</span>';
-                var eaName = eaVillages(ea);
-                var row = peBody.insertRow();
-                row.innerHTML = '<td class="row-label">' + ea + '</td>' +
-                    '<td style="max-width:200px;white-space:normal;font-size:0.75rem;">' + (eaName !== ea ? eaName : '-') + '</td>' +
-                    '<td>' + (PROVINCES[d.province] || d.province) + '</td>' +
-                    '<td>' + acName(d.ac) + '</td>' +
-                    '<td>Team ' + d.team + '</td>' +
-                    '<td><strong>' + d.total + '</strong></td>' +
-                    '<td>' + d.completed + '</td>' +
-                    '<td>' + d.approved + '</td>' +
-                    '<td>' + (d.rejected > 0 ? '<span style="color:#f87171">' + d.rejected + '</span>' : '0') + '</td>' +
-                    '<td>' + statusBadge + '</td>';
+            // Render helpers
+            function rateHtml(done, total) {
+                var rate = total > 0 ? Math.round((done / total) * 100) : 0;
+                var color = rate >= 80 ? '#4ade80' : rate >= 50 ? '#fbbf24' : '#f87171';
+                return '<td><span style="color:' + color + ';font-weight:600;">' + rate + '%</span></td>';
+            }
+            function rejHtml(n) { return '<td>' + (n > 0 ? '<span style="color:#f87171">' + n + '</span>' : '0') + '</td>'; }
+            function statCells(s) {
+                return '<td><strong>' + s.total + '</strong></td>' +
+                    '<td>' + s.completed + '</td>' +
+                    '<td>' + s.approvedSup + '</td>' +
+                    '<td>' + s.approvedHQ + '</td>' +
+                    rejHtml(s.rejected) +
+                    '<td>' + s.inProgress + '</td>' +
+                    rateHtml(s.completed + s.approvedSup + s.approvedHQ, s.total);
+            }
+
+            var hBody = document.querySelector('#progressHierTable tbody');
+            var GT = makeStats();
+
+            Object.keys(fieldHier).sort(function(a,b){ return (parseInt(a)||0)-(parseInt(b)||0); }).forEach(function(prov) {
+                var HP = fieldHier[prov];
+                GT.total += HP.total; GT.completed += HP.completed; GT.approvedSup += HP.approvedSup;
+                GT.approvedHQ += HP.approvedHQ; GT.rejected += HP.rejected; GT.inProgress += HP.inProgress;
+                // Province row
+                var pr = hBody.insertRow();
+                pr.className = 'progress-level-province';
+                pr.innerHTML = '<td colspan="2"><strong>' + (PROVINCES[prov] || 'Province ' + prov) + '</strong></td>' + statCells(HP);
+
+                Object.keys(HP.acs).sort().forEach(function(ac) {
+                    var HAC = HP.acs[ac];
+                    // Area Council row
+                    var acr = hBody.insertRow();
+                    acr.className = 'progress-level-ac';
+                    acr.innerHTML = '<td colspan="2" style="padding-left:1.4rem;">' + (acName(ac) || ac) + '</td>' + statCells(HAC);
+
+                    Object.keys(HAC.eas).sort().forEach(function(ea) {
+                        var HEA = HAC.eas[ea];
+                        var allDoneEA = HEA.rejected === 0 && HEA.inProgress === 0;
+                        var hasRejEA  = HEA.rejected > 0;
+                        var eaBadge   = hasRejEA
+                            ? ' <span class="status-badge rejected" style="font-size:0.6rem;padding:1px 5px;">Rejected</span>'
+                            : (allDoneEA ? ' <span class="status-badge approved-hq" style="font-size:0.6rem;padding:1px 5px;">Done</span>' : '');
+                        // EA row
+                        var ear = hBody.insertRow();
+                        ear.className = 'progress-level-ea';
+                        ear.innerHTML = '<td colspan="2" style="padding-left:2.8rem;font-style:italic;">' + ea + eaBadge + '</td>' + statCells(HEA);
+
+                        Object.keys(HEA.teams).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).forEach(function(team) {
+                            var HT = HEA.teams[team];
+                            var tr2 = hBody.insertRow();
+                            tr2.className = 'progress-level-team';
+                            tr2.innerHTML = '<td style="padding-left:4.2rem;">Team ' + team + '</td>' +
+                                '<td style="color:#94a3b8;">' + HT.interviewers.size + '</td>' + statCells(HT);
+                        });
+                    });
+                });
             });
+
+            // Grand total row
+            var gtr = hBody.insertRow();
+            gtr.className = 'total-row';
+            gtr.innerHTML = '<td colspan="2"><strong>Grand Total</strong></td>' + statCells(GT);
         }
 
         // ---- NAVIGATION ----
