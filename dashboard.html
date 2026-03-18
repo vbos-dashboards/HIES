@@ -349,12 +349,37 @@
         }
 
         /* Field Progress hierarchy rows */
-        .progress-level-province td { background: #0b1e3d; color: #93c5fd; font-weight: 700; border-top: 2px solid #2563eb !important; }
-        .progress-level-ac td { background: #0f1e33; color: #bfdbfe; font-weight: 600; border-top: 1px solid #1e3a5f !important; }
-        .progress-level-ea td { background: #121c2e; color: #94a3b8; border-top: 1px dashed #1e3a5f !important; }
-        .progress-level-team td { background: #0d1526; color: #cbd5e1; }
-        .progress-level-province:hover td, .progress-level-ac:hover td,
-        .progress-level-ea:hover td, .progress-level-team:hover td { filter: brightness(1.15); }
+        .progress-level-province td {
+            background: #0b1e3d;
+            color: #93c5fd;
+            font-weight: 700;
+            border-top: 2px solid #2563eb !important;
+        }
+
+        .progress-level-ac td {
+            background: #0f1e33;
+            color: #bfdbfe;
+            font-weight: 600;
+            border-top: 1px solid #1e3a5f !important;
+        }
+
+        .progress-level-ea td {
+            background: #121c2e;
+            color: #94a3b8;
+            border-top: 1px dashed #1e3a5f !important;
+        }
+
+        .progress-level-team td {
+            background: #0d1526;
+            color: #cbd5e1;
+        }
+
+        .progress-level-province:hover td,
+        .progress-level-ac:hover td,
+        .progress-level-ea:hover td,
+        .progress-level-team:hover td {
+            filter: brightness(1.15);
+        }
 
         /* Error items */
         .error-item {
@@ -856,8 +881,17 @@
         <div class="dashboard-grid">
             <div class="panel full-width">
                 <h3>Field Progress by Province / Area Council / EA / Team
-                    <i class="info-icon" data-tooltip="Hierarchical view: Province → Area Council → Enumeration Area → Team. Interview counts and completion rate at each level. EAs marked Done have no rejections and no in-progress interviews.">?</i>
+                    <i class="info-icon"
+                        data-tooltip="Hierarchical view: Province → Area Council → Enumeration Area → Team. Interview counts and completion rate at each level. EAs marked Done have no rejections and no in-progress interviews.">?</i>
                 </h3>
+                <div id="progressFilters" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center;">
+                    <span class="progress-filter-label">Filter by:</span>
+                    <select id="pfProv" class="progress-filter"><option value="">All Provinces</option></select>
+                    <select id="pfAC" class="progress-filter"><option value="">All Area Councils</option></select>
+                    <select id="pfEA" class="progress-filter"><option value="">All EAs</option></select>
+                    <select id="pfTeam" class="progress-filter"><option value="">All Teams</option></select>
+                    <button id="pfClear" class="progress-filter-clear">&#10005; Clear</button>
+                </div>
                 <div style="overflow-x:auto;">
                     <table class="data-table" id="progressHierTable">
                         <thead>
@@ -1734,60 +1768,15 @@
             //  10. FIELD PROGRESS (Hierarchy: Province → Area Council → EA → Team)
             // ============================================================
 
-            // Build hierarchy
-            function makeStats() { return { total:0, completed:0, approvedSup:0, approvedHQ:0, rejected:0, inProgress:0 }; }
-            var fieldHier = {};
-            var allFieldTeams = new Set();
-
-            mainData.forEach(function(d) {
-                var prov = d.province || 'Unknown';
-                var ac   = d.area_council || 'Unknown';
-                var ea   = d.enumeration_area || 'Unknown';
-                var team = d.team_id || 'Unknown';
-                allFieldTeams.add(team);
-                if (!fieldHier[prov]) fieldHier[prov] = Object.assign(makeStats(), { acs: {} });
-                var HP = fieldHier[prov];
-                if (!HP.acs[ac]) HP.acs[ac] = Object.assign(makeStats(), { eas: {} });
-                var HAC = HP.acs[ac];
-                if (!HAC.eas[ea]) HAC.eas[ea] = Object.assign(makeStats(), { teams: {} });
-                var HEA = HAC.eas[ea];
-                if (!HEA.teams[team]) HEA.teams[team] = Object.assign(makeStats(), { interviewers: new Set() });
-                var HT = HEA.teams[team];
-                var resp = (diagMap[d.interview__key] || {}).responsible;
-                if (resp) HT.interviewers.add(resp);
-                var sl = STATUS_MAP[d.interview__status] || '';
-                function bumpStat(obj) {
-                    obj.total++;
-                    if (sl === 'Completed') obj.completed++;
-                    else if (sl === 'ApprovedBySupervisor') obj.approvedSup++;
-                    else if (sl === 'ApprovedByHQ') obj.approvedHQ++;
-                    else if (sl.indexOf('Rejected') >= 0) obj.rejected++;
-                    else obj.inProgress++;
-                }
-                bumpStat(HT); bumpStat(HEA); bumpStat(HAC); bumpStat(HP);
-            });
-
-            // Stat cards
-            document.getElementById('progTeams').textContent = allFieldTeams.size;
-            document.getElementById('progTeamsDetail').textContent = 'Field teams active';
-            document.getElementById('progProvinces').textContent = Object.keys(fieldHier).length;
-            document.getElementById('progProvDetail').textContent = 'Provinces with data';
-            var allEAsCount = 0, doneEAsCount = 0;
-            Object.keys(fieldHier).forEach(function(p) {
-                Object.keys(fieldHier[p].acs).forEach(function(a) {
-                    Object.keys(fieldHier[p].acs[a].eas).forEach(function(e) {
-                        allEAsCount++;
-                        var ep = fieldHier[p].acs[a].eas[e];
-                        if (ep.rejected === 0 && ep.inProgress === 0) doneEAsCount++;
-                    });
-                });
-            });
-            document.getElementById('progEAsActive').textContent = allEAsCount;
-            document.getElementById('progEAActiveDetail').textContent = 'EAs with interviews';
-            document.getElementById('progEAsDone').textContent = doneEAsCount;
-            document.getElementById('progEADoneDetail').textContent = doneEAsCount + ' of ' + allEAsCount + ' EAs';
-
-            // Render helpers
+            function makeStats() { return { total:0,completed:0,approvedSup:0,approvedHQ:0,rejected:0,inProgress:0 }; }
+            function bumpStat(obj, sl) {
+                obj.total++;
+                if (sl === 'Completed') obj.completed++;
+                else if (sl === 'ApprovedBySupervisor') obj.approvedSup++;
+                else if (sl === 'ApprovedByHQ') obj.approvedHQ++;
+                else if (sl.indexOf('Rejected') >= 0) obj.rejected++;
+                else obj.inProgress++;
+            }
             function rateHtml(done, total) {
                 var rate = total > 0 ? Math.round((done / total) * 100) : 0;
                 var color = rate >= 80 ? '#4ade80' : rate >= 50 ? '#fbbf24' : '#f87171';
@@ -1796,60 +1785,176 @@
             function rejHtml(n) { return '<td>' + (n > 0 ? '<span style="color:#f87171">' + n + '</span>' : '0') + '</td>'; }
             function statCells(s) {
                 return '<td><strong>' + s.total + '</strong></td>' +
-                    '<td>' + s.completed + '</td>' +
-                    '<td>' + s.approvedSup + '</td>' +
-                    '<td>' + s.approvedHQ + '</td>' +
-                    rejHtml(s.rejected) +
+                    '<td>' + s.completed + '</td>' + '<td>' + s.approvedSup + '</td>' +
+                    '<td>' + s.approvedHQ + '</td>' + rejHtml(s.rejected) +
                     '<td>' + s.inProgress + '</td>' +
                     rateHtml(s.completed + s.approvedSup + s.approvedHQ, s.total);
             }
 
-            var hBody = document.querySelector('#progressHierTable tbody');
-            var GT = makeStats();
+            // Populate Province dropdown once
+            var pfProv = document.getElementById('pfProv');
+            var pfAC   = document.getElementById('pfAC');
+            var pfEA   = document.getElementById('pfEA');
+            var pfTeam = document.getElementById('pfTeam');
+            var provsSeen = {};
+            mainData.forEach(function(d) { provsSeen[d.province || 'Unknown'] = 1; });
+            Object.keys(provsSeen).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).forEach(function(p) {
+                var o = document.createElement('option');
+                o.value = p; o.textContent = PROVINCES[p] || 'Province ' + p;
+                pfProv.appendChild(o);
+            });
 
-            Object.keys(fieldHier).sort(function(a,b){ return (parseInt(a)||0)-(parseInt(b)||0); }).forEach(function(prov) {
-                var HP = fieldHier[prov];
-                GT.total += HP.total; GT.completed += HP.completed; GT.approvedSup += HP.approvedSup;
-                GT.approvedHQ += HP.approvedHQ; GT.rejected += HP.rejected; GT.inProgress += HP.inProgress;
-                // Province row
-                var pr = hBody.insertRow();
-                pr.className = 'progress-level-province';
-                pr.innerHTML = '<td colspan="2"><strong>' + (PROVINCES[prov] || 'Province ' + prov) + '</strong></td>' + statCells(HP);
+            // Cascade: repopulate AC/EA/Team options based on current Province + AC filters
+            function populateSubFilters(fProv, fAC) {
+                var prevAC = pfAC.value, prevEA = pfEA.value, prevTeam = pfTeam.value;
+                pfAC.length = 1; pfEA.length = 1; pfTeam.length = 1;
+                var acSet = {}, eaSet = {}, teamSet = {};
+                mainData.forEach(function(d) {
+                    if (fProv && d.province !== fProv) return;
+                    acSet[d.area_council || 'Unknown'] = acName(d.area_council) || d.area_council || 'Unknown';
+                    if (!fAC || d.area_council === fAC) {
+                        eaSet[d.enumeration_area || 'Unknown'] = 1;
+                        teamSet[d.team_id || 'Unknown'] = 1;
+                    }
+                });
+                Object.keys(acSet).sort().forEach(function(ac) {
+                    var o = document.createElement('option'); o.value = ac;
+                    o.textContent = acSet[ac]; pfAC.appendChild(o);
+                });
+                Object.keys(eaSet).sort().forEach(function(ea) {
+                    var o = document.createElement('option'); o.value = ea; o.textContent = ea; pfEA.appendChild(o);
+                });
+                Object.keys(teamSet).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).forEach(function(t) {
+                    var o = document.createElement('option'); o.value = t; o.textContent = 'Team ' + t; pfTeam.appendChild(o);
+                });
+                if (prevAC && Array.from(pfAC.options).some(function(o){return o.value===prevAC;})) pfAC.value = prevAC;
+                if (prevEA && Array.from(pfEA.options).some(function(o){return o.value===prevEA;})) pfEA.value = prevEA;
+                if (prevTeam && Array.from(pfTeam.options).some(function(o){return o.value===prevTeam;})) pfTeam.value = prevTeam;
+            }
+            populateSubFilters('', '');
 
-                Object.keys(HP.acs).sort().forEach(function(ac) {
-                    var HAC = HP.acs[ac];
-                    // Area Council row
-                    var acr = hBody.insertRow();
-                    acr.className = 'progress-level-ac';
-                    acr.innerHTML = '<td colspan="2" style="padding-left:1.4rem;">' + (acName(ac) || ac) + '</td>' + statCells(HAC);
+            function renderFieldHier() {
+                var fProv = pfProv.value, fAC = pfAC.value, fEA = pfEA.value, fTeam = pfTeam.value;
+                var filtered = mainData.filter(function(d) {
+                    if (fProv && d.province !== fProv) return false;
+                    if (fAC   && d.area_council !== fAC) return false;
+                    if (fEA   && d.enumeration_area !== fEA) return false;
+                    if (fTeam && d.team_id !== fTeam) return false;
+                    return true;
+                });
 
-                    Object.keys(HAC.eas).sort().forEach(function(ea) {
-                        var HEA = HAC.eas[ea];
-                        var allDoneEA = HEA.rejected === 0 && HEA.inProgress === 0;
-                        var hasRejEA  = HEA.rejected > 0;
-                        var eaBadge   = hasRejEA
-                            ? ' <span class="status-badge rejected" style="font-size:0.6rem;padding:1px 5px;">Rejected</span>'
-                            : (allDoneEA ? ' <span class="status-badge approved-hq" style="font-size:0.6rem;padding:1px 5px;">Done</span>' : '');
-                        // EA row
-                        var ear = hBody.insertRow();
-                        ear.className = 'progress-level-ea';
-                        ear.innerHTML = '<td colspan="2" style="padding-left:2.8rem;font-style:italic;">' + ea + eaBadge + '</td>' + statCells(HEA);
+                // Build hierarchy from filtered rows
+                var hier = {};
+                var filteredTeams = new Set();
+                filtered.forEach(function(d) {
+                    var prov = d.province || 'Unknown';
+                    var ac   = d.area_council || 'Unknown';
+                    var ea   = d.enumeration_area || 'Unknown';
+                    var team = d.team_id || 'Unknown';
+                    var sl   = STATUS_MAP[d.interview__status] || '';
+                    filteredTeams.add(team);
+                    if (!hier[prov]) hier[prov] = Object.assign(makeStats(), { acs:{} });
+                    bumpStat(hier[prov], sl);
+                    if (!hier[prov].acs[ac]) hier[prov].acs[ac] = Object.assign(makeStats(), { eas:{} });
+                    bumpStat(hier[prov].acs[ac], sl);
+                    if (!hier[prov].acs[ac].eas[ea]) hier[prov].acs[ac].eas[ea] = Object.assign(makeStats(), { teams:{} });
+                    bumpStat(hier[prov].acs[ac].eas[ea], sl);
+                    if (!hier[prov].acs[ac].eas[ea].teams[team])
+                        hier[prov].acs[ac].eas[ea].teams[team] = Object.assign(makeStats(), { interviewers:new Set() });
+                    bumpStat(hier[prov].acs[ac].eas[ea].teams[team], sl);
+                    var resp = (diagMap[d.interview__key] || {}).responsible;
+                    if (resp) hier[prov].acs[ac].eas[ea].teams[team].interviewers.add(resp);
+                });
 
-                        Object.keys(HEA.teams).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).forEach(function(team) {
-                            var HT = HEA.teams[team];
-                            var tr2 = hBody.insertRow();
-                            tr2.className = 'progress-level-team';
-                            tr2.innerHTML = '<td style="padding-left:4.2rem;">Team ' + team + '</td>' +
-                                '<td style="color:#94a3b8;">' + HT.interviewers.size + '</td>' + statCells(HT);
+                // Update stat cards
+                var allEAsCount = 0, doneEAsCount = 0;
+                Object.keys(hier).forEach(function(p) {
+                    Object.keys(hier[p].acs).forEach(function(a) {
+                        Object.keys(hier[p].acs[a].eas).forEach(function(e) {
+                            allEAsCount++;
+                            var ep = hier[p].acs[a].eas[e];
+                            if (ep.rejected === 0 && ep.inProgress === 0) doneEAsCount++;
                         });
                     });
                 });
+                document.getElementById('progTeams').textContent = filteredTeams.size;
+                document.getElementById('progTeamsDetail').textContent = 'Field teams active';
+                document.getElementById('progProvinces').textContent = Object.keys(hier).length;
+                document.getElementById('progProvDetail').textContent = 'Provinces with data';
+                document.getElementById('progEAsActive').textContent = allEAsCount;
+                document.getElementById('progEAActiveDetail').textContent = 'EAs with interviews';
+                document.getElementById('progEAsDone').textContent = doneEAsCount;
+                document.getElementById('progEADoneDetail').textContent = doneEAsCount + ' of ' + allEAsCount + ' EAs';
+
+                var hBody = document.querySelector('#progressHierTable tbody');
+                hBody.innerHTML = '';
+
+                if (filtered.length === 0) {
+                    var noRow = hBody.insertRow();
+                    noRow.innerHTML = '<td colspan="9" style="text-align:center;color:#64748b;padding:24px;">No data matches the selected filters.</td>';
+                    return;
+                }
+
+                var GT = makeStats();
+                Object.keys(hier).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).forEach(function(prov) {
+                    var HP = hier[prov];
+                    GT.total+=HP.total; GT.completed+=HP.completed; GT.approvedSup+=HP.approvedSup;
+                    GT.approvedHQ+=HP.approvedHQ; GT.rejected+=HP.rejected; GT.inProgress+=HP.inProgress;
+                    var pr = hBody.insertRow();
+                    pr.className = 'progress-level-province';
+                    pr.innerHTML = '<td colspan="2"><strong>' + (PROVINCES[prov] || 'Province ' + prov) + '</strong></td>' + statCells(HP);
+
+                    Object.keys(HP.acs).sort().forEach(function(ac) {
+                        var HAC = HP.acs[ac];
+                        var acr = hBody.insertRow();
+                        acr.className = 'progress-level-ac';
+                        acr.innerHTML = '<td colspan="2" style="padding-left:1.4rem;">' + (acName(ac) || ac) + '</td>' + statCells(HAC);
+
+                        Object.keys(HAC.eas).sort().forEach(function(ea) {
+                            var HEA = HAC.eas[ea];
+                            var allDoneEA = HEA.rejected === 0 && HEA.inProgress === 0;
+                            var eaBadge = HEA.rejected > 0
+                                ? ' <span class="status-badge rejected" style="font-size:0.6rem;padding:1px 5px;">Rejected</span>'
+                                : (allDoneEA ? ' <span class="status-badge approved-hq" style="font-size:0.6rem;padding:1px 5px;">Done</span>' : '');
+                            var ear = hBody.insertRow();
+                            ear.className = 'progress-level-ea';
+                            ear.innerHTML = '<td colspan="2" style="padding-left:2.8rem;font-style:italic;">' + ea + eaBadge + '</td>' + statCells(HEA);
+
+                            Object.keys(HEA.teams).sort(function(a,b){return (parseInt(a)||0)-(parseInt(b)||0);}).forEach(function(team) {
+                                var HT = HEA.teams[team];
+                                var tr2 = hBody.insertRow();
+                                tr2.className = 'progress-level-team';
+                                tr2.innerHTML = '<td style="padding-left:4.2rem;">Team ' + team + '</td>' +
+                                    '<td style="color:#94a3b8;">' + HT.interviewers.size + '</td>' + statCells(HT);
+                            });
+                        });
+                    });
+                });
+                var gtr = hBody.insertRow();
+                gtr.className = 'total-row';
+                gtr.innerHTML = '<td colspan="2"><strong>Grand Total</strong></td>' + statCells(GT);
+            }
+
+            // Wire up filter events
+            pfProv.addEventListener('change', function() {
+                pfAC.value=''; pfEA.value=''; pfTeam.value='';
+                populateSubFilters(pfProv.value, '');
+                renderFieldHier();
+            });
+            pfAC.addEventListener('change', function() {
+                pfEA.value=''; pfTeam.value='';
+                populateSubFilters(pfProv.value, pfAC.value);
+                renderFieldHier();
+            });
+            pfEA.addEventListener('change', renderFieldHier);
+            pfTeam.addEventListener('change', renderFieldHier);
+            document.getElementById('pfClear').addEventListener('click', function() {
+                pfProv.value=''; pfAC.value=''; pfEA.value=''; pfTeam.value='';
+                populateSubFilters('', '');
+                renderFieldHier();
             });
 
-            // Grand total row
-            var gtr = hBody.insertRow();
-            gtr.className = 'total-row';
-            gtr.innerHTML = '<td colspan="2"><strong>Grand Total</strong></td>' + statCells(GT);
+            renderFieldHier();
         }
 
         // ---- NAVIGATION ----
