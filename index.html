@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanuatu HIES 2026 Dashboard</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="https://vnso.gov.vu/images/VBoS-Logo.png" alt="VBoS Logo" class="logo"
+                onerror="this.style.display='none'">
+            <h2>HIES 2026-2027</h2>
+            <p class="subtitle">Household Income &amp; Expenditure Survey</p>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item active" data-tab="overview">
+                <span class="nav-icon">&#9632;</span> Overview
+            </li>
+            <li class="nav-item" data-tab="demographics">
+                <span class="nav-icon">&#9775;</span> Demographics
+            </li>
+            <li class="nav-item" data-tab="expenditure">
+                <span class="nav-icon">&#9733;</span> Expenditure
+            </li>
+            <li class="nav-item" data-tab="foodsecurity">
+                <span class="nav-icon">&#9752;</span> Food Security
+            </li>
+            <li class="nav-item" data-tab="housing">
+                <span class="nav-icon">&#8962;</span> Housing &amp; Assets
+            </li>
+            <li class="nav-item" data-tab="map">
+                <span class="nav-icon">&#9873;</span> Survey Map
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>Vanuatu Bureau of Statistics</p>
+            <p class="small">Data as of March 2026 &bull; Round 1</p>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content" id="content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <button class="menu-toggle" id="menuToggle">&#9776;</button>
+            <h1 id="pageTitle">Survey Overview</h1>
+            <div class="topbar-info">
+                <span class="badge">Round 1</span>
+                <span class="badge accent">Fieldwork in Progress</span>
+            </div>
+        </header>
+
+        <!-- OVERVIEW TAB -->
+        <section class="tab-content active" id="tab-overview">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-hh">--</div>
+                    <div class="kpi-label">Households Surveyed</div>
+                    <div class="kpi-sub" id="kpi-hh-sub"></div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-persons">--</div>
+                    <div class="kpi-label">Total Persons</div>
+                    <div class="kpi-sub" id="kpi-persons-sub"></div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-hhsize">--</div>
+                    <div class="kpi-label">Avg. Household Size</div>
+                    <div class="kpi-sub">persons per household</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-food">--</div>
+                    <div class="kpi-label">Food Items Recorded</div>
+                    <div class="kpi-sub" id="kpi-food-sub"></div>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Households by Province</h3>
+                    <canvas id="chart-province-hh"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Persons by Province</h3>
+                    <canvas id="chart-province-persons"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Interview Timeline</h3>
+                    <canvas id="chart-timeline"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Household Size Distribution</h3>
+                    <canvas id="chart-hhsize"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- DEMOGRAPHICS TAB -->
+        <section class="tab-content" id="tab-demographics">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-male">--</div>
+                    <div class="kpi-label">Male</div>
+                </div>
+                <div class="kpi-card pink">
+                    <div class="kpi-value" id="kpi-female">--</div>
+                    <div class="kpi-label">Female</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-sexratio">--</div>
+                    <div class="kpi-label">Sex Ratio (M:F)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-medianage">--</div>
+                    <div class="kpi-label">Median Age</div>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Population Pyramid</h3>
+                    <canvas id="chart-pyramid"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Sex Distribution</h3>
+                    <canvas id="chart-sex-pie"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-card">
+                    <h3>Age Group Distribution</h3>
+                    <canvas id="chart-age-bar"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Province by Sex</h3>
+                    <canvas id="chart-province-sex"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPENDITURE TAB -->
+        <section class="tab-content" id="tab-expenditure">
+            <div class="kpi-grid">
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-totalfood">--</div>
+                    <div class="kpi-label">Total Food Purchase (VT)</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-homeprod">--</div>
+                    <div class="kpi-label">Home Production Value (VT)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-avgfoodhh">--</div>
+                    <div class="kpi-label">Avg. Food Spend/HH (VT)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-nonfood">--</div>
+                    <div class="kpi-label">Non-food Items</div>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Food Expenditure Sources</h3>
+                    <canvas id="chart-food-source"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Purchase vs Home Produced vs Gift</h3>
+                    <canvas id="chart-food-pie"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Food Expenditure by Province</h3>
+                    <canvas id="chart-food-province"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Average Food Spend per Household by Province</h3>
+                    <canvas id="chart-food-avg-province"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOD SECURITY TAB -->
+        <section class="tab-content" id="tab-foodsecurity">
+            <div class="kpi-grid">
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-fies-worried">--</div>
+                    <div class="kpi-label">Worried About Food</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-fies-unhealthy">--</div>
+                    <div class="kpi-label">Unable to Eat Healthy</div>
+                </div>
+                <div class="kpi-card red">
+                    <div class="kpi-value" id="kpi-fies-hungry">--</div>
+                    <div class="kpi-label">Went Hungry</div>
+                </div>
+                <div class="kpi-card red">
+                    <div class="kpi-value" id="kpi-fies-noeat">--</div>
+                    <div class="kpi-label">No Food Whole Day</div>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-card full">
+                    <h3>Food Insecurity Experience Scale (FIES) Indicators</h3>
+                    <canvas id="chart-fies-bar"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-card">
+                    <h3>FIES Severity Distribution</h3>
+                    <canvas id="chart-fies-severity"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>FIES Responses (%)</h3>
+                    <canvas id="chart-fies-radar"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOUSING TAB -->
+        <section class="tab-content" id="tab-housing">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-livestock">--</div>
+                    <div class="kpi-label">Livestock Entries</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-enterprises">--</div>
+                    <div class="kpi-label">Enterprises</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-landaccess">--</div>
+                    <div class="kpi-label">HH with Land Access</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-bank">--</div>
+                    <div class="kpi-label">HH with Bank Account</div>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-card">
+                    <h3>Dwelling Type</h3>
+                    <canvas id="chart-dwelling"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Housing Tenure</h3>
+                    <canvas id="chart-tenure"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-card">
+                    <h3>Number of Rooms</h3>
+                    <canvas id="chart-rooms"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Bank Account & Savings</h3>
+                    <canvas id="chart-financial"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAP TAB -->
+        <section class="tab-content" id="tab-map">
+            <div class="map-container">
+                <div id="survey-map" style="height: 100%; width: 100%;"></div>
+            </div>
+            <div class="map-legend">
+                <h4>Survey Locations</h4>
+                <p>Each marker represents a surveyed household. Click for details.</p>
+                <div class="legend-items">
+                    <span class="legend-dot torba"></span> Torba
+                    <span class="legend-dot sanma"></span> Sanma
+                    <span class="legend-dot penama"></span> Penama
+                    <span class="legend-dot malampa"></span> Malampa
+                    <span class="legend-dot shefa"></span> Shefa
+                    <span class="legend-dot tafea"></span> Tafea
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
