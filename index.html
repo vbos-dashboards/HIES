@@ -21,23 +21,32 @@
             <p class="subtitle">Household Income &amp; Expenditure Survey</p>
         </div>
         <ul class="nav-menu">
-            <li class="nav-item active" data-tab="overview">
-                <span class="nav-icon">&#9632;</span> Overview
+            <li class="nav-item active" data-tab="surveys">
+                <span class="nav-icon">&#128203;</span> Surveys and Statuses
             </li>
-            <li class="nav-item" data-tab="demographics">
-                <span class="nav-icon">&#9775;</span> Demographics
+            <li class="nav-item" data-tab="teams">
+                <span class="nav-icon">&#128101;</span> Teams and Statuses
             </li>
-            <li class="nav-item" data-tab="expenditure">
-                <span class="nav-icon">&#9733;</span> Expenditure
+            <li class="nav-item" data-tab="duration">
+                <span class="nav-icon">&#9201;</span> Status Duration
             </li>
-            <li class="nav-item" data-tab="foodsecurity">
-                <span class="nav-icon">&#9752;</span> Food Security
-            </li>
-            <li class="nav-item" data-tab="housing">
-                <span class="nav-icon">&#8962;</span> Housing &amp; Assets
+            <li class="nav-item" data-tab="devices">
+                <span class="nav-icon">&#128241;</span> Devices/Interviewers
             </li>
             <li class="nav-item" data-tab="map">
-                <span class="nav-icon">&#9873;</span> Survey Map
+                <span class="nav-icon">&#127758;</span> Map Report
+            </li>
+            <li class="nav-item" data-tab="cumulative">
+                <span class="nav-icon">&#128200;</span> Cumulative Interview Chart
+            </li>
+            <li class="nav-item" data-tab="quantity">
+                <span class="nav-icon">&#128202;</span> Quantity
+            </li>
+            <li class="nav-item" data-tab="speed">
+                <span class="nav-icon">&#9889;</span> Speed
+            </li>
+            <li class="nav-item" data-tab="statistics">
+                <span class="nav-icon">&#128201;</span> Survey Statistics
             </li>
         </ul>
         <div class="sidebar-footer">
@@ -58,233 +67,226 @@
             </div>
         </header>
 
-        <!-- OVERVIEW TAB -->
-        <section class="tab-content active" id="tab-overview">
-            <div class="kpi-grid">
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-hh">--</div>
-                    <div class="kpi-label">Households Surveyed</div>
-                    <div class="kpi-sub" id="kpi-hh-sub"></div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-persons">--</div>
-                    <div class="kpi-label">Total Persons</div>
-                    <div class="kpi-sub" id="kpi-persons-sub"></div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-hhsize">--</div>
-                    <div class="kpi-label">Avg. Household Size</div>
-                    <div class="kpi-sub">persons per household</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-food">--</div>
-                    <div class="kpi-label">Food Items Recorded</div>
-                    <div class="kpi-sub" id="kpi-food-sub"></div>
-                </div>
-            </div>
-
-            <div class="chart-row">
-                <div class="chart-card wide">
-                    <h3>Households by Province</h3>
-                    <canvas id="chart-province-hh"></canvas>
-                </div>
-                <div class="chart-card">
-                    <h3>Persons by Province</h3>
-                    <canvas id="chart-province-persons"></canvas>
-                </div>
-            </div>
-
-            <div class="chart-row">
-                <div class="chart-card wide">
-                    <h3>Interview Timeline</h3>
-                    <canvas id="chart-timeline"></canvas>
-                </div>
-                <div class="chart-card">
-                    <h3>Household Size Distribution</h3>
-                    <canvas id="chart-hhsize"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <!-- DEMOGRAPHICS TAB -->
-        <section class="tab-content" id="tab-demographics">
+        <!-- SURVEYS AND STATUSES TAB -->
+        <section class="tab-content active" id="tab-surveys">
             <div class="kpi-grid">
                 <div class="kpi-card blue">
-                    <div class="kpi-value" id="kpi-male">--</div>
-                    <div class="kpi-label">Male</div>
-                </div>
-                <div class="kpi-card pink">
-                    <div class="kpi-value" id="kpi-female">--</div>
-                    <div class="kpi-label">Female</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-sexratio">--</div>
-                    <div class="kpi-label">Sex Ratio (M:F)</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-medianage">--</div>
-                    <div class="kpi-label">Median Age</div>
-                </div>
-            </div>
-
-            <div class="chart-row">
-                <div class="chart-card wide">
-                    <h3>Population Pyramid</h3>
-                    <canvas id="chart-pyramid"></canvas>
-                </div>
-                <div class="chart-card">
-                    <h3>Sex Distribution</h3>
-                    <canvas id="chart-sex-pie"></canvas>
-                </div>
-            </div>
-
-            <div class="chart-row">
-                <div class="chart-card">
-                    <h3>Age Group Distribution</h3>
-                    <canvas id="chart-age-bar"></canvas>
-                </div>
-                <div class="chart-card">
-                    <h3>Province by Sex</h3>
-                    <canvas id="chart-province-sex"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <!-- EXPENDITURE TAB -->
-        <section class="tab-content" id="tab-expenditure">
-            <div class="kpi-grid">
-                <div class="kpi-card green">
-                    <div class="kpi-value" id="kpi-totalfood">--</div>
-                    <div class="kpi-label">Total Food Purchase (VT)</div>
+                    <div class="kpi-value" id="kpi-total-interviews">--</div>
+                    <div class="kpi-label">Total Interviews</div>
                 </div>
                 <div class="kpi-card green">
-                    <div class="kpi-value" id="kpi-homeprod">--</div>
-                    <div class="kpi-label">Home Production Value (VT)</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-avgfoodhh">--</div>
-                    <div class="kpi-label">Avg. Food Spend/HH (VT)</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-nonfood">--</div>
-                    <div class="kpi-label">Non-food Items</div>
-                </div>
-            </div>
-
-            <div class="chart-row">
-                <div class="chart-card wide">
-                    <h3>Food Expenditure Sources</h3>
-                    <canvas id="chart-food-source"></canvas>
-                </div>
-                <div class="chart-card">
-                    <h3>Purchase vs Home Produced vs Gift</h3>
-                    <canvas id="chart-food-pie"></canvas>
-                </div>
-            </div>
-
-            <div class="chart-row">
-                <div class="chart-card wide">
-                    <h3>Food Expenditure by Province</h3>
-                    <canvas id="chart-food-province"></canvas>
-                </div>
-                <div class="chart-card">
-                    <h3>Average Food Spend per Household by Province</h3>
-                    <canvas id="chart-food-avg-province"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <!-- FOOD SECURITY TAB -->
-        <section class="tab-content" id="tab-foodsecurity">
-            <div class="kpi-grid">
-                <div class="kpi-card orange">
-                    <div class="kpi-value" id="kpi-fies-worried">--</div>
-                    <div class="kpi-label">Worried About Food</div>
+                    <div class="kpi-value" id="kpi-completed">--</div>
+                    <div class="kpi-label">Completed</div>
                 </div>
                 <div class="kpi-card orange">
-                    <div class="kpi-value" id="kpi-fies-unhealthy">--</div>
-                    <div class="kpi-label">Unable to Eat Healthy</div>
+                    <div class="kpi-value" id="kpi-approved-sv">--</div>
+                    <div class="kpi-label">Approved by Supervisor</div>
                 </div>
-                <div class="kpi-card red">
-                    <div class="kpi-value" id="kpi-fies-hungry">--</div>
-                    <div class="kpi-label">Went Hungry</div>
-                </div>
-                <div class="kpi-card red">
-                    <div class="kpi-value" id="kpi-fies-noeat">--</div>
-                    <div class="kpi-label">No Food Whole Day</div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-approved-hq">--</div>
+                    <div class="kpi-label">Approved by HQ</div>
                 </div>
             </div>
-
             <div class="chart-row">
-                <div class="chart-card full">
-                    <h3>Food Insecurity Experience Scale (FIES) Indicators</h3>
-                    <canvas id="chart-fies-bar"></canvas>
+                <div class="chart-card wide">
+                    <h3>Interview Status Distribution</h3>
+                    <canvas id="chart-status-bar"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Status Breakdown</h3>
+                    <canvas id="chart-status-pie"></canvas>
                 </div>
             </div>
-
-            <div class="chart-row">
-                <div class="chart-card">
-                    <h3>FIES Severity Distribution</h3>
-                    <canvas id="chart-fies-severity"></canvas>
-                </div>
-                <div class="chart-card">
-                    <h3>FIES Responses (%)</h3>
-                    <canvas id="chart-fies-radar"></canvas>
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>All Surveys</h3>
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-surveys">
+                        <thead>
+                            <tr>
+                                <th>Interview Key</th>
+                                <th>Province</th>
+                                <th>EA</th>
+                                <th>Team</th>
+                                <th>Interviewer</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </section>
 
-        <!-- HOUSING TAB -->
-        <section class="tab-content" id="tab-housing">
+        <!-- TEAMS AND STATUSES TAB -->
+        <section class="tab-content" id="tab-teams">
             <div class="kpi-grid">
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-livestock">--</div>
-                    <div class="kpi-label">Livestock Entries</div>
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-num-teams">--</div>
+                    <div class="kpi-label">Active Teams</div>
                 </div>
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-enterprises">--</div>
-                    <div class="kpi-label">Enterprises</div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-avg-per-team">--</div>
+                    <div class="kpi-label">Avg Interviews/Team</div>
                 </div>
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-landaccess">--</div>
-                    <div class="kpi-label">HH with Land Access</div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-top-team">--</div>
+                    <div class="kpi-label">Top Performing Team</div>
                 </div>
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-bank">--</div>
-                    <div class="kpi-label">HH with Bank Account</div>
-                </div>
-            </div>
-
-            <div class="chart-row">
-                <div class="chart-card">
-                    <h3>Dwelling Type</h3>
-                    <canvas id="chart-dwelling"></canvas>
-                </div>
-                <div class="chart-card">
-                    <h3>Housing Tenure</h3>
-                    <canvas id="chart-tenure"></canvas>
+                <div class="kpi-card red">
+                    <div class="kpi-value" id="kpi-rejected-count">--</div>
+                    <div class="kpi-label">Rejected Interviews</div>
                 </div>
             </div>
-
             <div class="chart-row">
-                <div class="chart-card">
-                    <h3>Number of Rooms</h3>
-                    <canvas id="chart-rooms"></canvas>
+                <div class="chart-card wide">
+                    <h3>Interviews by Team and Status</h3>
+                    <canvas id="chart-team-status"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h3>Bank Account & Savings</h3>
-                    <canvas id="chart-financial"></canvas>
+                    <h3>Team Size (Interviews)</h3>
+                    <canvas id="chart-team-size"></canvas>
+                </div>
+            </div>
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>Team Summary</h3>
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-teams">
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Interviewers</th>
+                                <th>Total</th>
+                                <th>Completed</th>
+                                <th>Approved SV</th>
+                                <th>Approved HQ</th>
+                                <th>Rejected</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </section>
 
-        <!-- MAP TAB -->
+        <!-- STATUS DURATION TAB -->
+        <section class="tab-content" id="tab-duration">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-fieldwork-days">--</div>
+                    <div class="kpi-label">Fieldwork Days</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-approval-rate">--</div>
+                    <div class="kpi-label">Approval Rate</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-rejection-rate">--</div>
+                    <div class="kpi-label">Rejection Rate</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-pending">--</div>
+                    <div class="kpi-label">Pending Review</div>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Status Flow (Interviews by Status Over Time)</h3>
+                    <canvas id="chart-status-timeline"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Approval Pipeline</h3>
+                    <canvas id="chart-approval-funnel"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Interviews per Day by Status</h3>
+                    <canvas id="chart-daily-status"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Rejection vs Approval</h3>
+                    <canvas id="chart-reject-approve"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- DEVICES/INTERVIEWERS TAB -->
+        <section class="tab-content" id="tab-devices">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-num-interviewers">--</div>
+                    <div class="kpi-label">Active Interviewers</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-avg-per-intv">--</div>
+                    <div class="kpi-label">Avg Interviews/Interviewer</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-top-interviewer">--</div>
+                    <div class="kpi-label">Top Interviewer</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-provinces-covered">--</div>
+                    <div class="kpi-label">Provinces Covered</div>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Interviews per Interviewer</h3>
+                    <canvas id="chart-interviewer-bar"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Interviewer Status Distribution</h3>
+                    <canvas id="chart-interviewer-status"></canvas>
+                </div>
+            </div>
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>Interviewer Details</h3>
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-interviewers">
+                        <thead>
+                            <tr>
+                                <th>Interviewer ID</th>
+                                <th>Team</th>
+                                <th>Total Interviews</th>
+                                <th>Completed</th>
+                                <th>Approved</th>
+                                <th>Rejected</th>
+                                <th>Provinces</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAP REPORT TAB -->
         <section class="tab-content" id="tab-map">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-map-hh">--</div>
+                    <div class="kpi-label">Mapped Households</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-map-eas">--</div>
+                    <div class="kpi-label">Enumeration Areas</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-map-provinces">--</div>
+                    <div class="kpi-label">Provinces</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-map-gps">--</div>
+                    <div class="kpi-label">Valid GPS Points</div>
+                </div>
+            </div>
             <div class="map-container">
                 <div id="survey-map" style="height: 100%; width: 100%;"></div>
             </div>
             <div class="map-legend">
-                <h4>Survey Locations</h4>
+                <h4>Survey Locations by Province</h4>
                 <p>Each marker represents a surveyed household. Click for details.</p>
                 <div class="legend-items">
                     <span class="legend-dot torba"></span> Torba
@@ -293,6 +295,189 @@
                     <span class="legend-dot malampa"></span> Malampa
                     <span class="legend-dot shefa"></span> Shefa
                     <span class="legend-dot tafea"></span> Tafea
+                </div>
+            </div>
+        </section>
+
+        <!-- CUMULATIVE INTERVIEW CHART TAB -->
+        <section class="tab-content" id="tab-cumulative">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-cum-total">--</div>
+                    <div class="kpi-label">Total Interviews</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-cum-first">--</div>
+                    <div class="kpi-label">First Interview Date</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-cum-last">--</div>
+                    <div class="kpi-label">Last Interview Date</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-cum-daily-avg">--</div>
+                    <div class="kpi-label">Avg Interviews/Day</div>
+                </div>
+            </div>
+            <div class="chart-card full">
+                <h3>Cumulative Interviews Over Time</h3>
+                <canvas id="chart-cumulative-line"></canvas>
+            </div>
+            <div class="chart-row" style="margin-top:16px;">
+                <div class="chart-card wide">
+                    <h3>Cumulative Interviews by Province</h3>
+                    <canvas id="chart-cumulative-province"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Daily Interview Count</h3>
+                    <canvas id="chart-daily-count"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUANTITY TAB -->
+        <section class="tab-content" id="tab-quantity">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-qty-total">--</div>
+                    <div class="kpi-label">Total Interviews</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-qty-persons">--</div>
+                    <div class="kpi-label">Total Persons</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-qty-avg-hh">--</div>
+                    <div class="kpi-label">Avg Household Size</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-qty-peak">--</div>
+                    <div class="kpi-label">Peak Day Interviews</div>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Interviews by Province</h3>
+                    <canvas id="chart-qty-province"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Interviews by Team</h3>
+                    <canvas id="chart-qty-team"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Quantity per Interviewer</h3>
+                    <canvas id="chart-qty-interviewer"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Persons per Province</h3>
+                    <canvas id="chart-qty-persons-prov"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPEED TAB -->
+        <section class="tab-content" id="tab-speed">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-speed-daily">--</div>
+                    <div class="kpi-label">Avg Interviews/Day</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-speed-team-day">--</div>
+                    <div class="kpi-label">Avg per Team/Day</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-speed-intv-day">--</div>
+                    <div class="kpi-label">Avg per Interviewer/Day</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-speed-peak">--</div>
+                    <div class="kpi-label">Peak Daily Output</div>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Daily Interview Rate</h3>
+                    <canvas id="chart-speed-daily"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Team Productivity</h3>
+                    <canvas id="chart-speed-team"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Interviewer Productivity (Interviews/Day)</h3>
+                    <canvas id="chart-speed-interviewer"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Province Collection Speed</h3>
+                    <canvas id="chart-speed-province"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SURVEY STATISTICS TAB -->
+        <section class="tab-content" id="tab-statistics">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-stat-hh">--</div>
+                    <div class="kpi-label">Households Surveyed</div>
+                    <div class="kpi-sub" id="kpi-stat-hh-sub"></div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-stat-persons">--</div>
+                    <div class="kpi-label">Total Persons</div>
+                    <div class="kpi-sub" id="kpi-stat-persons-sub"></div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-stat-hhsize">--</div>
+                    <div class="kpi-label">Avg Household Size</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-stat-sexratio">--</div>
+                    <div class="kpi-label">Sex Ratio (M per 100F)</div>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Population Pyramid</h3>
+                    <canvas id="chart-stat-pyramid"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Sex Distribution</h3>
+                    <canvas id="chart-stat-sex"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Households by Province</h3>
+                    <canvas id="chart-stat-province"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Household Size Distribution</h3>
+                    <canvas id="chart-stat-hhsize"></canvas>
+                </div>
+            </div>
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>Province Summary</h3>
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-province-summary">
+                        <thead>
+                            <tr>
+                                <th>Province</th>
+                                <th>Households</th>
+                                <th>Persons</th>
+                                <th>Avg HH Size</th>
+                                <th>Male</th>
+                                <th>Female</th>
+                                <th>Sex Ratio</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </section>

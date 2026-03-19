@@ -462,6 +462,83 @@ body {
     }
 }
 
+/* ===== Data Tables ===== */
+.table-wrapper {
+    overflow-x: auto;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.data-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.data-table th {
+    background: var(--primary);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.data-table tbody tr:hover {
+    background: #eaf2fb;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background: #f8f9fb;
+}
+
+.data-table tbody tr:nth-child(even):hover {
+    background: #eaf2fb;
+}
+
+/* ===== Status Badges ===== */
+.status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: white;
+    background: #95a5a6;
+}
+
+.status-badge.status-65 {
+    background: #e74c3c;
+}
+
+.status-badge.status-100 {
+    background: #3498db;
+}
+
+.status-badge.status-120 {
+    background: #2ecc71;
+}
+
+.status-badge.status-125 {
+    background: #e67e22;
+}
+
+.status-badge.status-130 {
+    background: #9b59b6;
+}
+
 /* ===== Scrollbar ===== */
 ::-webkit-scrollbar {
     width: 8px;
