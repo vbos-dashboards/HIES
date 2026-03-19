@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VUTHIES 2026 - Survey Monitoring Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0c1426;
+            color: #e2e8f0;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a3a5c 0%, #0c1e36 60%, #091428 100%);
+            padding: 18px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #1d4ed8;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(59, 130, 246, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1100;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .header .subtitle {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 2px;
+        }
+
+        .header .refresh-info {
+            color: #64748b;
+            font-size: 0.75rem;
+            text-align: right;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: #3b82f6;
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin-left: 10px;
+            font-weight: 600;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: #111d30;
+            border-bottom: 1px solid #1e2d45;
+            padding: 0 24px;
+            display: flex;
+            gap: 0;
+            position: sticky;
+            top: 76px;
+            z-index: 1000;
+            overflow-x: auto;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav-bar::-webkit-scrollbar {
+            height: 0;
+        }
+
+        .nav-bar a {
+            color: #64748b;
+            text-decoration: none;
+            padding: 13px 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.01em;
+        }
+
+        .nav-bar a i {
+            font-size: 0.95rem;
+        }
+
+        .nav-bar a:hover {
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .nav-bar a.active {
+            color: #60a5fa;
+            border-bottom-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.07);
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Stats */
+        .top-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            padding: 20px 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, #1a2540 0%, #1e293b 100%);
+            border-radius: 14px;
+            padding: 20px 22px;
+            border: 1px solid #1e3051;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .stat-card.blue::before {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+
+        .stat-card.green::before {
+            background: linear-gradient(90deg, #22c55e, #4ade80);
+        }
+
+        .stat-card.amber::before {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+        }
+
+        .stat-card.red::before {
+            background: linear-gradient(90deg, #ef4444, #f87171);
+        }
+
+        .stat-card.purple::before {
+            background: linear-gradient(90deg, #a855f7, #c084fc);
+        }
+
+        .stat-card.cyan::before {
+            background: linear-gradient(90deg, #06b6d4, #22d3ee);
+        }
+
+        .stat-card.blue:hover {
+            box-shadow: 0 8px 28px rgba(59, 130, 246, 0.25);
+            border-color: #1d4ed8;
+        }
+
+        .stat-card.green:hover {
+            box-shadow: 0 8px 28px rgba(34, 197, 94, 0.22);
+            border-color: #166534;
+        }
+
+        .stat-card.amber:hover {
+            box-shadow: 0 8px 28px rgba(245, 158, 11, 0.22);
+            border-color: #92400e;
+        }
+
+        .stat-card.red:hover {
+            box-shadow: 0 8px 28px rgba(239, 68, 68, 0.22);
+            border-color: #7f1d1d;
+        }
+
+        .stat-card.purple:hover {
+            box-shadow: 0 8px 28px rgba(168, 85, 247, 0.22);
+            border-color: #581c87;
+        }
+
+        .stat-card.cyan:hover {
+            box-shadow: 0 8px 28px rgba(6, 182, 212, 0.22);
+            border-color: #164e63;
+        }
+
+        .stat-card .label {
+            font-size: 0.68rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            font-weight: 600;
+        }
+
+        .stat-card .value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 8px 0 4px;
+            letter-spacing: -0.02em;
+        }
+
+        .stat-card.blue .value {
+            color: #60a5fa;
+        }
+
+        .stat-card.green .value {
+            color: #4ade80;
+        }
+
+        .stat-card.amber .value {
+            color: #fbbf24;
+        }
+
+        .stat-card.red .value {
+            color: #f87171;
+        }
+
+        .stat-card.purple .value {
+            color: #c084fc;
+        }
+
+        .stat-card.cyan .value {
+            color: #22d3ee;
+        }
+
+        .stat-card .detail {
+            font-size: 0.7rem;
+            color: #64748b;
+        }
+
+        /* Grid & panels */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+            padding: 0 30px 30px;
+        }
+
+        .panel {
+            background: linear-gradient(160deg, #1b2740 0%, #1a2437 100%);
+            border-radius: 14px;
+            padding: 22px;
+            border: 1px solid #1e2d45;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .panel:hover {
+            border-color: #2d4a6b;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+        }
+
+        .panel h3 {
+            font-size: 0.78rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #1e2d45;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .chart-sm {
+            height: 260px;
+        }
+
+        .chart-md {
+            height: 320px;
+        }
+
+        .chart-lg {
+            height: 400px;
+        }
+
+        #gpsMap {
+            height: 500px;
+            border-radius: 8px;
+        }
+
+        /* Tables */
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        table.data-table th {
+            background: #0a1120;
+            color: #64748b;
+            padding: 11px 13px;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            letter-spacing: 0.07em;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        table.data-table td {
+            padding: 10px 13px;
+            border-top: 1px solid #172033;
+            color: #cbd5e1;
+            font-size: 0.8rem;
+        }
+
+        table.data-table tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.018);
+        }
+
+        table.data-table tr:hover td {
+            background: rgba(59, 130, 246, 0.07);
+        }
+
+        /* Status badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        .status-badge.completed {
+            background: rgba(22, 101, 52, 0.5);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+
+        .status-badge.approved-sup {
+            background: rgba(30, 58, 95, 0.5);
+            color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .status-badge.approved-hq {
+            background: rgba(88, 28, 135, 0.5);
+            color: #c084fc;
+            border: 1px solid rgba(192, 132, 252, 0.2);
+        }
+
+        .status-badge.rejected {
+            background: rgba(127, 29, 29, 0.5);
+            color: #f87171;
+            border: 1px solid rgba(248, 113, 113, 0.2);
+        }
+
+        /* Matrix table */
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+        }
+
+        .matrix-table th,
+        .matrix-table td {
+            padding: 10px 14px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+
+        .matrix-table th {
+            background: #0f172a;
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+        }
+
+        .matrix-table td {
+            color: #cbd5e1;
+        }
+
+        .matrix-table td.row-label {
+            text-align: left;
+            font-weight: 600;
+            color: #e2e8f0;
+            background: #0f172a;
+        }
+
+        .matrix-table tr:hover td {
+            background: #334155;
+        }
+
+        .matrix-table .total-row td {
+            background: #0f172a;
+            font-weight: 700;
+            color: #e2e8f0;
+            border-top: 2px solid #3b82f6;
+        }
+
+        /* Field Progress hierarchy rows */
+        .progress-level-province td {
+            background: #0b1e3d;
+            color: #93c5fd;
+            font-weight: 700;
+            border-top: 2px solid #2563eb !important;
+        }
+
+        .progress-level-ac td {
+            background: #0f1e33;
+            color: #bfdbfe;
+            font-weight: 600;
+            border-top: 1px solid #1e3a5f !important;
+        }
+
+        .progress-level-ea td {
+            background: #121c2e;
+            color: #94a3b8;
+            border-top: 1px dashed #1e3a5f !important;
+        }
+
+        .progress-level-team td {
+            background: #0d1526;
+            color: #cbd5e1;
+        }
+
+        .progress-level-province:hover td,
+        .progress-level-ac:hover td,
+        .progress-level-ea:hover td,
+        .progress-level-team:hover td {
+            filter: brightness(1.15);
+        }
+
+        /* Error items */
+        .error-item {
+            background: #1a1a2e;
+            border-left: 3px solid #ef4444;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.8rem;
+        }
+
+        .error-item .error-key {
+            color: #f87171;
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        .error-item .error-var {
+            color: #fbbf24;
+            font-size: 0.7rem;
+        }
+
+        .error-item .error-msg {
+            color: #cbd5e1;
+            margin-top: 4px;
+        }
+
+        /* Progress bars */
+        .progress-bar-bg {
+            background: #334155;
+            border-radius: 6px;
+            height: 10px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        /* Tooltips */
+        [data-tooltip] {
+            position: relative;
+            cursor: help;
+        }
+
+        [data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: normal;
+            text-transform: none;
+            white-space: normal;
+            width: max-content;
+            max-width: 280px;
+            line-height: 1.4;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-tooltip]::before {
+            content: '';
+            position: absolute;
+            bottom: calc(100% + 2px);
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #475569;
+            z-index: 1001;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        [data-tooltip]:hover::after,
+        [data-tooltip]:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card[data-tooltip]::after {
+            bottom: auto;
+            top: calc(100% + 8px);
+        }
+
+        .stat-card[data-tooltip]::before {
+            bottom: auto;
+            top: calc(100% + 2px);
+            border-top-color: transparent;
+            border-bottom-color: #475569;
+        }
+
+        .panel h3 .info-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #334155;
+            color: #94a3b8;
+            border-radius: 50%;
+            font-size: 0.6rem;
+            text-align: center;
+            line-height: 16px;
+            margin-left: 6px;
+            vertical-align: middle;
+            cursor: help;
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        .panel h3 .info-icon:hover {
+            background: #475569;
+            color: #e2e8f0;
+        }
+
+        /* ---- Mobile responsive ---- */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 14px 16px;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 1.15rem;
+            }
+
+            .header .subtitle {
+                font-size: 0.75rem;
+            }
+
+            .header .refresh-info {
+                text-align: center;
+            }
+
+            .header>div:last-child {
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+            }
+
+            #exportPdfBtn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .nav-bar {
+                padding: 0 8px;
+                gap: 0;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .nav-bar a {
+                padding: 10px 12px;
+                font-size: 0.72rem;
+            }
+
+            .top-stats {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 12px 12px;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 14px;
+            }
+
+            .stat-card .value {
+                font-size: 1.5rem;
+            }
+
+            .stat-card .label {
+                font-size: 0.68rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                padding: 0 12px 20px;
+                gap: 14px;
+            }
+
+            .panel {
+                padding: 14px;
+            }
+
+            .panel h3 {
+                font-size: 0.8rem;
+                margin-bottom: 12px;
+            }
+
+            .chart-sm {
+                height: 200px;
+            }
+
+            .chart-md {
+                height: 240px;
+            }
+
+            .chart-lg {
+                height: 280px;
+            }
+
+            #gpsMap {
+                height: 350px;
+            }
+
+            table.data-table {
+                font-size: 0.7rem;
+            }
+
+            table.data-table th,
+            table.data-table td {
+                padding: 7px 8px;
+            }
+
+            .matrix-table {
+                font-size: 0.68rem;
+            }
+
+            .matrix-table th,
+            .matrix-table td {
+                padding: 7px 8px;
+            }
+
+            /* Make tables horizontally scrollable */
+            .panel {
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1rem;
+            }
+
+            .header .badge {
+                font-size: 0.6rem;
+                padding: 2px 8px;
+                margin-left: 6px;
+            }
+
+            .top-stats {
+                grid-template-columns: 1fr 1fr;
+                padding: 10px 10px;
+                gap: 8px;
+            }
+
+            .stat-card .value {
+                font-size: 1.3rem;
+            }
+
+            .dashboard-grid {
+                padding: 0 10px 16px;
+            }
+
+            .nav-bar a {
+                padding: 9px 10px;
+                font-size: 0.68rem;
+            }
+
+            #gpsMap {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div style="display:flex;align-items:center;gap:16px;">
+            <img src="data:image/png;base64,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"
+                alt="HIES Logo" style="height:50px;">
+            <div>
+                <h1>Vanuatu HIES 2026 <span class="badge">MONITORING</span></h1>
+                <div class="subtitle">Survey Data Collection Monitoring Dashboard</div>
+            </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+            <button id="exportPdfBtn" onclick="document.getElementById('pdfModal').style.display='flex'"
+                style="background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border:none;padding:9px 20px;border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all 0.2s;box-shadow:0 4px 14px rgba(59,130,246,0.35);letter-spacing:0.02em;"
+                onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(59,130,246,0.5)'"
+                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 14px rgba(59,130,246,0.35)'"><i
+                    class="bi bi-file-earmark-pdf-fill" style="font-size:0.95rem;"></i>
+                Export PDF</button>
+            <div class="refresh-info">
+                <div id="lastUpdate"></div>
+                <div>Data exported: 16 Mar 2026</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Export Modal -->
+    <div id="pdfModal"
+        style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;">
+        <div
+            style="background:#1e293b;border-radius:16px;padding:28px;width:480px;max-width:92vw;max-height:85vh;overflow-y:auto;border:1px solid #334155;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                <h2 style="color:#e2e8f0;font-size:1.1rem;margin:0;">&#128196; Export PDF Report</h2>
+                <button onclick="document.getElementById('pdfModal').style.display='none'"
+                    style="background:none;border:none;color:#94a3b8;font-size:1.4rem;cursor:pointer;padding:4px 8px;">&times;</button>
+            </div>
+            <p style="color:#94a3b8;font-size:0.8rem;margin-bottom:16px;">Select the sections to include in your PDF
+                report:</p>
+            <div style="margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #334155;">
+                <label
+                    style="display:flex;align-items:center;gap:8px;color:#60a5fa;font-size:0.82rem;cursor:pointer;font-weight:600;"><input
+                        type="checkbox" id="pdfSelectAll" checked
+                        onchange="document.querySelectorAll('.pdf-section-cb').forEach(function(c){c.checked=this.checked}.bind(this))">
+                    Select / Deselect All</label>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;" id="pdfSections">
+                <label
+                    style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input
+                        type="checkbox" class="pdf-section-cb" value="surveys" checked> Surveys and Statuses</label>
+                <label
+                    style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input
+                        type="checkbox" class="pdf-section-cb" value="teams" checked> Teams and Statuses</label>
+                <label
+                    style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input
+                        type="checkbox" class="pdf-section-cb" value="progress" checked> Field Progress</label>
+                <label
+                    style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input
+                        type="checkbox" class="pdf-section-cb" value="statusduration" checked> Status Duration</label>
+                <label
+                    style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input
+                        type="checkbox" class="pdf-section-cb" value="devices" checked> Devices / Interviewers</label>
+                <label
+                    style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input
+                        type="checkbox" class="pdf-section-cb" value="map" checked> Map Report</label>
+                <label
+                    style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input
+                        type="checkbox" class="pdf-section-cb" value="cumulative" checked> Cumulative Interview
+                    Chart</label>
+                <label
+                    style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input
+                        type="checkbox" class="pdf-section-cb" value="quantity" checked> Quantity</label>
+                <label
+                    style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input
+                        type="checkbox" class="pdf-section-cb" value="speed" checked> Speed</label>
+                <label
+                    style="display:flex;align-items:center;gap:8px;color:#cbd5e1;font-size:0.82rem;cursor:pointer;"><input
+                        type="checkbox" class="pdf-section-cb" value="statistics" checked> Survey Statistics</label>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;">
+                <button onclick="document.getElementById('pdfModal').style.display='none'"
+                    style="background:#334155;color:#cbd5e1;border:none;padding:9px 20px;border-radius:8px;font-size:0.82rem;cursor:pointer;">Cancel</button>
+                <button id="pdfGenerateBtn" onclick="generatePDF()"
+                    style="background:#3b82f6;color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;">Generate
+                    PDF</button>
+            </div>
+            <div id="pdfProgress" style="display:none;margin-top:16px;">
+                <div style="display:flex;align-items:center;gap:10px;color:#94a3b8;font-size:0.8rem;"><span
+                        id="pdfProgressText">Generating...</span></div>
+                <div style="background:#334155;border-radius:6px;height:6px;margin-top:8px;overflow:hidden;">
+                    <div id="pdfProgressBar"
+                        style="height:100%;background:#3b82f6;border-radius:6px;width:0%;transition:width 0.3s;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-bar" id="navBar">
+        <a data-page="surveys" class="active"><i class="bi bi-clipboard-data-fill"></i>Surveys &amp; Statuses</a>
+        <a data-page="teams"><i class="bi bi-people-fill"></i>Teams &amp; Statuses</a>
+        <a data-page="progress"><i class="bi bi-map-fill"></i>Field Progress</a>
+        <a data-page="statusduration"><i class="bi bi-clock-history"></i>Status Duration</a>
+        <a data-page="devices"><i class="bi bi-phone-fill"></i>Devices / Interviewers</a>
+        <a data-page="map"><i class="bi bi-geo-alt-fill"></i>Map Report</a>
+        <a data-page="cumulative"><i class="bi bi-graph-up-arrow"></i>Cumulative Chart</a>
+        <a data-page="quantity"><i class="bi bi-bar-chart-fill"></i>Quantity</a>
+        <a data-page="speed"><i class="bi bi-speedometer2"></i>Speed</a>
+        <a data-page="statistics"><i class="bi bi-pie-chart-fill"></i>Survey Statistics</a>
+    </div>
+
+    <!-- ===== 1. SURVEYS AND STATUSES ===== -->
+    <div class="page-section active" id="page-surveys">
+        <div class="top-stats">
+            <div class="stat-card blue" data-tooltip="Total number of household interviews in this data export.">
+                <div class="label">Total Interviews</div>
+                <div class="value" id="totalInterviews">-</div>
+                <div class="detail" id="interviewDetail">Loading...</div>
+            </div>
+            <div class="stat-card green" data-tooltip="Interviews approved by supervisor or HQ.">
+                <div class="label">Approved</div>
+                <div class="value" id="totalApproved">-</div>
+                <div class="detail" id="approvedDetail"></div>
+            </div>
+            <div class="stat-card amber" data-tooltip="Interviews completed by interviewer but not yet approved.">
+                <div class="label">Completed</div>
+                <div class="value" id="totalCompleted">-</div>
+                <div class="detail" id="completedDetail"></div>
+            </div>
+            <div class="stat-card red" data-tooltip="Interviews rejected by supervisor or HQ.">
+                <div class="label">Rejected</div>
+                <div class="value" id="totalRejected">-</div>
+                <div class="detail" id="rejectedDetail"></div>
+            </div>
+        </div>
+        <div class="dashboard-grid">
+            <div class="panel">
+                <h3>Interview Status Distribution <i class="info-icon"
+                        data-tooltip="Breakdown of interview workflow stages: Completed, Approved by Supervisor, Approved by HQ, or Rejected.">?</i>
+                </h3>
+                <div class="chart-container chart-sm"><canvas id="statusChart"></canvas></div>
+            </div>
+            <div class="panel">
+                <h3>Status by Province <i class="info-icon"
+                        data-tooltip="Number of interviews per province colored by their current workflow status.">?</i>
+                </h3>
+                <div class="chart-container chart-sm"><canvas id="statusProvinceChart"></canvas></div>
+            </div>
+            <div class="panel full-width">
+                <h3>Interview Details <i class="info-icon"
+                        data-tooltip="Full list of all interviews with geographic details, household size, interviewer, timing, error count and workflow status.">?</i>
+                </h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="interviewTable">
+                        <thead>
+                            <tr>
+                                <th data-tooltip="Unique interview identifier">Interview Key</th>
+                                <th data-tooltip="Province where the interview was conducted">Province</th>
+                                <th data-tooltip="Area council within the province">Area Council</th>
+                                <th data-tooltip="Enumeration area code">EA</th>
+                                <th data-tooltip="Village name">Village</th>
+                                <th data-tooltip="Number of household members">HH Size</th>
+                                <th data-tooltip="Interviewer who conducted the interview">Interviewer</th>
+                                <th data-tooltip="Date the interview was started">Date</th>
+                                <th data-tooltip="Total interview duration">Duration</th>
+                                <th data-tooltip="Number of validation errors">Errors</th>
+                                <th data-tooltip="Current workflow status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 2. TEAMS AND STATUSES ===== -->
+    <div class="page-section" id="page-teams">
+        <div class="dashboard-grid">
+            <div class="panel full-width">
+                <h3>Team &times; Status Matrix <i class="info-icon"
+                        data-tooltip="Cross-tabulation showing the number of interviews in each workflow status per field team.">?</i>
+                </h3>
+                <div style="overflow-x:auto;">
+                    <table class="matrix-table" id="teamStatusMatrix">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel full-width">
+                <h3>Team Status Distribution <i class="info-icon"
+                        data-tooltip="Stacked bar chart showing the composition of interview statuses within each team.">?</i>
+                </h3>
+                <div class="chart-container chart-md"><canvas id="teamStatusChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FIELD PROGRESS ===== -->
+    <div class="page-section" id="page-progress">
+        <div class="top-stats">
+            <div class="stat-card blue" data-tooltip="Number of field teams active in this export.">
+                <div class="label">Active Teams</div>
+                <div class="value" id="progTeams">-</div>
+                <div class="detail" id="progTeamsDetail"></div>
+            </div>
+            <div class="stat-card green" data-tooltip="Number of provinces with at least one interview.">
+                <div class="label">Provinces Active</div>
+                <div class="value" id="progProvinces">-</div>
+                <div class="detail" id="progProvDetail"></div>
+            </div>
+            <div class="stat-card purple" data-tooltip="Enumeration Areas where interviews have started.">
+                <div class="label">EAs Active</div>
+                <div class="value" id="progEAsActive">-</div>
+                <div class="detail" id="progEAActiveDetail"></div>
+            </div>
+            <div class="stat-card amber"
+                data-tooltip="EAs where all interviews are completed or approved with no rejections.">
+                <div class="label">EAs Completed</div>
+                <div class="value" id="progEAsDone">-</div>
+                <div class="detail" id="progEADoneDetail"></div>
+            </div>
+        </div>
+        <div class="dashboard-grid">
+            <div class="panel full-width">
+                <h3>Field Progress by Province / Area Council / EA / Team
+                    <i class="info-icon"
+                        data-tooltip="Hierarchical view: Province → Area Council → Enumeration Area → Team. Interview counts and completion rate at each level. EAs marked Done have no rejections and no in-progress interviews.">?</i>
+                </h3>
+                <div id="progressFilters"
+                    style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center;">
+                    <span class="progress-filter-label">Filter by:</span>
+                    <select id="pfProv" class="progress-filter">
+                        <option value="">All Provinces</option>
+                    </select>
+                    <select id="pfAC" class="progress-filter">
+                        <option value="">All Area Councils</option>
+                    </select>
+                    <select id="pfEA" class="progress-filter">
+                        <option value="">All EAs</option>
+                    </select>
+                    <select id="pfTeam" class="progress-filter">
+                        <option value="">All Teams</option>
+                    </select>
+                    <button id="pfClear" class="progress-filter-clear">&#10005; Clear</button>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="progressHierTable">
+                        <thead>
+                            <tr>
+                                <th style="min-width:240px">Province / AC / EA / Team</th>
+                                <th>Interviewers</th>
+                                <th>Total</th>
+                                <th>Completed</th>
+                                <th>Approved (Sup)</th>
+                                <th>Approved (HQ)</th>
+                                <th>Rejected</th>
+                                <th>In Progress</th>
+                                <th>Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel full-width">
+                <h3>Interviews by Interviewer
+                    <i class="info-icon"
+                        data-tooltip="Number of interviews conducted per interviewer, broken down by status. Respects the filters above.">?</i>
+                </h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="progressIntTable">
+                        <thead>
+                            <tr>
+                                <th>Interviewer</th>
+                                <th>Team</th>
+                                <th>Province(s)</th>
+                                <th>EA(s)</th>
+                                <th>Total</th>
+                                <th>Completed</th>
+                                <th>Approved (Sup)</th>
+                                <th>Approved (HQ)</th>
+                                <th>Rejected</th>
+                                <th>In Progress</th>
+                                <th>Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 3. STATUS DURATION ===== -->
+    <div class="page-section" id="page-statusduration">
+        <div class="dashboard-grid">
+            <div class="panel full-width">
+                <h3>Average Time in Each Status <i class="info-icon"
+                        data-tooltip="Average time interviews spend in each workflow status before transitioning. Computed from the interview actions log.">?</i>
+                </h3>
+                <div class="chart-container chart-md"><canvas id="statusDurationChart"></canvas></div>
+            </div>
+            <div class="panel full-width">
+                <h3>Status Transition Timeline <i class="info-icon"
+                        data-tooltip="Detailed timeline of all status transitions per interview, showing when each workflow action occurred.">?</i>
+                </h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="statusTimelineTable">
+                        <thead>
+                            <tr>
+                                <th>Interview Key</th>
+                                <th>Action</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Originator</th>
+                                <th>Role</th>
+                                <th>Time Since Previous</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 4. DEVICES / INTERVIEWERS ===== -->
+    <div class="page-section" id="page-devices">
+        <div class="top-stats">
+            <div class="stat-card blue" data-tooltip="Number of distinct field teams active in this export.">
+                <div class="label">Active Teams</div>
+                <div class="value" id="devTeams">-</div>
+                <div class="detail" id="devTeamsDetail"></div>
+            </div>
+            <div class="stat-card green" data-tooltip="Number of distinct interviewers who have submitted data.">
+                <div class="label">Interviewers</div>
+                <div class="value" id="devInterviewers">-</div>
+                <div class="detail" id="devIntDetail"></div>
+            </div>
+            <div class="stat-card purple" data-tooltip="Number of distinct supervisors who appear in the actions log.">
+                <div class="label">Supervisors</div>
+                <div class="value" id="devSupervisors">-</div>
+                <div class="detail" id="devSupDetail"></div>
+            </div>
+        </div>
+        <div class="dashboard-grid">
+            <div class="panel full-width">
+                <h3>Interviewer Performance <i class="info-icon"
+                        data-tooltip="Summary per interviewer showing total interviews, validation errors, average duration, and current approval status.">?</i>
+                </h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="interviewerTable">
+                        <thead>
+                            <tr>
+                                <th data-tooltip="Interviewer ID">Interviewer</th>
+                                <th data-tooltip="Field team">Team</th>
+                                <th data-tooltip="Total interviews">Interviews</th>
+                                <th data-tooltip="Total errors">Errors</th>
+                                <th data-tooltip="Unanswered questions">Unanswered</th>
+                                <th data-tooltip="Average duration">Avg Duration</th>
+                                <th data-tooltip="Last activity date">Last Active</th>
+                                <th data-tooltip="Interview statuses">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel full-width">
+                <h3>Supervisor Activity <i class="info-icon"
+                        data-tooltip="Supervisor approvals and rejections from the actions log.">?</i></h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="supervisorTable">
+                        <thead>
+                            <tr>
+                                <th>Supervisor</th>
+                                <th>Approvals</th>
+                                <th>Rejections</th>
+                                <th>Last Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 5. MAP REPORT ===== -->
+    <div class="page-section" id="page-map">
+        <div class="dashboard-grid">
+            <div class="panel full-width">
+                <h3>Interview Locations (GPS) <i class="info-icon"
+                        data-tooltip="Map of all interview GPS coordinates. Marker colors indicate status: green=Completed, blue=Approved by Supervisor, purple=Approved by HQ.">?</i>
+                </h3>
+                <div id="gpsMap"></div>
+            </div>
+            <div class="panel">
+                <h3>GPS Quality <i class="info-icon"
+                        data-tooltip="GPS accuracy metrics for all interviews with valid coordinates.">?</i></h3>
+                <div id="gpsQuality"></div>
+            </div>
+            <div class="panel">
+                <h3>Interviews by Province <i class="info-icon"
+                        data-tooltip="Number of interviews collected per province.">?</i></h3>
+                <div class="chart-container chart-sm"><canvas id="provinceChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 6. CUMULATIVE INTERVIEW CHART ===== -->
+    <div class="page-section" id="page-cumulative">
+        <div class="dashboard-grid">
+            <div class="panel full-width">
+                <h3>Cumulative Interviews Over Time <i class="info-icon"
+                        data-tooltip="Line chart showing the cumulative number of interviews created over time, based on the interview actions log.">?</i>
+                </h3>
+                <div class="chart-container chart-lg"><canvas id="cumulativeChart"></canvas></div>
+            </div>
+            <div class="panel full-width">
+                <h3>Daily Interview Count <i class="info-icon"
+                        data-tooltip="Number of interviews started per day, showing the daily data collection rate.">?</i>
+                </h3>
+                <div class="chart-container chart-md"><canvas id="dailyChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 7. QUANTITY ===== -->
+    <div class="page-section" id="page-quantity">
+        <div class="dashboard-grid">
+            <div class="panel">
+                <h3>Interviews by Interviewer <i class="info-icon"
+                        data-tooltip="Number of interviews completed by each interviewer.">?</i></h3>
+                <div class="chart-container chart-md"><canvas id="qtyInterviewerChart"></canvas></div>
+            </div>
+            <div class="panel">
+                <h3>Interviews by Team <i class="info-icon"
+                        data-tooltip="Number of interviews completed by each field team.">?</i></h3>
+                <div class="chart-container chart-md"><canvas id="qtyTeamChart"></canvas></div>
+            </div>
+            <div class="panel">
+                <h3>Household Members by Province <i class="info-icon"
+                        data-tooltip="Number of household members enumerated per province.">?</i></h3>
+                <div class="chart-container chart-md"><canvas id="qtyMemberProvinceChart"></canvas></div>
+            </div>
+            <div class="panel">
+                <h3>Household Size Distribution <i class="info-icon"
+                        data-tooltip="Distribution of household sizes across all interviewed households.">?</i></h3>
+                <div class="chart-container chart-md"><canvas id="qtyHHSizeChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 8. SPEED ===== -->
+    <div class="page-section" id="page-speed">
+        <div class="top-stats" id="speedStats"></div>
+        <div class="dashboard-grid">
+            <div class="panel full-width">
+                <h3>Interview Duration by Interviewer <i class="info-icon"
+                        data-tooltip="Average, minimum, and maximum interview duration per interviewer.">?</i></h3>
+                <div class="chart-container chart-md"><canvas id="durationChart"></canvas></div>
+            </div>
+            <div class="panel full-width">
+                <h3>Speed Details by Interview <i class="info-icon"
+                        data-tooltip="Duration and speed metrics for each individual interview.">?</i></h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table" id="speedTable">
+                        <thead>
+                            <tr>
+                                <th>Interview Key</th>
+                                <th>Interviewer</th>
+                                <th>Team</th>
+                                <th>Duration</th>
+                                <th>Errors</th>
+                                <th>Unanswered</th>
+                                <th>Rejections</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 9. SURVEY STATISTICS ===== -->
+    <div class="page-section" id="page-statistics">
+        <div class="top-stats">
+            <div class="stat-card blue" data-tooltip="Total number of household interviews in this data export.">
+                <div class="label">Interviews</div>
+                <div class="value" id="statInterviews">-</div>
+                <div class="detail" id="statIntDetail"></div>
+            </div>
+            <div class="stat-card green" data-tooltip="Total individuals enumerated across all interviewed households.">
+                <div class="label">HH Members</div>
+                <div class="value" id="statMembers">-</div>
+                <div class="detail" id="statMemDetail"></div>
+            </div>
+            <div class="stat-card red" data-tooltip="Total validation errors flagged by Survey Solutions.">
+                <div class="label">Total Errors</div>
+                <div class="value" id="statErrors">-</div>
+                <div class="detail" id="statErrDetail"></div>
+            </div>
+            <div class="stat-card purple" data-tooltip="Number of questions left unanswered across all interviews.">
+                <div class="label">Unanswered</div>
+                <div class="value" id="statUnanswered">-</div>
+                <div class="detail" id="statUnDetail"></div>
+            </div>
+        </div>
+        <div class="dashboard-grid">
+            <div class="panel">
+                <h3>Data Quality Indicators <i class="info-icon"
+                        data-tooltip="Key quality metrics: error-free rate, rejection rate, GPS accuracy compliance, and comment coverage.">?</i>
+                </h3>
+                <div id="qualityMetrics"></div>
+            </div>
+            <div class="panel">
+                <h3>Population Pyramid (Age &amp; Sex) <i class="info-icon"
+                        data-tooltip="Age-sex distribution of all enumerated household members.">?</i></h3>
+                <div class="chart-container chart-md"><canvas id="pyramidChart"></canvas></div>
+            </div>
+            <div class="panel">
+                <h3>Food Insecurity (FIES) <i class="info-icon"
+                        data-tooltip="Food Insecurity Experience Scale — 8 standard questions measuring food access.">?</i>
+                </h3>
+                <div class="chart-container chart-sm"><canvas id="fiesChart"></canvas></div>
+            </div>
+            <div class="panel">
+                <h3>Validation Errors &amp; Warnings <i class="info-icon"
+                        data-tooltip="All validation errors triggered during data collection.">?</i></h3>
+                <div id="errorList" style="max-height: 400px; overflow-y: auto;"></div>
+            </div>
+            <div class="panel full-width">
+                <h3>Recent Comments &amp; Notes <i class="info-icon"
+                        data-tooltip="Interviewer comments and field notes entered during data collection.">?</i></h3>
+                <div id="commentsList" style="max-height: 350px; overflow-y: auto;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  UTILITIES
+        // ============================================================
+        function parseTSV(text) {
+            const lines = text.trim().split('\n');
+            if (lines.length < 1) return [];
+            const headers = lines[0].split('\t');
+            return lines.slice(1).map(line => {
+                const vals = line.split('\t');
+                const obj = {};
+                headers.forEach((h, i) => { obj[h.trim()] = (vals[i] || '').trim(); });
+                return obj;
+            });
+        }
+
+        const PROVINCES = { '1': 'Torba', '2': 'Sanma', '3': 'Penama', '4': 'Malampa', '5': 'Shefa', '6': 'Tafea' };
+        const STATUS_MAP = {
+            '0': 'Created', '20': 'InterviewerAssigned', '40': 'SupervisorAssigned',
+            '60': 'Completed', '65': 'ApprovedBySupervisor', '100': 'Completed',
+            '120': 'ApprovedByHQ', '125': 'Rejected by HQ', '130': 'RejectedBySup'
+        };
+        const STATUS_COLORS = {
+            'Created': '#64748b', 'InterviewerAssigned': '#fbbf24', 'SupervisorAssigned': '#f97316',
+            'Completed': '#22c55e', 'ApprovedBySupervisor': '#3b82f6',
+            'ApprovedByHQ': '#a855f7', 'Rejected by HQ': '#ef4444', 'RejectedBySup': '#ef4444'
+        };
+        const ACTION_MAP = {
+            '0': 'Created', '1': 'SupervisorAssigned', '3': 'ApprovedBySupervisor',
+            '4': 'RejectedBySupervisor', '5': 'ApprovedByHQ', '7': 'RejectedByHQ',
+            '12': 'InterviewerAssigned', '17': 'OpenedBySupervisor', '18': 'ClosedBySupervisor',
+            '20': 'ReceivedByInterviewer'
+        };
+
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = '#334155';
+        Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+
+        function parseDuration(durStr) {
+            const m = (durStr || '').match(/(\d+)\.(\d+):(\d+):(\d+)/);
+            if (!m) return 0;
+            return parseInt(m[1]) * 1440 + parseInt(m[2]) * 60 + parseInt(m[3]) + parseInt(m[4]) / 60;
+        }
+
+        function formatMinutes(min) {
+            if (!min || !isFinite(min)) return '-';
+            const h = Math.floor(min / 60);
+            const m = Math.round(min % 60);
+            return h > 0 ? `${h}h ${m}m` : `${m}m`;
+        }
+
+        function sanitize(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function formatTimeDiff(minutes) {
+            if (!minutes || !isFinite(minutes) || minutes < 0) return '-';
+            if (minutes < 60) return `${Math.round(minutes)}m`;
+            if (minutes < 1440) return `${Math.floor(minutes / 60)}h ${Math.round(minutes % 60)}m`;
+            const days = Math.floor(minutes / 1440);
+            const hrs = Math.floor((minutes % 1440) / 60);
+            return `${days}d ${hrs}h`;
+        }
+
+        // ============================================================
+        //  LOAD DATA FILES
+        // ============================================================
+        async function loadFile(filename) {
+            try {
+                const resp = await fetch(filename);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                return parseTSV(await resp.text());
+            } catch (e) {
+                console.warn(`Could not load ${filename}:`, e);
+                return [];
+            }
+        }
+
+        async function initDashboard() {
+            document.getElementById('lastUpdate').textContent = 'Loaded: ' + new Date().toLocaleString();
+
+            const [mainData, memberData, diagData, errorData, commentData, actionData] = await Promise.all([
+                loadFile('VUTHIES_2026.tab'),
+                loadFile('hm_basic.tab'),
+                loadFile('interview__diagnostics.tab'),
+                loadFile('interview__errors.tab'),
+                loadFile('interview__comments.tab'),
+                loadFile('interview__actions.tab')
+            ]);
+            const VILLAGE_LOOKUP = (typeof EMBEDDED_DATA !== 'undefined' && EMBEDDED_DATA.villageLookup) || {};
+            const AC_LOOKUP = (typeof EMBEDDED_DATA !== 'undefined' && EMBEDDED_DATA.areaCouncilLookup) || {};
+            const EA_LOOKUP = (typeof EMBEDDED_DATA !== 'undefined' && EMBEDDED_DATA.eaLookup) || {};
+            function villageName(code) { return VILLAGE_LOOKUP[code] || code; }
+            function acName(code) { return AC_LOOKUP[code] || code; }
+            function eaVillages(code) { return (EA_LOOKUP[code] || []).join(', ') || code; }
+            // END_REPLACEABLE_BLOCK
+
+            // ---- Shared lookups ----
+            const totalInterviews = mainData.length;
+            const totalMembers = memberData.length;
+            const avgHHSize = totalInterviews > 0 ? (totalMembers / totalInterviews).toFixed(1) : 0;
+            const totalErrors = errorData.length;
+            const totalUnanswered = diagData.reduce((s, d) => s + parseInt(d.n_questions_unanswered || 0), 0);
+
+            const durations = diagData.map(d => parseDuration(d.interview__duration)).filter(d => d > 0);
+            const avgDurMin = durations.length > 0 ? (durations.reduce((a, b) => a + b, 0) / durations.length) : 0;
+
+            const diagMap = {};
+            diagData.forEach(d => { diagMap[d.interview__key] = d; });
+            const hhSizeMap = {};
+            memberData.forEach(d => { hhSizeMap[d.interview__key] = (hhSizeMap[d.interview__key] || 0) + 1; });
+            const intToTeam = {};
+            mainData.forEach(d => { if (d.interviewer_id) intToTeam[d.interviewer_id] = d.team_id; });
+
+            // province lookup per interview
+            const interviewProvince = {};
+            mainData.forEach(d => { interviewProvince[d.interview__key] = d.province; });
+
+            // ============================================================
+            //  1. SURVEYS AND STATUSES
+            // ============================================================
+            const statusCounts = {};
+            diagData.forEach(d => {
+                const s = STATUS_MAP[d.interview__status] || 'Code ' + d.interview__status;
+                statusCounts[s] = (statusCounts[s] || 0) + 1;
+            });
+
+            const approvedCount = (statusCounts['ApprovedBySupervisor'] || 0) + (statusCounts['ApprovedByHQ'] || 0);
+            const completedCount = statusCounts['Completed'] || 0;
+            const rejectedCount = (statusCounts['Rejected by HQ'] || 0) + (statusCounts['RejectedBySup'] || 0);
+
+            document.getElementById('totalInterviews').textContent = totalInterviews;
+            document.getElementById('interviewDetail').textContent = avgHHSize + ' avg HH size';
+            document.getElementById('totalApproved').textContent = approvedCount;
+            document.getElementById('approvedDetail').textContent = (totalInterviews > 0 ? ((approvedCount / totalInterviews) * 100).toFixed(0) : 0) + '% of total';
+            document.getElementById('totalCompleted').textContent = completedCount;
+            document.getElementById('completedDetail').textContent = 'Awaiting approval';
+            document.getElementById('totalRejected').textContent = rejectedCount;
+            document.getElementById('rejectedDetail').textContent = rejectedCount > 0 ? 'Need correction' : 'None';
+
+            // Status doughnut
+            new Chart(document.getElementById('statusChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(statusCounts),
+                    datasets: [{ data: Object.values(statusCounts), backgroundColor: Object.keys(statusCounts).map(s => STATUS_COLORS[s] || '#64748b'), borderWidth: 0 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 14, usePointStyle: true, pointStyleWidth: 12 } } }, cutout: '55%' }
+            });
+
+            // Status by Province stacked bar
+            const provStatusData = {};
+            const allStatuses = [...new Set(Object.keys(statusCounts))];
+            mainData.forEach(d => {
+                const prov = PROVINCES[d.province] || 'Province ' + d.province;
+                const status = STATUS_MAP[d.interview__status] || 'Code ' + d.interview__status;
+                if (!provStatusData[prov]) provStatusData[prov] = {};
+                provStatusData[prov][status] = (provStatusData[prov][status] || 0) + 1;
+            });
+            new Chart(document.getElementById('statusProvinceChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(provStatusData),
+                    datasets: allStatuses.map(s => ({
+                        label: s, data: Object.keys(provStatusData).map(p => provStatusData[p][s] || 0),
+                        backgroundColor: STATUS_COLORS[s] || '#64748b', borderRadius: 4
+                    }))
+                },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', scales: { x: { stacked: true, beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, y: { stacked: true, grid: { display: false } } }, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } } } }
+            });
+
+            // Interview detail table
+            const itBody = document.querySelector('#interviewTable tbody');
+            mainData.forEach(d => {
+                const diag = diagMap[d.interview__key] || {};
+                const status = STATUS_MAP[d.interview__status] || d.interview__status;
+                const cls = status.includes('Approved') ? (status.includes('HQ') ? 'approved-hq' : 'approved-sup') : status === 'Completed' ? 'completed' : 'rejected';
+                const row = itBody.insertRow();
+                row.innerHTML = '<td>' + d.interview__key + '</td><td>' + (PROVINCES[d.province] || d.province) + '</td><td>' + acName(d.area_council) + '</td><td title="' + eaVillages(d.enumeration_area) + '">' + d.enumeration_area + '</td><td>' + villageName(d.village) + '</td><td>' + (hhSizeMap[d.interview__key] || '-') + '</td><td>' + (diag.responsible || d.interviewer_id) + '</td><td>' + (d.datetime_interview || '').substring(0, 10) + '</td><td>' + (diag.interview__duration || '-') + '</td><td>' + (diag.entities__errors || '0') + '</td><td><span class="status-badge ' + cls + '">' + status + '</span></td>';
+            });
+
+            // ============================================================
+            //  2. TEAMS AND STATUSES
+            // ============================================================
+            const teamStatus = {};
+            const allTeams = [...new Set(mainData.map(d => d.team_id).filter(Boolean))].sort();
+            mainData.forEach(d => {
+                const team = d.team_id || 'Unknown';
+                const status = STATUS_MAP[d.interview__status] || 'Code ' + d.interview__status;
+                if (!teamStatus[team]) teamStatus[team] = {};
+                teamStatus[team][status] = (teamStatus[team][status] || 0) + 1;
+            });
+
+            // Matrix table
+            const matHead = document.querySelector('#teamStatusMatrix thead');
+            const matBody = document.querySelector('#teamStatusMatrix tbody');
+            var hRow = '<tr><th>Team</th>';
+            allStatuses.forEach(function (s) { hRow += '<th>' + s + '</th>'; });
+            hRow += '<th>Total</th></tr>';
+            matHead.innerHTML = hRow;
+            const totals = {};
+            allStatuses.forEach(function (s) { totals[s] = 0; });
+            var grandTotal = 0;
+            allTeams.forEach(function (team) {
+                var rowTotal = 0;
+                var html = '<td class="row-label">Team ' + team + '</td>';
+                allStatuses.forEach(function (s) {
+                    var cnt = (teamStatus[team] || {})[s] || 0;
+                    rowTotal += cnt;
+                    totals[s] += cnt;
+                    html += '<td>' + (cnt || '-') + '</td>';
+                });
+                grandTotal += rowTotal;
+                html += '<td><strong>' + rowTotal + '</strong></td>';
+                var row = matBody.insertRow();
+                row.innerHTML = html;
+            });
+            var totalRow = matBody.insertRow();
+            totalRow.className = 'total-row';
+            var totalHtml = '<td class="row-label">Total</td>';
+            allStatuses.forEach(function (s) { totalHtml += '<td>' + totals[s] + '</td>'; });
+            totalHtml += '<td><strong>' + grandTotal + '</strong></td>';
+            totalRow.innerHTML = totalHtml;
+
+            // Team stacked bar chart
+            new Chart(document.getElementById('teamStatusChart'), {
+                type: 'bar',
+                data: {
+                    labels: allTeams.map(function (t) { return 'Team ' + t; }),
+                    datasets: allStatuses.map(function (s) {
+                        return {
+                            label: s,
+                            data: allTeams.map(function (t) { return (teamStatus[t] || {})[s] || 0; }),
+                            backgroundColor: STATUS_COLORS[s] || '#64748b', borderRadius: 4
+                        };
+                    })
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true, grid: { display: false } }, y: { stacked: true, beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } } }, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } } } }
+            });
+
+            // ============================================================
+            //  3. STATUS DURATION
+            // ============================================================
+            const actionsByInterview = {};
+            actionData.forEach(function (a) {
+                var key = a.interview__key;
+                if (!actionsByInterview[key]) actionsByInterview[key] = [];
+                actionsByInterview[key].push(a);
+            });
+
+            const statusDurations = {};
+            const timelineRows = [];
+            Object.entries(actionsByInterview).forEach(function ([key, actions]) {
+                actions.sort(function (a, b) {
+                    return new Date(a.date + 'T' + a.time) - new Date(b.date + 'T' + b.time);
+                });
+                var prevTime = null;
+                actions.forEach(function (a, i) {
+                    var actionName = ACTION_MAP[a.action] || 'Action ' + a.action;
+                    var curTime = new Date(a.date + 'T' + a.time);
+                    var timeSincePrev = null;
+                    if (prevTime && !isNaN(curTime) && !isNaN(prevTime)) {
+                        timeSincePrev = (curTime - prevTime) / 60000;
+                        var prevActionName = ACTION_MAP[actions[i - 1].action] || 'Action ' + actions[i - 1].action;
+                        if (!statusDurations[prevActionName]) statusDurations[prevActionName] = [];
+                        statusDurations[prevActionName].push(timeSincePrev);
+                    }
+                    timelineRows.push({ key: key, actionName: actionName, date: a.date, time: a.time, originator: a.originator, role: a.role === '1' ? 'Interviewer' : a.role === '2' ? 'Supervisor' : a.role === '4' ? 'HQ' : a.role, timeSincePrev: timeSincePrev });
+                    prevTime = curTime;
+                });
+            });
+
+            // Status duration chart
+            var durLabels = Object.keys(statusDurations);
+            var avgDurs = durLabels.map(function (s) {
+                var arr = statusDurations[s];
+                return arr.reduce(function (a, b) { return a + b; }, 0) / arr.length;
+            });
+            var durColors = durLabels.map(function (s) { return STATUS_COLORS[s] || '#64748b'; });
+            new Chart(document.getElementById('statusDurationChart'), {
+                type: 'bar',
+                data: {
+                    labels: durLabels,
+                    datasets: [{ label: 'Avg Duration (minutes)', data: avgDurs, backgroundColor: durColors, borderRadius: 6, barPercentage: 0.5 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Minutes' }, grid: { color: '#1e293b' } }, x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45 } } } }
+            });
+
+            // Timeline table
+            var tlBody = document.querySelector('#statusTimelineTable tbody');
+            timelineRows.forEach(function (r) {
+                var row = tlBody.insertRow();
+                row.innerHTML = '<td>' + r.key + '</td><td>' + r.actionName + '</td><td>' + r.date + '</td><td>' + r.time + '</td><td>' + r.originator + '</td><td>' + r.role + '</td><td>' + formatTimeDiff(r.timeSincePrev) + '</td>';
+            });
+
+            // ============================================================
+            //  4. DEVICES / INTERVIEWERS
+            // ============================================================
+            const teams = new Set(mainData.map(function (d) { return d.team_id; }).filter(Boolean));
+            const interviewerSet = new Set(diagData.map(function (d) { return d.responsible; }).filter(Boolean));
+            const supervisorSet = new Set(actionData.filter(function (a) { return a.role === '2'; }).map(function (a) { return a.originator; }).filter(Boolean));
+
+            document.getElementById('devTeams').textContent = teams.size;
+            document.getElementById('devTeamsDetail').textContent = 'Active in this export';
+            document.getElementById('devInterviewers').textContent = interviewerSet.size;
+            document.getElementById('devIntDetail').textContent = 'Collecting data';
+            document.getElementById('devSupervisors').textContent = supervisorSet.size;
+            document.getElementById('devSupDetail').textContent = 'Reviewing data';
+
+            // Interviewer performance table
+            const intrvPerf = {};
+            diagData.forEach(function (d) {
+                var intv = d.responsible || 'Unknown';
+                if (!intrvPerf[intv]) intrvPerf[intv] = { count: 0, errors: 0, unanswered: 0, durations: [], statuses: [], lastDate: '' };
+                intrvPerf[intv].count++;
+                intrvPerf[intv].errors += parseInt(d.entities__errors || 0);
+                intrvPerf[intv].unanswered += parseInt(d.n_questions_unanswered || 0);
+                intrvPerf[intv].statuses.push(STATUS_MAP[d.interview__status] || d.interview__status);
+                intrvPerf[intv].durations.push(parseDuration(d.interview__duration));
+            });
+            actionData.forEach(function (a) {
+                if (a.role === '1' && a.originator && intrvPerf[a.originator]) {
+                    if (a.date > (intrvPerf[a.originator].lastDate || '')) intrvPerf[a.originator].lastDate = a.date;
+                }
+            });
+
+            var perfBody = document.querySelector('#interviewerTable tbody');
+            Object.entries(intrvPerf).forEach(function ([intv, perf]) {
+                var validDur = perf.durations.filter(function (d) { return d > 0; });
+                var avgD = validDur.length > 0 ? validDur.reduce(function (a, b) { return a + b; }, 0) / validDur.length : 0;
+                var teamId = intToTeam[intv.replace('Int', '')] || '-';
+                var statusBadges = perf.statuses.map(function (s) {
+                    var cls = s.includes('Approved') ? (s.includes('HQ') ? 'approved-hq' : 'approved-sup') : s === 'Completed' ? 'completed' : 'rejected';
+                    return '<span class="status-badge ' + cls + '">' + s + '</span>';
+                }).join(' ');
+                var row = perfBody.insertRow();
+                row.innerHTML = '<td>' + intv + '</td><td>Team ' + teamId + '</td><td>' + perf.count + '</td><td>' + perf.errors + '</td><td>' + perf.unanswered + '</td><td>' + formatMinutes(avgD) + '</td><td>' + (perf.lastDate || '-') + '</td><td>' + statusBadges + '</td>';
+            });
+
+            // Supervisor activity table
+            const supActivity = {};
+            actionData.forEach(function (a) {
+                if (a.role !== '2') return;
+                var sup = a.originator;
+                if (!sup) return;
+                if (!supActivity[sup]) supActivity[sup] = { approvals: 0, rejections: 0, lastDate: '' };
+                if (a.action === '3') supActivity[sup].approvals++;
+                if (a.action === '4') supActivity[sup].rejections++;
+                if (a.date > supActivity[sup].lastDate) supActivity[sup].lastDate = a.date;
+            });
+            var supBody = document.querySelector('#supervisorTable tbody');
+            Object.entries(supActivity).forEach(function ([sup, data]) {
+                var row = supBody.insertRow();
+                row.innerHTML = '<td>' + sup + '</td><td>' + data.approvals + '</td><td>' + data.rejections + '</td><td>' + data.lastDate + '</td>';
+            });
+
+            // ============================================================
+            //  5. MAP REPORT
+            // ============================================================
+            var mapCenter = [-16.5, 168.0];
+            var map = L.map('gpsMap').setView(mapCenter, 6);
+            window._gpsMap = map;
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors', maxZoom: 19 }).addTo(map);
+
+            var statusColor = function (s) { if (s === '120') return '#a855f7'; if (s === '65') return '#3b82f6'; if (s === '100') return '#22c55e'; return '#fbbf24'; };
+
+            mainData.forEach(function (d) {
+                var lat = parseFloat(d.gps__Latitude), lng = parseFloat(d.gps__Longitude);
+                if (isNaN(lat) || isNaN(lng) || lat === 0) return;
+                var color = statusColor(d.interview__status);
+                L.circleMarker([lat, lng], { radius: 8, color: color, fillColor: color, fillOpacity: 0.8, weight: 2 }).addTo(map).bindPopup(
+                    '<strong>' + d.interview__key + '</strong><br>Province: ' + (PROVINCES[d.province] || d.province) + '<br>Area Council: ' + acName(d.area_council) + '<br>EA: ' + d.enumeration_area + ' (' + eaVillages(d.enumeration_area) + ')<br>Village: ' + villageName(d.village) + '<br>Interviewer: ' + d.interviewer_id + '<br>Status: ' + (STATUS_MAP[d.interview__status] || d.interview__status) + '<br>Date: ' + (d.datetime_interview || '').substring(0, 10)
+                );
+            });
+            var validCoords = mainData.map(function (d) { return [parseFloat(d.gps__Latitude), parseFloat(d.gps__Longitude)]; }).filter(function (c) { return !isNaN(c[0]) && !isNaN(c[1]) && c[0] !== 0; });
+            if (validCoords.length > 0) map.fitBounds(validCoords, { padding: [30, 30] });
+
+            // GPS Quality
+            var gpsAccuracies = mainData.map(function (d) { return parseFloat(d.gps__Accuracy); }).filter(function (v) { return !isNaN(v) && v > 0; });
+            var avgGPS = gpsAccuracies.length > 0 ? (gpsAccuracies.reduce(function (a, b) { return a + b; }, 0) / gpsAccuracies.length).toFixed(1) : '-';
+            var gpsWithin20 = gpsAccuracies.filter(function (a) { return a <= 20; }).length;
+            var gpsTotal = gpsAccuracies.length;
+            document.getElementById('gpsQuality').innerHTML =
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Interviews with GPS</span><span>' + gpsTotal + '/' + totalInterviews + '</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + (totalInterviews > 0 ? (gpsTotal / totalInterviews) * 100 : 0) + '%;background:#3b82f6;"></div></div></div>' +
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>GPS Accuracy \u2264 20m</span><span style="color:' + (gpsTotal > 0 ? (gpsWithin20 / gpsTotal > 0.8 ? '#4ade80' : '#fbbf24') : '#64748b') + '">' + (gpsTotal > 0 ? ((gpsWithin20 / gpsTotal) * 100).toFixed(0) : 0) + '% (' + gpsWithin20 + '/' + gpsTotal + ')</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + (gpsTotal > 0 ? (gpsWithin20 / gpsTotal) * 100 : 0) + '%;background:#f59e0b;"></div></div></div>' +
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Average GPS Accuracy</span><span>' + avgGPS + 'm</span></div></div>' +
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Best Accuracy</span><span>' + (gpsAccuracies.length > 0 ? Math.min.apply(null, gpsAccuracies).toFixed(1) : '-') + 'm</span></div></div>' +
+                '<div><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Worst Accuracy</span><span>' + (gpsAccuracies.length > 0 ? Math.max.apply(null, gpsAccuracies).toFixed(1) : '-') + 'm</span></div></div>';
+
+            // Province chart
+            var provCounts = {};
+            mainData.forEach(function (d) { var p = PROVINCES[d.province] || 'Province ' + d.province; provCounts[p] = (provCounts[p] || 0) + 1; });
+            var provColors = ['#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#a855f7', '#06b6d4'];
+            new Chart(document.getElementById('provinceChart'), {
+                type: 'bar',
+                data: { labels: Object.keys(provCounts), datasets: [{ label: 'Interviews', data: Object.values(provCounts), backgroundColor: Object.keys(provCounts).map(function (_, i) { return provColors[i % provColors.length]; }), borderRadius: 6, barPercentage: 0.6 }] },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, y: { grid: { display: false } } } }
+            });
+
+            // ============================================================
+            //  6. CUMULATIVE INTERVIEW CHART
+            // ============================================================
+            var interviewDates = {};
+            actionData.forEach(function (a) {
+                if (a.action === '0' || a.action === '12') {
+                    var key = a.interview__key;
+                    if (!interviewDates[key] || a.date < interviewDates[key]) {
+                        interviewDates[key] = a.date;
+                    }
+                }
+            });
+            mainData.forEach(function (d) {
+                if (!interviewDates[d.interview__key] && d.datetime_interview) {
+                    interviewDates[d.interview__key] = d.datetime_interview.substring(0, 10);
+                }
+            });
+
+            var dateCounts = {};
+            Object.values(interviewDates).forEach(function (date) { dateCounts[date] = (dateCounts[date] || 0) + 1; });
+            var sortedDates = Object.keys(dateCounts).sort();
+            var cumul = 0;
+            var cumulativeData = sortedDates.map(function (date) { cumul += dateCounts[date]; return { x: date, y: cumul }; });
+            var dailyData = sortedDates.map(function (date) { return { x: date, y: dateCounts[date] }; });
+
+            new Chart(document.getElementById('cumulativeChart'), {
+                type: 'line',
+                data: { datasets: [{ label: 'Cumulative Interviews', data: cumulativeData, borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.1)', fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: '#3b82f6' }] },
+                options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'category', title: { display: true, text: 'Date' }, grid: { color: '#1e293b' } }, y: { beginAtZero: true, title: { display: true, text: 'Interviews' }, grid: { color: '#1e293b' }, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } } }
+            });
+            new Chart(document.getElementById('dailyChart'), {
+                type: 'bar',
+                data: { datasets: [{ label: 'Interviews per Day', data: dailyData, backgroundColor: '#22c55e', borderRadius: 6, barPercentage: 0.6 }] },
+                options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'category', title: { display: true, text: 'Date' }, grid: { color: '#1e293b' } }, y: { beginAtZero: true, title: { display: true, text: 'Count' }, grid: { color: '#1e293b' }, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } } }
+            });
+
+            // ============================================================
+            //  7. QUANTITY
+            // ============================================================
+            var intrvCounts = {};
+            diagData.forEach(function (d) { var n = d.responsible || 'Unknown'; intrvCounts[n] = (intrvCounts[n] || 0) + 1; });
+            new Chart(document.getElementById('qtyInterviewerChart'), {
+                type: 'bar',
+                data: { labels: Object.keys(intrvCounts), datasets: [{ label: 'Interviews', data: Object.values(intrvCounts), backgroundColor: '#3b82f6', borderRadius: 6, barPercentage: 0.5 }] },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, y: { grid: { display: false } } } }
+            });
+
+            var teamCounts = {};
+            mainData.forEach(function (d) { var t = d.team_id ? 'Team ' + d.team_id : 'Unknown'; teamCounts[t] = (teamCounts[t] || 0) + 1; });
+            new Chart(document.getElementById('qtyTeamChart'), {
+                type: 'bar',
+                data: { labels: Object.keys(teamCounts), datasets: [{ label: 'Interviews', data: Object.values(teamCounts), backgroundColor: '#a855f7', borderRadius: 6, barPercentage: 0.5 }] },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, y: { grid: { display: false } } } }
+            });
+
+            var memberProv = {};
+            memberData.forEach(function (d) {
+                var prov = PROVINCES[interviewProvince[d.interview__key]] || 'Unknown';
+                memberProv[prov] = (memberProv[prov] || 0) + 1;
+            });
+            new Chart(document.getElementById('qtyMemberProvinceChart'), {
+                type: 'bar',
+                data: { labels: Object.keys(memberProv), datasets: [{ label: 'Members', data: Object.values(memberProv), backgroundColor: '#22c55e', borderRadius: 6, barPercentage: 0.5 }] },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, y: { grid: { display: false } } } }
+            });
+
+            var hhSizeDist = {};
+            Object.values(hhSizeMap).forEach(function (sz) { hhSizeDist[sz] = (hhSizeDist[sz] || 0) + 1; });
+            var hhSizeLabels = Object.keys(hhSizeDist).sort(function (a, b) { return a - b; });
+            new Chart(document.getElementById('qtyHHSizeChart'), {
+                type: 'bar',
+                data: { labels: hhSizeLabels.map(function (s) { return s + ' members'; }), datasets: [{ label: 'Households', data: hhSizeLabels.map(function (s) { return hhSizeDist[s]; }), backgroundColor: '#f59e0b', borderRadius: 6, barPercentage: 0.6 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, x: { grid: { display: false } } } }
+            });
+
+            // ============================================================
+            //  8. SPEED
+            // ============================================================
+            var speedStats = document.getElementById('speedStats');
+            var minDur = durations.length > 0 ? Math.min.apply(null, durations) : 0;
+            var maxDur = durations.length > 0 ? Math.max.apply(null, durations) : 0;
+            var sortedDur = durations.slice().sort(function (a, b) { return a - b; });
+            var medianDur = sortedDur.length > 0 ? sortedDur[Math.floor(sortedDur.length / 2)] : 0;
+            speedStats.innerHTML =
+                '<div class="stat-card blue" data-tooltip="Average interview duration across all interviews."><div class="label">Avg Duration</div><div class="value" style="color:#60a5fa">' + formatMinutes(avgDurMin) + '</div><div class="detail">Across ' + durations.length + ' interviews</div></div>' +
+                '<div class="stat-card green" data-tooltip="Shortest interview recorded."><div class="label">Fastest</div><div class="value" style="color:#4ade80">' + formatMinutes(minDur) + '</div><div class="detail">Minimum duration</div></div>' +
+                '<div class="stat-card red" data-tooltip="Longest interview recorded."><div class="label">Slowest</div><div class="value" style="color:#f87171">' + formatMinutes(maxDur) + '</div><div class="detail">Maximum duration</div></div>' +
+                '<div class="stat-card purple" data-tooltip="Median interview duration."><div class="label">Median</div><div class="value" style="color:#c084fc">' + formatMinutes(medianDur) + '</div><div class="detail">50th percentile</div></div>';
+
+            // Duration by interviewer
+            var intrvDuration = {};
+            diagData.forEach(function (d) {
+                var m = parseDuration(d.interview__duration);
+                if (m <= 0) return;
+                var intName = d.responsible || 'Unknown';
+                if (!intrvDuration[intName]) intrvDuration[intName] = [];
+                intrvDuration[intName].push(m);
+            });
+            var intNames = Object.keys(intrvDuration);
+            new Chart(document.getElementById('durationChart'), {
+                type: 'bar',
+                data: {
+                    labels: intNames,
+                    datasets: [
+                        { label: 'Avg Duration (min)', data: intNames.map(function (n) { return intrvDuration[n].reduce(function (a, b) { return a + b; }, 0) / intrvDuration[n].length; }), backgroundColor: '#3b82f6', borderRadius: 6, barPercentage: 0.4 },
+                        { label: 'Min Duration', data: intNames.map(function (n) { return Math.min.apply(null, intrvDuration[n]); }), backgroundColor: '#22c55e', borderRadius: 6, barPercentage: 0.4 },
+                        { label: 'Max Duration', data: intNames.map(function (n) { return Math.max.apply(null, intrvDuration[n]); }), backgroundColor: '#ef4444', borderRadius: 6, barPercentage: 0.4 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Minutes' }, grid: { color: '#1e293b' } }, x: { grid: { display: false } } } }
+            });
+
+            // Speed detail table
+            var spdBody = document.querySelector('#speedTable tbody');
+            diagData.forEach(function (d) {
+                var dur = parseDuration(d.interview__duration);
+                var teamId = intToTeam[(d.responsible || '').replace('Int', '')] || '-';
+                var row = spdBody.insertRow();
+                row.innerHTML = '<td>' + d.interview__key + '</td><td>' + (d.responsible || '-') + '</td><td>Team ' + teamId + '</td><td>' + formatMinutes(dur) + '</td><td>' + (d.entities__errors || '0') + '</td><td>' + (d.n_questions_unanswered || '0') + '</td><td>' + ((parseInt(d.rejections__sup || 0) + parseInt(d.rejections__hq || 0))) + '</td>';
+            });
+
+            // ============================================================
+            //  9. SURVEY STATISTICS
+            // ============================================================
+            document.getElementById('statInterviews').textContent = totalInterviews;
+            document.getElementById('statIntDetail').textContent = avgHHSize + ' avg HH size';
+            document.getElementById('statMembers').textContent = totalMembers;
+            document.getElementById('statMemDetail').textContent = 'Across ' + totalInterviews + ' households';
+            document.getElementById('statErrors').textContent = totalErrors;
+            document.getElementById('statErrDetail').textContent = (totalInterviews > 0 ? (totalErrors / totalInterviews).toFixed(1) : 0) + ' per interview';
+            document.getElementById('statUnanswered').textContent = totalUnanswered;
+            document.getElementById('statUnDetail').textContent = (totalInterviews > 0 ? (totalUnanswered / totalInterviews).toFixed(1) : 0) + ' per interview';
+
+            // Data quality
+            var qualDiv = document.getElementById('qualityMetrics');
+            var errRate = totalInterviews > 0 ? ((diagData.filter(function (d) { return parseInt(d.entities__errors) > 0; }).length / totalInterviews) * 100).toFixed(0) : 0;
+            var rejRate = totalInterviews > 0 ? ((diagData.filter(function (d) { return parseInt(d.rejections__sup) > 0; }).length / totalInterviews) * 100).toFixed(0) : 0;
+            qualDiv.innerHTML =
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Error-free interviews</span><span style="color:#4ade80">' + (100 - errRate) + '%</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + (100 - errRate) + '%;background:#22c55e;"></div></div></div>' +
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Rejection rate</span><span style="color:' + (rejRate > 20 ? '#f87171' : '#4ade80') + '">' + rejRate + '%</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + rejRate + '%;background:' + (rejRate > 20 ? '#ef4444' : '#22c55e') + ';"></div></div></div>' +
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>GPS Accuracy \u2264 20m</span><span style="color:' + (gpsTotal > 0 ? (gpsWithin20 / gpsTotal > 0.8 ? '#4ade80' : '#fbbf24') : '#64748b') + '">' + (gpsTotal > 0 ? ((gpsWithin20 / gpsTotal) * 100).toFixed(0) : 0) + '%</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + (gpsTotal > 0 ? (gpsWithin20 / gpsTotal) * 100 : 0) + '%;background:#f59e0b;"></div></div></div>' +
+                '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Avg GPS Accuracy</span><span>' + avgGPS + 'm</span></div></div>' +
+                '<div><div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span>Interviews with comments</span><span>' + new Set(commentData.map(function (c) { return c.interview__key; })).size + '/' + totalInterviews + '</span></div></div>';
+
+            // Population pyramid
+            var ageBins = ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65+'];
+            var maleAges = new Array(14).fill(0), femaleAges = new Array(14).fill(0);
+            memberData.forEach(function (d) {
+                var age = parseInt(d.age), sex = d.sex;
+                if (isNaN(age)) return;
+                var bin = Math.min(Math.floor(age / 5), 13);
+                if (sex === '1') maleAges[bin]++;
+                else if (sex === '2') femaleAges[bin]++;
+            });
+            new Chart(document.getElementById('pyramidChart'), {
+                type: 'bar',
+                data: {
+                    labels: ageBins, datasets: [
+                        { label: 'Male', data: maleAges.map(function (v) { return -v; }), backgroundColor: '#3b82f6', borderRadius: 4, barPercentage: 0.8 },
+                        { label: 'Female', data: femaleAges, backgroundColor: '#ec4899', borderRadius: 4, barPercentage: 0.8 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', scales: { x: { ticks: { callback: function (v) { return Math.abs(v); } }, grid: { color: '#1e293b' } }, y: { grid: { display: false }, stacked: true } }, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } }, tooltip: { callbacks: { label: function (ctx) { return ctx.dataset.label + ': ' + Math.abs(ctx.raw); } } } } }
+            });
+
+            // FIES chart
+            var fiesLabels = ['Worried not enough food', 'Unable to eat healthy', 'Ate only a few kinds', 'Skipped a meal', 'Ate less than should', 'Ran out of food', 'Hungry but did not eat', 'Went without eating'];
+            var fiesFields = ['fies_1', 'fies_2', 'fies_3', 'fies_4', 'fies_5', 'fies_7', 'fies_8', 'fies_9'];
+            var fiesYes = fiesFields.map(function (f) { return mainData.filter(function (d) { return d[f] === '1'; }).length; });
+            new Chart(document.getElementById('fiesChart'), {
+                type: 'bar',
+                data: { labels: fiesLabels, datasets: [{ label: 'Yes', data: fiesYes, backgroundColor: '#ef4444', borderRadius: 4, barPercentage: 0.6 }] },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#1e293b' } }, y: { grid: { display: false }, ticks: { font: { size: 10 } } } } }
+            });
+
+            // Error list
+            var errorList = document.getElementById('errorList');
+            if (errorData.length === 0) {
+                errorList.innerHTML = '<p style="color:#64748b;text-align:center;padding:20px;">No errors found</p>';
+            } else {
+                errorData.forEach(function (e) {
+                    var div = document.createElement('div');
+                    div.className = 'error-item';
+                    div.innerHTML = '<div class="error-key">' + e.interview__key + '</div><div class="error-var">' + (e.variable || 'General') + (e.roster ? ' (' + e.roster + ')' : '') + '</div><div class="error-msg">' + e.message + '</div>';
+                    errorList.appendChild(div);
+                });
+            }
+
+            // Comments list
+            var commDiv = document.getElementById('commentsList');
+            if (commentData.length === 0) {
+                commDiv.innerHTML = '<p style="color:#64748b;text-align:center;padding:20px;">No comments yet</p>';
+            } else {
+                commentData.forEach(function (c) {
+                    var div = document.createElement('div');
+                    div.style.cssText = 'background:#0f172a;border-radius:8px;padding:12px;margin-bottom:8px;border-left:3px solid #3b82f6;';
+                    div.innerHTML = '<div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="color:#60a5fa;font-weight:600;font-size:0.75rem;">' + (c.originator || '') + ' (' + c.interview__key + ')</span><span style="color:#64748b;font-size:0.7rem;">' + (c.date || '') + ' ' + (c.time || '') + '</span></div><div style="color:#94a3b8;font-size:0.7rem;margin-bottom:2px;">' + (c.variable || 'General') + (c.roster ? ' \u2022 ' + c.roster : '') + '</div><div style="color:#e2e8f0;font-size:0.8rem;">' + sanitize(c.comment || '') + '</div>';
+                    commDiv.appendChild(div);
+                });
+            }
+
+            // ============================================================
+            //  10. FIELD PROGRESS (Hierarchy: Province → Area Council → EA → Team)
+            // ============================================================
+
+            function makeStats() { return { total: 0, completed: 0, approvedSup: 0, approvedHQ: 0, rejected: 0, inProgress: 0 }; }
+            function bumpStat(obj, sl) {
+                obj.total++;
+                if (sl === 'Completed') obj.completed++;
+                else if (sl === 'ApprovedBySupervisor') obj.approvedSup++;
+                else if (sl === 'ApprovedByHQ') obj.approvedHQ++;
+                else if (sl.indexOf('Rejected') >= 0) obj.rejected++;
+                else obj.inProgress++;
+            }
+            function rateHtml(done, total) {
+                var rate = total > 0 ? Math.round((done / total) * 100) : 0;
+                var color = rate >= 80 ? '#4ade80' : rate >= 50 ? '#fbbf24' : '#f87171';
+                return '<td><span style="color:' + color + ';font-weight:600;">' + rate + '%</span></td>';
+            }
+            function rejHtml(n) { return '<td>' + (n > 0 ? '<span style="color:#f87171">' + n + '</span>' : '0') + '</td>'; }
+            function statCells(s) {
+                return '<td><strong>' + s.total + '</strong></td>' +
+                    '<td>' + s.completed + '</td>' + '<td>' + s.approvedSup + '</td>' +
+                    '<td>' + s.approvedHQ + '</td>' + rejHtml(s.rejected) +
+                    '<td>' + s.inProgress + '</td>' +
+                    rateHtml(s.completed + s.approvedSup + s.approvedHQ, s.total);
+            }
+
+            // Populate Province dropdown once
+            var pfProv = document.getElementById('pfProv');
+            var pfAC = document.getElementById('pfAC');
+            var pfEA = document.getElementById('pfEA');
+            var pfTeam = document.getElementById('pfTeam');
+            var provsSeen = {};
+            mainData.forEach(function (d) { provsSeen[d.province || 'Unknown'] = 1; });
+            Object.keys(provsSeen).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); }).forEach(function (p) {
+                var o = document.createElement('option');
+                o.value = p; o.textContent = PROVINCES[p] || 'Province ' + p;
+                pfProv.appendChild(o);
+            });
+
+            // Cascade: repopulate AC/EA/Team options based on current Province + AC filters
+            function populateSubFilters(fProv, fAC) {
+                var prevAC = pfAC.value, prevEA = pfEA.value, prevTeam = pfTeam.value;
+                pfAC.length = 1; pfEA.length = 1; pfTeam.length = 1;
+                var acSet = {}, eaSet = {}, teamSet = {};
+                mainData.forEach(function (d) {
+                    if (fProv && d.province !== fProv) return;
+                    acSet[d.area_council || 'Unknown'] = acName(d.area_council) || d.area_council || 'Unknown';
+                    if (!fAC || d.area_council === fAC) {
+                        eaSet[d.enumeration_area || 'Unknown'] = 1;
+                        teamSet[d.team_id || 'Unknown'] = 1;
+                    }
+                });
+                Object.keys(acSet).sort().forEach(function (ac) {
+                    var o = document.createElement('option'); o.value = ac;
+                    o.textContent = acSet[ac]; pfAC.appendChild(o);
+                });
+                Object.keys(eaSet).sort().forEach(function (ea) {
+                    var o = document.createElement('option'); o.value = ea; o.textContent = ea; pfEA.appendChild(o);
+                });
+                Object.keys(teamSet).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); }).forEach(function (t) {
+                    var o = document.createElement('option'); o.value = t; o.textContent = 'Team ' + t; pfTeam.appendChild(o);
+                });
+                if (prevAC && Array.from(pfAC.options).some(function (o) { return o.value === prevAC; })) pfAC.value = prevAC;
+                if (prevEA && Array.from(pfEA.options).some(function (o) { return o.value === prevEA; })) pfEA.value = prevEA;
+                if (prevTeam && Array.from(pfTeam.options).some(function (o) { return o.value === prevTeam; })) pfTeam.value = prevTeam;
+            }
+            populateSubFilters('', '');
+
+            function renderFieldHier() {
+                var fProv = pfProv.value, fAC = pfAC.value, fEA = pfEA.value, fTeam = pfTeam.value;
+                var filtered = mainData.filter(function (d) {
+                    if (fProv && d.province !== fProv) return false;
+                    if (fAC && d.area_council !== fAC) return false;
+                    if (fEA && d.enumeration_area !== fEA) return false;
+                    if (fTeam && d.team_id !== fTeam) return false;
+                    return true;
+                });
+
+                // Build hierarchy from filtered rows
+                var hier = {};
+                var filteredTeams = new Set();
+                filtered.forEach(function (d) {
+                    var prov = d.province || 'Unknown';
+                    var ac = d.area_council || 'Unknown';
+                    var ea = d.enumeration_area || 'Unknown';
+                    var team = d.team_id || 'Unknown';
+                    var sl = STATUS_MAP[d.interview__status] || '';
+                    filteredTeams.add(team);
+                    if (!hier[prov]) hier[prov] = Object.assign(makeStats(), { acs: {} });
+                    bumpStat(hier[prov], sl);
+                    if (!hier[prov].acs[ac]) hier[prov].acs[ac] = Object.assign(makeStats(), { eas: {} });
+                    bumpStat(hier[prov].acs[ac], sl);
+                    if (!hier[prov].acs[ac].eas[ea]) hier[prov].acs[ac].eas[ea] = Object.assign(makeStats(), { teams: {} });
+                    bumpStat(hier[prov].acs[ac].eas[ea], sl);
+                    if (!hier[prov].acs[ac].eas[ea].teams[team])
+                        hier[prov].acs[ac].eas[ea].teams[team] = Object.assign(makeStats(), { interviewers: new Set() });
+                    bumpStat(hier[prov].acs[ac].eas[ea].teams[team], sl);
+                    var resp = (diagMap[d.interview__key] || {}).responsible;
+                    if (resp) hier[prov].acs[ac].eas[ea].teams[team].interviewers.add(resp);
+                });
+
+                // Update stat cards
+                var allEAsCount = 0, doneEAsCount = 0;
+                Object.keys(hier).forEach(function (p) {
+                    Object.keys(hier[p].acs).forEach(function (a) {
+                        Object.keys(hier[p].acs[a].eas).forEach(function (e) {
+                            allEAsCount++;
+                            var ep = hier[p].acs[a].eas[e];
+                            if (ep.rejected === 0 && ep.inProgress === 0) doneEAsCount++;
+                        });
+                    });
+                });
+                document.getElementById('progTeams').textContent = filteredTeams.size;
+                document.getElementById('progTeamsDetail').textContent = 'Field teams active';
+                document.getElementById('progProvinces').textContent = Object.keys(hier).length;
+                document.getElementById('progProvDetail').textContent = 'Provinces with data';
+                document.getElementById('progEAsActive').textContent = allEAsCount;
+                document.getElementById('progEAActiveDetail').textContent = 'EAs with interviews';
+                document.getElementById('progEAsDone').textContent = doneEAsCount;
+                document.getElementById('progEADoneDetail').textContent = doneEAsCount + ' of ' + allEAsCount + ' EAs';
+
+                var hBody = document.querySelector('#progressHierTable tbody');
+                hBody.innerHTML = '';
+
+                if (filtered.length === 0) {
+                    var noRow = hBody.insertRow();
+                    noRow.innerHTML = '<td colspan="9" style="text-align:center;color:#64748b;padding:24px;">No data matches the selected filters.</td>';
+                    return;
+                }
+
+                var GT = makeStats();
+                Object.keys(hier).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); }).forEach(function (prov) {
+                    var HP = hier[prov];
+                    GT.total += HP.total; GT.completed += HP.completed; GT.approvedSup += HP.approvedSup;
+                    GT.approvedHQ += HP.approvedHQ; GT.rejected += HP.rejected; GT.inProgress += HP.inProgress;
+                    var pr = hBody.insertRow();
+                    pr.className = 'progress-level-province';
+                    pr.innerHTML = '<td colspan="2"><strong>' + (PROVINCES[prov] || 'Province ' + prov) + '</strong></td>' + statCells(HP);
+
+                    Object.keys(HP.acs).sort().forEach(function (ac) {
+                        var HAC = HP.acs[ac];
+                        var acr = hBody.insertRow();
+                        acr.className = 'progress-level-ac';
+                        acr.innerHTML = '<td colspan="2" style="padding-left:1.4rem;">' + (acName(ac) || ac) + '</td>' + statCells(HAC);
+
+                        Object.keys(HAC.eas).sort().forEach(function (ea) {
+                            var HEA = HAC.eas[ea];
+                            var allDoneEA = HEA.rejected === 0 && HEA.inProgress === 0;
+                            var eaBadge = HEA.rejected > 0
+                                ? ' <span class="status-badge rejected" style="font-size:0.6rem;padding:1px 5px;">Rejected</span>'
+                                : (allDoneEA ? ' <span class="status-badge approved-hq" style="font-size:0.6rem;padding:1px 5px;">Done</span>' : '');
+                            var ear = hBody.insertRow();
+                            ear.className = 'progress-level-ea';
+                            ear.innerHTML = '<td colspan="2" style="padding-left:2.8rem;font-style:italic;">' + ea + eaBadge + '</td>' + statCells(HEA);
+
+                            Object.keys(HEA.teams).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); }).forEach(function (team) {
+                                var HT = HEA.teams[team];
+                                var tr2 = hBody.insertRow();
+                                tr2.className = 'progress-level-team';
+                                tr2.innerHTML = '<td style="padding-left:4.2rem;">Team ' + team + '</td>' +
+                                    '<td style="color:#94a3b8;">' + HT.interviewers.size + '</td>' + statCells(HT);
+                            });
+                        });
+                    });
+                });
+                var gtr = hBody.insertRow();
+                gtr.className = 'total-row';
+                gtr.innerHTML = '<td colspan="2"><strong>Grand Total</strong></td>' + statCells(GT);
+
+                // ---- Interviews by Interviewer ----
+                var intMap = {};
+                filtered.forEach(function (d) {
+                    var resp = (diagMap[d.interview__key] || {}).responsible || 'Unknown';
+                    if (!intMap[resp]) intMap[resp] = Object.assign(makeStats(), { teams: new Set(), provinces: new Set(), eas: new Set() });
+                    var im = intMap[resp];
+                    im.teams.add(d.team_id || '?');
+                    im.provinces.add(d.province || '?');
+                    im.eas.add(d.enumeration_area || '?');
+                    var sl = STATUS_MAP[d.interview__status] || '';
+                    bumpStat(im, sl);
+                });
+                var iBody = document.querySelector('#progressIntTable tbody');
+                iBody.innerHTML = '';
+                var intTot = makeStats();
+                Object.keys(intMap).sort().forEach(function (intv) {
+                    var im = intMap[intv];
+                    intTot.total += im.total; intTot.completed += im.completed; intTot.approvedSup += im.approvedSup;
+                    intTot.approvedHQ += im.approvedHQ; intTot.rejected += im.rejected; intTot.inProgress += im.inProgress;
+                    var provNames = Array.from(im.provinces).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); }).map(function (p) { return PROVINCES[p] || p; }).join(', ');
+                    var eaList = Array.from(im.eas).sort().join(', ');
+                    var teamList = Array.from(im.teams).sort(function (a, b) { return (parseInt(a) || 0) - (parseInt(b) || 0); }).map(function (t) { return 'Team ' + t; }).join(', ');
+                    var row = iBody.insertRow();
+                    row.innerHTML = '<td class="row-label"><strong>' + intv + '</strong></td>' +
+                        '<td>' + teamList + '</td>' +
+                        '<td>' + provNames + '</td>' +
+                        '<td style="font-size:0.72rem;color:#94a3b8;">' + eaList + '</td>' +
+                        statCells(im);
+                });
+                var itTotRow = iBody.insertRow();
+                itTotRow.className = 'total-row';
+                itTotRow.innerHTML = '<td><strong>Total</strong></td><td></td><td></td><td></td>' + statCells(intTot);
+            }
+
+            // Wire up filter events
+            pfProv.addEventListener('change', function () {
+                pfAC.value = ''; pfEA.value = ''; pfTeam.value = '';
+                populateSubFilters(pfProv.value, '');
+                renderFieldHier();
+            });
+            pfAC.addEventListener('change', function () {
+                pfEA.value = ''; pfTeam.value = '';
+                populateSubFilters(pfProv.value, pfAC.value);
+                renderFieldHier();
+            });
+            pfEA.addEventListener('change', renderFieldHier);
+            pfTeam.addEventListener('change', renderFieldHier);
+            document.getElementById('pfClear').addEventListener('click', function () {
+                pfProv.value = ''; pfAC.value = ''; pfEA.value = ''; pfTeam.value = '';
+                populateSubFilters('', '');
+                renderFieldHier();
+            });
+
+            renderFieldHier();
+        }
+
+        // ---- NAVIGATION ----
+        document.querySelectorAll('.nav-bar a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                document.querySelectorAll('.nav-bar a').forEach(function (a) { a.classList.remove('active'); });
+                document.querySelectorAll('.page-section').forEach(function (s) { s.classList.remove('active'); });
+                this.classList.add('active');
+                document.getElementById('page-' + this.dataset.page).classList.add('active');
+                if (this.dataset.page === 'map' && window._gpsMap) {
+                    setTimeout(function () { window._gpsMap.invalidateSize(); }, 100);
+                }
+            });
+        });
+
+        window.addEventListener('DOMContentLoaded', initDashboard);
+
+        // ---- PDF EXPORT ----
+        async function generatePDF() {
+            var selected = [];
+            document.querySelectorAll('.pdf-section-cb:checked').forEach(function (cb) { selected.push(cb.value); });
+            if (selected.length === 0) { alert('Please select at least one section.'); return; }
+
+            var genBtn = document.getElementById('pdfGenerateBtn');
+            var progress = document.getElementById('pdfProgress');
+            var progressText = document.getElementById('pdfProgressText');
+            var progressBar = document.getElementById('pdfProgressBar');
+            genBtn.disabled = true;
+            genBtn.textContent = 'Generating...';
+            progress.style.display = 'block';
+            progressBar.style.width = '0%';
+
+            var jsPDF = window.jspdf.jsPDF;
+            var pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+            var pageW = pdf.internal.pageSize.getWidth();
+            var pageH = pdf.internal.pageSize.getHeight();
+            var margin = 10;
+            var contentW = pageW - margin * 2;
+
+            // Save current page state
+            var currentActive = document.querySelector('.nav-bar a.active');
+            var currentPage = currentActive ? currentActive.dataset.page : 'surveys';
+
+            // ---- COVER PAGE ----
+            pdf.setFillColor(15, 23, 42);
+            pdf.rect(0, 0, pageW, pageH, 'F');
+            // Top accent bar
+            pdf.setFillColor(30, 58, 95);
+            pdf.rect(0, 0, pageW, 4, 'F');
+            pdf.setFillColor(59, 130, 246);
+            pdf.rect(0, 4, pageW, 2, 'F');
+            // Title
+            pdf.setFontSize(28);
+            pdf.setTextColor(226, 232, 240);
+            pdf.text('Vanuatu HIES 2026', pageW / 2, pageH * 0.35, { align: 'center' });
+            pdf.setFontSize(16);
+            pdf.setTextColor(148, 163, 184);
+            pdf.text('Monitoring Report', pageW / 2, pageH * 0.35 + 14, { align: 'center' });
+            // Divider line
+            pdf.setDrawColor(59, 130, 246);
+            pdf.setLineWidth(0.5);
+            pdf.line(pageW * 0.3, pageH * 0.35 + 22, pageW * 0.7, pageH * 0.35 + 22);
+            // Report details
+            pdf.setFontSize(10);
+            pdf.setTextColor(148, 163, 184);
+            pdf.text('Generated: ' + new Date().toLocaleString(), pageW / 2, pageH * 0.55, { align: 'center' });
+            var sectionNames = {
+                surveys: 'Surveys and Statuses', teams: 'Teams and Statuses',
+                statusduration: 'Status Duration', devices: 'Devices / Interviewers',
+                map: 'Map Report', cumulative: 'Cumulative Interview Chart',
+                quantity: 'Quantity', speed: 'Speed', statistics: 'Survey Statistics'
+            };
+            pdf.setFontSize(9);
+            pdf.text('Sections included:', pageW / 2, pageH * 0.62, { align: 'center' });
+            pdf.setFontSize(8);
+            pdf.setTextColor(100, 116, 139);
+            selected.forEach(function (s, idx) {
+                pdf.text((idx + 1) + '. ' + (sectionNames[s] || s), pageW / 2, pageH * 0.66 + idx * 5, { align: 'center' });
+            });
+            // Bottom bar
+            pdf.setFillColor(30, 58, 95);
+            pdf.rect(0, pageH - 6, pageW, 6, 'F');
+            pdf.setFontSize(7);
+            pdf.setTextColor(100, 116, 139);
+            pdf.text('Vanuatu National Statistics Office', pageW / 2, pageH - 2, { align: 'center' });
+
+            // Helper: render header bar on each content page
+            function drawPageHeader(sectionTitle) {
+                pdf.setFillColor(30, 58, 95);
+                pdf.rect(0, 0, pageW, 14, 'F');
+                pdf.setFontSize(10);
+                pdf.setTextColor(255, 255, 255);
+                pdf.text('Vanuatu HIES 2026 — ' + sectionTitle, margin, 9);
+                pdf.setFontSize(7);
+                pdf.setTextColor(148, 163, 184);
+                pdf.text('Generated: ' + new Date().toLocaleString(), pageW - margin, 9, { align: 'right' });
+            }
+
+            // ---- CAPTURE EACH SECTION (one at a time) ----
+            // Show all sections at once so charts are already rendered
+            document.querySelectorAll('.page-section').forEach(function (s) { s.style.display = 'block'; s.classList.add('active'); });
+            // Map needs invalidateSize when made visible
+            if (selected.indexOf('map') >= 0 && window._gpsMap) {
+                window._gpsMap.invalidateSize();
+            }
+            // Single wait for everything to settle
+            await new Promise(function (r) { setTimeout(r, 400); });
+
+            for (var i = 0; i < selected.length; i++) {
+                var sectionId = selected[i];
+                var sectionTitle = sectionNames[sectionId] || sectionId;
+                progressText.textContent = 'Capturing: ' + sectionTitle + ' (' + (i + 1) + '/' + selected.length + ')';
+                progressBar.style.width = (((i + 0.5) / selected.length) * 100) + '%';
+
+                var section = document.getElementById('page-' + sectionId);
+                if (!section) continue;
+
+                try {
+                    var canvas = await html2canvas(section, {
+                        backgroundColor: '#0f172a',
+                        scale: 1.5,
+                        useCORS: true,
+                        logging: false,
+                        windowWidth: 1400,
+                        scrollX: 0,
+                        scrollY: -window.scrollY
+                    });
+
+                    pdf.addPage();
+                    drawPageHeader(sectionTitle);
+
+                    // Scale image to fit page
+                    var imgW = contentW;
+                    var imgH = (canvas.height / canvas.width) * imgW;
+                    var yStart = 18;
+                    var maxH = pageH - yStart - margin;
+
+                    if (imgH > maxH) {
+                        // Split across multiple pages
+                        var srcY = 0;
+                        var srcPageH = Math.floor((maxH / imgH) * canvas.height);
+                        var pageIdx = 0;
+                        while (srcY < canvas.height) {
+                            if (pageIdx > 0) {
+                                pdf.addPage();
+                                drawPageHeader(sectionTitle + ' (cont.)');
+                            }
+                            var sliceH = Math.min(srcPageH, canvas.height - srcY);
+                            var sliceCanvas = document.createElement('canvas');
+                            sliceCanvas.width = canvas.width;
+                            sliceCanvas.height = sliceH;
+                            var ctx = sliceCanvas.getContext('2d');
+                            ctx.drawImage(canvas, 0, srcY, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+                            var sliceImgH = (sliceH / canvas.width) * imgW;
+                            pdf.addImage(sliceCanvas.toDataURL('image/jpeg', 0.8), 'JPEG', margin, yStart, imgW, sliceImgH);
+                            srcY += sliceH;
+                            pageIdx++;
+                        }
+                    } else {
+                        pdf.addImage(canvas.toDataURL('image/jpeg', 0.8), 'JPEG', margin, yStart, imgW, imgH);
+                    }
+                } catch (e) {
+                    console.warn('PDF capture error for ' + sectionId + ':', e);
+                }
+            }
+
+            // Restore original page
+            document.querySelectorAll('.page-section').forEach(function (s) { s.classList.remove('active'); s.style.display = ''; });
+            document.getElementById('page-' + currentPage).classList.add('active');
+            if (currentPage === 'map' && window._gpsMap) {
+                setTimeout(function () { window._gpsMap.invalidateSize(); }, 100);
+            }
+
+            // Add page numbers (skip cover page = page 1)
+            var totalPages = pdf.internal.getNumberOfPages();
+            for (var p = 2; p <= totalPages; p++) {
+                pdf.setPage(p);
+                pdf.setFontSize(7);
+                pdf.setTextColor(100, 116, 139);
+                pdf.text('Page ' + (p - 1) + ' of ' + (totalPages - 1), pageW / 2, pageH - 4, { align: 'center' });
+            }
+
+            progressText.textContent = 'Complete!';
+            progressBar.style.width = '100%';
+
+            pdf.save('VUTHIES_2026_Report_' + new Date().toISOString().slice(0, 10) + '.pdf');
+
+            setTimeout(function () {
+                genBtn.disabled = false;
+                genBtn.textContent = 'Generate PDF';
+                progress.style.display = 'none';
+                document.getElementById('pdfModal').style.display = 'none';
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>

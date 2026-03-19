@@ -1,0 +1,15 @@
+{
+    "_comment": "VUTHIES 2026 Dashboard — Configuration Template",
+    "_instructions": [
+        "1. Copy this file to config.json",
+        "2. Fill in your Survey Solutions server details",
+        "3. NEVER commit config.json to git (it contains credentials)"
+    ],
+    "url": "https://your-server.mysurvey.solutions",
+    "workspace": "primary",
+    "user": "YourAPIuser",
+    "password": "YourAPIpassword",
+    "questionnaire_id": "",
+    "gh_repo": "vbos-dashboards/HIES",
+    "gh_token": ""
+}

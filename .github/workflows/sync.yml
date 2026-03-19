@@ -1,0 +1,62 @@
+# -----------------------------------------------
+# VUTHIES Dashboard — GitHub Actions Auto-Sync
+#
+# Runs on a schedule (every 6 hours) and also
+# allows manual trigger. Connects to the Survey
+# Solutions server, exports data, rebuilds the
+# dashboard, and pushes to GitHub Pages.
+#
+# Required GitHub Secrets:
+#   SS_URL       — Survey Solutions server URL
+#   SS_WORKSPACE — Workspace name (default: primary)
+#   SS_USER      — API user account
+#   SS_PASSWORD  — API user password
+# -----------------------------------------------
+
+name: Sync Dashboard
+
+on:
+  schedule:
+    # Every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    # Manual trigger from GitHub Actions UI
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run sync script
+        env:
+          SS_URL: ${{ secrets.SS_URL }}
+          SS_WORKSPACE: ${{ secrets.SS_WORKSPACE }}
+          SS_USER: ${{ secrets.SS_USER }}
+          SS_PASSWORD: ${{ secrets.SS_PASSWORD }}
+        run: |
+          if [ -z "$SS_URL" ]; then
+            echo "⚠️  SS_URL secret not set — skipping sync. Configure secrets in repo Settings → Secrets."
+            exit 0
+          fi
+          python sync.py --push
+
+      - name: Commit and push (if changes)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || (git commit -m "Auto-sync: $(date -u '+%Y-%m-%d %H:%M UTC')" && git push)
