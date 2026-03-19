@@ -803,8 +803,19 @@
         });
     }
 
+    // ===== COVER SCREEN =====
+    function setupCover() {
+        var btn = document.getElementById('enterDashboard');
+        if (btn) {
+            btn.addEventListener('click', function () {
+                document.getElementById('coverScreen').classList.add('hidden');
+            });
+        }
+    }
+
     // ===== INIT =====
     document.addEventListener('DOMContentLoaded', function () {
+        setupCover();
         setupNavigation();
         loadAllData();
     });
