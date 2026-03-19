@@ -654,9 +654,98 @@
                 -webkit-overflow-scrolling: touch;
             }
 
+            /* ==== Collection Coverage ==== */
+            .coverage-section {
+                margin-bottom: 22px;
+            }
+
+            .coverage-section-head {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.68rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: #64748b;
+                margin-bottom: 12px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #1e2d45;
+            }
+
+            .coverage-cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+                gap: 10px;
+            }
+
+            .coverage-card {
+                background: linear-gradient(145deg, #0f1c2e 0%, #132035 100%);
+                border-radius: 12px;
+                padding: 14px 16px;
+                border: 1px solid #1a2c42;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .coverage-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            }
+
+            .coverage-card.national {
+                border-color: #1d4ed8;
+                background: linear-gradient(145deg, #0f1c35 0%, #0c1830 100%);
+            }
+
+            .coverage-card .cov-label {
+                font-size: 0.62rem;
+                color: #64748b;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                font-weight: 700;
+                margin-bottom: 6px;
+            }
+
+            .coverage-card .cov-pct {
+                font-size: 1.9rem;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+                color: #e2e8f0;
+                line-height: 1;
+                margin-bottom: 4px;
+            }
+
+            .coverage-card.national .cov-pct {
+                font-size: 2.3rem;
+                color: #60a5fa;
+            }
+
+            .coverage-card .cov-ea {
+                font-size: 0.68rem;
+                color: #475569;
+                margin-bottom: 8px;
+            }
+
+            .cov-bar-bg {
+                height: 4px;
+                background: #1e2d45;
+                border-radius: 2px;
+                overflow: hidden;
+            }
+
+            .cov-bar-fill {
+                height: 100%;
+                border-radius: 2px;
+                transition: width 1s ease;
+            }
+
             .nav-bar a {
                 padding: 10px 12px;
                 font-size: 0.72rem;
+            }
+
+            .coverage-cards {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .top-stats {
@@ -900,6 +989,19 @@
                 <div class="detail" id="rejectedDetail"></div>
             </div>
         </div>
+
+        <!-- Collection Coverage -->
+        <div class="coverage-section">
+            <div class="coverage-section-head">
+                <i class="bi bi-collection-fill"></i>
+                Collection Coverage &mdash; EAs Visited vs. Target
+                <span
+                    style="margin-left:auto;font-weight:400;color:#334155;font-size:0.6rem;text-transform:none;letter-spacing:0;">Target:
+                    512 EAs nationally</span>
+            </div>
+            <div class="coverage-cards" id="coverageCards"></div>
+        </div>
+
         <div class="dashboard-grid">
             <div class="panel">
                 <h3>Interview Status Distribution <i class="info-icon"
@@ -1449,6 +1551,40 @@
             document.getElementById('completedDetail').textContent = 'Awaiting approval';
             document.getElementById('totalRejected').textContent = rejectedCount;
             document.getElementById('rejectedDetail').textContent = rejectedCount > 0 ? 'Need correction' : 'None';
+
+            // ---- Collection Coverage ----
+            const EA_TARGETS = { '1': 32, '2': 128, '3': 64, '4': 64, '5': 128, '6': 96 };
+            const TOTAL_TARGET_EAS = 512;
+            const easByProvince = {};
+            mainData.forEach(d => {
+                if (d.province && d.enumeration_area) {
+                    if (!easByProvince[d.province]) easByProvince[d.province] = new Set();
+                    easByProvince[d.province].add(d.enumeration_area);
+                }
+            });
+            const allVisitedEAs = new Set(mainData.map(d => d.enumeration_area).filter(Boolean));
+            const natVisited = allVisitedEAs.size;
+            const natPct = TOTAL_TARGET_EAS > 0 ? (natVisited / TOTAL_TARGET_EAS * 100).toFixed(1) : '0.0';
+            const natColor = natPct >= 60 ? '#22c55e' : natPct >= 25 ? '#f59e0b' : '#60a5fa';
+            const ccEl = document.getElementById('coverageCards');
+            ccEl.innerHTML = `<div class="coverage-card national">
+                <div class="cov-label"><i class="bi bi-globe2"></i> NATIONAL</div>
+                <div class="cov-pct">${natPct}%</div>
+                <div class="cov-ea">${natVisited} of ${TOTAL_TARGET_EAS} EAs visited</div>
+                <div class="cov-bar-bg"><div class="cov-bar-fill" style="width:${natPct}%;background:${natColor}"></div></div>
+            </div>`;
+            Object.entries(PROVINCES).sort((a, b) => parseInt(a[0]) - parseInt(b[0])).forEach(([code, name]) => {
+                const visited = (easByProvince[code] || new Set()).size;
+                const target = EA_TARGETS[code] || 0;
+                const pct = target > 0 ? (visited / target * 100).toFixed(1) : '0.0';
+                const color = pct >= 60 ? '#22c55e' : pct >= 25 ? '#f59e0b' : '#3b82f6';
+                ccEl.innerHTML += `<div class="coverage-card">
+                    <div class="cov-label">${name}</div>
+                    <div class="cov-pct" style="color:${color}">${pct}%</div>
+                    <div class="cov-ea">${visited} of ${target} EAs</div>
+                    <div class="cov-bar-bg"><div class="cov-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+                </div>`;
+            });
 
             // Status doughnut
             new Chart(document.getElementById('statusChart'), {
