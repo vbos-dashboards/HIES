@@ -759,6 +759,15 @@
         return d.innerHTML;
     }
 
+    /* ---------- cover page ---------- */
+    const coverPage = el('coverPage');
+    const coverBtn = el('coverEnter');
+    if (coverPage && coverBtn) {
+        coverBtn.addEventListener('click', () => {
+            coverPage.classList.add('hidden');
+        });
+    }
+
     /* ---------- initial render ---------- */
     renderTab('surveys');
 
