@@ -47,19 +47,21 @@
     }
 
     /* ---------- data loading ---------- */
-    let summary, households, persons, lookup, targets;
+    let summary, households, persons, lookup, targets, eaBoundaries, villagePoints;
     try {
         async function loadJSON(path) {
             const r = await fetch(path);
             if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
             return r.json();
         }
-        [summary, households, persons, lookup, targets] = await Promise.all([
+        [summary, households, persons, lookup, targets, eaBoundaries, villagePoints] = await Promise.all([
             loadJSON('data/summary.json'),
             loadJSON('data/households.json'),
             loadJSON('data/persons.json'),
             loadJSON('data/lookup.json'),
-            loadJSON('data/targets.json')
+            loadJSON('data/targets.json'),
+            loadJSON('data/ea_boundaries.geojson'),
+            loadJSON('data/villages.geojson')
         ]);
     } catch (err) {
         showError('Could not load dashboard data.', String(err));
@@ -417,25 +419,105 @@
         setText('kpi-map-provinces', provs);
         setText('kpi-map-gps', withGPS.length);
 
+        // Build actual count per EA
+        const actualByEA = {};
+        households.forEach(h => {
+            const ea = String(h.ea);
+            actualByEA[ea] = (actualByEA[ea] || 0) + 1;
+        });
+
+        // Build target per EA from targets data
+        const targetByEA = {};
+        if (targets && targets.eas) {
+            targets.eas.forEach(e => {
+                targetByEA[String(e.eahies)] = e.target_sample;
+            });
+        }
+
         // Leaflet map
         const map = L.map('survey-map').setView([-16.5, 168], 6);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors', maxZoom: 18
         }).addTo(map);
 
+        // Layer groups for toggle
+        const eaLayer = L.layerGroup().addTo(map);
+        const villageLayer = L.layerGroup();
+        const hhLayer = L.layerGroup().addTo(map);
+
+        // EA boundary polygons
+        if (eaBoundaries && eaBoundaries.features) {
+            L.geoJSON(eaBoundaries, {
+                style: function (feature) {
+                    const eaCode = String(feature.properties.eahies);
+                    const actual = actualByEA[eaCode] || 0;
+                    const target = targetByEA[eaCode] || 0;
+                    var fillColor = '#bdc3c7';
+                    if (actual > 0 && actual < target) fillColor = '#f39c12';
+                    if (actual >= target && target > 0) fillColor = '#2ecc71';
+                    return { color: '#34495e', weight: 1.5, fillColor: fillColor, fillOpacity: 0.35 };
+                },
+                onEachFeature: function (feature, layer) {
+                    var p = feature.properties;
+                    var eaCode = String(p.eahies);
+                    var actual = actualByEA[eaCode] || 0;
+                    var target = targetByEA[eaCode] || 0;
+                    var pct = target > 0 ? ((actual / target) * 100).toFixed(1) : '0.0';
+                    layer.bindPopup(
+                        '<b>EA: ' + esc(eaCode) + '</b><br>' +
+                        'Province: ' + esc(p.Pname) + '<br>' +
+                        'Area Council: ' + esc(p.ACNAME22) + '<br>' +
+                        'Team: ' + esc(p.Team_Name) + '<br>' +
+                        'HH in EA: ' + (p.hh_count || 0) + '<br>' +
+                        '<hr style="margin:4px 0;">' +
+                        'Target: ' + target + ' | Actual: ' + actual + ' | ' + pct + '%'
+                    );
+                }
+            }).addTo(eaLayer);
+        }
+
+        // Village point markers
+        if (villagePoints && villagePoints.features) {
+            L.geoJSON(villagePoints, {
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: 3, fillColor: '#9b59b6', color: '#fff', weight: 0.5, fillOpacity: 0.6
+                    });
+                },
+                onEachFeature: function (feature, layer) {
+                    var p = feature.properties;
+                    layer.bindPopup('<b>' + esc(p.Village) + '</b><br>Province: ' + esc(p.PNAME) + '<br>AC: ' + esc(p.ACNAME) + '<br>Island: ' + esc(p.Is_Name));
+                }
+            }).addTo(villageLayer);
+        }
+
+        // Household markers
         withGPS.forEach(h => {
             const lat = parseFloat(h.latitude);
             const lng = parseFloat(h.longitude);
             if (isNaN(lat) || isNaN(lng)) return;
-            const color = PROV_COLORS[h.province_name] || '#95a5a6';
-            const marker = L.circleMarker([lat, lng], {
-                radius: 6, fillColor: color, color: '#fff', weight: 1, fillOpacity: 0.8
-            }).addTo(map);
-            marker.bindPopup(`<b>${esc(h.interview_key)}</b><br>Province: ${esc(h.province_name)}<br>Island: ${esc(h.island_name)}<br>AC: ${esc(h.ac_name)}<br>Village: ${esc(h.village_name)}<br>EA: ${esc(h.ea)}<br>Team: ${esc(h.team_name || h.team_id)}<br>Date: ${esc(h.interview_date)}<br>Status: ${statusLabel(h.interview_status)}`);
+            L.circleMarker([lat, lng], {
+                radius: 5, fillColor: '#e74c3c', color: '#fff', weight: 1, fillOpacity: 0.85
+            }).bindPopup(
+                '<b>' + esc(h.interview_key) + '</b><br>' +
+                'Province: ' + esc(h.province_name) + '<br>Island: ' + esc(h.island_name) +
+                '<br>AC: ' + esc(h.ac_name) + '<br>Village: ' + esc(h.village_name) +
+                '<br>EA: ' + esc(h.ea) + '<br>Team: ' + esc(h.team_name || h.team_id) +
+                '<br>Date: ' + esc(h.interview_date) + '<br>Status: ' + statusLabel(h.interview_status)
+            ).addTo(hhLayer);
         });
 
-        // fit bounds
-        if (withGPS.length) {
+        // Layer control
+        L.control.layers(null, {
+            'EA Boundaries': eaLayer,
+            'Villages': villageLayer,
+            'Households': hhLayer
+        }).addTo(map);
+
+        // Fit bounds
+        if (eaBoundaries && eaBoundaries.features && eaBoundaries.features.length) {
+            map.fitBounds(L.geoJSON(eaBoundaries).getBounds(), { padding: [30, 30] });
+        } else if (withGPS.length) {
             const coords = withGPS.map(h => [parseFloat(h.latitude), parseFloat(h.longitude)]).filter(c => !isNaN(c[0]) && !isNaN(c[1]));
             if (coords.length) map.fitBounds(coords, { padding: [30, 30] });
         }

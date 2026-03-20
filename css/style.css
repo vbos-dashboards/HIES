@@ -378,6 +378,26 @@ body {
     background: #1abc9c;
 }
 
+.legend-square {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    margin-right: 4px;
+    vertical-align: middle;
+    border: 1px solid rgba(0,0,0,0.15);
+}
+
+.legend-dot-sm {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
 /* ===== Loading ===== */
 .loading-overlay {
     position: fixed;
