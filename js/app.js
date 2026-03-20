@@ -47,14 +47,14 @@
     }
 
     /* ---------- data loading ---------- */
-    let summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan;
+    let summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, enumerators;
     try {
         async function loadJSON(path) {
             const r = await fetch(path);
             if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
             return r.json();
         }
-        [summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan] = await Promise.all([
+        [summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, enumerators] = await Promise.all([
             loadJSON('data/summary.json'),
             loadJSON('data/households.json'),
             loadJSON('data/persons.json'),
@@ -62,7 +62,8 @@
             loadJSON('data/targets.json'),
             loadJSON('data/ea_boundaries.geojson'),
             loadJSON('data/villages.geojson'),
-            loadJSON('data/workplan.json')
+            loadJSON('data/workplan.json'),
+            loadJSON('data/enumerators.json')
         ]);
     } catch (err) {
         showError('Could not load dashboard data.', String(err));
@@ -123,7 +124,8 @@
         speed: 'Speed',
         statistics: 'Survey Statistics',
         monitoring: 'EA Monitoring',
-        workplan: 'Work Plan'
+        workplan: 'Work Plan',
+        enumerators: 'Enumerators'
     };
 
     const navItems = document.querySelectorAll('.nav-item');
@@ -165,6 +167,7 @@
             case 'statistics': renderStatistics(); break;
             case 'monitoring': renderMonitoring(); break;
             case 'workplan': renderWorkplan(); break;
+            case 'enumerators': renderEnumerators(); break;
         }
     }
 
@@ -1200,6 +1203,108 @@
                 '<td>' + esc(s.island || '') + '</td>' +
                 '<td>' + esc(s.ea_name || '') + '</td>' +
                 '<td>' + statusBadge + '</td>';
+            tbody.appendChild(tr);
+        });
+    }
+
+    /* ========================================
+       12. ENUMERATORS
+       ======================================== */
+    function renderEnumerators() {
+        if (!enumerators || !enumerators.length) return;
+
+        // Exclude HQ for field counts
+        const fieldStaff = enumerators.filter(e => e.province !== 'HQ');
+        const supervisors = enumerators.filter(e => e.role === 'Supervisor');
+        const provinces = [...new Set(fieldStaff.map(e => e.province))];
+
+        setText('kpi-enum-total', enumerators.length);
+        setText('kpi-enum-field', fieldStaff.length);
+        setText('kpi-enum-supervisors', supervisors.length);
+        setText('kpi-enum-provinces', provinces.length);
+
+        // Staff by province (stacked: Supervisor vs Enumerator)
+        const provOrder = provinces.sort();
+        const byProvSup = provOrder.map(p => fieldStaff.filter(e => e.province === p && e.role === 'Supervisor').length);
+        const byProvEnum = provOrder.map(p => fieldStaff.filter(e => e.province === p && e.role === 'Enumerator').length);
+        makeChart('chart-enum-province', {
+            type: 'bar',
+            data: {
+                labels: provOrder,
+                datasets: [
+                    { label: 'Supervisors', data: byProvSup, backgroundColor: '#f39c12' },
+                    { label: 'Enumerators', data: byProvEnum, backgroundColor: '#3498db' }
+                ]
+            },
+            options: { responsive: true, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } }, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // Gender distribution
+        const males = enumerators.filter(e => e.sex === 'Male').length;
+        const females = enumerators.filter(e => e.sex === 'Female').length;
+        makeChart('chart-enum-gender', {
+            type: 'doughnut',
+            data: {
+                labels: ['Male', 'Female'],
+                datasets: [{ data: [males, females], backgroundColor: ['#3498db', '#e91e8c'] }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // Team composition — group by province + team
+        const teamGroups = {};
+        fieldStaff.forEach(e => {
+            const key = e.province + ' - ' + (e.team || 'Unassigned');
+            if (!teamGroups[key]) teamGroups[key] = { supervisors: 0, enumerators: 0 };
+            if (e.role === 'Supervisor') teamGroups[key].supervisors++;
+            else teamGroups[key].enumerators++;
+        });
+        const teamKeys = Object.keys(teamGroups).sort();
+        makeChart('chart-enum-teams', {
+            type: 'bar',
+            data: {
+                labels: teamKeys,
+                datasets: [
+                    { label: 'Supervisors', data: teamKeys.map(k => teamGroups[k].supervisors), backgroundColor: '#f39c12' },
+                    { label: 'Enumerators', data: teamKeys.map(k => teamGroups[k].enumerators), backgroundColor: '#3498db' }
+                ]
+            },
+            options: { responsive: true, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } }, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // Roles doughnut
+        const roles = {};
+        enumerators.forEach(e => { roles[e.role] = (roles[e.role] || 0) + 1; });
+        makeChart('chart-enum-roles', {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(roles),
+                datasets: [{ data: Object.values(roles), backgroundColor: ['#3498db', '#f39c12', '#2ecc71', '#e74c3c'] }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // Directory table
+        const tbody = el('table-enumerators').querySelector('tbody');
+        // Sort by province then team then role (supervisors first) then name
+        const sorted = [...enumerators].sort((a, b) => {
+            if (a.province !== b.province) return (a.province || '').localeCompare(b.province || '');
+            if (a.team !== b.team) return (a.team || '').localeCompare(b.team || '');
+            if (a.role !== b.role) return a.role === 'Supervisor' ? -1 : 1;
+            return (a.first_name || '').localeCompare(b.first_name || '');
+        });
+        sorted.forEach(e => {
+            const tr = document.createElement('tr');
+            const roleBadge = e.role === 'Supervisor'
+                ? '<span class="status-badge" style="background:#f39c12;color:#fff;">Supervisor</span>'
+                : '<span class="status-badge" style="background:#3498db;color:#fff;">Enumerator</span>';
+            tr.innerHTML = '<td><strong>' + esc(e.first_name + ' ' + e.last_name) + '</strong></td>' +
+                '<td>' + esc(e.province) + '</td>' +
+                '<td>' + esc(e.team) + '</td>' +
+                '<td>' + roleBadge + '</td>' +
+                '<td>' + esc(e.sex) + '</td>' +
+                '<td>' + esc(e.island) + '</td>' +
+                '<td>' + esc(e.location) + '</td>';
             tbody.appendChild(tr);
         });
     }
