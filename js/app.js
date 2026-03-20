@@ -829,110 +829,132 @@
        9. SURVEY STATISTICS
        ======================================== */
     function renderStatistics() {
-        const totalHH = summary.total_households;
-        const totalP = summary.total_persons;
-        const avgHS = summary.avg_hh_size;
-        const maleC = summary.male_count;
-        const femaleC = summary.female_count;
+        // Compute all stats from raw data
+        const totalHH = households.length;
+        const totalP = persons.length;
+
+        // HH sizes from persons grouped by interview_key
+        const hhSizes = {};
+        persons.forEach(p => { hhSizes[p.interview_key] = (hhSizes[p.interview_key] || 0) + 1; });
+        const sizeValues = Object.values(hhSizes);
+        const avgHS = sizeValues.length > 0 ? (sizeValues.reduce((a, b) => a + b, 0) / sizeValues.length).toFixed(1) : '-';
+
+        // Sex counts
+        const maleC = persons.filter(p => String(p.sex) === '1').length;
+        const femaleC = persons.filter(p => String(p.sex) === '2').length;
         const sexRatio = femaleC > 0 ? ((maleC / femaleC) * 100).toFixed(0) : '-';
 
+        // Province data from households
+        const provHH = groupBy(households, 'province_name');
+        const provNames = Object.keys(provHH).filter(n => n).sort();
+
         setText('kpi-stat-hh', totalHH);
-        setText('kpi-stat-hh-sub', `${summary.provinces.length} provinces`);
+        setText('kpi-stat-hh-sub', provNames.length + ' provinces');
         setText('kpi-stat-persons', totalP);
-        setText('kpi-stat-persons-sub', `${maleC} male, ${femaleC} female`);
+        setText('kpi-stat-persons-sub', maleC + ' male, ' + femaleC + ' female');
         setText('kpi-stat-hhsize', avgHS);
         setText('kpi-stat-sexratio', sexRatio);
 
-        // population pyramid (horizontal stacked bar)
-        const ageGroups = summary.age_pyramid.map(a => a.group);
-        makeChart('chart-stat-pyramid', {
-            type: 'bar',
-            data: {
-                labels: ageGroups,
-                datasets: [
-                    {
-                        label: 'Male',
-                        data: summary.age_pyramid.map(a => -a.male),
-                        backgroundColor: '#3498db'
-                    },
-                    {
-                        label: 'Female',
-                        data: summary.age_pyramid.map(a => a.female),
-                        backgroundColor: '#e91e8c'
-                    }
-                ]
-            },
-            options: {
-                indexAxis: 'y', responsive: true,
-                scales: {
-                    x: {
-                        ticks: { callback: v => Math.abs(v) },
-                        title: { display: true, text: 'Population' }
-                    },
-                    y: { stacked: true }
-                },
-                plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + Math.abs(ctx.raw) } } }
-            }
+        // Age pyramid from persons
+        const ageBins = ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65+'];
+        function ageBin(age) {
+            const a = parseInt(age);
+            if (isNaN(a)) return null;
+            if (a >= 65) return '65+';
+            const idx = Math.floor(a / 5);
+            return ageBins[idx] || null;
+        }
+        const pyramidData = {};
+        ageBins.forEach(g => { pyramidData[g] = { male: 0, female: 0 }; });
+        persons.forEach(p => {
+            const bin = ageBin(p.age);
+            if (!bin) return;
+            if (String(p.sex) === '1') pyramidData[bin].male++;
+            else if (String(p.sex) === '2') pyramidData[bin].female++;
         });
+        const pyramidLabels = ageBins;
+        const pyramidHasData = Object.values(pyramidData).some(v => v.male > 0 || v.female > 0);
 
-        // sex distribution pie
+        if (pyramidHasData) {
+            makeChart('chart-stat-pyramid', {
+                type: 'bar',
+                data: {
+                    labels: pyramidLabels,
+                    datasets: [
+                        { label: 'Male', data: pyramidLabels.map(g => -pyramidData[g].male), backgroundColor: '#3498db' },
+                        { label: 'Female', data: pyramidLabels.map(g => pyramidData[g].female), backgroundColor: '#e91e8c' }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y', responsive: true,
+                    scales: {
+                        x: { ticks: { callback: v => Math.abs(v) }, title: { display: true, text: 'Population' } },
+                        y: { stacked: true }
+                    },
+                    plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + Math.abs(ctx.raw) } } }
+                }
+            });
+        }
+
+        // Sex distribution doughnut
         makeChart('chart-stat-sex', {
             type: 'doughnut',
             data: {
                 labels: ['Male', 'Female'],
-                datasets: [{
-                    data: [maleC, femaleC],
-                    backgroundColor: ['#3498db', '#e91e8c']
-                }]
+                datasets: [{ data: [maleC, femaleC], backgroundColor: ['#3498db', '#e91e8c'] }]
             },
             options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
         });
 
-        // households by province
+        // Households by province
+        const provData = provNames.map(n => ({ name: n, households: provHH[n].length }));
         makeChart('chart-stat-province', {
             type: 'bar',
             data: {
-                labels: summary.provinces.map(p => p.name),
+                labels: provData.map(p => p.name),
                 datasets: [{
                     label: 'Households',
-                    data: summary.provinces.map(p => p.households),
-                    backgroundColor: summary.provinces.map(p => PROV_COLORS[p.name] || '#95a5a6')
+                    data: provData.map(p => p.households),
+                    backgroundColor: provData.map(p => PROV_COLORS[p.name] || '#95a5a6')
                 }]
             },
             options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
         });
 
-        // household size distribution
+        // Household size distribution
+        const sizeDist = {};
+        sizeValues.forEach(s => { sizeDist[s] = (sizeDist[s] || 0) + 1; });
+        const sizeKeys = Object.keys(sizeDist).map(Number).sort((a, b) => a - b);
         makeChart('chart-stat-hhsize', {
             type: 'bar',
             data: {
-                labels: summary.hh_size_distribution.map(h => h.size + ' persons'),
+                labels: sizeKeys.map(s => s + ' persons'),
                 datasets: [{
                     label: 'Households',
-                    data: summary.hh_size_distribution.map(h => h.count),
+                    data: sizeKeys.map(s => sizeDist[s]),
                     backgroundColor: '#2ecc71'
                 }]
             },
             options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
         });
 
-        // province summary table
+        // Province summary table
         const tbody = el('table-province-summary').querySelector('tbody');
-        // build lookup: interview_key -> province_name
         const hhProvLookup = {};
         households.forEach(h => { hhProvLookup[h.interview_key] = h.province_name; });
-        // assign province to each person via interview_key
         const personsWithProv = persons.map(p => ({ ...p, province_name: hhProvLookup[p.interview_key] || '' }));
         const personsByProv = groupBy(personsWithProv, 'province_name');
-        summary.provinces.forEach(p => {
-            const provPersons = personsByProv[p.name] || [];
+        provNames.forEach(name => {
+            const hhCount = provHH[name].length;
+            const provPersons = personsByProv[name] || [];
+            const pCount = provPersons.length;
             const male = provPersons.filter(r => String(r.sex) === '1').length;
             const female = provPersons.filter(r => String(r.sex) === '2').length;
             const sr = female > 0 ? ((male / female) * 100).toFixed(0) : '-';
-            const avgSize = p.households > 0 ? (p.persons / p.households).toFixed(1) : '-';
+            const avg = hhCount > 0 ? (pCount / hhCount).toFixed(1) : '-';
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${esc(p.name)}</td><td>${p.households}</td><td>${p.persons}</td>` +
-                `<td>${avgSize}</td><td>${male}</td><td>${female}</td><td>${sr}</td>`;
+            tr.innerHTML = '<td>' + esc(name) + '</td><td>' + hhCount + '</td><td>' + pCount + '</td>' +
+                '<td>' + avg + '</td><td>' + male + '</td><td>' + female + '</td><td>' + sr + '</td>';
             tbody.appendChild(tr);
         });
     }
