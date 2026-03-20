@@ -47,18 +47,19 @@
     }
 
     /* ---------- data loading ---------- */
-    let summary, households, persons, lookup;
+    let summary, households, persons, lookup, targets;
     try {
         async function loadJSON(path) {
             const r = await fetch(path);
             if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
             return r.json();
         }
-        [summary, households, persons, lookup] = await Promise.all([
+        [summary, households, persons, lookup, targets] = await Promise.all([
             loadJSON('data/summary.json'),
             loadJSON('data/households.json'),
             loadJSON('data/persons.json'),
-            loadJSON('data/lookup.json')
+            loadJSON('data/lookup.json'),
+            loadJSON('data/targets.json')
         ]);
     } catch (err) {
         showError('Could not load dashboard data.', String(err));
@@ -117,7 +118,8 @@
         cumulative: 'Cumulative Interview Chart',
         quantity: 'Quantity',
         speed: 'Speed',
-        statistics: 'Survey Statistics'
+        statistics: 'Survey Statistics',
+        monitoring: 'EA Monitoring'
     };
 
     const navItems = document.querySelectorAll('.nav-item');
@@ -157,6 +159,7 @@
             case 'quantity': renderQuantity(); break;
             case 'speed': renderSpeed(); break;
             case 'statistics': renderStatistics(); break;
+            case 'monitoring': renderMonitoring(); break;
         }
     }
 
@@ -769,6 +772,160 @@
             const tr = document.createElement('tr');
             tr.innerHTML = `<td>${esc(p.name)}</td><td>${p.households}</td><td>${p.persons}</td>` +
                 `<td>${avgSize}</td><td>${male}</td><td>${female}</td><td>${sr}</td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    /* ========================================
+       10. EA MONITORING
+       ======================================== */
+    function renderMonitoring() {
+        if (!targets || !targets.eas) return;
+
+        // Build actual count per EA from households
+        const actualByEA = {};
+        households.forEach(h => {
+            const ea = String(h.ea);
+            actualByEA[ea] = (actualByEA[ea] || 0) + 1;
+        });
+
+        const totalTarget = targets.total_target || 0;
+        const totalActual = households.length;
+        const pctOverall = totalTarget > 0 ? ((totalActual / totalTarget) * 100).toFixed(1) : '0.0';
+        const easStarted = Object.keys(actualByEA).length;
+
+        setText('kpi-mon-target', totalTarget.toLocaleString());
+        setText('kpi-mon-actual', totalActual);
+        setText('kpi-mon-pct', pctOverall + '%');
+        setText('kpi-mon-eas-active', easStarted + ' / ' + targets.total_eas);
+
+        // Helper: build progress bar HTML
+        function progressHTML(label, actual, target) {
+            const pct = target > 0 ? Math.min(100, (actual / target) * 100) : 0;
+            const pctText = pct.toFixed(1);
+            const barColor = pct >= 100 ? '#2ecc71' : pct >= 50 ? '#f39c12' : '#3498db';
+            return '<div class="progress-row">' +
+                '<div class="progress-label">' + esc(label) + '</div>' +
+                '<div class="progress-bar-wrap">' +
+                '<div class="progress-bar-fill" style="width:' + pctText + '%;background:' + barColor + ';"></div>' +
+                '</div>' +
+                '<div class="progress-stats">' + actual + ' / ' + target + ' (' + pctText + '%)</div>' +
+                '</div>';
+        }
+
+        // Province progress bars
+        const provDiv = el('progress-province');
+        if (provDiv) {
+            // Map province names: targets use uppercase (TORBA), households use title case (Torba)
+            const provMap = {};
+            targets.eas.forEach(e => {
+                const norm = e.province.charAt(0) + e.province.slice(1).toLowerCase();
+                if (!provMap[norm]) provMap[norm] = { target: 0 };
+                provMap[norm].target += e.target_sample;
+            });
+            // Count actual by province
+            const hhByProv = groupBy(households, 'province_name');
+            let html = '';
+            Object.keys(provMap).sort().forEach(p => {
+                const actual = (hhByProv[p] || []).length;
+                html += progressHTML(p, actual, provMap[p].target);
+            });
+            provDiv.innerHTML = html;
+        }
+
+        // Strata progress bars
+        const strataDiv = el('progress-strata');
+        if (strataDiv) {
+            const strataTargets = targets.strata_targets || {};
+            // Build actual by strata: need to map each household's EA to its strata
+            const eaStrataMap = {};
+            targets.eas.forEach(e => { eaStrataMap[String(e.eahies)] = e.strata_name; });
+            const actualByStrata = {};
+            households.forEach(h => {
+                const s = eaStrataMap[String(h.ea)] || 'Unknown';
+                actualByStrata[s] = (actualByStrata[s] || 0) + 1;
+            });
+            let html = '';
+            Object.keys(strataTargets).sort().forEach(s => {
+                html += progressHTML(s, actualByStrata[s] || 0, strataTargets[s].target);
+            });
+            strataDiv.innerHTML = html;
+        }
+
+        // Bar chart: active EAs actual vs target
+        const activeEAs = targets.eas.filter(e => actualByEA[String(e.eahies)]);
+        if (activeEAs.length > 0) {
+            activeEAs.sort((a, b) => String(a.eahies).localeCompare(String(b.eahies)));
+            makeChart('chart-mon-ea', {
+                type: 'bar',
+                data: {
+                    labels: activeEAs.map(e => String(e.eahies)),
+                    datasets: [
+                        {
+                            label: 'Target',
+                            data: activeEAs.map(e => e.target_sample),
+                            backgroundColor: 'rgba(52,152,219,0.3)',
+                            borderColor: '#3498db',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Actual',
+                            data: activeEAs.map(e => actualByEA[String(e.eahies)] || 0),
+                            backgroundColor: '#2ecc71',
+                            borderColor: '#27ae60',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'top' } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        }
+
+        // Doughnut: province completion
+        const provNames = Object.keys(targets.province_targets || {}).sort();
+        const provActual = provNames.map(p => {
+            const norm = p.charAt(0) + p.slice(1).toLowerCase();
+            return (groupBy(households, 'province_name')[norm] || []).length;
+        });
+        const provTarget = provNames.map(p => targets.province_targets[p].target);
+        makeChart('chart-mon-prov', {
+            type: 'doughnut',
+            data: {
+                labels: provNames.map(p => p.charAt(0) + p.slice(1).toLowerCase()),
+                datasets: [{
+                    data: provActual,
+                    backgroundColor: provNames.map(p => {
+                        const norm = p.charAt(0) + p.slice(1).toLowerCase();
+                        return PROV_COLORS[norm] || '#95a5a6';
+                    })
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // EA detail table — all 512 EAs
+        const tbody = el('table-ea-monitoring').querySelector('tbody');
+        targets.eas.forEach(e => {
+            const code = String(e.eahies);
+            const actual = actualByEA[code] || 0;
+            const remaining = Math.max(0, e.target_sample - actual);
+            const pct = e.target_sample > 0 ? ((actual / e.target_sample) * 100).toFixed(1) : '0.0';
+            const barColor = actual >= e.target_sample ? '#2ecc71' : actual > 0 ? '#f39c12' : '#e0e0e0';
+            const tr = document.createElement('tr');
+            tr.innerHTML = '<td>' + esc(code) + '</td>' +
+                '<td>' + esc(e.province) + '</td>' +
+                '<td>' + esc(e.ac_name) + '</td>' +
+                '<td>' + esc(e.strata_name) + '</td>' +
+                '<td>' + esc(e.urban_rural) + '</td>' +
+                '<td>' + e.target_sample + '</td>' +
+                '<td>' + actual + '</td>' +
+                '<td>' + remaining + '</td>' +
+                '<td><div class="progress-bar-wrap small"><div class="progress-bar-fill" style="width:' +
+                Math.min(100, parseFloat(pct)) + '%;background:' + barColor + ';"></div></div> ' + pct + '%</td>';
             tbody.appendChild(tr);
         });
     }

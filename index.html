@@ -65,6 +65,9 @@
             <li class="nav-item" data-tab="statistics">
                 <span class="nav-icon">&#128201;</span> Survey Statistics
             </li>
+            <li class="nav-item" data-tab="monitoring">
+                <span class="nav-icon">&#127919;</span> EA Monitoring
+            </li>
         </ul>
         <div class="sidebar-footer">
             <p>Vanuatu Bureau of Statistics</p>
@@ -494,6 +497,74 @@
                                 <th>Male</th>
                                 <th>Female</th>
                                 <th>Sex Ratio</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <!-- EA MONITORING TAB -->
+        <section class="tab-content" id="tab-monitoring">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-mon-target">--</div>
+                    <div class="kpi-label">Target Households</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-mon-actual">--</div>
+                    <div class="kpi-label">Completed</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-mon-pct">--</div>
+                    <div class="kpi-label">Overall Progress</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-mon-eas-active">--</div>
+                    <div class="kpi-label">EAs Started</div>
+                </div>
+            </div>
+
+            <!-- Province progress -->
+            <div class="chart-card full" style="margin-bottom:16px;">
+                <h3>Progress by Province</h3>
+                <div id="progress-province"></div>
+            </div>
+
+            <!-- Strata progress -->
+            <div class="chart-card full" style="margin-bottom:16px;">
+                <h3>Progress by Strata</h3>
+                <div id="progress-strata"></div>
+            </div>
+
+            <!-- EA-level chart -->
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Interviews by EA (Actual vs Target)</h3>
+                    <canvas id="chart-mon-ea"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Province Completion</h3>
+                    <canvas id="chart-mon-prov"></canvas>
+                </div>
+            </div>
+
+            <!-- EA detail table -->
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>EA Detail</h3>
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-ea-monitoring">
+                        <thead>
+                            <tr>
+                                <th>EA Code</th>
+                                <th>Province</th>
+                                <th>Area Council</th>
+                                <th>Strata</th>
+                                <th>U/R</th>
+                                <th>Target</th>
+                                <th>Actual</th>
+                                <th>Remaining</th>
+                                <th>Progress</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
