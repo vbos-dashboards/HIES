@@ -1183,6 +1183,48 @@
         setText('kpi-wp-current', currentRound || 'N/A');
         setText('kpi-wp-behind', behindCount);
 
+        // Round overview badges with tooltips
+        var roundOverview = el('round-overview');
+        if (roundOverview) {
+            // Build per-round summary
+            var roundInfo = {};
+            rounds.forEach(function(r) {
+                var entries = eaEntries.filter(function(s) { return s.round === r; });
+                var teams = [...new Set(entries.map(function(s) { return s.team; }))].sort();
+                var islands = [...new Set(entries.map(function(s) { return s.island || ''; }).filter(Boolean))].sort();
+                var dates = [...new Set(entries.map(function(s) { return s.date; }))].sort();
+                var dateStart = dates[0] || '';
+                var dateEnd = dates[dates.length - 1] || dateStart;
+                var totalEAs = entries.length;
+                var completedEAs = entries.filter(function(s) { return actualByEA[String(s.eaid)] > 0; }).length;
+                var behindEAs = entries.filter(function(s) {
+                    var d = new Date(s.date); var we = new Date(d); we.setDate(we.getDate() + 6);
+                    return we < today && !actualByEA[String(s.eaid)];
+                }).length;
+                roundInfo[r] = { teams: teams, islands: islands, dateStart: dateStart, dateEnd: dateEnd, totalEAs: totalEAs, completedEAs: completedEAs, behindEAs: behindEAs };
+            });
+            var html = '';
+            rounds.forEach(function(r) {
+                var info = roundInfo[r];
+                var bg = '#bdc3c7'; var fg = '#fff';
+                if (r === currentRound) { bg = '#3498db'; }
+                else if (info.completedEAs === info.totalEAs && info.totalEAs > 0) { bg = '#2ecc71'; }
+                else if (info.behindEAs > 0) { bg = '#e74c3c'; }
+                else if (info.completedEAs > 0) { bg = '#f39c12'; }
+                var tooltip = r + '\n' +
+                    'Date: ' + info.dateStart + (info.dateEnd !== info.dateStart ? ' to ' + info.dateEnd : '') + '\n' +
+                    'EAs: ' + info.completedEAs + ' / ' + info.totalEAs + ' completed' +
+                    (info.behindEAs > 0 ? ' (' + info.behindEAs + ' behind)' : '') + '\n' +
+                    'Teams: ' + info.teams.join(', ') + '\n' +
+                    'Islands: ' + info.islands.join(', ');
+                html += '<div title="' + esc(tooltip) + '" style="display:inline-flex;align-items:center;justify-content:center;' +
+                    'min-width:60px;padding:6px 10px;border-radius:6px;background:' + bg + ';color:' + fg + ';' +
+                    'font-size:12px;font-weight:600;cursor:default;text-align:center;">' +
+                    esc(r.replace('Round ', 'R')) + '</div>';
+            });
+            roundOverview.innerHTML = html;
+        }
+
         // Team schedule progress bars
         const teamDiv = el('progress-workplan-teams');
         if (teamDiv) {
@@ -1227,6 +1269,15 @@
             return d < today ? '#2ecc71' : '#bdc3c7';
         });
 
+        // Build detailed week info for tooltips
+        var weekDetail = {};
+        eaEntries.forEach(function(s) {
+            if (!weekDetail[s.week]) weekDetail[s.week] = { eas: [], teams: new Set(), islands: new Set(), date: s.date, round: s.round };
+            weekDetail[s.week].eas.push(s);
+            weekDetail[s.week].teams.add(s.team);
+            if (s.island) weekDetail[s.week].islands.add(s.island);
+        });
+
         makeChart('chart-wp-weekly', {
             type: 'bar',
             data: {
@@ -1239,7 +1290,37 @@
             },
             options: {
                 responsive: true,
-                plugins: { legend: { display: false } },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            title: function(items) {
+                                var w = weekKeys[items[0].dataIndex];
+                                var wd = weekDetail[w];
+                                return w + ' - ' + (wd ? wd.round : '');
+                            },
+                            afterTitle: function(items) {
+                                var w = weekKeys[items[0].dataIndex];
+                                var wd = weekDetail[w];
+                                if (!wd) return '';
+                                return 'Start: ' + wd.date;
+                            },
+                            label: function(ctx) {
+                                return ctx.raw + ' EAs scheduled';
+                            },
+                            afterBody: function(items) {
+                                var w = weekKeys[items[0].dataIndex];
+                                var wd = weekDetail[w];
+                                if (!wd) return [];
+                                var completed = wd.eas.filter(function(s) { return actualByEA[String(s.eaid)] > 0; }).length;
+                                var lines = ['Completed: ' + completed + ' / ' + wd.eas.length];
+                                lines.push('Teams: ' + [...wd.teams].sort().join(', '));
+                                lines.push('Islands: ' + [...wd.islands].sort().join(', '));
+                                return lines;
+                            }
+                        }
+                    }
+                },
                 scales: { y: { beginAtZero: true, title: { display: true, text: '# EAs' } } }
             }
         });
