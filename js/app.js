@@ -88,6 +88,15 @@
 
     const statusCodes = Object.keys(hhByStatus).sort();
 
+    /* ---------- team name map ---------- */
+    const teamNameMap = {};
+    Object.keys(hhByTeam).forEach(tid => {
+        const rows = hhByTeam[tid];
+        const name = rows[0] && rows[0].team_name;
+        if (name) teamNameMap[tid] = name;
+    });
+    function tName(id) { return teamNameMap[id] || ('Team ' + id); }
+
     /* ---------- chart registry (for cleanup) ---------- */
     const charts = {};
     function makeChart(canvasId, config) {
@@ -208,9 +217,6 @@
         const avgPerTeam = (households.length / numTeams).toFixed(1);
         const topTeam = sortedEntries(Object.fromEntries(teamIds.map(t => [t, hhByTeam[t].length])))[0];
         const rejectedCount = ((hhByStatus['65'] || []).length) + ((hhByStatus['125'] || []).length);
-
-        // Build team name lookup from enriched data
-        function tName(id) { return teamNameMap[id] || ('Team ' + id); }
 
         setText('kpi-num-teams', numTeams);
         setText('kpi-avg-per-team', avgPerTeam);
