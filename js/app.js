@@ -47,21 +47,22 @@
     }
 
     /* ---------- data loading ---------- */
-    let summary, households, persons, lookup, targets, eaBoundaries, villagePoints;
+    let summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan;
     try {
         async function loadJSON(path) {
             const r = await fetch(path);
             if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
             return r.json();
         }
-        [summary, households, persons, lookup, targets, eaBoundaries, villagePoints] = await Promise.all([
+        [summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan] = await Promise.all([
             loadJSON('data/summary.json'),
             loadJSON('data/households.json'),
             loadJSON('data/persons.json'),
             loadJSON('data/lookup.json'),
             loadJSON('data/targets.json'),
             loadJSON('data/ea_boundaries.geojson'),
-            loadJSON('data/villages.geojson')
+            loadJSON('data/villages.geojson'),
+            loadJSON('data/workplan.json')
         ]);
     } catch (err) {
         showError('Could not load dashboard data.', String(err));
@@ -121,7 +122,8 @@
         quantity: 'Quantity',
         speed: 'Speed',
         statistics: 'Survey Statistics',
-        monitoring: 'EA Monitoring'
+        monitoring: 'EA Monitoring',
+        workplan: 'Work Plan'
     };
 
     const navItems = document.querySelectorAll('.nav-item');
@@ -162,6 +164,7 @@
             case 'speed': renderSpeed(); break;
             case 'statistics': renderStatistics(); break;
             case 'monitoring': renderMonitoring(); break;
+            case 'workplan': renderWorkplan(); break;
         }
     }
 
@@ -1008,6 +1011,195 @@
                 '<td>' + remaining + '</td>' +
                 '<td><div class="progress-bar-wrap small"><div class="progress-bar-fill" style="width:' +
                 Math.min(100, parseFloat(pct)) + '%;background:' + barColor + ';"></div></div> ' + pct + '%</td>';
+            tbody.appendChild(tr);
+        });
+    }
+
+    /* ========================================
+       11. WORK PLAN
+       ======================================== */
+    function renderWorkplan() {
+        if (!workplan || !workplan.schedule) return;
+
+        const schedule = workplan.schedule;
+        const teamNames = Object.keys(workplan.teams).sort();
+
+        // Only EA assignments (not breaks/training)
+        const eaEntries = schedule.filter(s => s.eaid !== null);
+        const breakEntries = schedule.filter(s => s.eaid === null);
+
+        // Unique rounds
+        const rounds = [...new Set(eaEntries.map(s => s.round))].sort((a, b) => {
+            const na = parseInt(a.replace(/\D/g, '')) || 0;
+            const nb = parseInt(b.replace(/\D/g, '')) || 0;
+            return na - nb;
+        });
+
+        // Build actual count per EA from household data
+        const actualByEA = {};
+        households.forEach(h => {
+            const ea = String(h.ea);
+            actualByEA[ea] = (actualByEA[ea] || 0) + 1;
+        });
+
+        // Determine current round based on today's date
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        let currentRound = null;
+        let currentWeek = null;
+        eaEntries.forEach(s => {
+            const d = new Date(s.date);
+            const weekEnd = new Date(d);
+            weekEnd.setDate(weekEnd.getDate() + 6);
+            if (today >= d && today <= weekEnd) {
+                currentRound = s.round;
+                currentWeek = s.week;
+            }
+        });
+        // If no current round, find the closest upcoming
+        if (!currentRound) {
+            let closest = null;
+            eaEntries.forEach(s => {
+                const d = new Date(s.date);
+                if (d >= today && (!closest || d < closest.d)) {
+                    closest = { d, round: s.round, week: s.week };
+                }
+            });
+            if (closest) { currentRound = closest.round; currentWeek = closest.week; }
+        }
+
+        // Count EAs behind schedule: planned date is past but EA has no actual data
+        let behindCount = 0;
+        eaEntries.forEach(s => {
+            const d = new Date(s.date);
+            const weekEnd = new Date(d);
+            weekEnd.setDate(weekEnd.getDate() + 6);
+            if (weekEnd < today && (!actualByEA[String(s.eaid)] || actualByEA[String(s.eaid)] === 0)) {
+                behindCount++;
+            }
+        });
+
+        // KPIs
+        setText('kpi-wp-rounds', rounds.length);
+        setText('kpi-wp-teams', teamNames.length);
+        setText('kpi-wp-current', currentRound || 'N/A');
+        setText('kpi-wp-behind', behindCount);
+
+        // Team schedule progress bars
+        const teamDiv = el('progress-workplan-teams');
+        if (teamDiv) {
+            let html = '';
+            teamNames.forEach(team => {
+                const teamEAs = eaEntries.filter(s => s.team === team);
+                const total = teamEAs.length;
+                // Count how many past-planned EAs have actual data
+                let completed = 0;
+                teamEAs.forEach(s => {
+                    if (actualByEA[String(s.eaid)] && actualByEA[String(s.eaid)] > 0) {
+                        completed++;
+                    }
+                });
+                const pct = total > 0 ? ((completed / total) * 100).toFixed(1) : '0.0';
+                const barColor = parseFloat(pct) >= 100 ? '#2ecc71' : parseFloat(pct) >= 25 ? '#f39c12' : '#3498db';
+                html += '<div class="progress-row">' +
+                    '<div class="progress-label">' + esc(team) + '</div>' +
+                    '<div class="progress-bar-wrap">' +
+                    '<div class="progress-bar-fill" style="width:' + pct + '%;background:' + barColor + ';"></div>' +
+                    '</div>' +
+                    '<div class="progress-stats">' + completed + ' / ' + total + ' EAs (' + pct + '%)</div>' +
+                    '</div>';
+            });
+            teamDiv.innerHTML = html;
+        }
+
+        // Weekly workload bar chart
+        const weekMap = {};
+        eaEntries.forEach(s => {
+            if (!weekMap[s.week]) weekMap[s.week] = { count: 0, date: s.date, round: s.round };
+            weekMap[s.week].count++;
+        });
+        const weekKeys = Object.keys(weekMap).sort((a, b) => {
+            const na = parseInt(a.replace(/\D/g, '')) || 0;
+            const nb = parseInt(b.replace(/\D/g, '')) || 0;
+            return na - nb;
+        });
+        const weekColors = weekKeys.map(w => {
+            if (weekMap[w].round === currentRound) return '#3498db';
+            const d = new Date(weekMap[w].date);
+            return d < today ? '#2ecc71' : '#bdc3c7';
+        });
+
+        makeChart('chart-wp-weekly', {
+            type: 'bar',
+            data: {
+                labels: weekKeys.map(w => w + (weekMap[w].round ? ' (' + weekMap[w].round + ')' : '')),
+                datasets: [{
+                    label: 'EAs Scheduled',
+                    data: weekKeys.map(w => weekMap[w].count),
+                    backgroundColor: weekColors
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, title: { display: true, text: '# EAs' } } }
+            }
+        });
+
+        // EAs by team doughnut
+        makeChart('chart-wp-team-eas', {
+            type: 'doughnut',
+            data: {
+                labels: teamNames,
+                datasets: [{
+                    data: teamNames.map(t => workplan.teams[t]),
+                    backgroundColor: CHART_PALETTE.concat(CHART_PALETTE)
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
+        });
+
+        // Full schedule table
+        const tbody = el('table-workplan').querySelector('tbody');
+        // Sort: by date, then team
+        const sorted = [...schedule].sort((a, b) => {
+            if (a.date !== b.date) return (a.date || '').localeCompare(b.date || '');
+            return a.team.localeCompare(b.team);
+        });
+        sorted.forEach(s => {
+            const tr = document.createElement('tr');
+            // Determine row status
+            let statusBadge = '';
+            if (s.eaid === null) {
+                // Break or training
+                statusBadge = '<span class="status-badge" style="background:#95a5a6;color:#fff;">' + esc(s.round) + '</span>';
+            } else {
+                const actual = actualByEA[String(s.eaid)] || 0;
+                const d = new Date(s.date);
+                const weekEnd = new Date(d);
+                weekEnd.setDate(weekEnd.getDate() + 6);
+                if (actual > 0) {
+                    statusBadge = '<span class="status-badge" style="background:#2ecc71;color:#fff;">Completed (' + actual + ' HH)</span>';
+                    tr.style.backgroundColor = '#f0fff0';
+                } else if (s.round === currentRound) {
+                    statusBadge = '<span class="status-badge" style="background:#3498db;color:#fff;">Current</span>';
+                    tr.style.backgroundColor = '#f0f7ff';
+                } else if (weekEnd < today) {
+                    statusBadge = '<span class="status-badge" style="background:#e74c3c;color:#fff;">Behind</span>';
+                    tr.style.backgroundColor = '#fff5f5';
+                } else {
+                    statusBadge = '<span class="status-badge" style="background:#bdc3c7;color:#fff;">Upcoming</span>';
+                }
+            }
+            tr.innerHTML = '<td>' + esc(s.team) + '</td>' +
+                '<td>' + esc(s.date) + '</td>' +
+                '<td>' + esc(s.week) + '</td>' +
+                '<td>' + esc(s.round) + '</td>' +
+                '<td>' + esc(s.strata || '') + '</td>' +
+                '<td>' + (s.eaid || '') + '</td>' +
+                '<td>' + esc(s.island || '') + '</td>' +
+                '<td>' + esc(s.ea_name || '') + '</td>' +
+                '<td>' + statusBadge + '</td>';
             tbody.appendChild(tr);
         });
     }

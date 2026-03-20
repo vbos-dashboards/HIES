@@ -68,6 +68,9 @@
             <li class="nav-item" data-tab="monitoring">
                 <span class="nav-icon">&#127919;</span> EA Monitoring
             </li>
+            <li class="nav-item" data-tab="workplan">
+                <span class="nav-icon">&#128197;</span> Work Plan
+            </li>
         </ul>
         <div class="sidebar-footer">
             <p>Vanuatu Bureau of Statistics</p>
@@ -564,6 +567,69 @@
                                 <th>Actual</th>
                                 <th>Remaining</th>
                                 <th>Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- WORK PLAN TAB -->
+        <section class="tab-content" id="tab-workplan">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-wp-rounds">--</div>
+                    <div class="kpi-label">Total Rounds</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-wp-teams">--</div>
+                    <div class="kpi-label">Teams</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-wp-current">--</div>
+                    <div class="kpi-label">Current Round</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-wp-behind">--</div>
+                    <div class="kpi-label">EAs Behind Schedule</div>
+                </div>
+            </div>
+
+            <!-- Team progress bars -->
+            <div class="chart-card full" style="margin-bottom:16px;">
+                <h3>Team Schedule Progress</h3>
+                <div id="progress-workplan-teams"></div>
+            </div>
+
+            <!-- Charts -->
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Weekly Workload (EAs per Week)</h3>
+                    <canvas id="chart-wp-weekly"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>EAs by Team</h3>
+                    <canvas id="chart-wp-team-eas"></canvas>
+                </div>
+            </div>
+
+            <!-- Full schedule table -->
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>Full Schedule</h3>
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-workplan">
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Date</th>
+                                <th>Week</th>
+                                <th>Round</th>
+                                <th>Strata</th>
+                                <th>EA ID</th>
+                                <th>Island</th>
+                                <th>EA Name</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
