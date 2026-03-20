@@ -100,7 +100,7 @@
 
     /* ---------- navigation ---------- */
     const TAB_TITLES = {
-        surveys: 'Surveys and Statuses',
+        surveys: 'HIES Status',
         teams: 'Teams and Statuses',
         duration: 'Status Duration',
         devices: 'Devices / Interviewers',
