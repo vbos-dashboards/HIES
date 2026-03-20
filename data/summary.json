@@ -1,15 +1,249 @@
 {
-    "total_interviews": 140,
-    "total_persons": 556,
-    "status_counts": {
-        "100": 38,
-        "125": 5,
-        "120": 50,
-        "65": 39,
-        "130": 8
-    },
-    "export_date": "2026-03-20",
-    "teams": 16,
-    "provinces": 6,
-    "eas": 16
+    "total_households":  140,
+    "total_persons":  556,
+    "avg_hh_size":  4,
+    "male_count":  284,
+    "female_count":  272,
+    "total_food_purchase":  1120686,
+    "total_home_production":  827909,
+    "total_food_items":  3850,
+    "total_nonfood_items":  652,
+    "total_livestock":  122,
+    "total_enterprises":  18,
+    "provinces":  [
+                      {
+                          "code":  "1",
+                          "name":  "Torba",
+                          "households":  11,
+                          "persons":  48
+                      },
+                      {
+                          "code":  "2",
+                          "name":  "Sanma",
+                          "households":  36,
+                          "persons":  126
+                      },
+                      {
+                          "code":  "3",
+                          "name":  "Penama",
+                          "households":  16,
+                          "persons":  62
+                      },
+                      {
+                          "code":  "4",
+                          "name":  "Malampa",
+                          "households":  17,
+                          "persons":  67
+                      },
+                      {
+                          "code":  "5",
+                          "name":  "Shefa",
+                          "households":  33,
+                          "persons":  114
+                      },
+                      {
+                          "code":  "6",
+                          "name":  "Tafea",
+                          "households":  27,
+                          "persons":  139
+                      }
+                  ],
+    "age_pyramid":  [
+                        {
+                            "group":  "0-4",
+                            "male":  36,
+                            "female":  28
+                        },
+                        {
+                            "group":  "5-9",
+                            "male":  37,
+                            "female":  35
+                        },
+                        {
+                            "group":  "10-14",
+                            "male":  42,
+                            "female":  32
+                        },
+                        {
+                            "group":  "15-19",
+                            "male":  28,
+                            "female":  24
+                        },
+                        {
+                            "group":  "20-24",
+                            "male":  15,
+                            "female":  23
+                        },
+                        {
+                            "group":  "25-29",
+                            "male":  22,
+                            "female":  23
+                        },
+                        {
+                            "group":  "30-34",
+                            "male":  21,
+                            "female":  22
+                        },
+                        {
+                            "group":  "35-39",
+                            "male":  13,
+                            "female":  17
+                        },
+                        {
+                            "group":  "40-44",
+                            "male":  16,
+                            "female":  14
+                        },
+                        {
+                            "group":  "45-49",
+                            "male":  17,
+                            "female":  17
+                        },
+                        {
+                            "group":  "50-54",
+                            "male":  9,
+                            "female":  15
+                        },
+                        {
+                            "group":  "55-59",
+                            "male":  7,
+                            "female":  4
+                        },
+                        {
+                            "group":  "60-64",
+                            "male":  7,
+                            "female":  9
+                        },
+                        {
+                            "group":  "65+",
+                            "male":  14,
+                            "female":  9
+                        }
+                    ],
+    "fies":  [
+                 {
+                     "item":  "Worried about food",
+                     "yes":  28,
+                     "no":  112,
+                     "pct":  20
+                 },
+                 {
+                     "item":  "Unable to eat healthy",
+                     "yes":  33,
+                     "no":  107,
+                     "pct":  23.6
+                 },
+                 {
+                     "item":  "Ate only few kinds",
+                     "yes":  36,
+                     "no":  104,
+                     "pct":  25.7
+                 },
+                 {
+                     "item":  "Skipped a meal",
+                     "yes":  26,
+                     "no":  114,
+                     "pct":  18.6
+                 },
+                 {
+                     "item":  "Ate less than should",
+                     "yes":  32,
+                     "no":  108,
+                     "pct":  22.9
+                 },
+                 {
+                     "item":  "Ran out of food",
+                     "yes":  18,
+                     "no":  122,
+                     "pct":  12.9
+                 },
+                 {
+                     "item":  "Hungry but did not eat",
+                     "yes":  11,
+                     "no":  129,
+                     "pct":  7.9
+                 },
+                 {
+                     "item":  "Went without eating all day",
+                     "yes":  10,
+                     "no":  130,
+                     "pct":  7.1
+                 }
+             ],
+    "interview_timeline":  [
+                               {
+                                   "date":  "2026-03-16",
+                                   "count":  17
+                               },
+                               {
+                                   "date":  "2026-03-17",
+                                   "count":  35
+                               },
+                               {
+                                   "date":  "2026-03-18",
+                                   "count":  42
+                               },
+                               {
+                                   "date":  "2026-03-19",
+                                   "count":  33
+                               },
+                               {
+                                   "date":  "2026-03-20",
+                                   "count":  13
+                               }
+                           ],
+    "hh_size_distribution":  [
+                                 {
+                                     "size":  1,
+                                     "count":  9
+                                 },
+                                 {
+                                     "size":  2,
+                                     "count":  14
+                                 },
+                                 {
+                                     "size":  3,
+                                     "count":  22
+                                 },
+                                 {
+                                     "size":  4,
+                                     "count":  29
+                                 },
+                                 {
+                                     "size":  5,
+                                     "count":  23
+                                 },
+                                 {
+                                     "size":  6,
+                                     "count":  11
+                                 },
+                                 {
+                                     "size":  7,
+                                     "count":  6
+                                 },
+                                 {
+                                     "size":  8,
+                                     "count":  6
+                                 },
+                                 {
+                                     "size":  9,
+                                     "count":  1
+                                 },
+                                 {
+                                     "size":  10,
+                                     "count":  1
+                                 },
+                                 {
+                                     "size":  11,
+                                     "count":  2
+                                 },
+                                 {
+                                     "size":  12,
+                                     "count":  1
+                                 },
+                                 {
+                                     "size":  13,
+                                     "count":  1
+                                 }
+                             ]
 }

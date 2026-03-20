@@ -1,14 +1,10 @@
-﻿[
+[
     {
         "interview_key":  "66-89-03-96",
         "type_id":  "3"
     },
     {
-        "interview_key":  "39-97-44-12",
-        "type_id":  "97"
-    },
-    {
-        "interview_key":  "61-41-55-77",
+        "interview_key":  "84-82-01-34",
         "type_id":  "2"
     },
     {
@@ -16,31 +12,23 @@
         "type_id":  "2"
     },
     {
-        "interview_key":  "84-82-01-34",
-        "type_id":  "2"
+        "interview_key":  "99-93-03-35",
+        "type_id":  "3"
     },
     {
-        "interview_key":  "16-08-61-30",
-        "type_id":  "97"
-    },
-    {
-        "interview_key":  "62-35-96-73",
-        "type_id":  "2"
-    },
-    {
-        "interview_key":  "77-42-07-84",
+        "interview_key":  "47-50-34-99",
         "type_id":  "6"
-    },
-    {
-        "interview_key":  "72-39-10-07",
-        "type_id":  "97"
     },
     {
         "interview_key":  "63-96-33-38",
         "type_id":  "1"
     },
     {
-        "interview_key":  "47-50-34-99",
+        "interview_key":  "64-31-14-38",
+        "type_id":  "6"
+    },
+    {
+        "interview_key":  "02-64-26-76",
         "type_id":  "6"
     },
     {
@@ -48,15 +36,39 @@
         "type_id":  "2"
     },
     {
+        "interview_key":  "82-55-74-56",
+        "type_id":  "2"
+    },
+    {
         "interview_key":  "53-10-05-46",
         "type_id":  "2"
     },
     {
-        "interview_key":  "02-64-26-76",
+        "interview_key":  "03-51-01-07",
+        "type_id":  "2"
+    },
+    {
+        "interview_key":  "62-35-96-73",
+        "type_id":  "2"
+    },
+    {
+        "interview_key":  "72-39-10-07",
+        "type_id":  "97"
+    },
+    {
+        "interview_key":  "16-08-61-30",
+        "type_id":  "97"
+    },
+    {
+        "interview_key":  "77-42-07-84",
         "type_id":  "6"
     },
     {
-        "interview_key":  "03-51-01-07",
+        "interview_key":  "61-41-55-77",
         "type_id":  "2"
+    },
+    {
+        "interview_key":  "39-97-44-12",
+        "type_id":  "97"
     }
 ]
