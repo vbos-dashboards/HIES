@@ -74,6 +74,7 @@
     const eaLookup = (lookup && lookup.ea) || {};
     const villageLookup = (lookup && lookup.village) || {};
     const acLookup = (lookup && lookup.area_council) || {};
+    const foodItemLookup = (lookup && lookup.food_item) || {};
 
     households.forEach(h => {
         h.interview_status = String(h.interview_status);
@@ -1477,7 +1478,7 @@
         makeChart('chart-food-top-items', {
             type: 'bar',
             data: {
-                labels: sorted.map(e => 'Item ' + e[0]),
+                labels: sorted.map(e => foodItemLookup[e[0]] || ('Item ' + e[0])),
                 datasets: [{
                     label: 'Households Reporting',
                     data: sorted.map(e => e[1]),
