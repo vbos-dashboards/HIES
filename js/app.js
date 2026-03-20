@@ -47,26 +47,37 @@
     }
 
     /* ---------- data loading ---------- */
-    let summary, households, persons;
+    let summary, households, persons, lookup;
     try {
         async function loadJSON(path) {
             const r = await fetch(path);
             if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
             return r.json();
         }
-        [summary, households, persons] = await Promise.all([
+        [summary, households, persons, lookup] = await Promise.all([
             loadJSON('data/summary.json'),
             loadJSON('data/households.json'),
-            loadJSON('data/persons.json')
+            loadJSON('data/persons.json'),
+            loadJSON('data/lookup.json')
         ]);
     } catch (err) {
         showError('Could not load dashboard data.', String(err));
         return;
     }
 
-    /* ---------- derived data ---------- */
-    // Normalize interview_status to string for consistent grouping
-    households.forEach(h => { h.interview_status = String(h.interview_status); });
+    /* ---------- enrich households from lookup ---------- */
+    const eaLookup = (lookup && lookup.ea) || {};
+    const villageLookup = (lookup && lookup.village) || {};
+    const acLookup = (lookup && lookup.area_council) || {};
+
+    households.forEach(h => {
+        h.interview_status = String(h.interview_status);
+        const info = eaLookup[h.ea] || {};
+        h.island_name = info.island || '';
+        h.ac_name = info.ac_name || acLookup[h.area_council] || '';
+        h.team_name = info.team_name || '';
+        h.village_name = villageLookup[h.village] || '';
+    });
     const hhByStatus = groupBy(households, 'interview_status');
     const hhByTeam = groupBy(households, 'team_id');
     const hhByInterviewer = groupBy(households, 'interviewer_id');
@@ -180,8 +191,9 @@
         const tbody = el('table-surveys').querySelector('tbody');
         households.forEach(h => {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${esc(h.interview_key)}</td><td>${esc(h.province_name)}</td><td>${esc(h.ea)}</td>` +
-                `<td>${esc(h.team_id)}</td><td>${esc(h.interviewer_id)}</td><td>${esc(h.interview_date)}</td>` +
+            tr.innerHTML = `<td>${esc(h.interview_key)}</td><td>${esc(h.province_name)}</td><td>${esc(h.island_name)}</td>` +
+                `<td>${esc(h.ac_name)}</td><td>${esc(h.ea)}</td><td>${esc(h.village_name)}</td>` +
+                `<td>${esc(h.team_name || h.team_id)}</td><td>${esc(h.interviewer_id)}</td><td>${esc(h.interview_date)}</td>` +
                 `<td><span class="status-badge status-${h.interview_status}">${statusLabel(h.interview_status)}</span></td>`;
             tbody.appendChild(tr);
         });
@@ -197,16 +209,19 @@
         const topTeam = sortedEntries(Object.fromEntries(teamIds.map(t => [t, hhByTeam[t].length])))[0];
         const rejectedCount = ((hhByStatus['65'] || []).length) + ((hhByStatus['125'] || []).length);
 
+        // Build team name lookup from enriched data
+        function tName(id) { return teamNameMap[id] || ('Team ' + id); }
+
         setText('kpi-num-teams', numTeams);
         setText('kpi-avg-per-team', avgPerTeam);
-        setText('kpi-top-team', 'Team ' + topTeam[0]);
+        setText('kpi-top-team', tName(topTeam[0]));
         setText('kpi-rejected-count', rejectedCount);
 
         // stacked bar: teams × status
         makeChart('chart-team-status', {
             type: 'bar',
             data: {
-                labels: teamIds.map(t => 'Team ' + t),
+                labels: teamIds.map(tName),
                 datasets: statusCodes.map(sc => ({
                     label: statusLabel(sc),
                     data: teamIds.map(t => (hhByTeam[t] || []).filter(h => h.interview_status === sc).length),
@@ -220,7 +235,7 @@
         makeChart('chart-team-size', {
             type: 'pie',
             data: {
-                labels: teamIds.map(t => 'Team ' + t),
+                labels: teamIds.map(tName),
                 datasets: [{
                     data: teamIds.map(t => hhByTeam[t].length),
                     backgroundColor: CHART_PALETTE
@@ -235,7 +250,7 @@
             const rows = hhByTeam[t];
             const intvs = [...new Set(rows.map(r => r.interviewer_id))].length;
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>Team ${esc(t)}</td><td>${intvs}</td><td>${rows.length}</td>` +
+            tr.innerHTML = `<td>${esc(tName(t))}</td><td>${intvs}</td><td>${rows.length}</td>` +
                 `<td>${rows.filter(r => r.interview_status === '100').length}</td>` +
                 `<td>${rows.filter(r => r.interview_status === '120').length}</td>` +
                 `<td>${rows.filter(r => r.interview_status === '130').length}</td>` +
@@ -370,7 +385,8 @@
             const team = rows[0].team_id;
             const provs = [...new Set(rows.map(r => r.province_name))].join(', ');
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${esc(i)}</td><td>Team ${esc(team)}</td><td>${rows.length}</td>` +
+            const teamLabel = (eaLookup[rows[0].ea] || {}).team_name || ('Team ' + team);
+            tr.innerHTML = `<td>${esc(i)}</td><td>${esc(teamLabel)}</td><td>${rows.length}</td>` +
                 `<td>${rows.filter(r => r.interview_status === '100').length}</td>` +
                 `<td>${rows.filter(r => ['120', '130'].includes(r.interview_status)).length}</td>` +
                 `<td>${rows.filter(r => ['65', '125'].includes(r.interview_status)).length}</td>` +
@@ -406,7 +422,7 @@
             const marker = L.circleMarker([lat, lng], {
                 radius: 6, fillColor: color, color: '#fff', weight: 1, fillOpacity: 0.8
             }).addTo(map);
-            marker.bindPopup(`<b>${esc(h.interview_key)}</b><br>Province: ${esc(h.province_name)}<br>EA: ${esc(h.ea)}<br>Team: ${esc(h.team_id)}<br>Date: ${esc(h.interview_date)}<br>Status: ${statusLabel(h.interview_status)}`);
+            marker.bindPopup(`<b>${esc(h.interview_key)}</b><br>Province: ${esc(h.province_name)}<br>Island: ${esc(h.island_name)}<br>AC: ${esc(h.ac_name)}<br>Village: ${esc(h.village_name)}<br>EA: ${esc(h.ea)}<br>Team: ${esc(h.team_name || h.team_id)}<br>Date: ${esc(h.interview_date)}<br>Status: ${statusLabel(h.interview_status)}`);
         });
 
         // fit bounds
@@ -515,7 +531,7 @@
         makeChart('chart-qty-team', {
             type: 'bar',
             data: {
-                labels: teamIds.map(t => 'Team ' + t),
+                labels: teamIds.map(t => tName(t)),
                 datasets: [{
                     label: 'Interviews',
                     data: teamIds.map(t => hhByTeam[t].length),
@@ -590,7 +606,7 @@
         makeChart('chart-speed-team', {
             type: 'bar',
             data: {
-                labels: teamIds.sort().map(t => 'Team ' + t),
+                labels: teamIds.sort().map(t => tName(t)),
                 datasets: [{
                     label: 'Interviews / Active Day',
                     data: teamIds.sort().map(t => {
