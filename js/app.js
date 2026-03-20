@@ -172,12 +172,54 @@
        1. SURVEYS AND STATUSES
        ======================================== */
     function renderSurveys() {
-        setText('kpi-total-interviews', households.length);
-        setText('kpi-completed', (hhByStatus['100'] || []).length);
-        setText('kpi-approved-sv', (hhByStatus['120'] || []).length);
-        setText('kpi-approved-hq', (hhByStatus['130'] || []).length);
+        // 2-color system: Progress vs Backlog
+        const progressStatuses = ['100', '130']; // Completed + Approved by HQ
+        const backlogStatuses = ['65', '120', '125']; // Rejected SV + Approved SV + Rejected HQ
+        const progressCount = households.filter(h => progressStatuses.includes(h.interview_status)).length;
+        const backlogCount = households.filter(h => backlogStatuses.includes(h.interview_status)).length;
+        const backlogPct = households.length > 0 ? ((backlogCount / households.length) * 100).toFixed(1) : '0.0';
 
-        // bar chart
+        setText('kpi-total-interviews', households.length);
+        setText('kpi-progress', progressCount);
+        setText('kpi-backlog', backlogCount);
+        setText('kpi-backlog-pct', backlogPct + '%');
+
+        // Progress vs Backlog by team (2-color stacked bar)
+        const teamIds = Object.keys(hhByTeam).sort();
+        makeChart('chart-progress-backlog-team', {
+            type: 'bar',
+            data: {
+                labels: teamIds.map(tName),
+                datasets: [
+                    {
+                        label: 'Progress',
+                        data: teamIds.map(t => hhByTeam[t].filter(h => progressStatuses.includes(h.interview_status)).length),
+                        backgroundColor: '#2ecc71'
+                    },
+                    {
+                        label: 'Backlog',
+                        data: teamIds.map(t => hhByTeam[t].filter(h => backlogStatuses.includes(h.interview_status)).length),
+                        backgroundColor: '#e67e22'
+                    }
+                ]
+            },
+            options: { responsive: true, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } }, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // Progress vs Backlog doughnut
+        makeChart('chart-progress-backlog-pie', {
+            type: 'doughnut',
+            data: {
+                labels: ['Progress', 'Backlog'],
+                datasets: [{
+                    data: [progressCount, backlogCount],
+                    backgroundColor: ['#2ecc71', '#e67e22']
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // detail bar chart (5-status)
         makeChart('chart-status-bar', {
             type: 'bar',
             data: {
@@ -220,42 +262,58 @@
        2. TEAMS AND STATUSES
        ======================================== */
     function renderTeams() {
+        const progressStatuses = ['100', '130'];
+        const backlogStatuses = ['65', '120', '125'];
         const teamIds = Object.keys(hhByTeam).sort();
         const numTeams = teamIds.length;
         const avgPerTeam = (households.length / numTeams).toFixed(1);
-        const topTeam = sortedEntries(Object.fromEntries(teamIds.map(t => [t, hhByTeam[t].length])))[0];
-        const rejectedCount = ((hhByStatus['65'] || []).length) + ((hhByStatus['125'] || []).length);
+
+        // Compute backlog per team
+        const teamBacklog = {};
+        teamIds.forEach(t => {
+            teamBacklog[t] = hhByTeam[t].filter(h => backlogStatuses.includes(h.interview_status)).length;
+        });
+        const totalBacklog = Object.values(teamBacklog).reduce((a, b) => a + b, 0);
+        const topBacklogTeam = sortedEntries(teamBacklog)[0];
 
         setText('kpi-num-teams', numTeams);
         setText('kpi-avg-per-team', avgPerTeam);
-        setText('kpi-top-team', tName(topTeam[0]));
-        setText('kpi-rejected-count', rejectedCount);
+        setText('kpi-team-backlog', totalBacklog);
+        setText('kpi-top-backlog-team', tName(topBacklogTeam[0]));
 
-        // stacked bar: teams × status
-        makeChart('chart-team-status', {
+        // Progress vs Backlog by team (2-color stacked bar)
+        makeChart('chart-team-progress-backlog', {
             type: 'bar',
             data: {
                 labels: teamIds.map(tName),
-                datasets: statusCodes.map(sc => ({
-                    label: statusLabel(sc),
-                    data: teamIds.map(t => (hhByTeam[t] || []).filter(h => h.interview_status === sc).length),
-                    backgroundColor: STATUS_COLORS[sc] || '#95a5a6'
-                }))
+                datasets: [
+                    {
+                        label: 'Progress',
+                        data: teamIds.map(t => hhByTeam[t].filter(h => progressStatuses.includes(h.interview_status)).length),
+                        backgroundColor: '#2ecc71'
+                    },
+                    {
+                        label: 'Backlog',
+                        data: teamIds.map(t => teamBacklog[t]),
+                        backgroundColor: '#e67e22'
+                    }
+                ]
             },
             options: { responsive: true, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } }, plugins: { legend: { position: 'bottom' } } }
         });
 
-        // pie team size
-        makeChart('chart-team-size', {
-            type: 'pie',
+        // Team backlog detail breakdown
+        makeChart('chart-team-backlog-detail', {
+            type: 'bar',
             data: {
                 labels: teamIds.map(tName),
-                datasets: [{
-                    data: teamIds.map(t => hhByTeam[t].length),
-                    backgroundColor: CHART_PALETTE
-                }]
+                datasets: backlogStatuses.map(sc => ({
+                    label: statusLabel(sc),
+                    data: teamIds.map(t => hhByTeam[t].filter(h => h.interview_status === sc).length),
+                    backgroundColor: STATUS_COLORS[sc] || '#95a5a6'
+                }))
             },
-            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+            options: { responsive: true, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } }, plugins: { legend: { position: 'bottom' } } }
         });
 
         // table
@@ -263,12 +321,12 @@
         teamIds.forEach(t => {
             const rows = hhByTeam[t];
             const intvs = [...new Set(rows.map(r => r.interviewer_id))].length;
+            const prog = rows.filter(r => progressStatuses.includes(r.interview_status)).length;
+            const back = teamBacklog[t];
+            const backPct = rows.length > 0 ? ((back / rows.length) * 100).toFixed(1) : '0.0';
             const tr = document.createElement('tr');
             tr.innerHTML = `<td>${esc(tName(t))}</td><td>${intvs}</td><td>${rows.length}</td>` +
-                `<td>${rows.filter(r => r.interview_status === '100').length}</td>` +
-                `<td>${rows.filter(r => r.interview_status === '120').length}</td>` +
-                `<td>${rows.filter(r => r.interview_status === '130').length}</td>` +
-                `<td>${rows.filter(r => r.interview_status === '65' || r.interview_status === '125').length}</td>`;
+                `<td>${prog}</td><td>${back}</td><td>${backPct}%</td>`;
             tbody.appendChild(tr);
         });
     }

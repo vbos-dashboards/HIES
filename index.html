@@ -98,25 +98,35 @@
                     <div class="kpi-label">Total Interviews</div>
                 </div>
                 <div class="kpi-card green">
-                    <div class="kpi-value" id="kpi-completed">--</div>
-                    <div class="kpi-label">Completed</div>
+                    <div class="kpi-value" id="kpi-progress">--</div>
+                    <div class="kpi-label">Progress (Completed + Approved HQ)</div>
                 </div>
                 <div class="kpi-card orange">
-                    <div class="kpi-value" id="kpi-approved-sv">--</div>
-                    <div class="kpi-label">Approved by Supervisor</div>
+                    <div class="kpi-value" id="kpi-backlog">--</div>
+                    <div class="kpi-label">Backlog (Pending Review)</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-approved-hq">--</div>
-                    <div class="kpi-label">Approved by HQ</div>
+                    <div class="kpi-value" id="kpi-backlog-pct">--</div>
+                    <div class="kpi-label">Backlog Rate</div>
                 </div>
             </div>
             <div class="chart-row">
                 <div class="chart-card wide">
-                    <h3>Interview Status Distribution</h3>
+                    <h3>Progress vs Backlog by Team</h3>
+                    <canvas id="chart-progress-backlog-team"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Progress vs Backlog</h3>
+                    <canvas id="chart-progress-backlog-pie"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Interview Status Distribution (Detail)</h3>
                     <canvas id="chart-status-bar"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h3>Status Breakdown</h3>
+                    <h3>Status Breakdown (Detail)</h3>
                     <canvas id="chart-status-pie"></canvas>
                 </div>
             </div>
@@ -156,22 +166,22 @@
                     <div class="kpi-label">Avg Interviews/Team</div>
                 </div>
                 <div class="kpi-card orange">
-                    <div class="kpi-value" id="kpi-top-team">--</div>
-                    <div class="kpi-label">Top Performing Team</div>
+                    <div class="kpi-value" id="kpi-team-backlog">--</div>
+                    <div class="kpi-label">Total Backlog</div>
                 </div>
                 <div class="kpi-card red">
-                    <div class="kpi-value" id="kpi-rejected-count">--</div>
-                    <div class="kpi-label">Rejected Interviews</div>
+                    <div class="kpi-value" id="kpi-top-backlog-team">--</div>
+                    <div class="kpi-label">Highest Backlog Team</div>
                 </div>
             </div>
             <div class="chart-row">
                 <div class="chart-card wide">
-                    <h3>Interviews by Team and Status</h3>
-                    <canvas id="chart-team-status"></canvas>
+                    <h3>Progress vs Backlog by Team</h3>
+                    <canvas id="chart-team-progress-backlog"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h3>Team Size (Interviews)</h3>
-                    <canvas id="chart-team-size"></canvas>
+                    <h3>Team Backlog Breakdown</h3>
+                    <canvas id="chart-team-backlog-detail"></canvas>
                 </div>
             </div>
             <div class="chart-card full" style="margin-top:16px;">
@@ -183,10 +193,9 @@
                                 <th>Team</th>
                                 <th>Interviewers</th>
                                 <th>Total</th>
-                                <th>Completed</th>
-                                <th>Approved SV</th>
-                                <th>Approved HQ</th>
-                                <th>Rejected</th>
+                                <th>Progress</th>
+                                <th>Backlog</th>
+                                <th>Backlog %</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
