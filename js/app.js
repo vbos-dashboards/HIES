@@ -193,12 +193,12 @@
                 labels: teamIds.map(tName),
                 datasets: [
                     {
-                        label: 'FS Backlog',
+                        label: 'Field Supervisor Backlog',
                         data: teamIds.map(t => hhByTeam[t].filter(h => fsBacklogStatuses.includes(h.interview_status)).length),
                         backgroundColor: '#e67e22'
                     },
                     {
-                        label: 'HQ Backlog',
+                        label: 'Headquarter Backlog',
                         data: teamIds.map(t => hhByTeam[t].filter(h => hqBacklogStatuses.includes(h.interview_status)).length),
                         backgroundColor: '#3498db'
                     },
@@ -216,7 +216,7 @@
         makeChart('chart-pipeline-pie', {
             type: 'doughnut',
             data: {
-                labels: ['FS Backlog', 'HQ Backlog', 'Approved'],
+                labels: ['Field Supervisor Backlog', 'Headquarter Backlog', 'Approved'],
                 datasets: [{
                     data: [fsBacklog, hqBacklog, approved],
                     backgroundColor: ['#e67e22', '#3498db', '#2ecc71']
@@ -297,12 +297,12 @@
                 labels: teamIds.map(tName),
                 datasets: [
                     {
-                        label: 'FS Backlog',
+                        label: 'Field Supervisor Backlog',
                         data: teamIds.map(t => teamFsBacklog[t]),
                         backgroundColor: '#e67e22'
                     },
                     {
-                        label: 'HQ Backlog',
+                        label: 'Headquarter Backlog',
                         data: teamIds.map(t => teamHqBacklog[t]),
                         backgroundColor: '#3498db'
                     },
