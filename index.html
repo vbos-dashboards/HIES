@@ -97,37 +97,37 @@
                     <div class="kpi-value" id="kpi-total-interviews">--</div>
                     <div class="kpi-label">Total Interviews</div>
                 </div>
-                <div class="kpi-card green">
-                    <div class="kpi-value" id="kpi-progress">--</div>
-                    <div class="kpi-label">Progress (Completed + Approved HQ)</div>
-                </div>
                 <div class="kpi-card orange">
-                    <div class="kpi-value" id="kpi-backlog">--</div>
-                    <div class="kpi-label">Backlog (Pending Review)</div>
+                    <div class="kpi-value" id="kpi-fs-backlog">--</div>
+                    <div class="kpi-label">FS Backlog</div>
                 </div>
-                <div class="kpi-card">
-                    <div class="kpi-value" id="kpi-backlog-pct">--</div>
-                    <div class="kpi-label">Backlog Rate</div>
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-hq-backlog">--</div>
+                    <div class="kpi-label">HQ Backlog</div>
                 </div>
-            </div>
-            <div class="chart-row">
-                <div class="chart-card wide">
-                    <h3>Progress vs Backlog by Team</h3>
-                    <canvas id="chart-progress-backlog-team"></canvas>
-                </div>
-                <div class="chart-card">
-                    <h3>Progress vs Backlog</h3>
-                    <canvas id="chart-progress-backlog-pie"></canvas>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-approved">--</div>
+                    <div class="kpi-label">Approved by HQ</div>
                 </div>
             </div>
             <div class="chart-row">
                 <div class="chart-card wide">
-                    <h3>Interview Status Distribution (Detail)</h3>
-                    <canvas id="chart-status-bar"></canvas>
+                    <h3>FS Backlog / HQ Backlog / Approved by Team</h3>
+                    <canvas id="chart-backlog-team"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h3>Status Breakdown (Detail)</h3>
-                    <canvas id="chart-status-pie"></canvas>
+                    <h3>Pipeline Overview</h3>
+                    <canvas id="chart-pipeline-pie"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>FS Backlog Breakdown by Team</h3>
+                    <canvas id="chart-fs-backlog-detail"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>FS Backlog Composition</h3>
+                    <canvas id="chart-fs-backlog-pie"></canvas>
                 </div>
             </div>
             <div class="chart-card full" style="margin-top:16px;">
@@ -161,27 +161,27 @@
                     <div class="kpi-value" id="kpi-num-teams">--</div>
                     <div class="kpi-label">Active Teams</div>
                 </div>
-                <div class="kpi-card green">
+                <div class="kpi-card">
                     <div class="kpi-value" id="kpi-avg-per-team">--</div>
                     <div class="kpi-label">Avg Interviews/Team</div>
                 </div>
                 <div class="kpi-card orange">
-                    <div class="kpi-value" id="kpi-team-backlog">--</div>
-                    <div class="kpi-label">Total Backlog</div>
+                    <div class="kpi-value" id="kpi-team-fs-backlog">--</div>
+                    <div class="kpi-label">Total FS Backlog</div>
                 </div>
-                <div class="kpi-card red">
-                    <div class="kpi-value" id="kpi-top-backlog-team">--</div>
-                    <div class="kpi-label">Highest Backlog Team</div>
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-team-hq-backlog">--</div>
+                    <div class="kpi-label">Total HQ Backlog</div>
                 </div>
             </div>
             <div class="chart-row">
                 <div class="chart-card wide">
-                    <h3>Progress vs Backlog by Team</h3>
-                    <canvas id="chart-team-progress-backlog"></canvas>
+                    <h3>FS Backlog / HQ Backlog / Approved by Team</h3>
+                    <canvas id="chart-team-pipeline"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h3>Team Backlog Breakdown</h3>
-                    <canvas id="chart-team-backlog-detail"></canvas>
+                    <h3>FS Backlog Breakdown by Team</h3>
+                    <canvas id="chart-team-fs-detail"></canvas>
                 </div>
             </div>
             <div class="chart-card full" style="margin-top:16px;">
@@ -193,9 +193,9 @@
                                 <th>Team</th>
                                 <th>Interviewers</th>
                                 <th>Total</th>
-                                <th>Progress</th>
-                                <th>Backlog</th>
-                                <th>Backlog %</th>
+                                <th>FS Backlog</th>
+                                <th>HQ Backlog</th>
+                                <th>Approved</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
