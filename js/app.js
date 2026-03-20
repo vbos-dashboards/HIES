@@ -35,14 +35,38 @@
     }
     function statusLabel(code) { return STATUS_LABELS[String(code)] || 'Unknown'; }
 
+    /* ---------- show error in page ---------- */
+    function showError(msg, detail) {
+        const content = el('content');
+        if (!content) return;
+        content.innerHTML = '<div style="padding:60px 32px;text-align:center;">' +
+            '<h2 style="color:#e74c3c;margin-bottom:12px;">Error Loading Data</h2>' +
+            '<p style="color:#555;margin-bottom:8px;">' + msg + '</p>' +
+            (detail ? '<pre style="color:#999;font-size:0.82rem;white-space:pre-wrap;">' + detail + '</pre>' : '') +
+            '<p style="color:#777;margin-top:16px;">Make sure the <code>data/</code> folder contains the JSON files.</p></div>';
+    }
+
     /* ---------- data loading ---------- */
-    const [summary, households, persons] = await Promise.all([
-        fetch('data/summary.json').then(r => r.json()),
-        fetch('data/households.json').then(r => r.json()),
-        fetch('data/persons.json').then(r => r.json())
-    ]);
+    let summary, households, persons;
+    try {
+        async function loadJSON(path) {
+            const r = await fetch(path);
+            if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
+            return r.json();
+        }
+        [summary, households, persons] = await Promise.all([
+            loadJSON('data/summary.json'),
+            loadJSON('data/households.json'),
+            loadJSON('data/persons.json')
+        ]);
+    } catch (err) {
+        showError('Could not load dashboard data.', String(err));
+        return;
+    }
 
     /* ---------- derived data ---------- */
+    // Normalize interview_status to string for consistent grouping
+    households.forEach(h => { h.interview_status = String(h.interview_status); });
     const hhByStatus = groupBy(households, 'interview_status');
     const hhByTeam = groupBy(households, 'team_id');
     const hhByInterviewer = groupBy(households, 'interviewer_id');
