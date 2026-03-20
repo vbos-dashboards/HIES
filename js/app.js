@@ -47,14 +47,14 @@
     }
 
     /* ---------- data loading ---------- */
-    let summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan;
+    let summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, foodData;
     try {
         async function loadJSON(path) {
             const r = await fetch(path);
             if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
             return r.json();
         }
-        [summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan] = await Promise.all([
+        [summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, foodData] = await Promise.all([
             loadJSON('data/summary.json'),
             loadJSON('data/households.json'),
             loadJSON('data/persons.json'),
@@ -62,7 +62,8 @@
             loadJSON('data/targets.json'),
             loadJSON('data/ea_boundaries.geojson'),
             loadJSON('data/villages.geojson'),
-            loadJSON('data/workplan.json')
+            loadJSON('data/workplan.json'),
+            loadJSON('data/food.json')
         ]);
     } catch (err) {
         showError('Could not load dashboard data.', String(err));
@@ -123,6 +124,7 @@
         speed: 'Speed',
         statistics: 'Survey Statistics',
         monitoring: 'EA Monitoring',
+        foodconsumption: 'Food Consumption',
         workplan: 'Work Plan'
     };
 
@@ -164,6 +166,7 @@
             case 'speed': renderSpeed(); break;
             case 'statistics': renderStatistics(); break;
             case 'monitoring': renderMonitoring(); break;
+            case 'foodconsumption': renderFoodConsumption(); break;
             case 'workplan': renderWorkplan(); break;
         }
     }
@@ -1272,6 +1275,233 @@
                 '<td>' + esc(s.island || '') + '</td>' +
                 '<td>' + esc(s.ea_name || '') + '</td>' +
                 '<td>' + statusBadge + '</td>';
+            tbody.appendChild(tr);
+        });
+    }
+
+    /* ========================================
+       12. FOOD CONSUMPTION
+       ======================================== */
+    function renderFoodConsumption() {
+        // Build household size map from persons
+        const hhSizeMap = {};
+        persons.forEach(p => {
+            hhSizeMap[p.interview_key] = (hhSizeMap[p.interview_key] || 0) + 1;
+        });
+
+        // Build food items per household
+        const foodPerHH = {};
+        const foodIdCounts = {};
+        foodData.forEach(r => {
+            foodPerHH[r.interview_key] = (foodPerHH[r.interview_key] || 0) + 1;
+            foodIdCounts[r.food_id] = (foodIdCounts[r.food_id] || 0) + 1;
+        });
+
+        // Cross-tabulate: household size → array of food item counts
+        const foodBySize = {};
+        const scatterPoints = [];
+        const hhKeys = Object.keys(foodPerHH).filter(k => hhSizeMap[k]);
+        hhKeys.forEach(k => {
+            const size = hhSizeMap[k];
+            const count = foodPerHH[k];
+            if (!foodBySize[size]) foodBySize[size] = [];
+            foodBySize[size].push(count);
+            scatterPoints.push({ x: size, y: count });
+        });
+
+        // KPIs
+        const uniqueFoodIds = Object.keys(foodIdCounts).length;
+        setText('kpi-food-hh', hhKeys.length);
+        setText('kpi-food-items', foodData.length);
+        setText('kpi-food-avg', (foodData.length / hhKeys.length).toFixed(1));
+        setText('kpi-food-unique', uniqueFoodIds);
+
+        // Sizes sorted
+        const sizes = Object.keys(foodBySize).map(Number).sort((a, b) => a - b);
+        const avgBySize = sizes.map(s => {
+            const arr = foodBySize[s];
+            return +(arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1);
+        });
+        const minBySize = sizes.map(s => Math.min(...foodBySize[s]));
+        const maxBySize = sizes.map(s => Math.max(...foodBySize[s]));
+        const countBySize = sizes.map(s => foodBySize[s].length);
+        function median(arr) {
+            const s = [...arr].sort((a, b) => a - b);
+            const mid = Math.floor(s.length / 2);
+            return s.length % 2 ? s[mid] : +((s[mid - 1] + s[mid]) / 2).toFixed(1);
+        }
+        const medBySize = sizes.map(s => median(foodBySize[s]));
+
+        // Chart 1: Average food items by household size (bar)
+        makeChart('chart-food-avg-by-size', {
+            type: 'bar',
+            data: {
+                labels: sizes.map(s => s + ' persons'),
+                datasets: [{
+                    label: 'Average Food Items',
+                    data: avgBySize,
+                    backgroundColor: '#3498db',
+                    borderRadius: 4
+                }, {
+                    label: 'Households (n)',
+                    data: countBySize,
+                    type: 'line',
+                    borderColor: '#e67e22',
+                    backgroundColor: 'rgba(230,126,34,0.15)',
+                    yAxisID: 'y1',
+                    pointRadius: 4,
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel: function (ctx) {
+                                if (ctx.datasetIndex === 0) {
+                                    const i = ctx.dataIndex;
+                                    return 'n=' + countBySize[i] + ', min=' + minBySize[i] + ', max=' + maxBySize[i];
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'Avg Food Items' } },
+                    y1: { position: 'right', beginAtZero: true, grid: { drawOnChartArea: false }, title: { display: true, text: 'Number of Households' } }
+                }
+            }
+        });
+
+        // Chart 2: Distribution box-style (min/max/median bar chart)
+        makeChart('chart-food-dist-by-size', {
+            type: 'bar',
+            data: {
+                labels: sizes.map(s => s + ' pers.'),
+                datasets: [{
+                    label: 'Minimum',
+                    data: minBySize,
+                    backgroundColor: '#e74c3c'
+                }, {
+                    label: 'Median',
+                    data: medBySize,
+                    backgroundColor: '#f39c12'
+                }, {
+                    label: 'Maximum',
+                    data: maxBySize,
+                    backgroundColor: '#2ecc71'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'bottom' } },
+                scales: { y: { beginAtZero: true, title: { display: true, text: 'Food Items' } } }
+            }
+        });
+
+        // Chart 3: Scatter plot — each dot is a household
+        makeChart('chart-food-scatter', {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Household',
+                    data: scatterPoints,
+                    backgroundColor: 'rgba(52,152,219,0.5)',
+                    pointRadius: 5
+                }, {
+                    label: 'Average',
+                    data: sizes.map((s, i) => ({ x: s, y: avgBySize[i] })),
+                    type: 'line',
+                    borderColor: '#e74c3c',
+                    borderWidth: 2,
+                    pointRadius: 6,
+                    pointBackgroundColor: '#e74c3c',
+                    fill: false,
+                    showLine: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'bottom' } },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Household Size (persons)' },
+                        ticks: { stepSize: 1 }
+                    },
+                    y: { beginAtZero: true, title: { display: true, text: 'Number of Food Items' } }
+                }
+            }
+        });
+
+        // Chart 4: Histogram — distribution of food item counts
+        const bins = [0, 10, 15, 20, 25, 30, 35, 40, 45, 50, 100];
+        const binLabels = [];
+        const binCounts = [];
+        for (let i = 0; i < bins.length - 1; i++) {
+            binLabels.push(bins[i] + '-' + (bins[i + 1] - 1));
+            binCounts.push(0);
+        }
+        hhKeys.forEach(k => {
+            const c = foodPerHH[k];
+            for (let i = 0; i < bins.length - 1; i++) {
+                if (c >= bins[i] && c < bins[i + 1]) { binCounts[i]++; break; }
+            }
+        });
+        makeChart('chart-food-histogram', {
+            type: 'bar',
+            data: {
+                labels: binLabels,
+                datasets: [{
+                    label: 'Households',
+                    data: binCounts,
+                    backgroundColor: '#9b59b6',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { title: { display: true, text: 'Number of Food Items' } },
+                    y: { beginAtZero: true, title: { display: true, text: 'Households' } }
+                }
+            }
+        });
+
+        // Chart 5: Top 30 most reported food items (horizontal bar)
+        const sorted = Object.entries(foodIdCounts).sort((a, b) => b[1] - a[1]).slice(0, 30);
+        makeChart('chart-food-top-items', {
+            type: 'bar',
+            data: {
+                labels: sorted.map(e => 'Item ' + e[0]),
+                datasets: [{
+                    label: 'Households Reporting',
+                    data: sorted.map(e => e[1]),
+                    backgroundColor: CHART_PALETTE.concat(CHART_PALETTE).slice(0, 30),
+                    borderRadius: 3
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { beginAtZero: true, title: { display: true, text: 'Number of Households' } }
+                }
+            }
+        });
+
+        // Detail table
+        const tbody = el('table-food-detail').querySelector('tbody');
+        sizes.forEach((s, i) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = '<td>' + s + '</td><td>' + countBySize[i] + '</td><td>' +
+                avgBySize[i] + '</td><td>' + minBySize[i] + '</td><td>' +
+                maxBySize[i] + '</td><td>' + medBySize[i] + '</td>';
             tbody.appendChild(tr);
         });
     }

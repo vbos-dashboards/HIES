@@ -68,6 +68,9 @@
             <li class="nav-item" data-tab="monitoring">
                 <span class="nav-icon">&#127919;</span> EA Monitoring
             </li>
+            <li class="nav-item" data-tab="foodconsumption">
+                <span class="nav-icon">&#127858;</span> Food Consumption
+            </li>
             <li class="nav-item" data-tab="workplan">
                 <span class="nav-icon">&#128197;</span> Work Plan
             </li>
@@ -576,6 +579,70 @@
                                 <th>Actual</th>
                                 <th>Remaining</th>
                                 <th>Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOD CONSUMPTION TAB -->
+        <section class="tab-content" id="tab-foodconsumption">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-food-hh">--</div>
+                    <div class="kpi-label">Households with Food Data</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-food-items">--</div>
+                    <div class="kpi-label">Total Food Items Reported</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-food-avg">--</div>
+                    <div class="kpi-label">Avg Items per Household</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-food-unique">--</div>
+                    <div class="kpi-label">Unique Food Items</div>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Average Number of Food Items by Household Size</h3>
+                    <canvas id="chart-food-avg-by-size"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Food Items Distribution by Household Size</h3>
+                    <canvas id="chart-food-dist-by-size"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Food Item Count per Household (by Household Size)</h3>
+                    <canvas id="chart-food-scatter"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Households by Number of Food Items Reported</h3>
+                    <canvas id="chart-food-histogram"></canvas>
+                </div>
+            </div>
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>Top 30 Most Reported Food Items</h3>
+                <canvas id="chart-food-top-items" style="min-height:400px;"></canvas>
+            </div>
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>Food Items per Household — Detail Table</h3>
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-food-detail">
+                        <thead>
+                            <tr>
+                                <th>Household Size</th>
+                                <th>Households (n)</th>
+                                <th>Avg Food Items</th>
+                                <th>Min</th>
+                                <th>Max</th>
+                                <th>Median</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
