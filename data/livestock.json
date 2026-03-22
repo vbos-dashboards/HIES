@@ -1,82 +1,54 @@
 [
     {
-        "interview_key":  "66-89-03-96",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "66-89-03-96",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "09-12-08-64",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "09-12-08-64",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "84-82-01-34",
-        "type_id":  "13501"
-    },
-    {
-        "interview_key":  "84-82-01-34",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "14-07-87-98",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "92-82-62-50",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "92-82-62-50",
-        "type_id":  "13505"
-    },
-    {
         "interview_key":  "74-90-66-68",
         "type_id":  "13505"
-    },
-    {
-        "interview_key":  "10-05-08-50",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "62-34-78-83",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "62-34-78-83",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "06-26-75-81",
-        "type_id":  "13501"
-    },
-    {
-        "interview_key":  "06-26-75-81",
-        "type_id":  "13504"
     },
     {
         "interview_key":  "91-42-28-25",
         "type_id":  "13505"
     },
     {
-        "interview_key":  "42-87-90-21",
+        "interview_key":  "06-26-75-81",
+        "type_id":  "13501"
+    },
+    {
+        "interview_key":  "06-26-75-81",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "84-82-01-34",
+        "type_id":  "13501"
+    },
+    {
+        "interview_key":  "84-82-01-34",
         "type_id":  "13505"
     },
     {
-        "interview_key":  "18-47-68-10",
+        "interview_key":  "92-82-62-50",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "92-82-62-50",
         "type_id":  "13505"
     },
     {
-        "interview_key":  "18-47-68-10",
-        "type_id":  "13508"
+        "interview_key":  "70-23-85-74",
+        "type_id":  "13505"
     },
     {
-        "interview_key":  "99-93-03-35",
+        "interview_key":  "73-88-34-84",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "73-88-34-84",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "39-71-34-86",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "39-71-34-86",
         "type_id":  "13505"
     },
     {
@@ -84,6 +56,22 @@
         "type_id":  "13501"
     },
     {
+        "interview_key":  "64-31-14-38",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "41-11-08-79",
+        "type_id":  "13501"
+    },
+    {
+        "interview_key":  "41-11-08-79",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "41-11-08-79",
+        "type_id":  "13505"
+    },
+    {
         "interview_key":  "34-05-69-24",
         "type_id":  "13501"
     },
@@ -96,31 +84,47 @@
         "type_id":  "13505"
     },
     {
-        "interview_key":  "39-19-16-41",
-        "type_id":  "13511"
-    },
-    {
-        "interview_key":  "71-35-48-97",
+        "interview_key":  "13-27-78-05",
         "type_id":  "13504"
     },
     {
-        "interview_key":  "71-35-48-97",
+        "interview_key":  "13-27-78-05",
         "type_id":  "13505"
     },
     {
-        "interview_key":  "37-01-52-28",
+        "interview_key":  "59-33-54-20",
         "type_id":  "13504"
     },
     {
-        "interview_key":  "37-01-52-28",
+        "interview_key":  "59-33-54-20",
         "type_id":  "13505"
     },
     {
-        "interview_key":  "63-96-33-38",
+        "interview_key":  "69-76-83-14",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "94-26-46-53",
+        "type_id":  "13501"
+    },
+    {
+        "interview_key":  "94-26-46-53",
         "type_id":  "13504"
     },
     {
-        "interview_key":  "63-96-33-38",
+        "interview_key":  "94-26-46-53",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "75-87-32-33",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "66-74-37-32",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "66-74-37-32",
         "type_id":  "13505"
     },
     {
@@ -129,6 +133,14 @@
     },
     {
         "interview_key":  "24-79-06-78",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "50-35-70-27",
+        "type_id":  "13501"
+    },
+    {
+        "interview_key":  "50-35-70-27",
         "type_id":  "13505"
     },
     {
@@ -136,103 +148,15 @@
         "type_id":  "13505"
     },
     {
-        "interview_key":  "13-27-78-05",
+        "interview_key":  "17-22-77-76",
         "type_id":  "13504"
     },
     {
-        "interview_key":  "13-27-78-05",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "64-31-14-38",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "50-35-70-27",
-        "type_id":  "13501"
-    },
-    {
-        "interview_key":  "50-35-70-27",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "47-45-24-82",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "47-45-24-82",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "78-04-06-68",
+        "interview_key":  "17-22-77-76",
         "type_id":  "13505"
     },
     {
         "interview_key":  "22-75-48-23",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "43-67-01-34",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "43-67-01-34",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "66-74-37-32",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "66-74-37-32",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "73-65-86-60",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "71-22-62-90",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "64-85-19-17",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "64-85-19-17",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "54-92-32-91",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "54-92-32-91",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "54-92-32-91",
-        "type_id":  "13507"
-    },
-    {
-        "interview_key":  "47-43-98-43",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "47-43-98-43",
-        "type_id":  "13508"
-    },
-    {
-        "interview_key":  "14-12-40-88",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "82-55-74-56",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "82-55-74-56",
         "type_id":  "13505"
     },
     {
@@ -264,6 +188,10 @@
         "type_id":  "13505"
     },
     {
+        "interview_key":  "14-12-40-88",
+        "type_id":  "13504"
+    },
+    {
         "interview_key":  "96-97-49-82",
         "type_id":  "13501"
     },
@@ -276,11 +204,15 @@
         "type_id":  "13505"
     },
     {
-        "interview_key":  "17-22-77-76",
+        "interview_key":  "84-23-71-34",
+        "type_id":  "13501"
+    },
+    {
+        "interview_key":  "84-23-71-34",
         "type_id":  "13504"
     },
     {
-        "interview_key":  "17-22-77-76",
+        "interview_key":  "84-23-71-34",
         "type_id":  "13505"
     },
     {
@@ -289,102 +221,6 @@
     },
     {
         "interview_key":  "31-40-20-96",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "84-23-71-34",
-        "type_id":  "13501"
-    },
-    {
-        "interview_key":  "84-23-71-34",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "84-23-71-34",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "92-81-21-58",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "03-51-01-07",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "73-88-34-84",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "73-88-34-84",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "86-85-30-88",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "86-85-30-88",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "69-41-74-84",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "62-35-96-73",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "33-34-90-80",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "91-31-42-66",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "91-31-42-66",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "94-26-46-53",
-        "type_id":  "13501"
-    },
-    {
-        "interview_key":  "94-26-46-53",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "94-26-46-53",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "69-76-83-14",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "82-04-37-47",
-        "type_id":  "13501"
-    },
-    {
-        "interview_key":  "82-04-37-47",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "82-04-37-47",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "82-04-37-47",
-        "type_id":  "13507"
-    },
-    {
-        "interview_key":  "08-53-42-97",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "08-53-42-97",
         "type_id":  "13505"
     },
     {
@@ -404,31 +240,7 @@
         "type_id":  "13505"
     },
     {
-        "interview_key":  "02-12-85-71",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "27-34-49-38",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "27-17-64-23",
-        "type_id":  "13501"
-    },
-    {
-        "interview_key":  "27-17-64-23",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "27-17-64-23",
-        "type_id":  "13505"
-    },
-    {
-        "interview_key":  "85-02-58-18",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "85-02-58-18",
+        "interview_key":  "92-81-21-58",
         "type_id":  "13505"
     },
     {
@@ -440,11 +252,19 @@
         "type_id":  "13505"
     },
     {
-        "interview_key":  "39-97-44-12",
-        "type_id":  "13501"
+        "interview_key":  "03-51-01-07",
+        "type_id":  "13505"
     },
     {
-        "interview_key":  "39-97-44-12",
+        "interview_key":  "71-22-62-90",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "08-53-42-97",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "08-53-42-97",
         "type_id":  "13505"
     },
     {
@@ -452,31 +272,207 @@
         "type_id":  "13504"
     },
     {
-        "interview_key":  "31-99-35-62",
-        "type_id":  "13504"
-    },
-    {
-        "interview_key":  "31-99-35-62",
+        "interview_key":  "02-12-85-71",
         "type_id":  "13505"
     },
     {
-        "interview_key":  "28-62-53-68",
+        "interview_key":  "82-55-74-56",
         "type_id":  "13504"
     },
     {
-        "interview_key":  "28-62-53-68",
+        "interview_key":  "82-55-74-56",
         "type_id":  "13505"
     },
     {
-        "interview_key":  "41-11-08-79",
+        "interview_key":  "39-19-16-41",
+        "type_id":  "13511"
+    },
+    {
+        "interview_key":  "64-85-19-17",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "64-85-19-17",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "97-75-89-83",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "97-75-89-83",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "99-93-03-35",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "68-44-70-23",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "68-44-70-23",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "10-05-08-50",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "27-34-49-38",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "86-85-30-88",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "86-85-30-88",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "18-47-68-10",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "18-47-68-10",
+        "type_id":  "13508"
+    },
+    {
+        "interview_key":  "62-35-96-73",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "73-65-86-60",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "09-12-08-64",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "09-12-08-64",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "63-96-33-38",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "63-96-33-38",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "27-17-64-23",
         "type_id":  "13501"
     },
     {
-        "interview_key":  "41-11-08-79",
+        "interview_key":  "27-17-64-23",
         "type_id":  "13504"
     },
     {
-        "interview_key":  "41-11-08-79",
+        "interview_key":  "27-17-64-23",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "14-07-87-98",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "47-45-24-82",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "47-45-24-82",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "82-04-37-47",
+        "type_id":  "13501"
+    },
+    {
+        "interview_key":  "82-04-37-47",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "82-04-37-47",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "82-04-37-47",
+        "type_id":  "13507"
+    },
+    {
+        "interview_key":  "66-89-03-96",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "66-89-03-96",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "54-92-32-91",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "54-92-32-91",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "54-92-32-91",
+        "type_id":  "13507"
+    },
+    {
+        "interview_key":  "91-31-42-66",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "91-31-42-66",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "37-01-52-28",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "37-01-52-28",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "47-43-98-43",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "47-43-98-43",
+        "type_id":  "13508"
+    },
+    {
+        "interview_key":  "85-02-58-18",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "85-02-58-18",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "31-99-35-62",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "31-99-35-62",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "28-62-53-68",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "28-62-53-68",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "33-34-90-80",
         "type_id":  "13505"
     },
     {
@@ -485,6 +481,110 @@
     },
     {
         "interview_key":  "21-35-10-15",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "90-25-03-92",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "71-35-48-97",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "71-35-48-97",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "43-67-01-34",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "43-67-01-34",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "89-91-66-15",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "89-91-66-15",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "98-72-19-99",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "39-97-44-12",
+        "type_id":  "13501"
+    },
+    {
+        "interview_key":  "39-97-44-12",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "69-41-74-84",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "78-04-06-68",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "72-81-41-81",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "18-29-47-23",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "18-29-47-23",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "02-43-60-73",
+        "type_id":  "13501"
+    },
+    {
+        "interview_key":  "02-43-60-73",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "02-43-60-73",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "62-34-78-83",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "62-34-78-83",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "42-87-90-21",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "23-18-42-15",
+        "type_id":  "13501"
+    },
+    {
+        "interview_key":  "23-18-42-15",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "23-18-42-15",
+        "type_id":  "13505"
+    },
+    {
+        "interview_key":  "50-12-80-46",
+        "type_id":  "13504"
+    },
+    {
+        "interview_key":  "50-12-80-46",
         "type_id":  "13505"
     }
 ]

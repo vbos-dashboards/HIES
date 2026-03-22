@@ -1188,23 +1188,23 @@
         if (roundOverview) {
             // Build per-round summary
             var roundInfo = {};
-            rounds.forEach(function(r) {
-                var entries = eaEntries.filter(function(s) { return s.round === r; });
-                var teams = [...new Set(entries.map(function(s) { return s.team; }))].sort();
-                var islands = [...new Set(entries.map(function(s) { return s.island || ''; }).filter(Boolean))].sort();
-                var dates = [...new Set(entries.map(function(s) { return s.date; }))].sort();
+            rounds.forEach(function (r) {
+                var entries = eaEntries.filter(function (s) { return s.round === r; });
+                var teams = [...new Set(entries.map(function (s) { return s.team; }))].sort();
+                var islands = [...new Set(entries.map(function (s) { return s.island || ''; }).filter(Boolean))].sort();
+                var dates = [...new Set(entries.map(function (s) { return s.date; }))].sort();
                 var dateStart = dates[0] || '';
                 var dateEnd = dates[dates.length - 1] || dateStart;
                 var totalEAs = entries.length;
-                var completedEAs = entries.filter(function(s) { return actualByEA[String(s.eaid)] > 0; }).length;
-                var behindEAs = entries.filter(function(s) {
+                var completedEAs = entries.filter(function (s) { return actualByEA[String(s.eaid)] > 0; }).length;
+                var behindEAs = entries.filter(function (s) {
                     var d = new Date(s.date); var we = new Date(d); we.setDate(we.getDate() + 6);
                     return we < today && !actualByEA[String(s.eaid)];
                 }).length;
                 roundInfo[r] = { teams: teams, islands: islands, dateStart: dateStart, dateEnd: dateEnd, totalEAs: totalEAs, completedEAs: completedEAs, behindEAs: behindEAs };
             });
             var html = '';
-            rounds.forEach(function(r) {
+            rounds.forEach(function (r) {
                 var info = roundInfo[r];
                 var bg = '#bdc3c7'; var fg = '#fff';
                 if (r === currentRound) { bg = '#3498db'; }
@@ -1271,7 +1271,7 @@
 
         // Build detailed week info for tooltips
         var weekDetail = {};
-        eaEntries.forEach(function(s) {
+        eaEntries.forEach(function (s) {
             if (!weekDetail[s.week]) weekDetail[s.week] = { eas: [], teams: new Set(), islands: new Set(), date: s.date, round: s.round };
             weekDetail[s.week].eas.push(s);
             weekDetail[s.week].teams.add(s.team);
@@ -1294,25 +1294,25 @@
                     legend: { display: false },
                     tooltip: {
                         callbacks: {
-                            title: function(items) {
+                            title: function (items) {
                                 var w = weekKeys[items[0].dataIndex];
                                 var wd = weekDetail[w];
                                 return w + ' - ' + (wd ? wd.round : '');
                             },
-                            afterTitle: function(items) {
+                            afterTitle: function (items) {
                                 var w = weekKeys[items[0].dataIndex];
                                 var wd = weekDetail[w];
                                 if (!wd) return '';
                                 return 'Start: ' + wd.date;
                             },
-                            label: function(ctx) {
+                            label: function (ctx) {
                                 return ctx.raw + ' EAs scheduled';
                             },
-                            afterBody: function(items) {
+                            afterBody: function (items) {
                                 var w = weekKeys[items[0].dataIndex];
                                 var wd = weekDetail[w];
                                 if (!wd) return [];
-                                var completed = wd.eas.filter(function(s) { return actualByEA[String(s.eaid)] > 0; }).length;
+                                var completed = wd.eas.filter(function (s) { return actualByEA[String(s.eaid)] > 0; }).length;
                                 var lines = ['Completed: ' + completed + ' / ' + wd.eas.length];
                                 lines.push('Teams: ' + [...wd.teams].sort().join(', '));
                                 lines.push('Islands: ' + [...wd.islands].sort().join(', '));
