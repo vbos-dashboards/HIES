@@ -54,7 +54,8 @@
             if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
             return r.json();
         }
-        [summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, foodData] = await Promise.all([
+        let listingData, marketData;
+        [summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, foodData, listingData, marketData] = await Promise.all([
             loadJSON('data/summary.json'),
             loadJSON('data/households.json'),
             loadJSON('data/persons.json'),
@@ -63,7 +64,9 @@
             loadJSON('data/ea_boundaries.geojson'),
             loadJSON('data/villages.geojson'),
             loadJSON('data/workplan.json'),
-            loadJSON('data/food.json')
+            loadJSON('data/food.json'),
+            loadJSON('data/listing.json').catch(() => []),
+            loadJSON('data/market.json').catch(() => ({ outlets: [], hh_progress: [], categories: [] }))
         ]);
     } catch (err) {
         showError('Could not load dashboard data.', String(err));
@@ -126,7 +129,9 @@
         statistics: 'Survey Statistics',
         monitoring: 'EA Monitoring',
         foodconsumption: 'Food Consumption',
-        workplan: 'Work Plan'
+        workplan: 'Work Plan',
+        listing: 'Household Listing',
+        market: 'Market Survey'
     };
 
     const navItems = document.querySelectorAll('.nav-item');
@@ -169,6 +174,8 @@
             case 'monitoring': renderMonitoring(); break;
             case 'foodconsumption': renderFoodConsumption(); break;
             case 'workplan': renderWorkplan(); break;
+            case 'listing': renderListing(); break;
+            case 'market': renderMarket(); break;
         }
     }
 
@@ -1606,6 +1613,269 @@
             tr.innerHTML = '<td>' + s + '</td><td>' + countBySize[i] + '</td><td>' +
                 avgBySize[i] + '</td><td>' + minBySize[i] + '</td><td>' +
                 maxBySize[i] + '</td><td>' + medBySize[i] + '</td>';
+            tbody.appendChild(tr);
+        });
+    }
+
+    /* ========================================
+       13. HOUSEHOLD LISTING PROGRESS
+       ======================================== */
+    function renderListing() {
+        if (!listingData || !listingData.length) return;
+
+        const total = listingData.length;
+        const completed = listingData.filter(r => r.has_listing).length;
+        const pending = total - completed;
+        const totalPhotos = listingData.reduce((s, r) => s + r.listing_photos, 0);
+
+        setText('kpi-list-total', total);
+        setText('kpi-list-completed', completed);
+        setText('kpi-list-pending', pending);
+        setText('kpi-list-photos', totalPhotos);
+
+        // By team
+        const byTeam = groupBy(listingData, 'team_id');
+        const teamIds = Object.keys(byTeam).sort();
+        const teamLabels = teamIds.map(t => tName(t));
+        const teamCompleted = teamIds.map(t => byTeam[t].filter(r => r.has_listing).length);
+        const teamPending = teamIds.map(t => byTeam[t].filter(r => !r.has_listing).length);
+
+        makeChart('chart-list-team', {
+            type: 'bar',
+            data: {
+                labels: teamLabels,
+                datasets: [
+                    { label: 'Completed', data: teamCompleted, backgroundColor: '#2ecc71' },
+                    { label: 'Pending', data: teamPending, backgroundColor: '#e74c3c' }
+                ]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } } }
+        });
+
+        // Pie
+        makeChart('chart-list-pie', {
+            type: 'doughnut',
+            data: {
+                labels: ['Completed', 'Pending'],
+                datasets: [{ data: [completed, pending], backgroundColor: ['#2ecc71', '#e74c3c'] }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // By province
+        const byProv = groupBy(listingData, 'province');
+        const provNames = Object.keys(byProv).filter(Boolean).sort();
+        makeChart('chart-list-province', {
+            type: 'bar',
+            data: {
+                labels: provNames,
+                datasets: [
+                    { label: 'Completed', data: provNames.map(p => byProv[p].filter(r => r.has_listing).length), backgroundColor: '#2ecc71' },
+                    { label: 'Pending', data: provNames.map(p => byProv[p].filter(r => !r.has_listing).length), backgroundColor: '#e74c3c' }
+                ]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } } }
+        });
+
+        // Photos distribution
+        const withPhotos = listingData.filter(r => r.listing_photos > 0);
+        const photoDist = {};
+        withPhotos.forEach(r => { photoDist[r.listing_photos] = (photoDist[r.listing_photos] || 0) + 1; });
+        const photoKeys = Object.keys(photoDist).map(Number).sort((a, b) => a - b);
+        makeChart('chart-list-photos', {
+            type: 'bar',
+            data: {
+                labels: photoKeys.map(k => k + ' photos'),
+                datasets: [{ label: 'Households', data: photoKeys.map(k => photoDist[k]), backgroundColor: '#3498db' }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+
+        // Team progress bars
+        var progDiv = el('progress-listing-teams');
+        if (progDiv) {
+            var html = '';
+            teamIds.forEach(function (t) {
+                var rows = byTeam[t];
+                var done = rows.filter(function (r) { return r.has_listing; }).length;
+                var pct = rows.length > 0 ? ((done / rows.length) * 100).toFixed(1) : '0.0';
+                var barColor = parseFloat(pct) >= 100 ? '#2ecc71' : parseFloat(pct) >= 25 ? '#f39c12' : '#3498db';
+                html += '<div class="progress-row">' +
+                    '<div class="progress-label">' + esc(tName(t)) + '</div>' +
+                    '<div class="progress-bar-wrap">' +
+                    '<div class="progress-bar-fill" style="width:' + pct + '%;background:' + barColor + ';"></div>' +
+                    '</div>' +
+                    '<div class="progress-stats">' + done + ' / ' + rows.length + ' (' + pct + '%)</div></div>';
+            });
+            progDiv.innerHTML = html;
+        }
+
+        // Detail table
+        var tbody = el('table-listing').querySelector('tbody');
+        listingData.forEach(function (r) {
+            var tr = document.createElement('tr');
+            var badge = r.has_listing
+                ? '<span class="status-badge" style="background:#2ecc71;color:#fff;">Done</span>'
+                : '<span class="status-badge" style="background:#e74c3c;color:#fff;">Pending</span>';
+            if (r.has_listing) tr.style.backgroundColor = '#f0fff0';
+            tr.innerHTML = '<td>' + esc(tName(r.team_id)) + '</td>' +
+                '<td>' + esc(r.province) + '</td>' +
+                '<td>' + esc(r.ea) + '</td>' +
+                '<td>' + esc(r.interview_key) + '</td>' +
+                '<td>' + r.listing_pages + '</td>' +
+                '<td>' + r.listing_photos + '</td>' +
+                '<td>' + badge + '</td>';
+            tbody.appendChild(tr);
+        });
+    }
+
+    /* ========================================
+       14. MARKET SURVEY PROGRESS
+       ======================================== */
+    function renderMarket() {
+        if (!marketData || !marketData.outlets) return;
+
+        var outlets = marketData.outlets;
+        var hhProgress = marketData.hh_progress || [];
+        var categories = marketData.categories || [];
+
+        var total = hhProgress.length || households.length;
+        var completed = hhProgress.filter(function (r) { return r.has_market; }).length;
+        var pending = total - completed;
+
+        setText('kpi-mkt-total', total);
+        setText('kpi-mkt-completed', completed);
+        setText('kpi-mkt-pending', pending);
+        setText('kpi-mkt-outlets', outlets.length);
+
+        // By team
+        var byTeam = groupBy(hhProgress, 'team_id');
+        var teamIds = Object.keys(byTeam).sort();
+        var teamLabels = teamIds.map(function (t) { return tName(t); });
+
+        makeChart('chart-mkt-team', {
+            type: 'bar',
+            data: {
+                labels: teamLabels,
+                datasets: [
+                    { label: 'Completed', data: teamIds.map(function (t) { return byTeam[t].filter(function (r) { return r.has_market; }).length; }), backgroundColor: '#2ecc71' },
+                    { label: 'Pending', data: teamIds.map(function (t) { return byTeam[t].filter(function (r) { return !r.has_market; }).length; }), backgroundColor: '#e74c3c' }
+                ]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } } }
+        });
+
+        // Pie
+        makeChart('chart-mkt-pie', {
+            type: 'doughnut',
+            data: {
+                labels: ['Completed', 'Pending'],
+                datasets: [{ data: [completed, pending], backgroundColor: ['#2ecc71', '#e74c3c'] }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // Product availability across outlets
+        var catLabels = categories.map(function (c) { return c.charAt(0).toUpperCase() + c.slice(1); });
+        var catAvail = categories.map(function (cat) {
+            return outlets.filter(function (o) { return o.products[cat] && o.products[cat].available; }).length;
+        });
+        makeChart('chart-mkt-products', {
+            type: 'bar',
+            data: {
+                labels: catLabels,
+                datasets: [{ label: 'Outlets Selling', data: catAvail, backgroundColor: CHART_PALETTE.slice(0, categories.length) }]
+            },
+            options: {
+                responsive: true, plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: function (ctx) { return ctx.raw + ' / ' + outlets.length + ' outlets (' + (outlets.length > 0 ? (ctx.raw / outlets.length * 100).toFixed(0) : 0) + '%)'; } } }
+                },
+                scales: { y: { beginAtZero: true, title: { display: true, text: '# Outlets' } } }
+            }
+        });
+
+        // By province
+        var byProv = groupBy(hhProgress, 'province');
+        var provNames = Object.keys(byProv).filter(Boolean).sort();
+        makeChart('chart-mkt-province', {
+            type: 'bar',
+            data: {
+                labels: provNames,
+                datasets: [
+                    { label: 'Completed', data: provNames.map(function (p) { return byProv[p].filter(function (r) { return r.has_market; }).length; }), backgroundColor: '#2ecc71' },
+                    { label: 'Pending', data: provNames.map(function (p) { return byProv[p].filter(function (r) { return !r.has_market; }).length; }), backgroundColor: '#e74c3c' }
+                ]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } } }
+        });
+
+        // Average items per category per outlet
+        var avgItems = categories.map(function (cat) {
+            var relevant = outlets.filter(function (o) { return o.products[cat] && o.products[cat].available; });
+            if (relevant.length === 0) return 0;
+            var sum = relevant.reduce(function (s, o) { return s + o.products[cat].items; }, 0);
+            return parseFloat((sum / relevant.length).toFixed(1));
+        });
+        makeChart('chart-mkt-items', {
+            type: 'bar',
+            data: {
+                labels: catLabels,
+                datasets: [{ label: 'Avg Items', data: avgItems, backgroundColor: CHART_PALETTE.slice(0, categories.length) }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Avg Items per Outlet' } } } }
+        });
+
+        // Outlets per HH distribution
+        var outletDist = {};
+        hhProgress.filter(function (r) { return r.has_market; }).forEach(function (r) {
+            outletDist[r.outlet_count] = (outletDist[r.outlet_count] || 0) + 1;
+        });
+        var outletKeys = Object.keys(outletDist).map(Number).sort(function (a, b) { return a - b; });
+        makeChart('chart-mkt-outlets-dist', {
+            type: 'bar',
+            data: {
+                labels: outletKeys.map(function (k) { return k + ' outlet' + (k !== 1 ? 's' : ''); }),
+                datasets: [{ label: 'Households', data: outletKeys.map(function (k) { return outletDist[k]; }), backgroundColor: '#3498db' }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+
+        // Team progress bars
+        var progDiv = el('progress-market-teams');
+        if (progDiv) {
+            var html = '';
+            teamIds.forEach(function (t) {
+                var rows = byTeam[t];
+                var done = rows.filter(function (r) { return r.has_market; }).length;
+                var pct = rows.length > 0 ? ((done / rows.length) * 100).toFixed(1) : '0.0';
+                var barColor = parseFloat(pct) >= 100 ? '#2ecc71' : parseFloat(pct) >= 25 ? '#f39c12' : '#3498db';
+                html += '<div class="progress-row">' +
+                    '<div class="progress-label">' + esc(tName(t)) + '</div>' +
+                    '<div class="progress-bar-wrap">' +
+                    '<div class="progress-bar-fill" style="width:' + pct + '%;background:' + barColor + ';"></div>' +
+                    '</div>' +
+                    '<div class="progress-stats">' + done + ' / ' + rows.length + ' (' + pct + '%)</div></div>';
+            });
+            progDiv.innerHTML = html;
+        }
+
+        // Outlet detail table
+        var tbody = el('table-market').querySelector('tbody');
+        outlets.forEach(function (o) {
+            var tr = document.createElement('tr');
+            var cells = '<td>' + esc(tName(o.team_id)) + '</td>' +
+                '<td>' + esc(o.province) + '</td>' +
+                '<td>' + esc(o.outlet_name) + '</td>';
+            categories.forEach(function (cat) {
+                var p = o.products[cat];
+                if (p && p.available) {
+                    cells += '<td style="text-align:center;"><span style="color:#2ecc71;font-weight:700;">&#10003;</span> ' + p.items + '</td>';
+                } else {
+                    cells += '<td style="text-align:center;color:#ccc;">&mdash;</td>';
+                }
+            });
+            tr.innerHTML = cells;
             tbody.appendChild(tr);
         });
     }

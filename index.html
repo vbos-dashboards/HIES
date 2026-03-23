@@ -76,6 +76,12 @@
             <li class="nav-item" data-tab="workplan">
                 <span class="nav-icon">&#128197;</span> Work Plan
             </li>
+            <li class="nav-item" data-tab="listing">
+                <span class="nav-icon">&#128196;</span> Household Listing
+            </li>
+            <li class="nav-item" data-tab="market">
+                <span class="nav-icon">&#128722;</span> Market Survey
+            </li>
         </ul>
         <div class="sidebar-footer">
             <p>Vanuatu Bureau of Statistics</p>
@@ -714,6 +720,152 @@
                                 <th>Island</th>
                                 <th>EA Name</th>
                                 <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== HOUSEHOLD LISTING ===== -->
+        <section class="tab-content" id="tab-listing">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-list-total">--</div>
+                    <div class="kpi-label">Total Households</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-list-completed">--</div>
+                    <div class="kpi-label">Listing Completed</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-list-pending">--</div>
+                    <div class="kpi-label">Listing Pending</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-list-photos">--</div>
+                    <div class="kpi-label">Photos Uploaded</div>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Listing Progress by Team</h3>
+                    <canvas id="chart-list-team"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Listing Completion Rate</h3>
+                    <canvas id="chart-list-pie"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Listing Progress by Province</h3>
+                    <canvas id="chart-list-province"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Photos per Household</h3>
+                    <canvas id="chart-list-photos"></canvas>
+                </div>
+            </div>
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>Team Listing Progress</h3>
+                <div id="progress-listing-teams"></div>
+            </div>
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>Household Listing Detail</h3>
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-listing">
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Province</th>
+                                <th>EA</th>
+                                <th>Interview Key</th>
+                                <th>Pages</th>
+                                <th>Photos</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== MARKET SURVEY ===== -->
+        <section class="tab-content" id="tab-market">
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-mkt-total">--</div>
+                    <div class="kpi-label">Total Households</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-mkt-completed">--</div>
+                    <div class="kpi-label">Market Survey Done</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-mkt-pending">--</div>
+                    <div class="kpi-label">Market Pending</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-mkt-outlets">--</div>
+                    <div class="kpi-label">Outlets Surveyed</div>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Market Survey Progress by Team</h3>
+                    <canvas id="chart-mkt-team"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Market Survey Completion</h3>
+                    <canvas id="chart-mkt-pie"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Product Availability Across Outlets</h3>
+                    <canvas id="chart-mkt-products"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Market Survey by Province</h3>
+                    <canvas id="chart-mkt-province"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Average Items per Category per Outlet</h3>
+                    <canvas id="chart-mkt-items"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Outlets per Household</h3>
+                    <canvas id="chart-mkt-outlets-dist"></canvas>
+                </div>
+            </div>
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>Team Market Survey Progress</h3>
+                <div id="progress-market-teams"></div>
+            </div>
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>Outlet Detail</h3>
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-market">
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Province</th>
+                                <th>Outlet Name</th>
+                                <th>Bread</th>
+                                <th>Meat</th>
+                                <th>Fish</th>
+                                <th>Dairy</th>
+                                <th>Fruit</th>
+                                <th>Nuts</th>
+                                <th>Veges</th>
+                                <th>Crops</th>
+                                <th>Spice</th>
+                                <th>Takeaway</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
