@@ -294,6 +294,113 @@ $summary = [PSCustomObject]@{
 }
 $summary | ConvertTo-Json -Depth 4 | Out-File (Join-Path $OutDir "summary.json") -Encoding UTF8
 
+# --- 8. Household Listing (listing_roster.tab) ---
+Write-Host "Processing household listing..."
+$listingData = Read-TabFile (Join-Path $SourceDir "listing_roster.tab")
+
+# Count pages and photos per household from listing roster
+$listingByHH = @{}
+foreach ($row in $listingData) {
+    $key = $row.interview__key
+    if (!$listingByHH.ContainsKey($key)) {
+        $listingByHH[$key] = @{ pages = 0; photos = 0 }
+    }
+    $listingByHH[$key].pages++
+    if ($row.hh_listing_photo1 -and $row.hh_listing_photo1 -ne "") {
+        $listingByHH[$key].photos++
+    }
+}
+
+# Build listing record for every household
+$listing = $households | ForEach-Object {
+    $key = $_.interview_key
+    $pages = if ($listingByHH.ContainsKey($key)) { $listingByHH[$key].pages } else { 0 }
+    $photos = if ($listingByHH.ContainsKey($key)) { $listingByHH[$key].photos } else { 0 }
+    [PSCustomObject]@{
+        interview_key  = $key
+        province       = $_.province_name
+        ea             = $_.ea
+        team_id        = $_.team_id
+        listing_pages  = $pages
+        listing_photos = $photos
+        has_listing    = if ($pages -gt 0) { 1 } else { 0 }
+    }
+}
+$listing | ConvertTo-Json -Depth 3 | Out-File (Join-Path $OutDir "listing.json") -Encoding UTF8
+$listWithData = ($listing | Where-Object { $_.has_listing -eq 1 }).Count
+Write-Host "  -> $($listing.Count) records ($listWithData with listing data)"
+
+# --- 9. Market Survey (marketlist_roster.tab) ---
+Write-Host "Processing market survey..."
+$marketData = Read-TabFile (Join-Path $SourceDir "marketlist_roster.tab")
+
+$categories = @("bread", "meat", "fish", "dairy", "fruit", "nuts", "veges", "crop", "spice", "takeaway")
+$headers = if (Test-Path (Join-Path $SourceDir "marketlist_roster.tab")) {
+    (Get-Content (Join-Path $SourceDir "marketlist_roster.tab") -TotalCount 1) -split "`t"
+} else { @() }
+
+# Build outlet records
+$outlets = @()
+foreach ($row in $marketData) {
+    $key = $row.interview__key
+    $hh = $households | Where-Object { $_.interview_key -eq $key } | Select-Object -First 1
+    $products = @{}
+    foreach ($cat in $categories) {
+        $prodCol = "${cat}_prod"
+        $avail = if ($row.$prodCol -eq "1") { 1 } else { 0 }
+        # Count type columns for this category
+        $typeCount = ($headers | Where-Object { $_ -match "^${cat}_type__" }).Count
+        $itemCount = 0
+        if ($avail -eq 1) {
+            foreach ($h in $headers) {
+                if ($h -match "^${cat}_type__" -and $row.$h -eq "1") {
+                    $itemCount++
+                }
+            }
+        }
+        $products[$cat] = [PSCustomObject]@{ available = $avail; items = $itemCount }
+    }
+    $outlets += [PSCustomObject]@{
+        interview_key = $key
+        outlet_id     = $row.marketlist_roster__id
+        outlet_name   = $row.outlet_list
+        products      = $products
+        province      = if ($hh) { $hh.province_name } else { "" }
+        ea            = if ($hh) { $hh.ea } else { "" }
+        team_id       = if ($hh) { $hh.team_id } else { "" }
+    }
+}
+
+# Build HH progress for market
+$marketByHH = @{}
+foreach ($o in $outlets) {
+    $key = $o.interview_key
+    if (!$marketByHH.ContainsKey($key)) { $marketByHH[$key] = 0 }
+    $marketByHH[$key]++
+}
+
+$hhProgress = $households | ForEach-Object {
+    $key = $_.interview_key
+    $count = if ($marketByHH.ContainsKey($key)) { $marketByHH[$key] } else { 0 }
+    [PSCustomObject]@{
+        interview_key = $key
+        province      = $_.province_name
+        ea            = $_.ea
+        team_id       = $_.team_id
+        has_market    = if ($count -gt 0) { 1 } else { 0 }
+        outlet_count  = $count
+    }
+}
+
+$marketJson = [PSCustomObject]@{
+    outlets     = $outlets
+    hh_progress = $hhProgress
+    categories  = $categories
+}
+$marketJson | ConvertTo-Json -Depth 5 | Out-File (Join-Path $OutDir "market.json") -Encoding UTF8
+$mktWithData = ($hhProgress | Where-Object { $_.has_market -eq 1 }).Count
+Write-Host "  -> $($outlets.Count) outlets from $mktWithData households"
+
 Write-Host "`nDone! JSON files written to: $OutDir"
 Write-Host "Files created:"
 Get-ChildItem $OutDir -Filter "*.json" | ForEach-Object { Write-Host "  $($_.Name) ($([math]::Round($_.Length/1024, 1)) KB)" }
