@@ -25,29 +25,29 @@
         "amount":  400
     },
     {
-        "interview_key":  "63-15-92-19",
-        "item_id":  "561169003",
-        "amount":  150
-    },
-    {
-        "interview_key":  "63-15-92-19",
+        "interview_key":  "06-26-75-81",
         "item_id":  "561172026",
-        "amount":  50
+        "amount":  20
     },
     {
-        "interview_key":  "63-15-92-19",
+        "interview_key":  "06-26-75-81",
+        "item_id":  "1213276001",
+        "amount":  300
+    },
+    {
+        "interview_key":  "06-26-75-81",
         "item_id":  "1213276004",
         "amount":  100
     },
     {
-        "interview_key":  "63-15-92-19",
-        "item_id":  "1213278004",
-        "amount":  500
+        "interview_key":  "06-26-75-81",
+        "item_id":  "1213277010",
+        "amount":  600
     },
     {
-        "interview_key":  "63-15-92-19",
+        "interview_key":  "06-26-75-81",
         "item_id":  "1213278005",
-        "amount":  300
+        "amount":  1000
     },
     {
         "interview_key":  "91-42-28-25",
@@ -95,6 +95,16 @@
         "amount":  100
     },
     {
+        "interview_key":  "92-82-62-50",
+        "item_id":  "561169005",
+        "amount":  180
+    },
+    {
+        "interview_key":  "92-82-62-50",
+        "item_id":  "1213278005",
+        "amount":  200
+    },
+    {
         "interview_key":  "94-73-99-06",
         "item_id":  "561169003",
         "amount":  150
@@ -115,29 +125,59 @@
         "amount":  300
     },
     {
-        "interview_key":  "06-26-75-81",
+        "interview_key":  "71-30-93-92",
+        "item_id":  "561169003",
+        "amount":  500
+    },
+    {
+        "interview_key":  "71-30-93-92",
         "item_id":  "561172026",
-        "amount":  20
+        "amount":  60
     },
     {
-        "interview_key":  "06-26-75-81",
-        "item_id":  "1213276001",
-        "amount":  300
+        "interview_key":  "71-30-93-92",
+        "item_id":  "1213276003",
+        "amount":  250
     },
     {
-        "interview_key":  "06-26-75-81",
+        "interview_key":  "71-30-93-92",
         "item_id":  "1213276004",
         "amount":  100
     },
     {
-        "interview_key":  "06-26-75-81",
-        "item_id":  "1213277010",
-        "amount":  600
+        "interview_key":  "71-30-93-92",
+        "item_id":  "1213278005",
+        "amount":  200
     },
     {
-        "interview_key":  "06-26-75-81",
+        "interview_key":  "88-46-76-60",
+        "item_id":  "561172026",
+        "amount":  40
+    },
+    {
+        "interview_key":  "88-46-76-60",
+        "item_id":  "1213276001",
+        "amount":  250
+    },
+    {
+        "interview_key":  "88-46-76-60",
+        "item_id":  "1213276004",
+        "amount":  80
+    },
+    {
+        "interview_key":  "88-46-76-60",
+        "item_id":  "1213277010",
+        "amount":  300
+    },
+    {
+        "interview_key":  "88-46-76-60",
+        "item_id":  "1213277011",
+        "amount":  200
+    },
+    {
+        "interview_key":  "88-46-76-60",
         "item_id":  "1213278005",
-        "amount":  1000
+        "amount":  160
     },
     {
         "interview_key":  "84-82-01-34",
@@ -150,18 +190,228 @@
         "amount":  60
     },
     {
+        "interview_key":  "61-81-47-23",
+        "item_id":  "561169003",
+        "amount":  150
+    },
+    {
+        "interview_key":  "61-81-47-23",
+        "item_id":  "561169007",
+        "amount":  100
+    },
+    {
+        "interview_key":  "61-81-47-23",
+        "item_id":  "561172026",
+        "amount":  50
+    },
+    {
+        "interview_key":  "61-81-47-23",
+        "item_id":  "1213276002",
+        "amount":  100
+    },
+    {
+        "interview_key":  "61-81-47-23",
+        "item_id":  "1213276004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "61-81-47-23",
+        "item_id":  "1213278004",
+        "amount":  500
+    },
+    {
+        "interview_key":  "61-81-47-23",
+        "item_id":  "1213278005",
+        "amount":  500
+    },
+    {
+        "interview_key":  "99-82-87-99",
+        "item_id":  "561169003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "99-82-87-99",
+        "item_id":  "561169007",
+        "amount":  150
+    },
+    {
+        "interview_key":  "99-82-87-99",
+        "item_id":  "561172026",
+        "amount":  10
+    },
+    {
+        "interview_key":  "57-72-24-94",
+        "item_id":  "561169003",
+        "amount":  250
+    },
+    {
+        "interview_key":  "57-72-24-94",
+        "item_id":  "561169007",
+        "amount":  160
+    },
+    {
+        "interview_key":  "57-72-24-94",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "57-72-24-94",
+        "item_id":  "1213276004",
+        "amount":  60
+    },
+    {
+        "interview_key":  "52-71-60-97",
+        "item_id":  "561169005",
+        "amount":  140
+    },
+    {
+        "interview_key":  "52-71-60-97",
+        "item_id":  "1213276003",
+        "amount":  100
+    },
+    {
+        "interview_key":  "97-22-58-47",
+        "item_id":  "561169003",
+        "amount":  300
+    },
+    {
+        "interview_key":  "97-22-58-47",
+        "item_id":  "561169005",
+        "amount":  100
+    },
+    {
+        "interview_key":  "97-22-58-47",
+        "item_id":  "561169007",
+        "amount":  140
+    },
+    {
+        "interview_key":  "97-22-58-47",
+        "item_id":  "561170001",
+        "amount":  100
+    },
+    {
+        "interview_key":  "97-22-58-47",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "97-22-58-47",
+        "item_id":  "1213276003",
+        "amount":  130
+    },
+    {
+        "interview_key":  "97-22-58-47",
+        "item_id":  "1213276004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "97-22-58-47",
+        "item_id":  "1213277001",
+        "amount":  150
+    },
+    {
+        "interview_key":  "97-22-58-47",
+        "item_id":  "1213277010",
+        "amount":  450
+    },
+    {
+        "interview_key":  "97-22-58-47",
+        "item_id":  "1213277011",
+        "amount":  220
+    },
+    {
+        "interview_key":  "97-22-58-47",
+        "item_id":  "1213278004",
+        "amount":  240
+    },
+    {
+        "interview_key":  "97-22-58-47",
+        "item_id":  "1213278005",
+        "amount":  250
+    },
+    {
+        "interview_key":  "63-15-92-19",
+        "item_id":  "561169003",
+        "amount":  150
+    },
+    {
+        "interview_key":  "63-15-92-19",
+        "item_id":  "561172026",
+        "amount":  50
+    },
+    {
+        "interview_key":  "63-15-92-19",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "63-15-92-19",
+        "item_id":  "1213278004",
+        "amount":  500
+    },
+    {
+        "interview_key":  "63-15-92-19",
+        "item_id":  "1213278005",
+        "amount":  300
+    },
+    {
+        "interview_key":  "73-88-34-84",
+        "item_id":  "561169003",
+        "amount":  1000
+    },
+    {
         "interview_key":  "50-00-85-05",
         "item_id":  "1213278005",
         "amount":  500
     },
     {
-        "interview_key":  "92-82-62-50",
-        "item_id":  "561169005",
-        "amount":  180
+        "interview_key":  "06-11-13-03",
+        "item_id":  "561169003",
+        "amount":  100
     },
     {
-        "interview_key":  "92-82-62-50",
-        "item_id":  "1213278005",
+        "interview_key":  "06-11-13-03",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "06-11-13-03",
+        "item_id":  "1213276004",
+        "amount":  50
+    },
+    {
+        "interview_key":  "90-25-03-92",
+        "item_id":  "561169003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "90-25-03-92",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "90-25-03-92",
+        "item_id":  "1213276002",
+        "amount":  20
+    },
+    {
+        "interview_key":  "90-25-03-92",
+        "item_id":  "1213276003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "90-25-03-92",
+        "item_id":  "1213276004",
+        "amount":  60
+    },
+    {
+        "interview_key":  "90-25-03-92",
+        "item_id":  "1213277011",
+        "amount":  250
+    },
+    {
+        "interview_key":  "90-25-03-92",
+        "item_id":  "1213278004",
         "amount":  200
     },
     {
@@ -213,11 +463,6 @@
         "interview_key":  "70-23-85-74",
         "item_id":  "1213278005",
         "amount":  800
-    },
-    {
-        "interview_key":  "73-88-34-84",
-        "item_id":  "561169003",
-        "amount":  1000
     },
     {
         "interview_key":  "36-06-67-22",
@@ -305,6 +550,126 @@
         "amount":  500
     },
     {
+        "interview_key":  "82-04-37-47",
+        "item_id":  "561172026",
+        "amount":  50
+    },
+    {
+        "interview_key":  "82-04-37-47",
+        "item_id":  "1213276002",
+        "amount":  100
+    },
+    {
+        "interview_key":  "82-04-37-47",
+        "item_id":  "1213276004",
+        "amount":  250
+    },
+    {
+        "interview_key":  "82-04-37-47",
+        "item_id":  "1213278004",
+        "amount":  1000
+    },
+    {
+        "interview_key":  "82-04-37-47",
+        "item_id":  "1213278005",
+        "amount":  300
+    },
+    {
+        "interview_key":  "88-06-15-24",
+        "item_id":  "561169003",
+        "amount":  250
+    },
+    {
+        "interview_key":  "75-87-32-33",
+        "item_id":  "561169003",
+        "amount":  470
+    },
+    {
+        "interview_key":  "75-87-32-33",
+        "item_id":  "561169007",
+        "amount":  90
+    },
+    {
+        "interview_key":  "75-87-32-33",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "75-87-32-33",
+        "item_id":  "1213276004",
+        "amount":  120
+    },
+    {
+        "interview_key":  "75-87-32-33",
+        "item_id":  "1213278001",
+        "amount":  700
+    },
+    {
+        "interview_key":  "75-87-32-33",
+        "item_id":  "1213278004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "75-87-32-33",
+        "item_id":  "1213278005",
+        "amount":  100
+    },
+    {
+        "interview_key":  "08-07-35-57",
+        "item_id":  "561172026",
+        "amount":  60
+    },
+    {
+        "interview_key":  "08-07-35-57",
+        "item_id":  "1213278005",
+        "amount":  200
+    },
+    {
+        "interview_key":  "75-41-50-97",
+        "item_id":  "561169001",
+        "amount":  300
+    },
+    {
+        "interview_key":  "75-41-50-97",
+        "item_id":  "561169003",
+        "amount":  380
+    },
+    {
+        "interview_key":  "75-41-50-97",
+        "item_id":  "561169005",
+        "amount":  300
+    },
+    {
+        "interview_key":  "75-41-50-97",
+        "item_id":  "561169007",
+        "amount":  250
+    },
+    {
+        "interview_key":  "75-41-50-97",
+        "item_id":  "1213276003",
+        "amount":  500
+    },
+    {
+        "interview_key":  "75-41-50-97",
+        "item_id":  "1213277010",
+        "amount":  250
+    },
+    {
+        "interview_key":  "75-41-50-97",
+        "item_id":  "1213278001",
+        "amount":  2580
+    },
+    {
+        "interview_key":  "75-41-50-97",
+        "item_id":  "1213278004",
+        "amount":  400
+    },
+    {
+        "interview_key":  "75-41-50-97",
+        "item_id":  "1213278005",
+        "amount":  550
+    },
+    {
         "interview_key":  "99-54-95-97",
         "item_id":  "561169003",
         "amount":  1
@@ -328,51 +693,6 @@
         "interview_key":  "99-54-95-97",
         "item_id":  "1213278005",
         "amount":  4
-    },
-    {
-        "interview_key":  "08-07-35-57",
-        "item_id":  "561172026",
-        "amount":  60
-    },
-    {
-        "interview_key":  "08-07-35-57",
-        "item_id":  "1213278005",
-        "amount":  200
-    },
-    {
-        "interview_key":  "64-31-14-38",
-        "item_id":  "561169003",
-        "amount":  250
-    },
-    {
-        "interview_key":  "64-31-14-38",
-        "item_id":  "561169005",
-        "amount":  100
-    },
-    {
-        "interview_key":  "64-31-14-38",
-        "item_id":  "561169007",
-        "amount":  80
-    },
-    {
-        "interview_key":  "64-31-14-38",
-        "item_id":  "561172026",
-        "amount":  100
-    },
-    {
-        "interview_key":  "64-31-14-38",
-        "item_id":  "1213276003",
-        "amount":  100
-    },
-    {
-        "interview_key":  "64-31-14-38",
-        "item_id":  "1213277010",
-        "amount":  350
-    },
-    {
-        "interview_key":  "64-31-14-38",
-        "item_id":  "1213278001",
-        "amount":  350
     },
     {
         "interview_key":  "57-19-05-78",
@@ -403,6 +723,76 @@
         "interview_key":  "57-19-05-78",
         "item_id":  "1213278005",
         "amount":  100
+    },
+    {
+        "interview_key":  "43-29-27-75",
+        "item_id":  "561169003",
+        "amount":  450
+    },
+    {
+        "interview_key":  "43-29-27-75",
+        "item_id":  "561169007",
+        "amount":  300
+    },
+    {
+        "interview_key":  "43-29-27-75",
+        "item_id":  "1213276003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "43-29-27-75",
+        "item_id":  "1213277010",
+        "amount":  500
+    },
+    {
+        "interview_key":  "43-29-27-75",
+        "item_id":  "1213277011",
+        "amount":  250
+    },
+    {
+        "interview_key":  "43-29-27-75",
+        "item_id":  "1213278001",
+        "amount":  1500
+    },
+    {
+        "interview_key":  "43-29-27-75",
+        "item_id":  "1213278004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "43-29-27-75",
+        "item_id":  "1213278005",
+        "amount":  500
+    },
+    {
+        "interview_key":  "94-26-46-53",
+        "item_id":  "561169003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "94-26-46-53",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "94-26-46-53",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "04-33-50-06",
+        "item_id":  "561169003",
+        "amount":  70
+    },
+    {
+        "interview_key":  "04-33-50-06",
+        "item_id":  "561169007",
+        "amount":  250
+    },
+    {
+        "interview_key":  "04-33-50-06",
+        "item_id":  "1213276003",
+        "amount":  200
     },
     {
         "interview_key":  "40-09-01-38",
@@ -448,21 +838,6 @@
         "interview_key":  "40-09-01-38",
         "item_id":  "1213278005",
         "amount":  60
-    },
-    {
-        "interview_key":  "04-33-50-06",
-        "item_id":  "561169003",
-        "amount":  70
-    },
-    {
-        "interview_key":  "04-33-50-06",
-        "item_id":  "561169007",
-        "amount":  250
-    },
-    {
-        "interview_key":  "04-33-50-06",
-        "item_id":  "1213276003",
-        "amount":  200
     },
     {
         "interview_key":  "47-50-34-99",
@@ -520,6 +895,41 @@
         "amount":  200
     },
     {
+        "interview_key":  "63-37-16-15",
+        "item_id":  "561169007",
+        "amount":  150
+    },
+    {
+        "interview_key":  "63-37-16-15",
+        "item_id":  "1213276001",
+        "amount":  350
+    },
+    {
+        "interview_key":  "63-37-16-15",
+        "item_id":  "1213276004",
+        "amount":  60
+    },
+    {
+        "interview_key":  "63-37-16-15",
+        "item_id":  "1213278005",
+        "amount":  1000
+    },
+    {
+        "interview_key":  "13-27-78-05",
+        "item_id":  "561169003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "13-27-78-05",
+        "item_id":  "561172026",
+        "amount":  100
+    },
+    {
+        "interview_key":  "13-27-78-05",
+        "item_id":  "1213278005",
+        "amount":  500
+    },
+    {
         "interview_key":  "41-11-08-79",
         "item_id":  "561169003",
         "amount":  300
@@ -533,6 +943,91 @@
         "interview_key":  "41-11-08-79",
         "item_id":  "561172026",
         "amount":  20
+    },
+    {
+        "interview_key":  "69-76-83-14",
+        "item_id":  "561169003",
+        "amount":  100
+    },
+    {
+        "interview_key":  "69-76-83-14",
+        "item_id":  "561169007",
+        "amount":  280
+    },
+    {
+        "interview_key":  "69-76-83-14",
+        "item_id":  "561172026",
+        "amount":  30
+    },
+    {
+        "interview_key":  "69-76-83-14",
+        "item_id":  "1213277011",
+        "amount":  280
+    },
+    {
+        "interview_key":  "06-45-67-80",
+        "item_id":  "561169003",
+        "amount":  280
+    },
+    {
+        "interview_key":  "06-45-67-80",
+        "item_id":  "561169007",
+        "amount":  150
+    },
+    {
+        "interview_key":  "06-45-67-80",
+        "item_id":  "561172026",
+        "amount":  100
+    },
+    {
+        "interview_key":  "06-45-67-80",
+        "item_id":  "1213276003",
+        "amount":  220
+    },
+    {
+        "interview_key":  "06-45-67-80",
+        "item_id":  "1213276004",
+        "amount":  120
+    },
+    {
+        "interview_key":  "06-45-67-80",
+        "item_id":  "1213277011",
+        "amount":  220
+    },
+    {
+        "interview_key":  "64-31-14-38",
+        "item_id":  "561169003",
+        "amount":  250
+    },
+    {
+        "interview_key":  "64-31-14-38",
+        "item_id":  "561169005",
+        "amount":  100
+    },
+    {
+        "interview_key":  "64-31-14-38",
+        "item_id":  "561169007",
+        "amount":  80
+    },
+    {
+        "interview_key":  "64-31-14-38",
+        "item_id":  "561172026",
+        "amount":  100
+    },
+    {
+        "interview_key":  "64-31-14-38",
+        "item_id":  "1213276003",
+        "amount":  100
+    },
+    {
+        "interview_key":  "64-31-14-38",
+        "item_id":  "1213277010",
+        "amount":  350
+    },
+    {
+        "interview_key":  "64-31-14-38",
+        "item_id":  "1213278001",
+        "amount":  350
     },
     {
         "interview_key":  "34-05-69-24",
@@ -560,66 +1055,6 @@
         "amount":  140
     },
     {
-        "interview_key":  "06-25-70-76",
-        "item_id":  "1213278001",
-        "amount":  350
-    },
-    {
-        "interview_key":  "13-27-78-05",
-        "item_id":  "561169003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "13-27-78-05",
-        "item_id":  "561172026",
-        "amount":  100
-    },
-    {
-        "interview_key":  "13-27-78-05",
-        "item_id":  "1213278005",
-        "amount":  500
-    },
-    {
-        "interview_key":  "43-29-27-75",
-        "item_id":  "561169003",
-        "amount":  450
-    },
-    {
-        "interview_key":  "43-29-27-75",
-        "item_id":  "561169007",
-        "amount":  300
-    },
-    {
-        "interview_key":  "43-29-27-75",
-        "item_id":  "1213276003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "43-29-27-75",
-        "item_id":  "1213277010",
-        "amount":  500
-    },
-    {
-        "interview_key":  "43-29-27-75",
-        "item_id":  "1213277011",
-        "amount":  250
-    },
-    {
-        "interview_key":  "43-29-27-75",
-        "item_id":  "1213278001",
-        "amount":  1500
-    },
-    {
-        "interview_key":  "43-29-27-75",
-        "item_id":  "1213278004",
-        "amount":  200
-    },
-    {
-        "interview_key":  "43-29-27-75",
-        "item_id":  "1213278005",
-        "amount":  500
-    },
-    {
         "interview_key":  "59-33-54-20",
         "item_id":  "561169003",
         "amount":  200
@@ -640,99 +1075,264 @@
         "amount":  400
     },
     {
-        "interview_key":  "63-37-16-15",
-        "item_id":  "561169007",
-        "amount":  150
-    },
-    {
-        "interview_key":  "63-37-16-15",
-        "item_id":  "1213276001",
-        "amount":  350
-    },
-    {
-        "interview_key":  "63-37-16-15",
-        "item_id":  "1213276004",
-        "amount":  60
-    },
-    {
-        "interview_key":  "63-37-16-15",
-        "item_id":  "1213278005",
-        "amount":  1000
-    },
-    {
-        "interview_key":  "69-76-83-14",
-        "item_id":  "561169003",
-        "amount":  100
-    },
-    {
-        "interview_key":  "69-76-83-14",
-        "item_id":  "561169007",
-        "amount":  280
-    },
-    {
-        "interview_key":  "69-76-83-14",
-        "item_id":  "561172026",
-        "amount":  30
-    },
-    {
-        "interview_key":  "69-76-83-14",
-        "item_id":  "1213277011",
-        "amount":  280
-    },
-    {
-        "interview_key":  "88-06-15-24",
+        "interview_key":  "42-40-43-96",
         "item_id":  "561169003",
         "amount":  250
     },
     {
-        "interview_key":  "94-26-46-53",
-        "item_id":  "561169003",
-        "amount":  200
+        "interview_key":  "42-40-43-96",
+        "item_id":  "561169007",
+        "amount":  250
     },
     {
-        "interview_key":  "94-26-46-53",
+        "interview_key":  "42-40-43-96",
         "item_id":  "561172026",
         "amount":  20
     },
     {
-        "interview_key":  "94-26-46-53",
+        "interview_key":  "42-40-43-96",
         "item_id":  "1213276004",
         "amount":  100
     },
     {
-        "interview_key":  "75-87-32-33",
-        "item_id":  "561169003",
-        "amount":  470
+        "interview_key":  "42-40-43-96",
+        "item_id":  "1213277010",
+        "amount":  200
     },
     {
-        "interview_key":  "75-87-32-33",
-        "item_id":  "561169007",
-        "amount":  90
+        "interview_key":  "42-40-43-96",
+        "item_id":  "1213277011",
+        "amount":  250
     },
     {
-        "interview_key":  "75-87-32-33",
+        "interview_key":  "42-40-43-96",
+        "item_id":  "1213278004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "42-40-43-96",
+        "item_id":  "1213278005",
+        "amount":  100
+    },
+    {
+        "interview_key":  "28-62-53-68",
         "item_id":  "561172026",
         "amount":  20
     },
     {
-        "interview_key":  "75-87-32-33",
+        "interview_key":  "47-48-86-01",
+        "item_id":  "540157005",
+        "amount":  180
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "561169001",
+        "amount":  210
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "561169003",
+        "amount":  300
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "561169005",
+        "amount":  100
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "561169007",
+        "amount":  180
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "561170001",
+        "amount":  100
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "561170009",
+        "amount":  220
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "1213276001",
+        "amount":  200
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "1213276003",
+        "amount":  150
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "1213276004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "1213277001",
+        "amount":  150
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "1213277010",
+        "amount":  280
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "1213277011",
+        "amount":  220
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "1213278001",
+        "amount":  1500
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "1213278004",
+        "amount":  120
+    },
+    {
+        "interview_key":  "47-48-86-01",
+        "item_id":  "1213278005",
+        "amount":  300
+    },
+    {
+        "interview_key":  "06-25-70-76",
+        "item_id":  "1213278001",
+        "amount":  350
+    },
+    {
+        "interview_key":  "09-64-31-44",
+        "item_id":  "561169003",
+        "amount":  60
+    },
+    {
+        "interview_key":  "09-64-31-44",
+        "item_id":  "1213276004",
+        "amount":  60
+    },
+    {
+        "interview_key":  "40-86-40-92",
+        "item_id":  "561169003",
+        "amount":  300
+    },
+    {
+        "interview_key":  "40-86-40-92",
+        "item_id":  "561169007",
+        "amount":  180
+    },
+    {
+        "interview_key":  "40-86-40-92",
+        "item_id":  "561172026",
+        "amount":  50
+    },
+    {
+        "interview_key":  "40-86-40-92",
+        "item_id":  "1213276001",
+        "amount":  180
+    },
+    {
+        "interview_key":  "40-86-40-92",
+        "item_id":  "1213276003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "40-86-40-92",
         "item_id":  "1213276004",
         "amount":  120
     },
     {
-        "interview_key":  "75-87-32-33",
-        "item_id":  "1213278001",
-        "amount":  700
+        "interview_key":  "40-86-40-92",
+        "item_id":  "1213277010",
+        "amount":  500
     },
     {
-        "interview_key":  "75-87-32-33",
-        "item_id":  "1213278004",
-        "amount":  100
+        "interview_key":  "40-86-40-92",
+        "item_id":  "1213277011",
+        "amount":  280
     },
     {
-        "interview_key":  "75-87-32-33",
+        "interview_key":  "40-86-40-92",
         "item_id":  "1213278005",
-        "amount":  100
+        "amount":  200
+    },
+    {
+        "interview_key":  "49-34-70-67",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "49-34-70-67",
+        "item_id":  "1213278005",
+        "amount":  200
+    },
+    {
+        "interview_key":  "96-10-64-63",
+        "item_id":  "561169003",
+        "amount":  450
+    },
+    {
+        "interview_key":  "96-10-64-63",
+        "item_id":  "561172026",
+        "amount":  60
+    },
+    {
+        "interview_key":  "96-10-64-63",
+        "item_id":  "1213276003",
+        "amount":  240
+    },
+    {
+        "interview_key":  "96-10-64-63",
+        "item_id":  "1213276004",
+        "amount":  70
+    },
+    {
+        "interview_key":  "96-10-64-63",
+        "item_id":  "1213277011",
+        "amount":  200
+    },
+    {
+        "interview_key":  "96-10-64-63",
+        "item_id":  "1213278005",
+        "amount":  180
+    },
+    {
+        "interview_key":  "41-20-86-76",
+        "item_id":  "561169002",
+        "amount":  200
+    },
+    {
+        "interview_key":  "41-20-86-76",
+        "item_id":  "561169003",
+        "amount":  60
+    },
+    {
+        "interview_key":  "41-20-86-76",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "41-20-86-76",
+        "item_id":  "1213278001",
+        "amount":  450
+    },
+    {
+        "interview_key":  "41-20-86-76",
+        "item_id":  "1213278004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "24-79-06-78",
+        "item_id":  "561172026",
+        "amount":  20
     },
     {
         "interview_key":  "66-74-37-32",
@@ -760,9 +1360,29 @@
         "amount":  600
     },
     {
-        "interview_key":  "24-79-06-78",
+        "interview_key":  "17-22-77-76",
+        "item_id":  "561169003",
+        "amount":  300
+    },
+    {
+        "interview_key":  "17-22-77-76",
+        "item_id":  "561169007",
+        "amount":  150
+    },
+    {
+        "interview_key":  "17-22-77-76",
         "item_id":  "561172026",
         "amount":  20
+    },
+    {
+        "interview_key":  "17-22-77-76",
+        "item_id":  "1213276004",
+        "amount":  60
+    },
+    {
+        "interview_key":  "17-22-77-76",
+        "item_id":  "1213277011",
+        "amount":  200
     },
     {
         "interview_key":  "50-35-70-27",
@@ -773,256 +1393,6 @@
         "interview_key":  "50-35-70-27",
         "item_id":  "1213276004",
         "amount":  60
-    },
-    {
-        "interview_key":  "75-41-50-97",
-        "item_id":  "561169001",
-        "amount":  300
-    },
-    {
-        "interview_key":  "75-41-50-97",
-        "item_id":  "561169003",
-        "amount":  380
-    },
-    {
-        "interview_key":  "75-41-50-97",
-        "item_id":  "561169005",
-        "amount":  300
-    },
-    {
-        "interview_key":  "75-41-50-97",
-        "item_id":  "561169007",
-        "amount":  250
-    },
-    {
-        "interview_key":  "75-41-50-97",
-        "item_id":  "1213276003",
-        "amount":  500
-    },
-    {
-        "interview_key":  "75-41-50-97",
-        "item_id":  "1213277010",
-        "amount":  250
-    },
-    {
-        "interview_key":  "75-41-50-97",
-        "item_id":  "1213278001",
-        "amount":  2580
-    },
-    {
-        "interview_key":  "75-41-50-97",
-        "item_id":  "1213278004",
-        "amount":  400
-    },
-    {
-        "interview_key":  "75-41-50-97",
-        "item_id":  "1213278005",
-        "amount":  550
-    },
-    {
-        "interview_key":  "02-64-26-76",
-        "item_id":  "561169007",
-        "amount":  240
-    },
-    {
-        "interview_key":  "02-64-26-76",
-        "item_id":  "561170009",
-        "amount":  300
-    },
-    {
-        "interview_key":  "02-64-26-76",
-        "item_id":  "561172026",
-        "amount":  30
-    },
-    {
-        "interview_key":  "02-64-26-76",
-        "item_id":  "1213276001",
-        "amount":  250
-    },
-    {
-        "interview_key":  "02-64-26-76",
-        "item_id":  "1213276003",
-        "amount":  100
-    },
-    {
-        "interview_key":  "02-64-26-76",
-        "item_id":  "1213276004",
-        "amount":  100
-    },
-    {
-        "interview_key":  "02-64-26-76",
-        "item_id":  "1213277010",
-        "amount":  200
-    },
-    {
-        "interview_key":  "02-64-26-76",
-        "item_id":  "1213277011",
-        "amount":  220
-    },
-    {
-        "interview_key":  "02-64-26-76",
-        "item_id":  "1213278005",
-        "amount":  400
-    },
-    {
-        "interview_key":  "02-64-26-76",
-        "item_id":  "1270299010",
-        "amount":  600
-    },
-    {
-        "interview_key":  "17-22-77-76",
-        "item_id":  "561169003",
-        "amount":  300
-    },
-    {
-        "interview_key":  "17-22-77-76",
-        "item_id":  "561169007",
-        "amount":  150
-    },
-    {
-        "interview_key":  "17-22-77-76",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "17-22-77-76",
-        "item_id":  "1213276004",
-        "amount":  60
-    },
-    {
-        "interview_key":  "17-22-77-76",
-        "item_id":  "1213277011",
-        "amount":  200
-    },
-    {
-        "interview_key":  "22-75-48-23",
-        "item_id":  "561169003",
-        "amount":  150
-    },
-    {
-        "interview_key":  "89-91-74-12",
-        "item_id":  "561169003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "89-91-74-12",
-        "item_id":  "561172026",
-        "amount":  30
-    },
-    {
-        "interview_key":  "89-91-74-12",
-        "item_id":  "1213276004",
-        "amount":  200
-    },
-    {
-        "interview_key":  "89-91-74-12",
-        "item_id":  "1213278001",
-        "amount":  450
-    },
-    {
-        "interview_key":  "89-91-74-12",
-        "item_id":  "1213278005",
-        "amount":  60
-    },
-    {
-        "interview_key":  "48-55-39-19",
-        "item_id":  "561169003",
-        "amount":  300
-    },
-    {
-        "interview_key":  "48-55-39-19",
-        "item_id":  "1213276003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "48-55-39-19",
-        "item_id":  "1213276004",
-        "amount":  100
-    },
-    {
-        "interview_key":  "48-55-39-19",
-        "item_id":  "1213277011",
-        "amount":  280
-    },
-    {
-        "interview_key":  "48-55-39-19",
-        "item_id":  "1213278005",
-        "amount":  200
-    },
-    {
-        "interview_key":  "77-88-59-97",
-        "item_id":  "561169003",
-        "amount":  80
-    },
-    {
-        "interview_key":  "77-88-59-97",
-        "item_id":  "561170001",
-        "amount":  100
-    },
-    {
-        "interview_key":  "77-88-59-97",
-        "item_id":  "1213276001",
-        "amount":  100
-    },
-    {
-        "interview_key":  "77-88-59-97",
-        "item_id":  "1213276003",
-        "amount":  100
-    },
-    {
-        "interview_key":  "77-88-59-97",
-        "item_id":  "1213276004",
-        "amount":  50
-    },
-    {
-        "interview_key":  "77-88-59-97",
-        "item_id":  "1213277010",
-        "amount":  150
-    },
-    {
-        "interview_key":  "77-88-59-97",
-        "item_id":  "1213277011",
-        "amount":  70
-    },
-    {
-        "interview_key":  "77-88-59-97",
-        "item_id":  "1213278005",
-        "amount":  50
-    },
-    {
-        "interview_key":  "06-55-14-70",
-        "item_id":  "561169003",
-        "amount":  250
-    },
-    {
-        "interview_key":  "06-55-14-70",
-        "item_id":  "561169007",
-        "amount":  250
-    },
-    {
-        "interview_key":  "06-55-14-70",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "06-55-14-70",
-        "item_id":  "1213276004",
-        "amount":  60
-    },
-    {
-        "interview_key":  "06-55-14-70",
-        "item_id":  "1213277010",
-        "amount":  300
-    },
-    {
-        "interview_key":  "06-55-14-70",
-        "item_id":  "1213277011",
-        "amount":  280
-    },
-    {
-        "interview_key":  "06-55-14-70",
-        "item_id":  "1213278005",
-        "amount":  200
     },
     {
         "interview_key":  "86-21-86-39",
@@ -1090,19 +1460,109 @@
         "amount":  300
     },
     {
-        "interview_key":  "09-05-48-03",
+        "interview_key":  "48-55-39-19",
         "item_id":  "561169003",
-        "amount":  150
+        "amount":  300
     },
     {
-        "interview_key":  "09-05-48-03",
-        "item_id":  "561172026",
+        "interview_key":  "48-55-39-19",
+        "item_id":  "1213276003",
         "amount":  200
     },
     {
-        "interview_key":  "09-05-48-03",
+        "interview_key":  "48-55-39-19",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "48-55-39-19",
+        "item_id":  "1213277011",
+        "amount":  280
+    },
+    {
+        "interview_key":  "48-55-39-19",
         "item_id":  "1213278005",
         "amount":  200
+    },
+    {
+        "interview_key":  "06-55-14-70",
+        "item_id":  "561169003",
+        "amount":  250
+    },
+    {
+        "interview_key":  "06-55-14-70",
+        "item_id":  "561169007",
+        "amount":  250
+    },
+    {
+        "interview_key":  "06-55-14-70",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "06-55-14-70",
+        "item_id":  "1213276004",
+        "amount":  60
+    },
+    {
+        "interview_key":  "06-55-14-70",
+        "item_id":  "1213277010",
+        "amount":  300
+    },
+    {
+        "interview_key":  "06-55-14-70",
+        "item_id":  "1213277011",
+        "amount":  280
+    },
+    {
+        "interview_key":  "06-55-14-70",
+        "item_id":  "1213278005",
+        "amount":  200
+    },
+    {
+        "interview_key":  "31-40-20-96",
+        "item_id":  "561169003",
+        "amount":  180
+    },
+    {
+        "interview_key":  "31-40-20-96",
+        "item_id":  "1213276004",
+        "amount":  50
+    },
+    {
+        "interview_key":  "31-40-20-96",
+        "item_id":  "1213278005",
+        "amount":  70
+    },
+    {
+        "interview_key":  "93-63-08-10",
+        "item_id":  "561169003",
+        "amount":  280
+    },
+    {
+        "interview_key":  "93-63-08-10",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "93-63-08-10",
+        "item_id":  "1213278005",
+        "amount":  350
+    },
+    {
+        "interview_key":  "61-41-55-77",
+        "item_id":  "561169003",
+        "amount":  450
+    },
+    {
+        "interview_key":  "61-41-55-77",
+        "item_id":  "561169007",
+        "amount":  300
+    },
+    {
+        "interview_key":  "22-75-48-23",
+        "item_id":  "561169003",
+        "amount":  150
     },
     {
         "interview_key":  "47-10-05-66",
@@ -1145,21 +1605,6 @@
         "amount":  700
     },
     {
-        "interview_key":  "93-63-08-10",
-        "item_id":  "561169003",
-        "amount":  280
-    },
-    {
-        "interview_key":  "93-63-08-10",
-        "item_id":  "1213276004",
-        "amount":  100
-    },
-    {
-        "interview_key":  "93-63-08-10",
-        "item_id":  "1213278005",
-        "amount":  350
-    },
-    {
         "interview_key":  "08-46-73-10",
         "item_id":  "561172026",
         "amount":  100
@@ -1180,29 +1625,29 @@
         "amount":  140
     },
     {
-        "interview_key":  "14-12-40-88",
+        "interview_key":  "89-91-74-12",
         "item_id":  "561169003",
-        "amount":  120
-    },
-    {
-        "interview_key":  "14-12-40-88",
-        "item_id":  "561172026",
         "amount":  200
     },
     {
-        "interview_key":  "14-12-40-88",
-        "item_id":  "1213276004",
-        "amount":  100
+        "interview_key":  "89-91-74-12",
+        "item_id":  "561172026",
+        "amount":  30
     },
     {
-        "interview_key":  "96-97-49-82",
+        "interview_key":  "89-91-74-12",
         "item_id":  "1213276004",
-        "amount":  50
+        "amount":  200
     },
     {
-        "interview_key":  "96-97-49-82",
+        "interview_key":  "89-91-74-12",
+        "item_id":  "1213278001",
+        "amount":  450
+    },
+    {
+        "interview_key":  "89-91-74-12",
         "item_id":  "1213278005",
-        "amount":  7000
+        "amount":  60
     },
     {
         "interview_key":  "87-87-61-60",
@@ -1250,6 +1695,86 @@
         "amount":  700
     },
     {
+        "interview_key":  "09-05-48-03",
+        "item_id":  "561169003",
+        "amount":  150
+    },
+    {
+        "interview_key":  "09-05-48-03",
+        "item_id":  "561172026",
+        "amount":  200
+    },
+    {
+        "interview_key":  "09-05-48-03",
+        "item_id":  "1213278005",
+        "amount":  200
+    },
+    {
+        "interview_key":  "02-64-26-76",
+        "item_id":  "561169007",
+        "amount":  240
+    },
+    {
+        "interview_key":  "02-64-26-76",
+        "item_id":  "561170009",
+        "amount":  300
+    },
+    {
+        "interview_key":  "02-64-26-76",
+        "item_id":  "561172026",
+        "amount":  30
+    },
+    {
+        "interview_key":  "02-64-26-76",
+        "item_id":  "1213276001",
+        "amount":  250
+    },
+    {
+        "interview_key":  "02-64-26-76",
+        "item_id":  "1213276003",
+        "amount":  100
+    },
+    {
+        "interview_key":  "02-64-26-76",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "02-64-26-76",
+        "item_id":  "1213277010",
+        "amount":  200
+    },
+    {
+        "interview_key":  "02-64-26-76",
+        "item_id":  "1213277011",
+        "amount":  220
+    },
+    {
+        "interview_key":  "02-64-26-76",
+        "item_id":  "1213278005",
+        "amount":  400
+    },
+    {
+        "interview_key":  "02-64-26-76",
+        "item_id":  "1270299010",
+        "amount":  600
+    },
+    {
+        "interview_key":  "14-12-40-88",
+        "item_id":  "561169003",
+        "amount":  120
+    },
+    {
+        "interview_key":  "14-12-40-88",
+        "item_id":  "561172026",
+        "amount":  200
+    },
+    {
+        "interview_key":  "14-12-40-88",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
         "interview_key":  "84-23-71-34",
         "item_id":  "561169003",
         "amount":  700
@@ -1290,27 +1815,77 @@
         "amount":  360
     },
     {
-        "interview_key":  "31-40-20-96",
-        "item_id":  "561169003",
-        "amount":  180
-    },
-    {
-        "interview_key":  "31-40-20-96",
-        "item_id":  "1213276004",
-        "amount":  50
-    },
-    {
-        "interview_key":  "31-40-20-96",
-        "item_id":  "1213278005",
-        "amount":  70
-    },
-    {
         "interview_key":  "53-10-05-46",
         "item_id":  "561172026",
         "amount":  20
     },
     {
         "interview_key":  "53-10-05-46",
+        "item_id":  "1213278005",
+        "amount":  150
+    },
+    {
+        "interview_key":  "96-97-49-82",
+        "item_id":  "1213276004",
+        "amount":  50
+    },
+    {
+        "interview_key":  "96-97-49-82",
+        "item_id":  "1213278005",
+        "amount":  7000
+    },
+    {
+        "interview_key":  "77-88-59-97",
+        "item_id":  "561169003",
+        "amount":  80
+    },
+    {
+        "interview_key":  "77-88-59-97",
+        "item_id":  "561170001",
+        "amount":  100
+    },
+    {
+        "interview_key":  "77-88-59-97",
+        "item_id":  "1213276001",
+        "amount":  100
+    },
+    {
+        "interview_key":  "77-88-59-97",
+        "item_id":  "1213276003",
+        "amount":  100
+    },
+    {
+        "interview_key":  "77-88-59-97",
+        "item_id":  "1213276004",
+        "amount":  50
+    },
+    {
+        "interview_key":  "77-88-59-97",
+        "item_id":  "1213277010",
+        "amount":  150
+    },
+    {
+        "interview_key":  "77-88-59-97",
+        "item_id":  "1213277011",
+        "amount":  70
+    },
+    {
+        "interview_key":  "77-88-59-97",
+        "item_id":  "1213278005",
+        "amount":  50
+    },
+    {
+        "interview_key":  "07-23-75-27",
+        "item_id":  "561169003",
+        "amount":  130
+    },
+    {
+        "interview_key":  "07-23-75-27",
+        "item_id":  "561172026",
+        "amount":  40
+    },
+    {
+        "interview_key":  "07-23-75-27",
         "item_id":  "1213278005",
         "amount":  150
     },
@@ -1380,14 +1955,14 @@
         "amount":  550
     },
     {
-        "interview_key":  "61-41-55-77",
+        "interview_key":  "02-12-85-71",
         "item_id":  "561169003",
-        "amount":  450
+        "amount":  300
     },
     {
-        "interview_key":  "61-41-55-77",
-        "item_id":  "561169007",
-        "amount":  300
+        "interview_key":  "02-12-85-71",
+        "item_id":  "561172026",
+        "amount":  100
     },
     {
         "interview_key":  "73-27-76-79",
@@ -1413,6 +1988,21 @@
         "interview_key":  "73-27-76-79",
         "item_id":  "1213278005",
         "amount":  200
+    },
+    {
+        "interview_key":  "17-34-66-39",
+        "item_id":  "561169003",
+        "amount":  280
+    },
+    {
+        "interview_key":  "17-34-66-39",
+        "item_id":  "1213276003",
+        "amount":  400
+    },
+    {
+        "interview_key":  "17-34-66-39",
+        "item_id":  "1213278005",
+        "amount":  300
     },
     {
         "interview_key":  "92-81-21-58",
@@ -1475,88 +2065,93 @@
         "amount":  300
     },
     {
-        "interview_key":  "02-58-49-36",
+        "interview_key":  "72-39-10-07",
         "item_id":  "561169003",
-        "amount":  200
+        "amount":  120
     },
     {
-        "interview_key":  "02-58-49-36",
+        "interview_key":  "72-39-10-07",
         "item_id":  "561172026",
-        "amount":  10
+        "amount":  40
     },
     {
-        "interview_key":  "02-58-49-36",
-        "item_id":  "1213276001",
-        "amount":  230
-    },
-    {
-        "interview_key":  "02-58-49-36",
+        "interview_key":  "72-39-10-07",
         "item_id":  "1213276004",
+        "amount":  50
+    },
+    {
+        "interview_key":  "72-39-10-07",
+        "item_id":  "1213278005",
+        "amount":  160
+    },
+    {
+        "interview_key":  "46-51-34-60",
+        "item_id":  "561169003",
+        "amount":  180
+    },
+    {
+        "interview_key":  "46-51-34-60",
+        "item_id":  "561170001",
         "amount":  100
     },
     {
-        "interview_key":  "02-58-49-36",
-        "item_id":  "1213277010",
+        "interview_key":  "46-51-34-60",
+        "item_id":  "561172026",
+        "amount":  50
+    },
+    {
+        "interview_key":  "46-51-34-60",
+        "item_id":  "1213276002",
+        "amount":  100
+    },
+    {
+        "interview_key":  "46-51-34-60",
+        "item_id":  "1213276003",
+        "amount":  720
+    },
+    {
+        "interview_key":  "46-51-34-60",
+        "item_id":  "1213276004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "46-51-34-60",
+        "item_id":  "1213277011",
+        "amount":  240
+    },
+    {
+        "interview_key":  "46-51-34-60",
+        "item_id":  "1213278005",
+        "amount":  480
+    },
+    {
+        "interview_key":  "61-62-04-77",
+        "item_id":  "561169003",
         "amount":  450
     },
     {
-        "interview_key":  "02-58-49-36",
-        "item_id":  "1213277011",
-        "amount":  250
-    },
-    {
-        "interview_key":  "03-51-01-07",
+        "interview_key":  "61-62-04-77",
         "item_id":  "561169007",
-        "amount":  250
-    },
-    {
-        "interview_key":  "03-51-01-07",
-        "item_id":  "561170001",
         "amount":  300
     },
     {
-        "interview_key":  "03-51-01-07",
+        "interview_key":  "08-53-42-97",
+        "item_id":  "561169003",
+        "amount":  500
+    },
+    {
+        "interview_key":  "08-53-42-97",
         "item_id":  "561172026",
-        "amount":  10
+        "amount":  100
     },
     {
-        "interview_key":  "03-51-01-07",
-        "item_id":  "1213276001",
-        "amount":  250
-    },
-    {
-        "interview_key":  "03-51-01-07",
+        "interview_key":  "08-53-42-97",
         "item_id":  "1213276004",
         "amount":  200
     },
     {
-        "interview_key":  "03-51-01-07",
+        "interview_key":  "08-53-42-97",
         "item_id":  "1213277011",
-        "amount":  270
-    },
-    {
-        "interview_key":  "03-51-01-07",
-        "item_id":  "1213278005",
-        "amount":  300
-    },
-    {
-        "interview_key":  "73-40-61-10",
-        "item_id":  "561169007",
-        "amount":  250
-    },
-    {
-        "interview_key":  "73-40-61-10",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "73-40-61-10",
-        "item_id":  "1213276004",
-        "amount":  200
-    },
-    {
-        "interview_key":  "73-40-61-10",
-        "item_id":  "1213278005",
         "amount":  200
     },
     {
@@ -1603,196 +2198,6 @@
         "interview_key":  "11-54-73-19",
         "item_id":  "1213278005",
         "amount":  150
-    },
-    {
-        "interview_key":  "71-22-62-90",
-        "item_id":  "561169003",
-        "amount":  1000
-    },
-    {
-        "interview_key":  "71-22-62-90",
-        "item_id":  "1213276004",
-        "amount":  200
-    },
-    {
-        "interview_key":  "71-22-62-90",
-        "item_id":  "1213277011",
-        "amount":  450
-    },
-    {
-        "interview_key":  "71-22-62-90",
-        "item_id":  "1213278001",
-        "amount":  450
-    },
-    {
-        "interview_key":  "71-22-62-90",
-        "item_id":  "1213278005",
-        "amount":  1000
-    },
-    {
-        "interview_key":  "08-53-42-97",
-        "item_id":  "561169003",
-        "amount":  500
-    },
-    {
-        "interview_key":  "08-53-42-97",
-        "item_id":  "561172026",
-        "amount":  100
-    },
-    {
-        "interview_key":  "08-53-42-97",
-        "item_id":  "1213276004",
-        "amount":  200
-    },
-    {
-        "interview_key":  "08-53-42-97",
-        "item_id":  "1213277011",
-        "amount":  200
-    },
-    {
-        "interview_key":  "07-23-75-27",
-        "item_id":  "561169003",
-        "amount":  130
-    },
-    {
-        "interview_key":  "07-23-75-27",
-        "item_id":  "561172026",
-        "amount":  40
-    },
-    {
-        "interview_key":  "07-23-75-27",
-        "item_id":  "1213278005",
-        "amount":  150
-    },
-    {
-        "interview_key":  "61-62-04-77",
-        "item_id":  "561169003",
-        "amount":  450
-    },
-    {
-        "interview_key":  "61-62-04-77",
-        "item_id":  "561169007",
-        "amount":  300
-    },
-    {
-        "interview_key":  "17-34-66-39",
-        "item_id":  "561169003",
-        "amount":  280
-    },
-    {
-        "interview_key":  "17-34-66-39",
-        "item_id":  "1213276003",
-        "amount":  400
-    },
-    {
-        "interview_key":  "17-34-66-39",
-        "item_id":  "1213278005",
-        "amount":  300
-    },
-    {
-        "interview_key":  "51-11-35-55",
-        "item_id":  "561169003",
-        "amount":  280
-    },
-    {
-        "interview_key":  "51-11-35-55",
-        "item_id":  "561169007",
-        "amount":  180
-    },
-    {
-        "interview_key":  "51-11-35-55",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "51-11-35-55",
-        "item_id":  "1213276003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "51-11-35-55",
-        "item_id":  "1213276004",
-        "amount":  80
-    },
-    {
-        "interview_key":  "51-11-35-55",
-        "item_id":  "1213278005",
-        "amount":  100
-    },
-    {
-        "interview_key":  "46-51-34-60",
-        "item_id":  "561169003",
-        "amount":  180
-    },
-    {
-        "interview_key":  "46-51-34-60",
-        "item_id":  "561170001",
-        "amount":  100
-    },
-    {
-        "interview_key":  "46-51-34-60",
-        "item_id":  "561172026",
-        "amount":  50
-    },
-    {
-        "interview_key":  "46-51-34-60",
-        "item_id":  "1213276002",
-        "amount":  100
-    },
-    {
-        "interview_key":  "46-51-34-60",
-        "item_id":  "1213276003",
-        "amount":  720
-    },
-    {
-        "interview_key":  "46-51-34-60",
-        "item_id":  "1213276004",
-        "amount":  200
-    },
-    {
-        "interview_key":  "46-51-34-60",
-        "item_id":  "1213277011",
-        "amount":  240
-    },
-    {
-        "interview_key":  "46-51-34-60",
-        "item_id":  "1213278005",
-        "amount":  480
-    },
-    {
-        "interview_key":  "94-85-13-77",
-        "item_id":  "1213276004",
-        "amount":  500
-    },
-    {
-        "interview_key":  "94-85-13-77",
-        "item_id":  "1213277010",
-        "amount":  1000
-    },
-    {
-        "interview_key":  "94-85-13-77",
-        "item_id":  "1213277011",
-        "amount":  600
-    },
-    {
-        "interview_key":  "72-39-10-07",
-        "item_id":  "561169003",
-        "amount":  120
-    },
-    {
-        "interview_key":  "72-39-10-07",
-        "item_id":  "561172026",
-        "amount":  40
-    },
-    {
-        "interview_key":  "72-39-10-07",
-        "item_id":  "1213276004",
-        "amount":  50
-    },
-    {
-        "interview_key":  "72-39-10-07",
-        "item_id":  "1213278005",
-        "amount":  160
     },
     {
         "interview_key":  "54-34-45-21",
@@ -1905,24 +2310,179 @@
         "amount":  500
     },
     {
-        "interview_key":  "02-12-85-71",
-        "item_id":  "561169003",
-        "amount":  300
+        "interview_key":  "73-40-61-10",
+        "item_id":  "561169007",
+        "amount":  250
     },
     {
-        "interview_key":  "02-12-85-71",
+        "interview_key":  "73-40-61-10",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "73-40-61-10",
+        "item_id":  "1213276004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "73-40-61-10",
+        "item_id":  "1213278005",
+        "amount":  200
+    },
+    {
+        "interview_key":  "77-42-07-84",
+        "item_id":  "561169003",
+        "amount":  130
+    },
+    {
+        "interview_key":  "77-42-07-84",
+        "item_id":  "561169007",
+        "amount":  100
+    },
+    {
+        "interview_key":  "77-42-07-84",
+        "item_id":  "561170009",
+        "amount":  480
+    },
+    {
+        "interview_key":  "77-42-07-84",
         "item_id":  "561172026",
         "amount":  100
     },
     {
-        "interview_key":  "82-55-74-56",
-        "item_id":  "1213276004",
-        "amount":  60
+        "interview_key":  "77-42-07-84",
+        "item_id":  "1213276003",
+        "amount":  120
     },
     {
-        "interview_key":  "82-55-74-56",
+        "interview_key":  "77-42-07-84",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "77-42-07-84",
+        "item_id":  "1213277010",
+        "amount":  180
+    },
+    {
+        "interview_key":  "77-42-07-84",
+        "item_id":  "1213277011",
+        "amount":  200
+    },
+    {
+        "interview_key":  "77-42-07-84",
         "item_id":  "1213278005",
-        "amount":  210
+        "amount":  490
+    },
+    {
+        "interview_key":  "03-51-01-07",
+        "item_id":  "561169007",
+        "amount":  250
+    },
+    {
+        "interview_key":  "03-51-01-07",
+        "item_id":  "561170001",
+        "amount":  300
+    },
+    {
+        "interview_key":  "03-51-01-07",
+        "item_id":  "561172026",
+        "amount":  10
+    },
+    {
+        "interview_key":  "03-51-01-07",
+        "item_id":  "1213276001",
+        "amount":  250
+    },
+    {
+        "interview_key":  "03-51-01-07",
+        "item_id":  "1213276004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "03-51-01-07",
+        "item_id":  "1213277011",
+        "amount":  270
+    },
+    {
+        "interview_key":  "03-51-01-07",
+        "item_id":  "1213278005",
+        "amount":  300
+    },
+    {
+        "interview_key":  "22-11-78-50",
+        "item_id":  "1213278001",
+        "amount":  700
+    },
+    {
+        "interview_key":  "19-51-08-31",
+        "item_id":  "1213276004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "19-51-08-31",
+        "item_id":  "1213278005",
+        "amount":  1000
+    },
+    {
+        "interview_key":  "02-58-49-36",
+        "item_id":  "561169003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "02-58-49-36",
+        "item_id":  "561172026",
+        "amount":  10
+    },
+    {
+        "interview_key":  "02-58-49-36",
+        "item_id":  "1213276001",
+        "amount":  230
+    },
+    {
+        "interview_key":  "02-58-49-36",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "02-58-49-36",
+        "item_id":  "1213277010",
+        "amount":  450
+    },
+    {
+        "interview_key":  "02-58-49-36",
+        "item_id":  "1213277011",
+        "amount":  250
+    },
+    {
+        "interview_key":  "51-11-35-55",
+        "item_id":  "561169003",
+        "amount":  280
+    },
+    {
+        "interview_key":  "51-11-35-55",
+        "item_id":  "561169007",
+        "amount":  180
+    },
+    {
+        "interview_key":  "51-11-35-55",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "51-11-35-55",
+        "item_id":  "1213276003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "51-11-35-55",
+        "item_id":  "1213276004",
+        "amount":  80
+    },
+    {
+        "interview_key":  "51-11-35-55",
+        "item_id":  "1213278005",
+        "amount":  100
     },
     {
         "interview_key":  "62-93-43-55",
@@ -1945,181 +2505,6 @@
         "amount":  250
     },
     {
-        "interview_key":  "64-85-19-17",
-        "item_id":  "561169003",
-        "amount":  250
-    },
-    {
-        "interview_key":  "64-85-19-17",
-        "item_id":  "561169007",
-        "amount":  190
-    },
-    {
-        "interview_key":  "64-85-19-17",
-        "item_id":  "561172026",
-        "amount":  40
-    },
-    {
-        "interview_key":  "64-85-19-17",
-        "item_id":  "1213276001",
-        "amount":  460
-    },
-    {
-        "interview_key":  "64-85-19-17",
-        "item_id":  "1213276003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "64-85-19-17",
-        "item_id":  "1213276004",
-        "amount":  60
-    },
-    {
-        "interview_key":  "64-85-19-17",
-        "item_id":  "1213277010",
-        "amount":  250
-    },
-    {
-        "interview_key":  "64-85-19-17",
-        "item_id":  "1213277011",
-        "amount":  480
-    },
-    {
-        "interview_key":  "64-85-19-17",
-        "item_id":  "1213278005",
-        "amount":  300
-    },
-    {
-        "interview_key":  "97-75-89-83",
-        "item_id":  "561172026",
-        "amount":  100
-    },
-    {
-        "interview_key":  "97-75-89-83",
-        "item_id":  "1213276002",
-        "amount":  100
-    },
-    {
-        "interview_key":  "97-75-89-83",
-        "item_id":  "1213276003",
-        "amount":  250
-    },
-    {
-        "interview_key":  "97-75-89-83",
-        "item_id":  "1213276004",
-        "amount":  120
-    },
-    {
-        "interview_key":  "97-75-89-83",
-        "item_id":  "1213277001",
-        "amount":  200
-    },
-    {
-        "interview_key":  "97-75-89-83",
-        "item_id":  "1213277010",
-        "amount":  1000
-    },
-    {
-        "interview_key":  "97-75-89-83",
-        "item_id":  "1213277011",
-        "amount":  150
-    },
-    {
-        "interview_key":  "99-93-03-35",
-        "item_id":  "561169003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "99-93-03-35",
-        "item_id":  "561169007",
-        "amount":  200
-    },
-    {
-        "interview_key":  "99-93-03-35",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "99-93-03-35",
-        "item_id":  "1213276001",
-        "amount":  350
-    },
-    {
-        "interview_key":  "99-93-03-35",
-        "item_id":  "1213276003",
-        "amount":  100
-    },
-    {
-        "interview_key":  "99-93-03-35",
-        "item_id":  "1213276004",
-        "amount":  60
-    },
-    {
-        "interview_key":  "99-93-03-35",
-        "item_id":  "1213277010",
-        "amount":  350
-    },
-    {
-        "interview_key":  "99-93-03-35",
-        "item_id":  "1213278001",
-        "amount":  1100
-    },
-    {
-        "interview_key":  "99-93-03-35",
-        "item_id":  "1213278004",
-        "amount":  200
-    },
-    {
-        "interview_key":  "99-93-03-35",
-        "item_id":  "1213278005",
-        "amount":  70
-    },
-    {
-        "interview_key":  "38-40-24-40",
-        "item_id":  "561169003",
-        "amount":  150
-    },
-    {
-        "interview_key":  "38-40-24-40",
-        "item_id":  "561169007",
-        "amount":  160
-    },
-    {
-        "interview_key":  "38-40-24-40",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "38-40-24-40",
-        "item_id":  "1213276001",
-        "amount":  210
-    },
-    {
-        "interview_key":  "38-40-24-40",
-        "item_id":  "1213276003",
-        "amount":  180
-    },
-    {
-        "interview_key":  "38-40-24-40",
-        "item_id":  "1213276004",
-        "amount":  80
-    },
-    {
-        "interview_key":  "38-40-24-40",
-        "item_id":  "1213277011",
-        "amount":  100
-    },
-    {
-        "interview_key":  "38-40-24-40",
-        "item_id":  "1213278005",
-        "amount":  200
-    },
-    {
-        "interview_key":  "38-40-24-40",
-        "item_id":  "1270299010",
-        "amount":  200
-    },
-    {
         "interview_key":  "68-44-70-23",
         "item_id":  "561169003",
         "amount":  320
@@ -2130,12 +2515,27 @@
         "amount":  150
     },
     {
-        "interview_key":  "19-51-08-31",
+        "interview_key":  "82-55-74-56",
         "item_id":  "1213276004",
-        "amount":  200
+        "amount":  60
     },
     {
-        "interview_key":  "19-51-08-31",
+        "interview_key":  "82-55-74-56",
+        "item_id":  "1213278005",
+        "amount":  210
+    },
+    {
+        "interview_key":  "73-65-86-60",
+        "item_id":  "561169003",
+        "amount":  250
+    },
+    {
+        "interview_key":  "73-65-86-60",
+        "item_id":  "1213278001",
+        "amount":  400
+    },
+    {
+        "interview_key":  "73-65-86-60",
         "item_id":  "1213278005",
         "amount":  1000
     },
@@ -2200,9 +2600,164 @@
         "amount":  500
     },
     {
-        "interview_key":  "22-11-78-50",
+        "interview_key":  "99-93-03-35",
+        "item_id":  "561169003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "99-93-03-35",
+        "item_id":  "561169007",
+        "amount":  200
+    },
+    {
+        "interview_key":  "99-93-03-35",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "99-93-03-35",
+        "item_id":  "1213276001",
+        "amount":  350
+    },
+    {
+        "interview_key":  "99-93-03-35",
+        "item_id":  "1213276003",
+        "amount":  100
+    },
+    {
+        "interview_key":  "99-93-03-35",
+        "item_id":  "1213276004",
+        "amount":  60
+    },
+    {
+        "interview_key":  "99-93-03-35",
+        "item_id":  "1213277010",
+        "amount":  350
+    },
+    {
+        "interview_key":  "99-93-03-35",
         "item_id":  "1213278001",
-        "amount":  700
+        "amount":  1100
+    },
+    {
+        "interview_key":  "99-93-03-35",
+        "item_id":  "1213278004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "99-93-03-35",
+        "item_id":  "1213278005",
+        "amount":  70
+    },
+    {
+        "interview_key":  "09-12-08-64",
+        "item_id":  "561169003",
+        "amount":  300
+    },
+    {
+        "interview_key":  "09-12-08-64",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "09-12-08-64",
+        "item_id":  "1213276001",
+        "amount":  400
+    },
+    {
+        "interview_key":  "09-12-08-64",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "97-75-89-83",
+        "item_id":  "561172026",
+        "amount":  100
+    },
+    {
+        "interview_key":  "97-75-89-83",
+        "item_id":  "1213276002",
+        "amount":  100
+    },
+    {
+        "interview_key":  "97-75-89-83",
+        "item_id":  "1213276003",
+        "amount":  250
+    },
+    {
+        "interview_key":  "97-75-89-83",
+        "item_id":  "1213276004",
+        "amount":  120
+    },
+    {
+        "interview_key":  "97-75-89-83",
+        "item_id":  "1213277001",
+        "amount":  200
+    },
+    {
+        "interview_key":  "97-75-89-83",
+        "item_id":  "1213277010",
+        "amount":  1000
+    },
+    {
+        "interview_key":  "97-75-89-83",
+        "item_id":  "1213277011",
+        "amount":  150
+    },
+    {
+        "interview_key":  "27-17-64-23",
+        "item_id":  "561169003",
+        "amount":  500
+    },
+    {
+        "interview_key":  "27-17-64-23",
+        "item_id":  "561169007",
+        "amount":  150
+    },
+    {
+        "interview_key":  "27-17-64-23",
+        "item_id":  "561170001",
+        "amount":  150
+    },
+    {
+        "interview_key":  "27-17-64-23",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "27-17-64-23",
+        "item_id":  "1213276001",
+        "amount":  200
+    },
+    {
+        "interview_key":  "27-17-64-23",
+        "item_id":  "1213276003",
+        "amount":  250
+    },
+    {
+        "interview_key":  "27-17-64-23",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "27-17-64-23",
+        "item_id":  "1213277010",
+        "amount":  300
+    },
+    {
+        "interview_key":  "27-17-64-23",
+        "item_id":  "1213277011",
+        "amount":  200
+    },
+    {
+        "interview_key":  "27-17-64-23",
+        "item_id":  "1213278001",
+        "amount":  1000
+    },
+    {
+        "interview_key":  "27-17-64-23",
+        "item_id":  "1213278005",
+        "amount":  1000
     },
     {
         "interview_key":  "27-34-49-38",
@@ -2238,6 +2793,71 @@
         "interview_key":  "27-34-49-38",
         "item_id":  "1213278005",
         "amount":  500
+    },
+    {
+        "interview_key":  "94-85-13-77",
+        "item_id":  "1213276004",
+        "amount":  500
+    },
+    {
+        "interview_key":  "94-85-13-77",
+        "item_id":  "1213277010",
+        "amount":  1000
+    },
+    {
+        "interview_key":  "94-85-13-77",
+        "item_id":  "1213277011",
+        "amount":  600
+    },
+    {
+        "interview_key":  "71-22-62-90",
+        "item_id":  "561169003",
+        "amount":  1000
+    },
+    {
+        "interview_key":  "71-22-62-90",
+        "item_id":  "1213276004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "71-22-62-90",
+        "item_id":  "1213277011",
+        "amount":  450
+    },
+    {
+        "interview_key":  "71-22-62-90",
+        "item_id":  "1213278001",
+        "amount":  450
+    },
+    {
+        "interview_key":  "71-22-62-90",
+        "item_id":  "1213278005",
+        "amount":  1000
+    },
+    {
+        "interview_key":  "77-17-79-82",
+        "item_id":  "561169003",
+        "amount":  250
+    },
+    {
+        "interview_key":  "77-17-79-82",
+        "item_id":  "1213278005",
+        "amount":  70
+    },
+    {
+        "interview_key":  "46-10-54-31",
+        "item_id":  "561169003",
+        "amount":  150
+    },
+    {
+        "interview_key":  "46-10-54-31",
+        "item_id":  "561172026",
+        "amount":  40
+    },
+    {
+        "interview_key":  "46-10-54-31",
+        "item_id":  "1213278005",
+        "amount":  100
     },
     {
         "interview_key":  "18-47-68-10",
@@ -2285,104 +2905,179 @@
         "amount":  300
     },
     {
-        "interview_key":  "62-35-96-73",
-        "item_id":  "561169003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "62-35-96-73",
-        "item_id":  "1213278005",
-        "amount":  300
-    },
-    {
-        "interview_key":  "73-65-86-60",
+        "interview_key":  "64-85-19-17",
         "item_id":  "561169003",
         "amount":  250
     },
     {
-        "interview_key":  "73-65-86-60",
-        "item_id":  "1213278001",
-        "amount":  400
-    },
-    {
-        "interview_key":  "73-65-86-60",
-        "item_id":  "1213278005",
-        "amount":  1000
-    },
-    {
-        "interview_key":  "77-42-07-84",
-        "item_id":  "561169003",
-        "amount":  130
-    },
-    {
-        "interview_key":  "77-42-07-84",
+        "interview_key":  "64-85-19-17",
         "item_id":  "561169007",
-        "amount":  100
+        "amount":  190
     },
     {
-        "interview_key":  "77-42-07-84",
-        "item_id":  "561170009",
+        "interview_key":  "64-85-19-17",
+        "item_id":  "561172026",
+        "amount":  40
+    },
+    {
+        "interview_key":  "64-85-19-17",
+        "item_id":  "1213276001",
+        "amount":  460
+    },
+    {
+        "interview_key":  "64-85-19-17",
+        "item_id":  "1213276003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "64-85-19-17",
+        "item_id":  "1213276004",
+        "amount":  60
+    },
+    {
+        "interview_key":  "64-85-19-17",
+        "item_id":  "1213277010",
+        "amount":  250
+    },
+    {
+        "interview_key":  "64-85-19-17",
+        "item_id":  "1213277011",
         "amount":  480
     },
     {
-        "interview_key":  "77-42-07-84",
-        "item_id":  "561172026",
-        "amount":  100
+        "interview_key":  "64-85-19-17",
+        "item_id":  "1213278005",
+        "amount":  300
     },
     {
-        "interview_key":  "77-42-07-84",
+        "interview_key":  "60-17-98-71",
+        "item_id":  "561169003",
+        "amount":  350
+    },
+    {
+        "interview_key":  "60-17-98-71",
+        "item_id":  "561169005",
+        "amount":  200
+    },
+    {
+        "interview_key":  "60-17-98-71",
+        "item_id":  "561169007",
+        "amount":  250
+    },
+    {
+        "interview_key":  "60-17-98-71",
+        "item_id":  "561172026",
+        "amount":  10
+    },
+    {
+        "interview_key":  "60-17-98-71",
+        "item_id":  "1213276001",
+        "amount":  150
+    },
+    {
+        "interview_key":  "60-17-98-71",
         "item_id":  "1213276003",
         "amount":  120
     },
     {
-        "interview_key":  "77-42-07-84",
+        "interview_key":  "60-17-98-71",
         "item_id":  "1213276004",
-        "amount":  100
+        "amount":  50
     },
     {
-        "interview_key":  "77-42-07-84",
+        "interview_key":  "60-17-98-71",
         "item_id":  "1213277010",
-        "amount":  180
-    },
-    {
-        "interview_key":  "77-42-07-84",
-        "item_id":  "1213277011",
         "amount":  200
     },
     {
-        "interview_key":  "77-42-07-84",
-        "item_id":  "1213278005",
-        "amount":  490
-    },
-    {
-        "interview_key":  "77-17-79-82",
-        "item_id":  "561169003",
-        "amount":  250
-    },
-    {
-        "interview_key":  "77-17-79-82",
-        "item_id":  "1213278005",
-        "amount":  70
-    },
-    {
-        "interview_key":  "09-12-08-64",
-        "item_id":  "561169003",
+        "interview_key":  "60-17-98-71",
+        "item_id":  "1213277011",
         "amount":  300
     },
     {
-        "interview_key":  "09-12-08-64",
+        "interview_key":  "60-17-98-71",
+        "item_id":  "1213278004",
+        "amount":  150
+    },
+    {
+        "interview_key":  "60-17-98-71",
+        "item_id":  "1213278005",
+        "amount":  100
+    },
+    {
+        "interview_key":  "38-40-24-40",
+        "item_id":  "561169003",
+        "amount":  150
+    },
+    {
+        "interview_key":  "38-40-24-40",
+        "item_id":  "561169007",
+        "amount":  160
+    },
+    {
+        "interview_key":  "38-40-24-40",
         "item_id":  "561172026",
         "amount":  20
     },
     {
-        "interview_key":  "09-12-08-64",
+        "interview_key":  "38-40-24-40",
         "item_id":  "1213276001",
+        "amount":  210
+    },
+    {
+        "interview_key":  "38-40-24-40",
+        "item_id":  "1213276003",
+        "amount":  180
+    },
+    {
+        "interview_key":  "38-40-24-40",
+        "item_id":  "1213276004",
+        "amount":  80
+    },
+    {
+        "interview_key":  "38-40-24-40",
+        "item_id":  "1213277011",
+        "amount":  100
+    },
+    {
+        "interview_key":  "38-40-24-40",
+        "item_id":  "1213278005",
+        "amount":  200
+    },
+    {
+        "interview_key":  "38-40-24-40",
+        "item_id":  "1270299010",
+        "amount":  200
+    },
+    {
+        "interview_key":  "25-09-05-89",
+        "item_id":  "561169003",
+        "amount":  450
+    },
+    {
+        "interview_key":  "25-09-05-89",
+        "item_id":  "1213276003",
+        "amount":  500
+    },
+    {
+        "interview_key":  "25-09-05-89",
+        "item_id":  "1213277010",
+        "amount":  500
+    },
+    {
+        "interview_key":  "25-09-05-89",
+        "item_id":  "1213278005",
         "amount":  400
     },
     {
-        "interview_key":  "09-12-08-64",
-        "item_id":  "1213276004",
-        "amount":  100
+        "interview_key":  "62-35-96-73",
+        "item_id":  "561169003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "62-35-96-73",
+        "item_id":  "1213278005",
+        "amount":  300
     },
     {
         "interview_key":  "63-96-33-38",
@@ -2430,79 +3125,59 @@
         "amount":  420
     },
     {
-        "interview_key":  "27-17-64-23",
+        "interview_key":  "04-54-77-47",
         "item_id":  "561169003",
-        "amount":  500
+        "amount":  250
     },
     {
-        "interview_key":  "27-17-64-23",
-        "item_id":  "561169007",
+        "interview_key":  "04-54-77-47",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "04-54-77-47",
+        "item_id":  "1213277011",
         "amount":  150
     },
     {
-        "interview_key":  "27-17-64-23",
-        "item_id":  "561170001",
+        "interview_key":  "04-54-77-47",
+        "item_id":  "1213278005",
+        "amount":  100
+    },
+    {
+        "interview_key":  "95-37-17-73",
+        "item_id":  "561169003",
         "amount":  150
     },
     {
-        "interview_key":  "27-17-64-23",
+        "interview_key":  "95-37-17-73",
         "item_id":  "561172026",
         "amount":  20
     },
     {
-        "interview_key":  "27-17-64-23",
+        "interview_key":  "95-37-17-73",
         "item_id":  "1213276001",
-        "amount":  200
+        "amount":  120
     },
     {
-        "interview_key":  "27-17-64-23",
-        "item_id":  "1213276003",
-        "amount":  250
-    },
-    {
-        "interview_key":  "27-17-64-23",
+        "interview_key":  "95-37-17-73",
         "item_id":  "1213276004",
         "amount":  100
     },
     {
-        "interview_key":  "27-17-64-23",
-        "item_id":  "1213277010",
-        "amount":  300
-    },
-    {
-        "interview_key":  "27-17-64-23",
+        "interview_key":  "95-37-17-73",
         "item_id":  "1213277011",
-        "amount":  200
+        "amount":  220
     },
     {
-        "interview_key":  "27-17-64-23",
+        "interview_key":  "95-37-17-73",
         "item_id":  "1213278001",
-        "amount":  1000
+        "amount":  500
     },
     {
-        "interview_key":  "27-17-64-23",
+        "interview_key":  "95-37-17-73",
         "item_id":  "1213278005",
-        "amount":  1000
-    },
-    {
-        "interview_key":  "04-54-77-47",
-        "item_id":  "561169003",
-        "amount":  250
-    },
-    {
-        "interview_key":  "04-54-77-47",
-        "item_id":  "1213276004",
-        "amount":  100
-    },
-    {
-        "interview_key":  "04-54-77-47",
-        "item_id":  "1213277011",
-        "amount":  150
-    },
-    {
-        "interview_key":  "04-54-77-47",
-        "item_id":  "1213278005",
-        "amount":  100
+        "amount":  70
     },
     {
         "interview_key":  "14-07-87-98",
@@ -2515,139 +3190,74 @@
         "amount":  160
     },
     {
-        "interview_key":  "47-45-24-82",
+        "interview_key":  "85-02-58-18",
         "item_id":  "561169003",
-        "amount":  450
+        "amount":  150
     },
     {
-        "interview_key":  "47-45-24-82",
+        "interview_key":  "85-02-58-18",
+        "item_id":  "1213278005",
+        "amount":  70
+    },
+    {
+        "interview_key":  "89-75-20-34",
+        "item_id":  "1213278005",
+        "amount":  500
+    },
+    {
+        "interview_key":  "27-21-35-50",
+        "item_id":  "561169003",
+        "amount":  150
+    },
+    {
+        "interview_key":  "27-21-35-50",
         "item_id":  "561169007",
-        "amount":  200
+        "amount":  120
     },
     {
-        "interview_key":  "47-45-24-82",
+        "interview_key":  "27-21-35-50",
         "item_id":  "561170001",
         "amount":  100
     },
     {
-        "interview_key":  "47-45-24-82",
+        "interview_key":  "27-21-35-50",
         "item_id":  "561172026",
-        "amount":  20
+        "amount":  90
     },
     {
-        "interview_key":  "47-45-24-82",
-        "item_id":  "943249001",
-        "amount":  100
-    },
-    {
-        "interview_key":  "47-45-24-82",
-        "item_id":  "1213276002",
-        "amount":  150
-    },
-    {
-        "interview_key":  "47-45-24-82",
-        "item_id":  "1213276003",
-        "amount":  280
-    },
-    {
-        "interview_key":  "47-45-24-82",
+        "interview_key":  "27-21-35-50",
         "item_id":  "1213276004",
-        "amount":  70
-    },
-    {
-        "interview_key":  "47-45-24-82",
-        "item_id":  "1213277010",
         "amount":  300
     },
     {
-        "interview_key":  "47-45-24-82",
-        "item_id":  "1213277011",
-        "amount":  200
-    },
-    {
-        "interview_key":  "47-45-24-82",
+        "interview_key":  "27-21-35-50",
         "item_id":  "1213278005",
-        "amount":  140
+        "amount":  550
     },
     {
-        "interview_key":  "65-87-27-79",
-        "item_id":  "561169003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "65-87-27-79",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "65-87-27-79",
-        "item_id":  "1213277011",
-        "amount":  200
-    },
-    {
-        "interview_key":  "82-04-37-47",
-        "item_id":  "561172026",
-        "amount":  50
-    },
-    {
-        "interview_key":  "82-04-37-47",
-        "item_id":  "1213276002",
-        "amount":  100
-    },
-    {
-        "interview_key":  "82-04-37-47",
-        "item_id":  "1213276004",
-        "amount":  250
-    },
-    {
-        "interview_key":  "82-04-37-47",
-        "item_id":  "1213278004",
-        "amount":  1000
-    },
-    {
-        "interview_key":  "82-04-37-47",
-        "item_id":  "1213278005",
-        "amount":  300
-    },
-    {
-        "interview_key":  "46-10-54-31",
-        "item_id":  "561169003",
-        "amount":  150
-    },
-    {
-        "interview_key":  "46-10-54-31",
+        "interview_key":  "33-34-90-80",
         "item_id":  "561172026",
         "amount":  40
     },
     {
-        "interview_key":  "46-10-54-31",
-        "item_id":  "1213278005",
-        "amount":  100
+        "interview_key":  "33-34-90-80",
+        "item_id":  "1213276003",
+        "amount":  200
     },
     {
-        "interview_key":  "13-33-98-00",
-        "item_id":  "561169003",
-        "amount":  230
-    },
-    {
-        "interview_key":  "13-33-98-00",
-        "item_id":  "561172026",
-        "amount":  10
-    },
-    {
-        "interview_key":  "13-33-98-00",
+        "interview_key":  "33-34-90-80",
         "item_id":  "1213276004",
-        "amount":  50
+        "amount":  300
     },
     {
-        "interview_key":  "13-33-98-00",
+        "interview_key":  "33-34-90-80",
         "item_id":  "1213277011",
-        "amount":  200
+        "amount":  150
     },
     {
-        "interview_key":  "13-33-98-00",
+        "interview_key":  "33-34-90-80",
         "item_id":  "1213278005",
-        "amount":  200
+        "amount":  580
     },
     {
         "interview_key":  "98-30-24-89",
@@ -2685,184 +3295,129 @@
         "amount":  420
     },
     {
-        "interview_key":  "66-89-03-96",
-        "item_id":  "561169003",
-        "amount":  300
+        "interview_key":  "31-99-35-62",
+        "item_id":  "99992",
+        "amount":  700
     },
     {
-        "interview_key":  "66-89-03-96",
-        "item_id":  "561169007",
-        "amount":  200
-    },
-    {
-        "interview_key":  "66-89-03-96",
-        "item_id":  "561172026",
-        "amount":  100
-    },
-    {
-        "interview_key":  "66-89-03-96",
-        "item_id":  "1213276003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "66-89-03-96",
-        "item_id":  "1213277011",
-        "amount":  200
-    },
-    {
-        "interview_key":  "66-89-03-96",
-        "item_id":  "1213278001",
-        "amount":  1000
-    },
-    {
-        "interview_key":  "66-89-03-96",
-        "item_id":  "1213278005",
-        "amount":  500
-    },
-    {
-        "interview_key":  "77-80-73-35",
-        "item_id":  "561169003",
-        "amount":  180
-    },
-    {
-        "interview_key":  "77-80-73-35",
-        "item_id":  "561169007",
-        "amount":  160
-    },
-    {
-        "interview_key":  "77-80-73-35",
+        "interview_key":  "31-99-35-62",
         "item_id":  "561172026",
         "amount":  20
     },
     {
-        "interview_key":  "77-80-73-35",
+        "interview_key":  "31-99-35-62",
         "item_id":  "1213276003",
-        "amount":  120
+        "amount":  350
     },
     {
-        "interview_key":  "77-80-73-35",
+        "interview_key":  "31-99-35-62",
         "item_id":  "1213276004",
-        "amount":  150
-    },
-    {
-        "interview_key":  "77-80-73-35",
-        "item_id":  "1213277010",
-        "amount":  280
-    },
-    {
-        "interview_key":  "77-80-73-35",
-        "item_id":  "1213277011",
-        "amount":  220
-    },
-    {
-        "interview_key":  "77-80-73-35",
-        "item_id":  "1213278005",
         "amount":  250
     },
     {
-        "interview_key":  "42-40-43-96",
+        "interview_key":  "21-06-64-08",
         "item_id":  "561169003",
-        "amount":  250
-    },
-    {
-        "interview_key":  "42-40-43-96",
-        "item_id":  "561169007",
-        "amount":  250
-    },
-    {
-        "interview_key":  "42-40-43-96",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "42-40-43-96",
-        "item_id":  "1213276004",
-        "amount":  100
-    },
-    {
-        "interview_key":  "42-40-43-96",
-        "item_id":  "1213277010",
-        "amount":  200
-    },
-    {
-        "interview_key":  "42-40-43-96",
-        "item_id":  "1213277011",
-        "amount":  250
-    },
-    {
-        "interview_key":  "42-40-43-96",
-        "item_id":  "1213278004",
-        "amount":  200
-    },
-    {
-        "interview_key":  "42-40-43-96",
-        "item_id":  "1213278005",
-        "amount":  100
-    },
-    {
-        "interview_key":  "79-91-74-06",
-        "item_id":  "561169003",
-        "amount":  300
-    },
-    {
-        "interview_key":  "79-91-74-06",
-        "item_id":  "561169007",
-        "amount":  250
-    },
-    {
-        "interview_key":  "79-91-74-06",
-        "item_id":  "561172026",
-        "amount":  30
-    },
-    {
-        "interview_key":  "79-91-74-06",
-        "item_id":  "1213276001",
-        "amount":  250
-    },
-    {
-        "interview_key":  "79-91-74-06",
-        "item_id":  "1213278005",
-        "amount":  200
-    },
-    {
-        "interview_key":  "25-09-05-89",
-        "item_id":  "561169003",
-        "amount":  450
-    },
-    {
-        "interview_key":  "25-09-05-89",
-        "item_id":  "1213276003",
-        "amount":  500
-    },
-    {
-        "interview_key":  "25-09-05-89",
-        "item_id":  "1213277010",
-        "amount":  500
-    },
-    {
-        "interview_key":  "25-09-05-89",
-        "item_id":  "1213278005",
-        "amount":  400
-    },
-    {
-        "interview_key":  "91-31-42-66",
-        "item_id":  "561172026",
-        "amount":  10
-    },
-    {
-        "interview_key":  "91-31-42-66",
-        "item_id":  "1213276001",
-        "amount":  200
-    },
-    {
-        "interview_key":  "91-31-42-66",
-        "item_id":  "1213276003",
         "amount":  140
     },
     {
-        "interview_key":  "91-31-42-66",
+        "interview_key":  "21-06-64-08",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "21-06-64-08",
+        "item_id":  "1213276004",
+        "amount":  70
+    },
+    {
+        "interview_key":  "21-06-64-08",
+        "item_id":  "1213277011",
+        "amount":  250
+    },
+    {
+        "interview_key":  "23-31-03-80",
+        "item_id":  "561169003",
+        "amount":  700
+    },
+    {
+        "interview_key":  "23-31-03-80",
+        "item_id":  "561169007",
+        "amount":  120
+    },
+    {
+        "interview_key":  "23-31-03-80",
+        "item_id":  "561172026",
+        "amount":  50
+    },
+    {
+        "interview_key":  "23-31-03-80",
+        "item_id":  "1213276001",
+        "amount":  250
+    },
+    {
+        "interview_key":  "23-31-03-80",
+        "item_id":  "1213276003",
+        "amount":  500
+    },
+    {
+        "interview_key":  "23-31-03-80",
+        "item_id":  "1213276004",
+        "amount":  1400
+    },
+    {
+        "interview_key":  "23-31-03-80",
+        "item_id":  "1213277001",
+        "amount":  250
+    },
+    {
+        "interview_key":  "23-31-03-80",
+        "item_id":  "1213277011",
+        "amount":  450
+    },
+    {
+        "interview_key":  "23-31-03-80",
+        "item_id":  "1213278004",
+        "amount":  150
+    },
+    {
+        "interview_key":  "23-31-03-80",
         "item_id":  "1213278005",
-        "amount":  400
+        "amount":  450
+    },
+    {
+        "interview_key":  "21-35-10-15",
+        "item_id":  "561169003",
+        "amount":  150
+    },
+    {
+        "interview_key":  "21-35-10-15",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "21-35-10-15",
+        "item_id":  "1213276004",
+        "amount":  50
+    },
+    {
+        "interview_key":  "21-35-10-15",
+        "item_id":  "1213278005",
+        "amount":  120
+    },
+    {
+        "interview_key":  "16-08-61-30",
+        "item_id":  "561172026",
+        "amount":  40
+    },
+    {
+        "interview_key":  "16-08-61-30",
+        "item_id":  "1213277011",
+        "amount":  150
+    },
+    {
+        "interview_key":  "16-08-61-30",
+        "item_id":  "1213278005",
+        "amount":  300
     },
     {
         "interview_key":  "58-60-04-34",
@@ -2920,9 +3475,64 @@
         "amount":  280
     },
     {
-        "interview_key":  "34-67-30-54",
+        "interview_key":  "79-91-74-06",
+        "item_id":  "561169003",
+        "amount":  300
+    },
+    {
+        "interview_key":  "79-91-74-06",
+        "item_id":  "561169007",
+        "amount":  250
+    },
+    {
+        "interview_key":  "79-91-74-06",
         "item_id":  "561172026",
-        "amount":  20
+        "amount":  30
+    },
+    {
+        "interview_key":  "79-91-74-06",
+        "item_id":  "1213276001",
+        "amount":  250
+    },
+    {
+        "interview_key":  "79-91-74-06",
+        "item_id":  "1213278005",
+        "amount":  200
+    },
+    {
+        "interview_key":  "66-89-03-96",
+        "item_id":  "561169003",
+        "amount":  300
+    },
+    {
+        "interview_key":  "66-89-03-96",
+        "item_id":  "561169007",
+        "amount":  200
+    },
+    {
+        "interview_key":  "66-89-03-96",
+        "item_id":  "561172026",
+        "amount":  100
+    },
+    {
+        "interview_key":  "66-89-03-96",
+        "item_id":  "1213276003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "66-89-03-96",
+        "item_id":  "1213277011",
+        "amount":  200
+    },
+    {
+        "interview_key":  "66-89-03-96",
+        "item_id":  "1213278001",
+        "amount":  1000
+    },
+    {
+        "interview_key":  "66-89-03-96",
+        "item_id":  "1213278005",
+        "amount":  500
     },
     {
         "interview_key":  "47-43-98-43",
@@ -2955,604 +3565,259 @@
         "amount":  200
     },
     {
-        "interview_key":  "85-02-58-18",
-        "item_id":  "561169003",
-        "amount":  150
-    },
-    {
-        "interview_key":  "85-02-58-18",
-        "item_id":  "1213278005",
-        "amount":  70
-    },
-    {
-        "interview_key":  "41-20-86-76",
-        "item_id":  "561169002",
-        "amount":  200
-    },
-    {
-        "interview_key":  "41-20-86-76",
-        "item_id":  "561169003",
-        "amount":  60
-    },
-    {
-        "interview_key":  "41-20-86-76",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "41-20-86-76",
-        "item_id":  "1213278001",
-        "amount":  450
-    },
-    {
-        "interview_key":  "41-20-86-76",
-        "item_id":  "1213278004",
-        "amount":  200
-    },
-    {
-        "interview_key":  "31-99-35-62",
-        "item_id":  "99992",
-        "amount":  700
-    },
-    {
-        "interview_key":  "31-99-35-62",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "31-99-35-62",
-        "item_id":  "1213276003",
-        "amount":  350
-    },
-    {
-        "interview_key":  "31-99-35-62",
-        "item_id":  "1213276004",
+        "interview_key":  "77-19-91-37",
+        "item_id":  "561169007",
         "amount":  250
     },
     {
-        "interview_key":  "28-62-53-68",
+        "interview_key":  "77-19-91-37",
         "item_id":  "561172026",
-        "amount":  20
+        "amount":  60
     },
     {
-        "interview_key":  "33-34-90-80",
-        "item_id":  "561172026",
-        "amount":  40
-    },
-    {
-        "interview_key":  "33-34-90-80",
-        "item_id":  "1213276003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "33-34-90-80",
-        "item_id":  "1213276004",
+        "interview_key":  "77-19-91-37",
+        "item_id":  "1213276001",
         "amount":  300
     },
     {
-        "interview_key":  "33-34-90-80",
-        "item_id":  "1213277011",
+        "interview_key":  "77-19-91-37",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "77-19-91-37",
+        "item_id":  "1213277001",
+        "amount":  200
+    },
+    {
+        "interview_key":  "77-19-91-37",
+        "item_id":  "1213277010",
         "amount":  150
     },
     {
-        "interview_key":  "33-34-90-80",
+        "interview_key":  "77-19-91-37",
+        "item_id":  "1213277011",
+        "amount":  350
+    },
+    {
+        "interview_key":  "77-19-91-37",
+        "item_id":  "1213278001",
+        "amount":  500
+    },
+    {
+        "interview_key":  "77-19-91-37",
+        "item_id":  "1213278005",
+        "amount":  210
+    },
+    {
+        "interview_key":  "78-04-06-68",
+        "item_id":  "561169003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "78-04-06-68",
+        "item_id":  "561169007",
+        "amount":  300
+    },
+    {
+        "interview_key":  "78-04-06-68",
+        "item_id":  "561170001",
+        "amount":  120
+    },
+    {
+        "interview_key":  "78-04-06-68",
+        "item_id":  "561172026",
+        "amount":  80
+    },
+    {
+        "interview_key":  "78-04-06-68",
+        "item_id":  "1213276002",
+        "amount":  150
+    },
+    {
+        "interview_key":  "78-04-06-68",
+        "item_id":  "1213276003",
+        "amount":  300
+    },
+    {
+        "interview_key":  "78-04-06-68",
+        "item_id":  "1213276004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "78-04-06-68",
+        "item_id":  "1213277001",
+        "amount":  400
+    },
+    {
+        "interview_key":  "78-04-06-68",
+        "item_id":  "1213277010",
+        "amount":  400
+    },
+    {
+        "interview_key":  "78-04-06-68",
+        "item_id":  "1213277011",
+        "amount":  400
+    },
+    {
+        "interview_key":  "78-04-06-68",
+        "item_id":  "1213278004",
+        "amount":  300
+    },
+    {
+        "interview_key":  "78-04-06-68",
         "item_id":  "1213278005",
         "amount":  580
     },
     {
-        "interview_key":  "21-35-10-15",
+        "interview_key":  "53-09-53-50",
         "item_id":  "561169003",
-        "amount":  150
+        "amount":  200
     },
     {
-        "interview_key":  "21-35-10-15",
-        "item_id":  "561172026",
-        "amount":  20
+        "interview_key":  "53-09-53-50",
+        "item_id":  "561169007",
+        "amount":  180
     },
     {
-        "interview_key":  "21-35-10-15",
-        "item_id":  "1213276004",
-        "amount":  50
-    },
-    {
-        "interview_key":  "21-35-10-15",
+        "interview_key":  "53-09-53-50",
         "item_id":  "1213278005",
-        "amount":  120
-    },
-    {
-        "interview_key":  "21-06-64-08",
-        "item_id":  "561169003",
         "amount":  140
     },
     {
-        "interview_key":  "21-06-64-08",
+        "interview_key":  "77-80-73-35",
+        "item_id":  "561169003",
+        "amount":  180
+    },
+    {
+        "interview_key":  "77-80-73-35",
+        "item_id":  "561169007",
+        "amount":  160
+    },
+    {
+        "interview_key":  "77-80-73-35",
         "item_id":  "561172026",
         "amount":  20
     },
     {
-        "interview_key":  "21-06-64-08",
-        "item_id":  "1213276004",
-        "amount":  70
-    },
-    {
-        "interview_key":  "21-06-64-08",
-        "item_id":  "1213277011",
-        "amount":  250
-    },
-    {
-        "interview_key":  "27-21-35-50",
-        "item_id":  "561169003",
-        "amount":  150
-    },
-    {
-        "interview_key":  "27-21-35-50",
-        "item_id":  "561169007",
+        "interview_key":  "77-80-73-35",
+        "item_id":  "1213276003",
         "amount":  120
     },
     {
-        "interview_key":  "27-21-35-50",
+        "interview_key":  "77-80-73-35",
+        "item_id":  "1213276004",
+        "amount":  150
+    },
+    {
+        "interview_key":  "77-80-73-35",
+        "item_id":  "1213277010",
+        "amount":  280
+    },
+    {
+        "interview_key":  "77-80-73-35",
+        "item_id":  "1213277011",
+        "amount":  220
+    },
+    {
+        "interview_key":  "77-80-73-35",
+        "item_id":  "1213278005",
+        "amount":  250
+    },
+    {
+        "interview_key":  "47-45-24-82",
+        "item_id":  "561169003",
+        "amount":  450
+    },
+    {
+        "interview_key":  "47-45-24-82",
+        "item_id":  "561169007",
+        "amount":  200
+    },
+    {
+        "interview_key":  "47-45-24-82",
         "item_id":  "561170001",
         "amount":  100
     },
     {
-        "interview_key":  "27-21-35-50",
+        "interview_key":  "47-45-24-82",
         "item_id":  "561172026",
-        "amount":  90
+        "amount":  20
     },
     {
-        "interview_key":  "27-21-35-50",
-        "item_id":  "1213276004",
-        "amount":  300
-    },
-    {
-        "interview_key":  "27-21-35-50",
-        "item_id":  "1213278005",
-        "amount":  550
-    },
-    {
-        "interview_key":  "60-17-98-71",
-        "item_id":  "561169003",
-        "amount":  350
-    },
-    {
-        "interview_key":  "60-17-98-71",
-        "item_id":  "561169005",
-        "amount":  200
-    },
-    {
-        "interview_key":  "60-17-98-71",
-        "item_id":  "561169007",
-        "amount":  250
-    },
-    {
-        "interview_key":  "60-17-98-71",
-        "item_id":  "561172026",
-        "amount":  10
-    },
-    {
-        "interview_key":  "60-17-98-71",
-        "item_id":  "1213276001",
-        "amount":  150
-    },
-    {
-        "interview_key":  "60-17-98-71",
-        "item_id":  "1213276003",
-        "amount":  120
-    },
-    {
-        "interview_key":  "60-17-98-71",
-        "item_id":  "1213276004",
-        "amount":  50
-    },
-    {
-        "interview_key":  "60-17-98-71",
-        "item_id":  "1213277010",
-        "amount":  200
-    },
-    {
-        "interview_key":  "60-17-98-71",
-        "item_id":  "1213277011",
-        "amount":  300
-    },
-    {
-        "interview_key":  "60-17-98-71",
-        "item_id":  "1213278004",
-        "amount":  150
-    },
-    {
-        "interview_key":  "60-17-98-71",
-        "item_id":  "1213278005",
+        "interview_key":  "47-45-24-82",
+        "item_id":  "943249001",
         "amount":  100
     },
     {
-        "interview_key":  "15-98-23-49",
-        "item_id":  "561172026",
-        "amount":  40
+        "interview_key":  "47-45-24-82",
+        "item_id":  "1213276002",
+        "amount":  150
     },
     {
-        "interview_key":  "15-98-23-49",
-        "item_id":  "1213276004",
-        "amount":  200
-    },
-    {
-        "interview_key":  "15-98-23-49",
-        "item_id":  "1213278005",
-        "amount":  200
-    },
-    {
-        "interview_key":  "89-75-20-34",
-        "item_id":  "1213278005",
-        "amount":  500
-    },
-    {
-        "interview_key":  "06-58-03-39",
-        "item_id":  "561169003",
-        "amount":  380
-    },
-    {
-        "interview_key":  "06-58-03-39",
-        "item_id":  "561169007",
-        "amount":  180
-    },
-    {
-        "interview_key":  "06-58-03-39",
-        "item_id":  "561172026",
-        "amount":  100
-    },
-    {
-        "interview_key":  "06-58-03-39",
-        "item_id":  "1213276001",
-        "amount":  380
-    },
-    {
-        "interview_key":  "06-58-03-39",
+        "interview_key":  "47-45-24-82",
         "item_id":  "1213276003",
-        "amount":  250
-    },
-    {
-        "interview_key":  "06-58-03-39",
-        "item_id":  "1213276004",
-        "amount":  120
-    },
-    {
-        "interview_key":  "06-58-03-39",
-        "item_id":  "1213277010",
-        "amount":  480
-    },
-    {
-        "interview_key":  "06-58-03-39",
-        "item_id":  "1213277011",
-        "amount":  250
-    },
-    {
-        "interview_key":  "06-58-03-39",
-        "item_id":  "1213278005",
-        "amount":  160
-    },
-    {
-        "interview_key":  "06-45-67-80",
-        "item_id":  "561169003",
         "amount":  280
     },
     {
-        "interview_key":  "06-45-67-80",
-        "item_id":  "561169007",
-        "amount":  150
-    },
-    {
-        "interview_key":  "06-45-67-80",
-        "item_id":  "561172026",
-        "amount":  100
-    },
-    {
-        "interview_key":  "06-45-67-80",
-        "item_id":  "1213276003",
-        "amount":  220
-    },
-    {
-        "interview_key":  "06-45-67-80",
+        "interview_key":  "47-45-24-82",
         "item_id":  "1213276004",
-        "amount":  120
-    },
-    {
-        "interview_key":  "06-45-67-80",
-        "item_id":  "1213277011",
-        "amount":  220
-    },
-    {
-        "interview_key":  "90-25-03-92",
-        "item_id":  "561169003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "90-25-03-92",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "90-25-03-92",
-        "item_id":  "1213276002",
-        "amount":  20
-    },
-    {
-        "interview_key":  "90-25-03-92",
-        "item_id":  "1213276003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "90-25-03-92",
-        "item_id":  "1213276004",
-        "amount":  60
-    },
-    {
-        "interview_key":  "90-25-03-92",
-        "item_id":  "1213277011",
-        "amount":  250
-    },
-    {
-        "interview_key":  "90-25-03-92",
-        "item_id":  "1213278004",
-        "amount":  200
-    },
-    {
-        "interview_key":  "95-37-17-73",
-        "item_id":  "561169003",
-        "amount":  150
-    },
-    {
-        "interview_key":  "95-37-17-73",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "95-37-17-73",
-        "item_id":  "1213276001",
-        "amount":  120
-    },
-    {
-        "interview_key":  "95-37-17-73",
-        "item_id":  "1213276004",
-        "amount":  100
-    },
-    {
-        "interview_key":  "95-37-17-73",
-        "item_id":  "1213277011",
-        "amount":  220
-    },
-    {
-        "interview_key":  "95-37-17-73",
-        "item_id":  "1213278001",
-        "amount":  500
-    },
-    {
-        "interview_key":  "95-37-17-73",
-        "item_id":  "1213278005",
         "amount":  70
     },
     {
-        "interview_key":  "71-35-48-97",
-        "item_id":  "561169003",
-        "amount":  100
+        "interview_key":  "47-45-24-82",
+        "item_id":  "1213277010",
+        "amount":  300
     },
     {
-        "interview_key":  "71-35-48-97",
-        "item_id":  "561169005",
-        "amount":  120
+        "interview_key":  "47-45-24-82",
+        "item_id":  "1213277011",
+        "amount":  200
     },
     {
-        "interview_key":  "71-35-48-97",
-        "item_id":  "561169007",
+        "interview_key":  "47-45-24-82",
+        "item_id":  "1213278005",
         "amount":  140
     },
     {
-        "interview_key":  "71-35-48-97",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "71-35-48-97",
-        "item_id":  "1213276001",
-        "amount":  180
-    },
-    {
-        "interview_key":  "71-35-48-97",
-        "item_id":  "1213276004",
-        "amount":  50
-    },
-    {
-        "interview_key":  "71-35-48-97",
-        "item_id":  "1213277010",
-        "amount":  500
-    },
-    {
-        "interview_key":  "71-35-48-97",
-        "item_id":  "1213277011",
-        "amount":  220
-    },
-    {
-        "interview_key":  "71-35-48-97",
-        "item_id":  "1213278005",
-        "amount":  80
-    },
-    {
-        "interview_key":  "23-31-03-80",
+        "interview_key":  "13-33-98-00",
         "item_id":  "561169003",
-        "amount":  700
+        "amount":  230
     },
     {
-        "interview_key":  "23-31-03-80",
-        "item_id":  "561169007",
-        "amount":  120
-    },
-    {
-        "interview_key":  "23-31-03-80",
-        "item_id":  "561172026",
-        "amount":  50
-    },
-    {
-        "interview_key":  "23-31-03-80",
-        "item_id":  "1213276001",
-        "amount":  250
-    },
-    {
-        "interview_key":  "23-31-03-80",
-        "item_id":  "1213276003",
-        "amount":  500
-    },
-    {
-        "interview_key":  "23-31-03-80",
-        "item_id":  "1213276004",
-        "amount":  1400
-    },
-    {
-        "interview_key":  "23-31-03-80",
-        "item_id":  "1213277001",
-        "amount":  250
-    },
-    {
-        "interview_key":  "23-31-03-80",
-        "item_id":  "1213277011",
-        "amount":  450
-    },
-    {
-        "interview_key":  "23-31-03-80",
-        "item_id":  "1213278004",
-        "amount":  150
-    },
-    {
-        "interview_key":  "23-31-03-80",
-        "item_id":  "1213278005",
-        "amount":  450
-    },
-    {
-        "interview_key":  "43-67-01-34",
+        "interview_key":  "13-33-98-00",
         "item_id":  "561172026",
         "amount":  10
     },
     {
-        "interview_key":  "43-67-01-34",
+        "interview_key":  "13-33-98-00",
         "item_id":  "1213276004",
-        "amount":  150
+        "amount":  50
     },
     {
-        "interview_key":  "43-67-01-34",
+        "interview_key":  "13-33-98-00",
+        "item_id":  "1213277011",
+        "amount":  200
+    },
+    {
+        "interview_key":  "13-33-98-00",
         "item_id":  "1213278005",
         "amount":  200
     },
     {
-        "interview_key":  "91-40-49-83",
-        "item_id":  "561169003",
-        "amount":  380
-    },
-    {
-        "interview_key":  "91-40-49-83",
-        "item_id":  "561169007",
-        "amount":  200
-    },
-    {
-        "interview_key":  "91-40-49-83",
-        "item_id":  "561172026",
-        "amount":  40
-    },
-    {
-        "interview_key":  "91-40-49-83",
-        "item_id":  "1213276001",
-        "amount":  380
-    },
-    {
-        "interview_key":  "91-40-49-83",
-        "item_id":  "1213276002",
-        "amount":  140
-    },
-    {
-        "interview_key":  "91-40-49-83",
-        "item_id":  "1213276004",
-        "amount":  140
-    },
-    {
-        "interview_key":  "91-40-49-83",
-        "item_id":  "1213277001",
-        "amount":  450
-    },
-    {
-        "interview_key":  "91-40-49-83",
-        "item_id":  "1213277010",
-        "amount":  450
-    },
-    {
-        "interview_key":  "91-40-49-83",
-        "item_id":  "1213277011",
-        "amount":  280
-    },
-    {
-        "interview_key":  "91-40-49-83",
-        "item_id":  "1213278001",
-        "amount":  1400
-    },
-    {
-        "interview_key":  "91-40-49-83",
-        "item_id":  "1213278005",
-        "amount":  480
-    },
-    {
-        "interview_key":  "16-08-61-30",
-        "item_id":  "561172026",
-        "amount":  40
-    },
-    {
-        "interview_key":  "16-08-61-30",
-        "item_id":  "1213277011",
-        "amount":  150
-    },
-    {
-        "interview_key":  "16-08-61-30",
-        "item_id":  "1213278005",
-        "amount":  300
-    },
-    {
-        "interview_key":  "19-04-05-78",
+        "interview_key":  "65-87-27-79",
         "item_id":  "561169003",
         "amount":  200
     },
     {
-        "interview_key":  "19-04-05-78",
-        "item_id":  "561169007",
-        "amount":  180
+        "interview_key":  "65-87-27-79",
+        "item_id":  "561172026",
+        "amount":  20
     },
     {
-        "interview_key":  "19-04-05-78",
-        "item_id":  "1213276001",
-        "amount":  150
-    },
-    {
-        "interview_key":  "19-04-05-78",
-        "item_id":  "1213276004",
-        "amount":  80
-    },
-    {
-        "interview_key":  "19-04-05-78",
+        "interview_key":  "65-87-27-79",
         "item_id":  "1213277011",
-        "amount":  250
-    },
-    {
-        "interview_key":  "19-04-05-78",
-        "item_id":  "1213278005",
-        "amount":  160
-    },
-    {
-        "interview_key":  "89-91-66-15",
-        "item_id":  "1213276004",
-        "amount":  1000
-    },
-    {
-        "interview_key":  "89-91-66-15",
-        "item_id":  "1213277011",
-        "amount":  500
-    },
-    {
-        "interview_key":  "89-91-66-15",
-        "item_id":  "1213278001",
-        "amount":  2000
+        "amount":  200
     },
     {
         "interview_key":  "98-72-19-99",
@@ -3588,6 +3853,51 @@
         "interview_key":  "98-72-19-99",
         "item_id":  "1213277010",
         "amount":  500
+    },
+    {
+        "interview_key":  "69-41-74-84",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "43-67-01-34",
+        "item_id":  "561172026",
+        "amount":  10
+    },
+    {
+        "interview_key":  "43-67-01-34",
+        "item_id":  "1213276004",
+        "amount":  150
+    },
+    {
+        "interview_key":  "43-67-01-34",
+        "item_id":  "1213278005",
+        "amount":  200
+    },
+    {
+        "interview_key":  "34-67-30-54",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "91-31-42-66",
+        "item_id":  "561172026",
+        "amount":  10
+    },
+    {
+        "interview_key":  "91-31-42-66",
+        "item_id":  "1213276001",
+        "amount":  200
+    },
+    {
+        "interview_key":  "91-31-42-66",
+        "item_id":  "1213276003",
+        "amount":  140
+    },
+    {
+        "interview_key":  "91-31-42-66",
+        "item_id":  "1213278005",
+        "amount":  400
     },
     {
         "interview_key":  "91-24-90-68",
@@ -3670,124 +3980,24 @@
         "amount":  700
     },
     {
-        "interview_key":  "39-97-44-12",
+        "interview_key":  "62-34-78-83",
         "item_id":  "561169003",
-        "amount":  150
+        "amount":  1000
     },
     {
-        "interview_key":  "39-97-44-12",
-        "item_id":  "561172026",
-        "amount":  90
-    },
-    {
-        "interview_key":  "39-97-44-12",
-        "item_id":  "1213276001",
-        "amount":  240
-    },
-    {
-        "interview_key":  "39-97-44-12",
-        "item_id":  "1213276003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "39-97-44-12",
-        "item_id":  "1213276004",
-        "amount":  200
-    },
-    {
-        "interview_key":  "39-97-44-12",
-        "item_id":  "1213277011",
-        "amount":  250
-    },
-    {
-        "interview_key":  "53-09-53-50",
-        "item_id":  "561169003",
-        "amount":  200
-    },
-    {
-        "interview_key":  "53-09-53-50",
+        "interview_key":  "62-34-78-83",
         "item_id":  "561169007",
-        "amount":  180
-    },
-    {
-        "interview_key":  "53-09-53-50",
-        "item_id":  "1213278005",
-        "amount":  140
-    },
-    {
-        "interview_key":  "77-19-91-37",
-        "item_id":  "561169007",
-        "amount":  250
-    },
-    {
-        "interview_key":  "77-19-91-37",
-        "item_id":  "561172026",
-        "amount":  60
-    },
-    {
-        "interview_key":  "77-19-91-37",
-        "item_id":  "1213276001",
-        "amount":  300
-    },
-    {
-        "interview_key":  "77-19-91-37",
-        "item_id":  "1213276004",
-        "amount":  100
-    },
-    {
-        "interview_key":  "77-19-91-37",
-        "item_id":  "1213277001",
-        "amount":  200
-    },
-    {
-        "interview_key":  "77-19-91-37",
-        "item_id":  "1213277010",
-        "amount":  150
-    },
-    {
-        "interview_key":  "77-19-91-37",
-        "item_id":  "1213277011",
-        "amount":  350
-    },
-    {
-        "interview_key":  "77-19-91-37",
-        "item_id":  "1213278001",
         "amount":  500
     },
     {
-        "interview_key":  "77-19-91-37",
+        "interview_key":  "62-34-78-83",
+        "item_id":  "561172026",
+        "amount":  100
+    },
+    {
+        "interview_key":  "62-34-78-83",
         "item_id":  "1213278005",
-        "amount":  210
-    },
-    {
-        "interview_key":  "64-93-73-39",
-        "item_id":  "561169003",
-        "amount":  1200
-    },
-    {
-        "interview_key":  "64-93-73-39",
-        "item_id":  "561169007",
         "amount":  450
-    },
-    {
-        "interview_key":  "64-93-73-39",
-        "item_id":  "1213276004",
-        "amount":  180
-    },
-    {
-        "interview_key":  "64-93-73-39",
-        "item_id":  "1213278001",
-        "amount":  1500
-    },
-    {
-        "interview_key":  "64-93-73-39",
-        "item_id":  "1213278005",
-        "amount":  1000
-    },
-    {
-        "interview_key":  "64-93-73-39",
-        "item_id":  "1270299010",
-        "amount":  1000
     },
     {
         "interview_key":  "35-44-22-74",
@@ -3855,159 +4065,24 @@
         "amount":  500
     },
     {
-        "interview_key":  "69-41-74-84",
-        "item_id":  "561172026",
-        "amount":  20
-    },
-    {
-        "interview_key":  "78-04-06-68",
+        "interview_key":  "14-38-02-95",
         "item_id":  "561169003",
         "amount":  200
     },
     {
-        "interview_key":  "78-04-06-68",
-        "item_id":  "561169007",
-        "amount":  300
-    },
-    {
-        "interview_key":  "78-04-06-68",
-        "item_id":  "561170001",
-        "amount":  120
-    },
-    {
-        "interview_key":  "78-04-06-68",
+        "interview_key":  "14-38-02-95",
         "item_id":  "561172026",
-        "amount":  80
+        "amount":  10
     },
     {
-        "interview_key":  "78-04-06-68",
-        "item_id":  "1213276002",
-        "amount":  150
-    },
-    {
-        "interview_key":  "78-04-06-68",
+        "interview_key":  "14-38-02-95",
         "item_id":  "1213276003",
-        "amount":  300
-    },
-    {
-        "interview_key":  "78-04-06-68",
-        "item_id":  "1213276004",
         "amount":  200
     },
     {
-        "interview_key":  "78-04-06-68",
-        "item_id":  "1213277001",
-        "amount":  400
-    },
-    {
-        "interview_key":  "78-04-06-68",
-        "item_id":  "1213277010",
-        "amount":  400
-    },
-    {
-        "interview_key":  "78-04-06-68",
-        "item_id":  "1213277011",
-        "amount":  400
-    },
-    {
-        "interview_key":  "78-04-06-68",
-        "item_id":  "1213278004",
-        "amount":  300
-    },
-    {
-        "interview_key":  "78-04-06-68",
-        "item_id":  "1213278005",
-        "amount":  580
-    },
-    {
-        "interview_key":  "72-81-41-81",
-        "item_id":  "561169003",
-        "amount":  160
-    },
-    {
-        "interview_key":  "72-81-41-81",
-        "item_id":  "561169007",
-        "amount":  200
-    },
-    {
-        "interview_key":  "72-81-41-81",
-        "item_id":  "561170001",
-        "amount":  100
-    },
-    {
-        "interview_key":  "72-81-41-81",
-        "item_id":  "561172026",
-        "amount":  10
-    },
-    {
-        "interview_key":  "72-81-41-81",
+        "interview_key":  "14-38-02-95",
         "item_id":  "1213276004",
-        "amount":  100
-    },
-    {
-        "interview_key":  "72-81-41-81",
-        "item_id":  "1213277011",
-        "amount":  250
-    },
-    {
-        "interview_key":  "72-81-41-81",
-        "item_id":  "1213278005",
-        "amount":  100
-    },
-    {
-        "interview_key":  "18-29-47-23",
-        "item_id":  "561169003",
-        "amount":  100
-    },
-    {
-        "interview_key":  "18-29-47-23",
-        "item_id":  "561169007",
-        "amount":  200
-    },
-    {
-        "interview_key":  "18-29-47-23",
-        "item_id":  "561172026",
-        "amount":  40
-    },
-    {
-        "interview_key":  "18-29-47-23",
-        "item_id":  "1213276004",
-        "amount":  70
-    },
-    {
-        "interview_key":  "18-29-47-23",
-        "item_id":  "1213278001",
-        "amount":  350
-    },
-    {
-        "interview_key":  "18-29-47-23",
-        "item_id":  "1213278005",
-        "amount":  100
-    },
-    {
-        "interview_key":  "71-00-52-01",
-        "item_id":  "561169003",
-        "amount":  350
-    },
-    {
-        "interview_key":  "71-00-52-01",
-        "item_id":  "561169007",
-        "amount":  100
-    },
-    {
-        "interview_key":  "71-00-52-01",
-        "item_id":  "561172026",
-        "amount":  10
-    },
-    {
-        "interview_key":  "71-00-52-01",
-        "item_id":  "1213276004",
-        "amount":  130
-    },
-    {
-        "interview_key":  "71-00-52-01",
-        "item_id":  "1213278005",
-        "amount":  500
+        "amount":  60
     },
     {
         "interview_key":  "02-43-60-73",
@@ -4050,61 +4125,6 @@
         "amount":  350
     },
     {
-        "interview_key":  "34-01-78-99",
-        "item_id":  "561172026",
-        "amount":  100
-    },
-    {
-        "interview_key":  "34-01-78-99",
-        "item_id":  "1213276001",
-        "amount":  280
-    },
-    {
-        "interview_key":  "34-01-78-99",
-        "item_id":  "1213276002",
-        "amount":  70
-    },
-    {
-        "interview_key":  "34-01-78-99",
-        "item_id":  "1213276004",
-        "amount":  60
-    },
-    {
-        "interview_key":  "34-01-78-99",
-        "item_id":  "1213277001",
-        "amount":  450
-    },
-    {
-        "interview_key":  "34-01-78-99",
-        "item_id":  "1213277010",
-        "amount":  350
-    },
-    {
-        "interview_key":  "34-01-78-99",
-        "item_id":  "1213278005",
-        "amount":  200
-    },
-    {
-        "interview_key":  "62-34-78-83",
-        "item_id":  "561169003",
-        "amount":  1000
-    },
-    {
-        "interview_key":  "62-34-78-83",
-        "item_id":  "561169007",
-        "amount":  500
-    },
-    {
-        "interview_key":  "62-34-78-83",
-        "item_id":  "561172026",
-        "amount":  100
-    },
-    {
-        "interview_key":  "62-34-78-83",
-        "item_id":  "1213278005",
-        "amount":  450
-    },
-    {
         "interview_key":  "42-87-90-21",
         "item_id":  "561169003",
         "amount":  1000
@@ -4120,14 +4140,19 @@
         "amount":  400
     },
     {
-        "interview_key":  "36-49-72-24",
-        "item_id":  "561172026",
-        "amount":  20
+        "interview_key":  "89-91-66-15",
+        "item_id":  "1213276004",
+        "amount":  1000
     },
     {
-        "interview_key":  "36-49-72-24",
-        "item_id":  "1213277010",
-        "amount":  250
+        "interview_key":  "89-91-66-15",
+        "item_id":  "1213277011",
+        "amount":  500
+    },
+    {
+        "interview_key":  "89-91-66-15",
+        "item_id":  "1213278001",
+        "amount":  2000
     },
     {
         "interview_key":  "54-62-65-78",
@@ -4160,14 +4185,34 @@
         "amount":  200
     },
     {
-        "interview_key":  "23-18-42-15",
-        "item_id":  "1213276001",
-        "amount":  340
+        "interview_key":  "39-97-44-12",
+        "item_id":  "561169003",
+        "amount":  150
     },
     {
-        "interview_key":  "23-18-42-15",
-        "item_id":  "1213277010",
-        "amount":  300
+        "interview_key":  "39-97-44-12",
+        "item_id":  "561172026",
+        "amount":  90
+    },
+    {
+        "interview_key":  "39-97-44-12",
+        "item_id":  "1213276001",
+        "amount":  240
+    },
+    {
+        "interview_key":  "39-97-44-12",
+        "item_id":  "1213276003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "39-97-44-12",
+        "item_id":  "1213276004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "39-97-44-12",
+        "item_id":  "1213277011",
+        "amount":  250
     },
     {
         "interview_key":  "11-57-12-66",
@@ -4210,24 +4255,354 @@
         "amount":  200
     },
     {
-        "interview_key":  "14-38-02-95",
+        "interview_key":  "71-00-52-01",
         "item_id":  "561169003",
-        "amount":  200
+        "amount":  350
     },
     {
-        "interview_key":  "14-38-02-95",
+        "interview_key":  "71-00-52-01",
+        "item_id":  "561169007",
+        "amount":  100
+    },
+    {
+        "interview_key":  "71-00-52-01",
         "item_id":  "561172026",
         "amount":  10
     },
     {
-        "interview_key":  "14-38-02-95",
+        "interview_key":  "71-00-52-01",
+        "item_id":  "1213276004",
+        "amount":  130
+    },
+    {
+        "interview_key":  "71-00-52-01",
+        "item_id":  "1213278005",
+        "amount":  500
+    },
+    {
+        "interview_key":  "06-58-03-39",
+        "item_id":  "561169003",
+        "amount":  380
+    },
+    {
+        "interview_key":  "06-58-03-39",
+        "item_id":  "561169007",
+        "amount":  180
+    },
+    {
+        "interview_key":  "06-58-03-39",
+        "item_id":  "561172026",
+        "amount":  100
+    },
+    {
+        "interview_key":  "06-58-03-39",
+        "item_id":  "1213276001",
+        "amount":  380
+    },
+    {
+        "interview_key":  "06-58-03-39",
         "item_id":  "1213276003",
+        "amount":  250
+    },
+    {
+        "interview_key":  "06-58-03-39",
+        "item_id":  "1213276004",
+        "amount":  120
+    },
+    {
+        "interview_key":  "06-58-03-39",
+        "item_id":  "1213277010",
+        "amount":  480
+    },
+    {
+        "interview_key":  "06-58-03-39",
+        "item_id":  "1213277011",
+        "amount":  250
+    },
+    {
+        "interview_key":  "06-58-03-39",
+        "item_id":  "1213278005",
+        "amount":  160
+    },
+    {
+        "interview_key":  "60-68-20-55",
+        "item_id":  "561169003",
+        "amount":  420
+    },
+    {
+        "interview_key":  "60-68-20-55",
+        "item_id":  "561169007",
+        "amount":  250
+    },
+    {
+        "interview_key":  "60-68-20-55",
+        "item_id":  "1213276001",
+        "amount":  100
+    },
+    {
+        "interview_key":  "60-68-20-55",
+        "item_id":  "1213276003",
+        "amount":  360
+    },
+    {
+        "interview_key":  "60-68-20-55",
+        "item_id":  "1213277010",
+        "amount":  180
+    },
+    {
+        "interview_key":  "60-68-20-55",
+        "item_id":  "1213277011",
+        "amount":  280
+    },
+    {
+        "interview_key":  "60-68-20-55",
+        "item_id":  "1213278005",
+        "amount":  300
+    },
+    {
+        "interview_key":  "18-29-47-23",
+        "item_id":  "561169003",
+        "amount":  100
+    },
+    {
+        "interview_key":  "18-29-47-23",
+        "item_id":  "561169007",
         "amount":  200
     },
     {
-        "interview_key":  "14-38-02-95",
+        "interview_key":  "18-29-47-23",
+        "item_id":  "561172026",
+        "amount":  40
+    },
+    {
+        "interview_key":  "18-29-47-23",
         "item_id":  "1213276004",
-        "amount":  60
+        "amount":  70
+    },
+    {
+        "interview_key":  "18-29-47-23",
+        "item_id":  "1213278001",
+        "amount":  350
+    },
+    {
+        "interview_key":  "18-29-47-23",
+        "item_id":  "1213278005",
+        "amount":  100
+    },
+    {
+        "interview_key":  "64-93-73-39",
+        "item_id":  "561169003",
+        "amount":  1200
+    },
+    {
+        "interview_key":  "64-93-73-39",
+        "item_id":  "561169007",
+        "amount":  450
+    },
+    {
+        "interview_key":  "64-93-73-39",
+        "item_id":  "1213276004",
+        "amount":  180
+    },
+    {
+        "interview_key":  "64-93-73-39",
+        "item_id":  "1213278001",
+        "amount":  1500
+    },
+    {
+        "interview_key":  "64-93-73-39",
+        "item_id":  "1213278005",
+        "amount":  1000
+    },
+    {
+        "interview_key":  "64-93-73-39",
+        "item_id":  "1270299010",
+        "amount":  1000
+    },
+    {
+        "interview_key":  "91-40-49-83",
+        "item_id":  "561169003",
+        "amount":  380
+    },
+    {
+        "interview_key":  "91-40-49-83",
+        "item_id":  "561169007",
+        "amount":  200
+    },
+    {
+        "interview_key":  "91-40-49-83",
+        "item_id":  "561172026",
+        "amount":  40
+    },
+    {
+        "interview_key":  "91-40-49-83",
+        "item_id":  "1213276001",
+        "amount":  380
+    },
+    {
+        "interview_key":  "91-40-49-83",
+        "item_id":  "1213276002",
+        "amount":  140
+    },
+    {
+        "interview_key":  "91-40-49-83",
+        "item_id":  "1213276004",
+        "amount":  140
+    },
+    {
+        "interview_key":  "91-40-49-83",
+        "item_id":  "1213277001",
+        "amount":  450
+    },
+    {
+        "interview_key":  "91-40-49-83",
+        "item_id":  "1213277010",
+        "amount":  450
+    },
+    {
+        "interview_key":  "91-40-49-83",
+        "item_id":  "1213277011",
+        "amount":  280
+    },
+    {
+        "interview_key":  "91-40-49-83",
+        "item_id":  "1213278001",
+        "amount":  1400
+    },
+    {
+        "interview_key":  "91-40-49-83",
+        "item_id":  "1213278005",
+        "amount":  480
+    },
+    {
+        "interview_key":  "23-18-42-15",
+        "item_id":  "1213276001",
+        "amount":  340
+    },
+    {
+        "interview_key":  "23-18-42-15",
+        "item_id":  "1213277010",
+        "amount":  300
+    },
+    {
+        "interview_key":  "72-81-41-81",
+        "item_id":  "561169003",
+        "amount":  160
+    },
+    {
+        "interview_key":  "72-81-41-81",
+        "item_id":  "561169007",
+        "amount":  200
+    },
+    {
+        "interview_key":  "72-81-41-81",
+        "item_id":  "561170001",
+        "amount":  100
+    },
+    {
+        "interview_key":  "72-81-41-81",
+        "item_id":  "561172026",
+        "amount":  10
+    },
+    {
+        "interview_key":  "72-81-41-81",
+        "item_id":  "1213276004",
+        "amount":  100
+    },
+    {
+        "interview_key":  "72-81-41-81",
+        "item_id":  "1213277011",
+        "amount":  250
+    },
+    {
+        "interview_key":  "72-81-41-81",
+        "item_id":  "1213278005",
+        "amount":  100
+    },
+    {
+        "interview_key":  "36-49-72-24",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "36-49-72-24",
+        "item_id":  "1213277010",
+        "amount":  250
+    },
+    {
+        "interview_key":  "19-04-05-78",
+        "item_id":  "561169003",
+        "amount":  200
+    },
+    {
+        "interview_key":  "19-04-05-78",
+        "item_id":  "561169007",
+        "amount":  180
+    },
+    {
+        "interview_key":  "19-04-05-78",
+        "item_id":  "1213276001",
+        "amount":  150
+    },
+    {
+        "interview_key":  "19-04-05-78",
+        "item_id":  "1213276004",
+        "amount":  80
+    },
+    {
+        "interview_key":  "19-04-05-78",
+        "item_id":  "1213277011",
+        "amount":  250
+    },
+    {
+        "interview_key":  "19-04-05-78",
+        "item_id":  "1213278005",
+        "amount":  160
+    },
+    {
+        "interview_key":  "71-35-48-97",
+        "item_id":  "561169003",
+        "amount":  100
+    },
+    {
+        "interview_key":  "71-35-48-97",
+        "item_id":  "561169005",
+        "amount":  120
+    },
+    {
+        "interview_key":  "71-35-48-97",
+        "item_id":  "561169007",
+        "amount":  140
+    },
+    {
+        "interview_key":  "71-35-48-97",
+        "item_id":  "561172026",
+        "amount":  20
+    },
+    {
+        "interview_key":  "71-35-48-97",
+        "item_id":  "1213276001",
+        "amount":  180
+    },
+    {
+        "interview_key":  "71-35-48-97",
+        "item_id":  "1213276004",
+        "amount":  50
+    },
+    {
+        "interview_key":  "71-35-48-97",
+        "item_id":  "1213277010",
+        "amount":  500
+    },
+    {
+        "interview_key":  "71-35-48-97",
+        "item_id":  "1213277011",
+        "amount":  220
+    },
+    {
+        "interview_key":  "71-35-48-97",
+        "item_id":  "1213278005",
+        "amount":  80
     },
     {
         "interview_key":  "50-12-80-46",
@@ -4275,38 +4650,53 @@
         "amount":  1000
     },
     {
-        "interview_key":  "60-68-20-55",
-        "item_id":  "561169003",
-        "amount":  420
-    },
-    {
-        "interview_key":  "60-68-20-55",
-        "item_id":  "561169007",
-        "amount":  250
-    },
-    {
-        "interview_key":  "60-68-20-55",
-        "item_id":  "1213276001",
+        "interview_key":  "34-01-78-99",
+        "item_id":  "561172026",
         "amount":  100
     },
     {
-        "interview_key":  "60-68-20-55",
-        "item_id":  "1213276003",
-        "amount":  360
-    },
-    {
-        "interview_key":  "60-68-20-55",
-        "item_id":  "1213277010",
-        "amount":  180
-    },
-    {
-        "interview_key":  "60-68-20-55",
-        "item_id":  "1213277011",
+        "interview_key":  "34-01-78-99",
+        "item_id":  "1213276001",
         "amount":  280
     },
     {
-        "interview_key":  "60-68-20-55",
+        "interview_key":  "34-01-78-99",
+        "item_id":  "1213276002",
+        "amount":  70
+    },
+    {
+        "interview_key":  "34-01-78-99",
+        "item_id":  "1213276004",
+        "amount":  60
+    },
+    {
+        "interview_key":  "34-01-78-99",
+        "item_id":  "1213277001",
+        "amount":  450
+    },
+    {
+        "interview_key":  "34-01-78-99",
+        "item_id":  "1213277010",
+        "amount":  350
+    },
+    {
+        "interview_key":  "34-01-78-99",
         "item_id":  "1213278005",
-        "amount":  300
+        "amount":  200
+    },
+    {
+        "interview_key":  "15-98-23-49",
+        "item_id":  "561172026",
+        "amount":  40
+    },
+    {
+        "interview_key":  "15-98-23-49",
+        "item_id":  "1213276004",
+        "amount":  200
+    },
+    {
+        "interview_key":  "15-98-23-49",
+        "item_id":  "1213278005",
+        "amount":  200
     }
 ]
