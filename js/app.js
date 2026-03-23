@@ -47,14 +47,13 @@
     }
 
     /* ---------- data loading ---------- */
-    let summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, foodData;
+    let summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, foodData, listingData, marketData;
     try {
         async function loadJSON(path) {
             const r = await fetch(path);
             if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
             return r.json();
         }
-        let listingData, marketData;
         [summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, foodData, listingData, marketData] = await Promise.all([
             loadJSON('data/summary.json'),
             loadJSON('data/households.json'),
