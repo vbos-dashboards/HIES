@@ -43,7 +43,10 @@ $households = $hhData | ForEach-Object {
         area_council        = $_.area_council
         ea                  = $_.enumeration_area
         village             = $_.village
+        household_serial    = $_.household_serial_no
         hh_serial           = $_.household_serial_no
+        phone1              = $_.h1901
+        phone2              = $_.h1902
         latitude            = $_.gps__Latitude
         longitude           = $_.gps__Longitude
         interview_date      = if ($_.datetime_interview) { ($_.datetime_interview -split "T")[0] } else { "" }
@@ -91,6 +94,7 @@ $persons = $personData | ForEach-Object {
     [PSCustomObject]@{
         interview_key       = $_.interview__key
         person_id           = $_.hm_basic__id
+        name                = $_.name
         sex                 = $_.sex
         age                 = $ageVal
         relat               = $_.relat
@@ -398,6 +402,69 @@ $marketJson = [PSCustomObject]@{
 $marketJson | ConvertTo-Json -Depth 5 | Out-File (Join-Path $OutDir "market.json") -Encoding UTF8
 $mktWithData = ($hhProgress | Where-Object { $_.has_market -eq 1 }).Count
 Write-Host "  -> $($outlets.Count) outlets from $mktWithData households"
+
+# --- 10. Generate CSV Files ---
+Write-Host "Generating CSV extracts..."
+
+# Build household head lookup
+$hhHeadLookup = @{}
+foreach ($person in $persons) {
+    if ($person.relat -eq '1') {
+        $hhHeadLookup[$person.interview_key] = $person.name
+    }
+}
+
+# Generate CSV records
+$csvRecords = $households | ForEach-Object {
+    $hhHead = if ($hhHeadLookup.ContainsKey($_.interview_key)) { $hhHeadLookup[$_.interview_key] } else { "" }
+    $date1 = if ($_.interview_date) { $_.interview_date } else { "" }
+    $date2 = if ($_.interview_date -and $_.interview_date -match '^\d{4}-\d{2}-\d{2}$') {
+        $parts = $_.interview_date -split '-'
+        "$($parts[2])/$($parts[1])/$($parts[0])"
+    }
+    else { $_.interview_date }
+    
+    [PSCustomObject]@{
+        team_id            = $_.team_id
+        province_name      = $_.province_name
+        ea                 = $_.ea
+        area_council       = $_.area_council
+        village            = $_.village
+        interview_key      = $_.interview_key
+        household_serial   = $_.household_serial
+        household_head     = $hhHead
+        phone1             = $_.phone1
+        phone2             = $_.phone2
+        interview_status   = $_.interview_status
+        interview_date_iso = $date1
+        interview_date_dmy = $date2
+    }
+}
+
+# Write CSV with household serial ID
+$csv1 = [System.Collections.Generic.List[string]]::new()
+$csv1.Add('Team ID,Province,EA,Area Council,Village,Interview Key,Household Serial ID,Household Head,Phone 1,Phone 2,Interview Status,Interview Date')
+foreach ($rec in $csvRecords) {
+    $csv1.Add(('{0},{1},{2},{3},{4},{5},{6},"{7}",{8},{9},{10},{11}' -f `
+                $rec.team_id, $rec.province_name, $rec.ea, $rec.area_council, $rec.village, `
+                $rec.interview_key, $rec.household_serial, $rec.household_head, `
+                $rec.phone1, $rec.phone2, $rec.interview_status, $rec.interview_date_iso))
+}
+[System.IO.File]::WriteAllLines((Join-Path $PSScriptRoot "round1_households.new.csv"), $csv1, [System.Text.UTF8Encoding]::new($false))
+
+# Write CSV without household serial ID (DD/MM/YYYY date format)
+$csv2 = [System.Collections.Generic.List[string]]::new()
+$csv2.Add('Team ID,Province,EA,Area Council,Village,Interview Key,Household Head,Phone 1,Phone 2,Interview Status,Interview Date')
+foreach ($rec in $csvRecords) {
+    $csv2.Add(('{0},{1},{2},{3},{4},{5},"{6}",{7},{8},{9},{10}' -f `
+                $rec.team_id, $rec.province_name, $rec.ea, $rec.area_council, $rec.village, `
+                $rec.interview_key, $rec.household_head, `
+                $rec.phone1, $rec.phone2, $rec.interview_status, $rec.interview_date_dmy))
+}
+[System.IO.File]::WriteAllLines((Join-Path $PSScriptRoot "round1_households_id.new.csv"), $csv2, [System.Text.UTF8Encoding]::new($false))
+
+Write-Host "  -> round1_households.csv: $($csvRecords.Count) records"
+Write-Host "  -> round1_households_id.csv: $($csvRecords.Count) records"
 
 Write-Host "`nDone! JSON files written to: $OutDir"
 Write-Host "Files created:"
