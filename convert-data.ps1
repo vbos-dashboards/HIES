@@ -2,7 +2,7 @@
 # Usage: .\convert-data.ps1 -SourceDir "path\to\VUTHIES_2026_1_Tabular_All_..."
 
 param(
-    [string]$SourceDir = "c:\Users\jyaruel\Downloads\VUTHIES_2026_1_Tabular_All_20260319T2219Z"
+    [string]$SourceDir = "c:\Users\jyaruel\Downloads\VUTHIES_2026_1_Tabular_All_20260324T2110Z"
 )
 
 $OutDir = Join-Path $PSScriptRoot "data"
@@ -167,7 +167,6 @@ Write-Host "  -> $($nonfood.Count) non-food items"
 # --- 5. Livestock ---
 Write-Host "Processing livestock..."
 $livestockData = Read-TabFile (Join-Path $SourceDir "livestock_roster.tab")
-$livestockHeaders = (Get-Content (Join-Path $SourceDir "livestock_roster.tab") -TotalCount 1) -split "`t"
 $livestock = $livestockData | ForEach-Object {
     [PSCustomObject]@{
         interview_key = $_.interview__key
@@ -337,7 +336,8 @@ $marketData = Read-TabFile (Join-Path $SourceDir "marketlist_roster.tab")
 $categories = @("bread", "meat", "fish", "dairy", "fruit", "nuts", "veges", "crop", "spice", "takeaway")
 $headers = if (Test-Path (Join-Path $SourceDir "marketlist_roster.tab")) {
     (Get-Content (Join-Path $SourceDir "marketlist_roster.tab") -TotalCount 1) -split "`t"
-} else { @() }
+}
+else { @() }
 
 # Build outlet records
 $outlets = @()
@@ -348,8 +348,6 @@ foreach ($row in $marketData) {
     foreach ($cat in $categories) {
         $prodCol = "${cat}_prod"
         $avail = if ($row.$prodCol -eq "1") { 1 } else { 0 }
-        # Count type columns for this category
-        $typeCount = ($headers | Where-Object { $_ -match "^${cat}_type__" }).Count
         $itemCount = 0
         if ($avail -eq 1) {
             foreach ($h in $headers) {
