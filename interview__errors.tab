@@ -1,0 +1,629 @@
+﻿interview__key	interview__id	roster	id1	id2	id3	variable	type	message__number	message
+85-83-38-50	3a8cdfcc42ae46d38285d837eb0abfd5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+74-90-66-68	0c1f15e194b144d88f575c8cdac59938					gps	2	1	GPS has to be within 20m
+74-90-66-68	0c1f15e194b144d88f575c8cdac59938	hm_basic	3			relat	2	8	Warning: Age difference between child and spouse is inconsistent
+74-90-66-68	0c1f15e194b144d88f575c8cdac59938	hm_basic	4			relat	2	8	Warning: Age difference between child and spouse is inconsistent
+74-90-66-68	0c1f15e194b144d88f575c8cdac59938						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+06-26-75-81	454d2f37654e47b7816c2323aadc0213					gps	2	1	GPS has to be within 20m
+06-26-75-81	454d2f37654e47b7816c2323aadc0213						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+91-42-28-25	d43ac6ec9edb470eb9b0a291168379c4					gps	2	1	GPS has to be within 20m
+91-42-28-25	d43ac6ec9edb470eb9b0a291168379c4						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+96-34-54-38	5eaaf9c9a97c4b758f671a1830e15530					gps	2	1	GPS has to be within 20m
+96-34-54-38	5eaaf9c9a97c4b758f671a1830e15530						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+81-63-77-73	938988b3f7714d3aa86922079db69819					gps	2	1	GPS has to be within 20m
+81-63-77-73	938988b3f7714d3aa86922079db69819						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+57-45-21-27	84786587a1944fec8f46249a3eaf9938					gps	2	1	GPS has to be within 20m
+57-45-21-27	84786587a1944fec8f46249a3eaf9938						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+94-73-99-06	83ba393ea4604cf4a92a525c9f810028					gps	2	1	GPS has to be within 20m
+94-73-99-06	83ba393ea4604cf4a92a525c9f810028						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+82-04-37-47	b8b62bcaf9d343c0b0e688042a81425f					gps	2	1	GPS has to be within 20m
+82-04-37-47	b8b62bcaf9d343c0b0e688042a81425f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+91-32-97-70	9403ec88bc9c41daaa55067bf9d6ef81					gps	2	1	GPS has to be within 20m
+91-32-97-70	9403ec88bc9c41daaa55067bf9d6ef81						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+99-62-55-67	97ac7655eb7d4a2cb04445710b08ddee					gps	2	1	GPS has to be within 20m
+99-62-55-67	97ac7655eb7d4a2cb04445710b08ddee						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+63-15-92-19	8279251f11ee47789cb001064bff0f86					gps	2	1	GPS has to be within 20m
+63-15-92-19	8279251f11ee47789cb001064bff0f86						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+41-60-84-35	aa6729968b0c4bb2ab4c27c2b1f1d5cf					gps	2	1	GPS has to be within 20m
+41-60-84-35	aa6729968b0c4bb2ab4c27c2b1f1d5cf						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+41-60-84-35	aa6729968b0c4bb2ab4c27c2b1f1d5cf					spend_ice	2	1	The purchase value for the ICE seems unlikely. Please verify.
+41-60-84-35	aa6729968b0c4bb2ab4c27c2b1f1d5cf					expense_fuel_boat	2	1	The value entered for fuel seems unlikely. Please verify.
+94-78-45-38	de76537f824c45ba8996e8846c86290a					gps	2	1	GPS has to be within 20m
+94-78-45-38	de76537f824c45ba8996e8846c86290a						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+33-54-06-55	af6f2269598e4cb194ab221e8f73e035					gps	2	1	GPS has to be within 20m
+33-54-06-55	af6f2269598e4cb194ab221e8f73e035						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+85-59-48-28	eafb1e2dbda8466a86c67f25ac2e11db					gps	2	1	GPS has to be within 20m
+85-59-48-28	eafb1e2dbda8466a86c67f25ac2e11db						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+25-55-15-20	fc7d30888cc746acb2d062cd3a273b23					gps	2	1	GPS has to be within 20m
+25-55-15-20	fc7d30888cc746acb2d062cd3a273b23						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+99-50-16-04	ff039590d33440c68d054a0228f81f98					gps	2	1	GPS has to be within 20m
+99-50-16-04	ff039590d33440c68d054a0228f81f98						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+88-08-70-63	478e84d77b464ed0a40f6bf39eee8487					gps	2	1	GPS has to be within 20m
+88-08-70-63	478e84d77b464ed0a40f6bf39eee8487						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+06-33-68-96	8a3389bc4a2c4ce896ad395d190ea582					gps	2	1	GPS has to be within 20m
+06-33-68-96	8a3389bc4a2c4ce896ad395d190ea582						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+36-25-76-51	d63f85daf8ce4b75bcd7d340af820431					gps	2	1	GPS has to be within 20m
+36-25-76-51	d63f85daf8ce4b75bcd7d340af820431						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+14-77-00-48	55280efd75c946b481d081604365fb58					gps	2	1	GPS has to be within 20m
+14-77-00-48	55280efd75c946b481d081604365fb58						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+03-90-78-84	71146d0dd85b423fae86ab3a5c1c20e0					gps	2	1	GPS has to be within 20m
+03-90-78-84	71146d0dd85b423fae86ab3a5c1c20e0						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+25-15-76-66	856be865365745e79549caad8f23be7a					gps	2	1	GPS has to be within 20m
+25-15-76-66	856be865365745e79549caad8f23be7a						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+52-71-60-97	934bb631fab445d1b716b8d8ef61deb2					gps	2	1	GPS has to be within 20m
+52-71-60-97	934bb631fab445d1b716b8d8ef61deb2						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+63-37-16-15	e7e0fb87518b42b0ba272f5985bf0f81					gps	2	1	GPS has to be within 20m
+63-37-16-15	e7e0fb87518b42b0ba272f5985bf0f81						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+08-72-96-01	57fdaba12be641e19959e672b4ea6e38					gps	2	1	GPS has to be within 20m
+08-72-96-01	57fdaba12be641e19959e672b4ea6e38						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+39-71-34-86	b66d9f33e8664b1b8a57392d133b36e8					gps	2	1	GPS has to be within 20m
+39-71-34-86	b66d9f33e8664b1b8a57392d133b36e8						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+70-23-85-74	6929cffee1754a31b8e85297bab97df0					gps	2	1	GPS has to be within 20m
+70-23-85-74	6929cffee1754a31b8e85297bab97df0						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+36-06-67-22	a3ad2eb525a9457cacf5d4bf2aee8470					gps	2	1	GPS has to be within 20m
+36-06-67-22	a3ad2eb525a9457cacf5d4bf2aee8470						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+00-00-84-14	a044d23059524a03836ae3ad2bf0318f					gps	2	1	GPS has to be within 20m
+50-00-85-05	f8cce1dbd3f9475b98af629f6cc99aab					gps	2	1	GPS has to be within 20m
+50-00-85-05	f8cce1dbd3f9475b98af629f6cc99aab						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+97-15-20-38	e2c8447a7a9d4af29a97060236cdec9c					gps	2	1	GPS has to be within 20m
+97-15-20-38	e2c8447a7a9d4af29a97060236cdec9c						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+71-01-22-10	2bc0bd4c52cd48ad8603474f5bc06ecb					gps	2	1	GPS has to be within 20m
+71-01-22-10	2bc0bd4c52cd48ad8603474f5bc06ecb						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+71-01-22-10	2bc0bd4c52cd48ad8603474f5bc06ecb	narcotic_items_roster	1	221082004		amount_paid_cash	2	1	The amount seems unrealistic, please confirm and accept it if correct
+40-09-01-38	7dc9b103c86c4bd0af8602904fc6fa03						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+82-55-74-56	2f02ac8f4fa84c20a35d6b1e436f6c75					gps	2	1	GPS has to be within 20m
+82-55-74-56	2f02ac8f4fa84c20a35d6b1e436f6c75						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+51-87-38-36	92cbdb4075d44ed88ee48bd348624b31					gps	2	1	GPS has to be within 20m
+51-87-38-36	92cbdb4075d44ed88ee48bd348624b31						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+08-07-35-57	002f4776dd664896a51bdb8eab7d598f					gps	2	1	GPS has to be within 20m
+08-07-35-57	002f4776dd664896a51bdb8eab7d598f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+99-54-95-97	704c77c2e3ba4ad7946da87d9742ea85					gps	2	1	GPS has to be within 20m
+99-54-95-97	704c77c2e3ba4ad7946da87d9742ea85						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+75-41-50-97	ec4949786dcd4e44bc675d4340353cea					gps	2	1	GPS has to be within 20m
+75-41-50-97	ec4949786dcd4e44bc675d4340353cea						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+54-97-26-43	3ff4546b911d40fd94f6c1ab8f3ca7a3					gps	2	1	GPS has to be within 20m
+54-97-26-43	3ff4546b911d40fd94f6c1ab8f3ca7a3						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+57-19-05-78	ff5adcc833b74ad59112abbe8bfe313f					gps	2	1	GPS has to be within 20m
+57-19-05-78	ff5adcc833b74ad59112abbe8bfe313f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+12-52-60-63	5b03ff3e9ae4445f9126ceb576ab421f					gps	2	1	GPS has to be within 20m
+12-52-60-63	5b03ff3e9ae4445f9126ceb576ab421f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+12-52-60-63	5b03ff3e9ae4445f9126ceb576ab421f	ict_roster	2	819201001		electronic_purchase_amount	2	1	The value entered for laptop seems unlikely. Please verify.
+12-52-60-63	5b03ff3e9ae4445f9126ceb576ab421f	other_personal_item_roster	2	1213278009		amount_purchase_other_item	2	1	The 12 months value entered for %rostertitle% seems unlikely. Please verify.
+60-33-52-83	11f3abb0469b4311996623b045497873					gps	2	1	GPS has to be within 20m
+60-33-52-83	11f3abb0469b4311996623b045497873						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+75-87-32-33	b0c564b803524c569e32628bbdde211e					gps	2	1	GPS has to be within 20m
+75-87-32-33	b0c564b803524c569e32628bbdde211e						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+75-87-32-33	b0c564b803524c569e32628bbdde211e	ict_roster	2	819201001		electronic_purchase_amount	2	1	The value entered for laptop seems unlikely. Please verify.
+31-86-90-66	4302810b25de4f418e3ffddc5f53b949					gps	2	1	GPS has to be within 20m
+31-86-90-66	4302810b25de4f418e3ffddc5f53b949						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+42-40-43-96	d888a9f0d50d413c826ec839079a4191					gps	2	1	GPS has to be within 20m
+42-40-43-96	d888a9f0d50d413c826ec839079a4191						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+09-64-31-44	5f1f48c3fe764b8eb9d69abc90888e53					gps	2	1	GPS has to be within 20m
+09-64-31-44	5f1f48c3fe764b8eb9d69abc90888e53						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+47-50-34-99	a87332015bdc4429a9556ffc006c05ec					gps	2	1	GPS has to be within 20m
+47-50-34-99	a87332015bdc4429a9556ffc006c05ec						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+43-29-27-75	bd15d165f5354be383711be4d3eb8e0b					gps	2	1	GPS has to be within 20m
+43-29-27-75	bd15d165f5354be383711be4d3eb8e0b						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+84-23-71-34	6f80a5b98358494ea69c0e4fef8ca0cf					gps	2	1	GPS has to be within 20m
+84-23-71-34	6f80a5b98358494ea69c0e4fef8ca0cf						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+13-27-78-05	eed0801e220247f3a70a28c5f7f84277					gps	2	1	GPS has to be within 20m
+13-27-78-05	eed0801e220247f3a70a28c5f7f84277						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+84-44-71-60	b139b98f973c4dfcb8b282c747775651					gps	2	1	GPS has to be within 20m
+84-44-71-60	b139b98f973c4dfcb8b282c747775651						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+34-97-91-49	7773093cf4fb422c99465f72188c93c5					gps	2	1	GPS has to be within 20m
+34-97-91-49	7773093cf4fb422c99465f72188c93c5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+42-66-74-70	7ae173d340864222998f3bfc38206d10					gps	2	1	GPS has to be within 20m
+42-66-74-70	7ae173d340864222998f3bfc38206d10						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+28-62-53-68	d14440ebbed74601a1a1066f4ed81567					gps	2	1	GPS has to be within 20m
+28-62-53-68	d14440ebbed74601a1a1066f4ed81567						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+95-64-89-47	c3b9045ef5ed41a3beb8237bda116258					gps	2	1	GPS has to be within 20m
+95-64-89-47	c3b9045ef5ed41a3beb8237bda116258						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+95-64-89-47	c3b9045ef5ed41a3beb8237bda116258	narcotic_items_roster	1	231087099		amount_paid_cash	2	1	The amount seems unrealistic, please confirm and accept it if correct
+95-64-89-47	c3b9045ef5ed41a3beb8237bda116258	narcotic_items_roster	1	231087099		recieve_gift	2	1	Quantity in Cash, Home Produced and Gifts should equal Total Consumed - please check !!!!
+26-62-12-53	3065d6bafeae42809246fc8ce908cb49					gps	2	1	GPS has to be within 20m
+26-62-12-53	3065d6bafeae42809246fc8ce908cb49						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+96-99-16-93	1cd00983ed954a5baea751b57116da1c					gps	2	1	GPS has to be within 20m
+02-64-26-76	1e12c0f8fcea4ffe9627353cce7fce31					gps	2	1	GPS has to be within 20m
+02-64-26-76	1e12c0f8fcea4ffe9627353cce7fce31						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+46-69-67-80	db4b80a11b314308a0376b76ceac3f67					gps	2	1	GPS has to be within 20m
+46-69-67-80	db4b80a11b314308a0376b76ceac3f67						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+65-54-06-15	d06ab7cc57f449aca0dafd577a3741e9						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+22-75-48-23	4d3026180f324444a185d75cc3204d19					gps	2	1	GPS has to be within 20m
+22-75-48-23	4d3026180f324444a185d75cc3204d19						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+25-98-44-02	e38fa993a6114e4698ff84a375249d28					gps	2	1	GPS has to be within 20m
+25-98-44-02	e38fa993a6114e4698ff84a375249d28						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+31-40-20-96	db40dfdf8cce4c96b181258619f13af5					gps	2	1	GPS has to be within 20m
+31-40-20-96	db40dfdf8cce4c96b181258619f13af5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+06-45-67-80	d542d20450a349b8991602244edd1292					gps	2	1	GPS has to be within 20m
+06-45-67-80	d542d20450a349b8991602244edd1292						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+66-74-37-32	1df603a5154b4634b4e5ebbd85e5008d					gps	2	1	GPS has to be within 20m
+66-74-37-32	1df603a5154b4634b4e5ebbd85e5008d						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+77-88-59-97	342466a21cb24e5291a85ecc8d83aede					gps	2	1	GPS has to be within 20m
+77-88-59-97	342466a21cb24e5291a85ecc8d83aede						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+92-82-62-50	e71bcc1ff320490295a424e64a79f1be					gps	2	1	GPS has to be within 20m
+92-82-62-50	e71bcc1ff320490295a424e64a79f1be						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+92-82-62-50	e71bcc1ff320490295a424e64a79f1be	narcotic_items_roster	1	221082004		amount_paid_cash	2	1	The amount seems unrealistic, please confirm and accept it if correct
+93-63-08-10	b98632db139c4f4995fc71056973ed4d					gps	2	1	GPS has to be within 20m
+93-63-08-10	b98632db139c4f4995fc71056973ed4d						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+41-20-86-76	e622b868e1ca46298e551fc610f233e1					gps	2	1	GPS has to be within 20m
+41-20-86-76	e622b868e1ca46298e551fc610f233e1						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+17-22-77-76	059e06b7edcb489e9f51b04710de07b6					gps	2	1	GPS has to be within 20m
+17-22-77-76	059e06b7edcb489e9f51b04710de07b6						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+24-79-06-78	e6fc0b8ca2ae4df5b62d5c583379f860					gps	2	1	GPS has to be within 20m
+24-79-06-78	e6fc0b8ca2ae4df5b62d5c583379f860						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+86-21-86-39	160a5696812f460f9bae8e112b5c976b					gps	2	1	GPS has to be within 20m
+86-21-86-39	160a5696812f460f9bae8e112b5c976b						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+84-82-01-34	613396b08e06476aa6d9c79116d108bb					gps	2	1	GPS has to be within 20m
+84-82-01-34	613396b08e06476aa6d9c79116d108bb						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+07-23-75-27	3e6b35f0ea9f4aa9be8d4152518ba986					gps	2	1	GPS has to be within 20m
+07-23-75-27	3e6b35f0ea9f4aa9be8d4152518ba986						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+07-23-75-27	3e6b35f0ea9f4aa9be8d4152518ba986					last_pmt_wasteDisposal	2	1	Please check and confirm the amount spend on this service as it is unlikely
+14-12-40-88	91993fa3ff364bf997a0c3beb6f3be33					gps	2	1	GPS has to be within 20m
+14-12-40-88	91993fa3ff364bf997a0c3beb6f3be33						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+47-10-05-66	d7de9aba87f942aeba805a122f230df9					gps	2	1	GPS has to be within 20m
+47-10-05-66	d7de9aba87f942aeba805a122f230df9						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+53-10-05-46	6b57501c9bef40cd9d246482eca2a447					gps	2	1	GPS has to be within 20m
+53-10-05-46	6b57501c9bef40cd9d246482eca2a447						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+09-05-48-03	369b4ec8785a4a32a0cc7057936f1d54					gps	2	1	GPS has to be within 20m
+09-05-48-03	369b4ec8785a4a32a0cc7057936f1d54						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+09-05-48-03	369b4ec8785a4a32a0cc7057936f1d54	oth_income_ros	21000			amount_cashIncome	2	1	The 12 months value entered for %rostertitle% seems unlikely. Please verify.
+73-88-34-84	c1ab3a55e3154bfcbeb323d4f16395d3					gps	2	1	GPS has to be within 20m
+73-88-34-84	c1ab3a55e3154bfcbeb323d4f16395d3						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+73-88-34-84	c1ab3a55e3154bfcbeb323d4f16395d3	narcotic_items_roster	1	231087099		amount_paid_cash	2	1	The amount seems unrealistic, please confirm and accept it if correct
+08-46-73-10	3dd6e26159784512b8f939730a2182eb					gps	2	1	GPS has to be within 20m
+08-46-73-10	3dd6e26159784512b8f939730a2182eb						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+87-87-61-60	4afdb08432f74e35935f10426c75971c					gps	2	1	GPS has to be within 20m
+87-87-61-60	4afdb08432f74e35935f10426c75971c						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+39-25-61-55	00e5ec75e29d46d7a6a1761c47dbd0fb					gps	2	1	GPS has to be within 20m
+39-25-61-55	00e5ec75e29d46d7a6a1761c47dbd0fb						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+02-12-85-71	35d677ceaa684512be80e62368bbc2e0					gps	2	1	GPS has to be within 20m
+02-12-85-71	35d677ceaa684512be80e62368bbc2e0						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+11-54-73-19	432779ace7d14cf8b5aa9029d58fb545					gps	2	1	GPS has to be within 20m
+11-54-73-19	432779ace7d14cf8b5aa9029d58fb545						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+92-81-21-58	df58e67443874e3c8a968ae7beb726b4					gps	2	1	GPS has to be within 20m
+92-81-21-58	df58e67443874e3c8a968ae7beb726b4						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+61-41-55-77	20b4037a4f074a0f8ee1d30768762084					gps	2	1	GPS has to be within 20m
+61-41-55-77	20b4037a4f074a0f8ee1d30768762084						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+41-11-08-79	9771b8019f804c189577d54505cc7852					gps	2	1	GPS has to be within 20m
+41-11-08-79	9771b8019f804c189577d54505cc7852						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+89-91-74-12	773fa39304b342d3b425f421540e8e47						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+64-55-50-30	7f9ca279ef544b619512de3dd8a94bba					gps	2	1	GPS has to be within 20m
+64-55-50-30	7f9ca279ef544b619512de3dd8a94bba						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+64-31-14-38	6b416d59eb7f485ca083301838e92131					gps	2	1	GPS has to be within 20m
+64-31-14-38	6b416d59eb7f485ca083301838e92131						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+73-27-76-79	41cd41bbce5e4d5c8f9860e1c7a68348					gps	2	1	GPS has to be within 20m
+73-27-76-79	41cd41bbce5e4d5c8f9860e1c7a68348						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+55-43-51-24	07cb98814b64400f8fad77e2c73bb90a					gps	2	1	GPS has to be within 20m
+55-43-51-24	07cb98814b64400f8fad77e2c73bb90a						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+03-51-01-07	b5e742cfe4a84724ab3bc1d2c33bd42e					gps	2	1	GPS has to be within 20m
+03-51-01-07	b5e742cfe4a84724ab3bc1d2c33bd42e						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+46-51-34-60	8cc1ef2e261945029084dfd5059e54d8					gps	2	1	GPS has to be within 20m
+46-51-34-60	8cc1ef2e261945029084dfd5059e54d8						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+46-51-34-60	8cc1ef2e261945029084dfd5059e54d8					last_pmt_wasteDisposal	2	1	Please check and confirm the amount spend on this service as it is unlikely
+30-76-08-57	872ca17241a44551a3ba2302ed889027					gps	2	1	GPS has to be within 20m
+30-76-08-57	872ca17241a44551a3ba2302ed889027						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+73-40-61-10	6c1f54e5259643a39e5f396cc7a5bacf					gps	2	1	GPS has to be within 20m
+73-40-61-10	6c1f54e5259643a39e5f396cc7a5bacf						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+96-06-08-11	d553eaa2f212492b91ab3d45f7d7c0cc					gps	2	1	GPS has to be within 20m
+96-06-08-11	d553eaa2f212492b91ab3d45f7d7c0cc						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+96-06-08-11	d553eaa2f212492b91ab3d45f7d7c0cc	narcotic_items_roster	1	231087099		amount_paid_cash	2	1	The amount seems unrealistic, please confirm and accept it if correct
+08-53-42-97	fea787895d984194a381f06aeb71496c					gps	2	1	GPS has to be within 20m
+08-53-42-97	fea787895d984194a381f06aeb71496c						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+44-60-85-72	b313c53f8e494c20966a41915fa73dbd					gps	2	1	GPS has to be within 20m
+44-60-85-72	b313c53f8e494c20966a41915fa73dbd						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+17-34-66-39	b40498c6581a43ed814fcf219e6bd212					gps	2	1	GPS has to be within 20m
+17-34-66-39	b40498c6581a43ed814fcf219e6bd212						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+61-62-04-77	c4d3eccb80cd4163ab62e5be0819fd4a					gps	2	1	GPS has to be within 20m
+61-62-04-77	c4d3eccb80cd4163ab62e5be0819fd4a						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+96-97-49-82	46374f265ff0407eb62c9cbb13edcd57					gps	2	1	GPS has to be within 20m
+96-97-49-82	46374f265ff0407eb62c9cbb13edcd57						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+02-58-49-36	53812401a0164f2f87fc58acbbb6bf22					gps	2	1	GPS has to be within 20m
+02-58-49-36	53812401a0164f2f87fc58acbbb6bf22						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+72-39-10-07	fed2a12588154a47932a65efd97cf357					gps	2	1	GPS has to be within 20m
+72-39-10-07	fed2a12588154a47932a65efd97cf357						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+97-75-89-83	6b828f06caa84ff980eea9876f0b0ebd					gps	2	1	GPS has to be within 20m
+97-75-89-83	6b828f06caa84ff980eea9876f0b0ebd						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+54-34-45-21	2b1967832a6d48b0ad40d56136730b2b					gps	2	1	GPS has to be within 20m
+54-34-45-21	2b1967832a6d48b0ad40d56136730b2b						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+54-34-45-21	2b1967832a6d48b0ad40d56136730b2b	food_recall_details	118049099			homeProd_cons_gift	2	1	Quantity in Cash, Home Produced and Gifts should equal Total Consumed - please check !!!!
+54-34-45-21	2b1967832a6d48b0ad40d56136730b2b	food_recall_details	119060099			homeProd_cons_gift	2	1	Quantity in Cash, Home Produced and Gifts should equal Total Consumed - please check !!!!
+77-42-07-84	5562e8a948134c0fa777c72ec075be0f					gps	2	1	GPS has to be within 20m
+77-42-07-84	5562e8a948134c0fa777c72ec075be0f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+01-61-64-35	580c1fff5e524043b59bd4e72e658762					gps	2	1	GPS has to be within 20m
+01-61-64-35	580c1fff5e524043b59bd4e72e658762						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+77-17-79-82	fe85587ab69248df91b3fb4b61ae8f20					gps	2	1	GPS has to be within 20m
+77-17-79-82	fe85587ab69248df91b3fb4b61ae8f20						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+39-19-16-41	75ad4f2b27a04c9580cc9399d335da49					gps	2	1	GPS has to be within 20m
+39-19-16-41	75ad4f2b27a04c9580cc9399d335da49						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+22-11-78-50	bf91ce193bd74011a6f405af283485bc					gps	2	1	GPS has to be within 20m
+22-11-78-50	bf91ce193bd74011a6f405af283485bc						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+50-35-70-27	572ab672c58a4979948a8b06aafd6a9f					gps	2	1	GPS has to be within 20m
+50-35-70-27	572ab672c58a4979948a8b06aafd6a9f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+71-22-62-90	471701673ba441ebba6cf1ad939caed6					gps	2	1	GPS has to be within 20m
+71-22-62-90	471701673ba441ebba6cf1ad939caed6						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+46-10-54-31	c0d48f46f0ce43acbfa05e5040c345b8					gps	2	1	GPS has to be within 20m
+46-10-54-31	c0d48f46f0ce43acbfa05e5040c345b8						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+38-40-24-40	034fdf3001c34d48b32ea6cffb2d58b6					gps	2	1	GPS has to be within 20m
+38-40-24-40	034fdf3001c34d48b32ea6cffb2d58b6						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+99-93-03-35	bff95934a7354183a1673d302212fbc3					gps	2	1	GPS has to be within 20m
+99-93-03-35	bff95934a7354183a1673d302212fbc3						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+94-85-13-77	775d8aafe2be4066932c79058ddd7d2e					gps	2	1	GPS has to be within 20m
+94-85-13-77	775d8aafe2be4066932c79058ddd7d2e						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+98-72-19-99	378dfa71c052413cb29aca90f9d43dbc					gps	2	1	GPS has to be within 20m
+98-72-19-99	378dfa71c052413cb29aca90f9d43dbc						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+62-35-96-73	1ecb0fac40304dd1ac4789e7ae2bf24b					gps	2	1	GPS has to be within 20m
+62-35-96-73	1ecb0fac40304dd1ac4789e7ae2bf24b						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+82-77-70-70	5e9d2908d63f4939ad9d933f1ed59409					gps	2	1	GPS has to be within 20m
+82-77-70-70	5e9d2908d63f4939ad9d933f1ed59409						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+82-77-70-70	5e9d2908d63f4939ad9d933f1ed59409					current_loan	2	1	Dwelling is recorded on MORTGAGE in H1131. This mortgage has to be recorded here so should be coded as 'Yes'.
+08-51-14-47	d9da9d0902574488a6de55a6e9dda484					gps	2	1	GPS has to be within 20m
+08-51-14-47	d9da9d0902574488a6de55a6e9dda484						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+27-34-49-38	e4cfc4a2bf564ad8ac9200439f9543bd					gps	2	1	GPS has to be within 20m
+27-34-49-38	e4cfc4a2bf564ad8ac9200439f9543bd						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+51-11-35-55	db4bcffb55464af68703b0b03986c020					gps	2	1	GPS has to be within 20m
+51-11-35-55	db4bcffb55464af68703b0b03986c020						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+68-44-70-23	7b2f23e36152422c9b6a8340b6feb7ae					gps	2	1	GPS has to be within 20m
+68-44-70-23	7b2f23e36152422c9b6a8340b6feb7ae						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+37-01-52-28	83408e3627764b6da873a2b6301d68a7					gps	2	1	GPS has to be within 20m
+37-01-52-28	83408e3627764b6da873a2b6301d68a7						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+37-01-52-28	83408e3627764b6da873a2b6301d68a7	narcotic_items_roster	1	231087099		amount_paid_cash	2	1	The amount seems unrealistic, please confirm and accept it if correct
+09-12-08-64	f256f2f9e23e4891b1da845b65e81fbd					gps	2	1	GPS has to be within 20m
+09-12-08-64	f256f2f9e23e4891b1da845b65e81fbd						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+18-47-68-10	cc68f228a74948c9b5138b6920faa8a4					gps	2	1	GPS has to be within 20m
+18-47-68-10	cc68f228a74948c9b5138b6920faa8a4						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+62-93-43-55	577351d6e4e64ad9b628c020d12d84c6					gps	2	1	GPS has to be within 20m
+62-93-43-55	577351d6e4e64ad9b628c020d12d84c6						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+06-25-70-76	d4b9ece1deae464eb4dfc11178a9350d					gps	2	1	GPS has to be within 20m
+06-25-70-76	d4b9ece1deae464eb4dfc11178a9350d						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+66-89-03-96	5b59f106fd144e1b967eb9b5bc26d88f					gps	2	1	GPS has to be within 20m
+66-89-03-96	5b59f106fd144e1b967eb9b5bc26d88f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+00-75-20-68	929b94c65b3b42dcb3c13e40a21d99b6					gps	2	1	GPS has to be within 20m
+00-75-20-68	929b94c65b3b42dcb3c13e40a21d99b6						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+16-08-61-30	30d8cccf35b34e06a1b4c7d30cea04f3					gps	2	1	GPS has to be within 20m
+16-08-61-30	30d8cccf35b34e06a1b4c7d30cea04f3						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+86-85-30-88	14fdc56707d94a79a278e825b04fe651					gps	2	1	GPS has to be within 20m
+86-85-30-88	14fdc56707d94a79a278e825b04fe651						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+78-04-06-68	5d3ee7d0cabc498f820f93a4c2a0cb12					gps	2	1	GPS has to be within 20m
+78-04-06-68	5d3ee7d0cabc498f820f93a4c2a0cb12						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+53-09-53-50	458a503f5b5a44d18acfcca1da936dc7					gps	2	1	GPS has to be within 20m
+53-09-53-50	458a503f5b5a44d18acfcca1da936dc7						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+53-09-53-50	458a503f5b5a44d18acfcca1da936dc7					last_pmt_wasteDisposal	2	1	Please check and confirm the amount spend on this service as it is unlikely
+08-16-17-94	60b4c1171288499d8f1453a265e9972f					gps	2	1	GPS has to be within 20m
+08-16-17-94	60b4c1171288499d8f1453a265e9972f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+64-85-19-17	59d51ae39d554dba8719d144d40b700a					gps	2	1	GPS has to be within 20m
+64-85-19-17	59d51ae39d554dba8719d144d40b700a						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+60-17-98-71	09d1f760a3834c5aa603465c751a6509					gps	2	1	GPS has to be within 20m
+60-17-98-71	09d1f760a3834c5aa603465c751a6509						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+61-81-47-23	0538d84d4222402dbc1834bd38955863					gps	2	1	GPS has to be within 20m
+61-81-47-23	0538d84d4222402dbc1834bd38955863						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+10-05-08-50	50e4840e2343494f8dc5154d1a141db2					gps	2	1	GPS has to be within 20m
+10-05-08-50	50e4840e2343494f8dc5154d1a141db2						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+63-96-33-38	783d19a6c80341efadb98940aac26e51					gps	2	1	GPS has to be within 20m
+63-96-33-38	783d19a6c80341efadb98940aac26e51						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+63-96-33-38	783d19a6c80341efadb98940aac26e51					expense_agrFuel	2	1	The 30 days value entered for other agricultural purposes seems unlikely. Please verify.
+73-65-86-60	ee69200b303e4296b1faf9ed7ac3440f					gps	2	1	GPS has to be within 20m
+73-65-86-60	ee69200b303e4296b1faf9ed7ac3440f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+25-09-05-89	1e0ec0a1a0f9408a9dd65c66b52ce8ed					gps	2	1	GPS has to be within 20m
+25-09-05-89	1e0ec0a1a0f9408a9dd65c66b52ce8ed						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+32-64-47-46	e3e48520e2ba44b396d4e7572a7f591e					gps	2	1	GPS has to be within 20m
+32-64-47-46	e3e48520e2ba44b396d4e7572a7f591e						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+91-31-42-66	7dc644b1455f4ed8922e5230e3e447e2					gps	2	1	GPS has to be within 20m
+91-31-42-66	7dc644b1455f4ed8922e5230e3e447e2						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+13-33-98-00	cf1a0dde337749508b338fb19c629836					gps	2	1	GPS has to be within 20m
+13-33-98-00	cf1a0dde337749508b338fb19c629836						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+28-79-98-72	919e3aaf7b2a4cc48086da3633878202					gps	2	1	GPS has to be within 20m
+28-79-98-72	919e3aaf7b2a4cc48086da3633878202						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+89-75-20-34	cee720235d5448c6b39d70749944af98					gps	2	1	GPS has to be within 20m
+89-75-20-34	cee720235d5448c6b39d70749944af98						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+34-67-30-54	849e7dd0fba147e5b951948fe2992dc5					gps	2	1	GPS has to be within 20m
+34-67-30-54	849e7dd0fba147e5b951948fe2992dc5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+65-87-27-79	973b9216212945408f19b004af3935a5					gps	2	1	GPS has to be within 20m
+65-87-27-79	973b9216212945408f19b004af3935a5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+69-38-29-78	ae362bba2e4f48fab3500295285ff999					gps	2	1	GPS has to be within 20m
+69-38-29-78	ae362bba2e4f48fab3500295285ff999						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+47-43-98-43	841f4a2168c242049dfd8dbd4777f01d					gps	2	1	GPS has to be within 20m
+47-43-98-43	841f4a2168c242049dfd8dbd4777f01d						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+85-02-58-18	af5eca5d0df54bfc8c151a17a54fe5e5					gps	2	1	GPS has to be within 20m
+85-02-58-18	af5eca5d0df54bfc8c151a17a54fe5e5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+79-91-74-06	77b724468a684faf8b4bbc9ba851fb84					gps	2	1	GPS has to be within 20m
+79-91-74-06	77b724468a684faf8b4bbc9ba851fb84						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+04-54-77-47	85ba865a55d849039a96a3a2e432177b						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+27-21-35-50	b205fee055a84a73b8b4865397f12a10					gps	2	1	GPS has to be within 20m
+27-21-35-50	b205fee055a84a73b8b4865397f12a10						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+27-21-35-50	b205fee055a84a73b8b4865397f12a10					last_pmt_wasteDisposal	2	1	Please check and confirm the amount spend on this service as it is unlikely
+21-06-64-08	fb4ce53190484736bd4f5af13b58de06					gps	2	1	GPS has to be within 20m
+21-06-64-08	fb4ce53190484736bd4f5af13b58de06						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+54-92-32-91	66cc2cedf0e1483db934860c1bc40c27					gps	2	1	GPS has to be within 20m
+54-92-32-91	66cc2cedf0e1483db934860c1bc40c27						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+77-19-91-37	8ee3519bb8044532bed3cac6043ddf53					gps	2	1	GPS has to be within 20m
+77-19-91-37	8ee3519bb8044532bed3cac6043ddf53						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+31-99-35-62	cea0c6a51c294e32899f993d4f14a9ad					gps	2	1	GPS has to be within 20m
+31-99-35-62	cea0c6a51c294e32899f993d4f14a9ad						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+77-80-73-35	924decce54094b4a8ee0e017ce697405					gps	2	1	GPS has to be within 20m
+77-80-73-35	924decce54094b4a8ee0e017ce697405						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+23-31-03-80	1ee18bddad874952ad5d26fb93530b60					gps	2	1	GPS has to be within 20m
+23-31-03-80	1ee18bddad874952ad5d26fb93530b60						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+33-34-90-80	e655dd20ecd544a0a54b9537559e811b					gps	2	1	GPS has to be within 20m
+33-34-90-80	e655dd20ecd544a0a54b9537559e811b						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+21-35-10-15	e4112e19da2d470fbfa7b97cd70b836d					gps	2	1	GPS has to be within 20m
+21-35-10-15	e4112e19da2d470fbfa7b97cd70b836d						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+98-30-24-89	f6834a4abec14edbb81ed98cf3a8b252					gps	2	1	GPS has to be within 20m
+98-30-24-89	f6834a4abec14edbb81ed98cf3a8b252						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+64-93-73-39	3aeeabc877294f59ae12b860c0d53dc2					gps	2	1	GPS has to be within 20m
+64-93-73-39	3aeeabc877294f59ae12b860c0d53dc2						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+99-82-87-99	aca97749e9ed4e9ab323c9ec81077d9d					gps	2	1	GPS has to be within 20m
+99-82-87-99	aca97749e9ed4e9ab323c9ec81077d9d						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+58-60-04-34	5790d184b17d4cfdb73e7cc50eb7dbb4					gps	2	1	GPS has to be within 20m
+58-60-04-34	5790d184b17d4cfdb73e7cc50eb7dbb4						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+62-34-78-83	2398093ebea645ac8fce8f7ab966813e					gps	2	1	GPS has to be within 20m
+62-34-78-83	2398093ebea645ac8fce8f7ab966813e						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+88-06-15-24	61fcf08e44cd44e0bb86eb594d8ace33					gps	2	1	GPS has to be within 20m
+88-06-15-24	61fcf08e44cd44e0bb86eb594d8ace33						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+88-06-15-24	61fcf08e44cd44e0bb86eb594d8ace33	narcotic_items_roster	1	1		amount_paid_cash	2	1	The amount seems unrealistic, please confirm and accept it if correct
+88-06-15-24	61fcf08e44cd44e0bb86eb594d8ace33	narcotic_items_roster	1	2		amount_paid_cash	2	1	The amount seems unrealistic, please confirm and accept it if correct
+43-67-01-34	0b7ad00c9b354a80a16d5d4c201f3354					gps	2	1	GPS has to be within 20m
+43-67-01-34	0b7ad00c9b354a80a16d5d4c201f3354						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+06-58-03-39	4336385438014861a584f4d1b6dbac3c					gps	2	1	GPS has to be within 20m
+06-58-03-39	4336385438014861a584f4d1b6dbac3c						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+91-24-90-68	25a70ded395a409a94c028cce6416dec					gps	2	1	GPS has to be within 20m
+91-24-90-68	25a70ded395a409a94c028cce6416dec						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+34-01-78-99	1e55c6f34ee34f7bb7542e071a2aca0c					gps	2	1	GPS has to be within 20m
+34-01-78-99	1e55c6f34ee34f7bb7542e071a2aca0c						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+91-40-49-83	589a101c9ee44f00a0e955e37266eb63					gps	2	1	GPS has to be within 20m
+91-40-49-83	589a101c9ee44f00a0e955e37266eb63						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+69-41-74-84	4831e03cd1c94838ac738038f97e5cc9					gps	2	1	GPS has to be within 20m
+69-41-74-84	4831e03cd1c94838ac738038f97e5cc9						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+69-41-74-84	4831e03cd1c94838ac738038f97e5cc9	narcotic_items_roster	1	231087099		amount_paid_cash	2	1	The amount seems unrealistic, please confirm and accept it if correct
+45-59-44-66	467e48f73f38496f8dff9f11c815c866						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+23-18-42-15	1f59764e653e4c24927d784dfdd38e01					gps	2	1	GPS has to be within 20m
+23-18-42-15	1f59764e653e4c24927d784dfdd38e01						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+23-18-42-15	1f59764e653e4c24927d784dfdd38e01	narcotic_items_roster	1	231087099		amount_paid_cash	2	1	The amount seems unrealistic, please confirm and accept it if correct
+83-06-75-70	19847056a213416ab03cc643442a8c4d					gps	2	1	GPS has to be within 20m
+39-97-44-12	c10a78ba328049efa5f81bb1b3a25e99					gps	2	1	GPS has to be within 20m
+39-97-44-12	c10a78ba328049efa5f81bb1b3a25e99						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+71-35-48-97	4aac5b00f412457d91ae380e33d3ea9f					gps	2	1	GPS has to be within 20m
+71-35-48-97	4aac5b00f412457d91ae380e33d3ea9f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+50-12-80-46	fb8fe61869304f0489b6b5ba88e7034e					gps	2	1	GPS has to be within 20m
+50-12-80-46	fb8fe61869304f0489b6b5ba88e7034e						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+74-11-97-81	7b7ef72c93814a2f84cd364c11990ad0					gps	2	1	GPS has to be within 20m
+74-11-97-81	7b7ef72c93814a2f84cd364c11990ad0						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+35-44-22-74	6885d1ab7dcc474cbf08283dfa12887f					gps	2	1	GPS has to be within 20m
+35-44-22-74	6885d1ab7dcc474cbf08283dfa12887f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+72-81-41-81	9c6e13f9c35f4783b0e6c35c9b548e89					gps	2	1	GPS has to be within 20m
+72-81-41-81	9c6e13f9c35f4783b0e6c35c9b548e89						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+90-58-94-20	02d52cbc793a4ea490fa7512fbd98422					gps	2	1	GPS has to be within 20m
+90-58-94-20	02d52cbc793a4ea490fa7512fbd98422						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+90-58-94-20	02d52cbc793a4ea490fa7512fbd98422					last_pmt_wasteDisposal	2	1	Please check and confirm the amount spend on this service as it is unlikely
+14-07-87-98	948795d423da41168693d755fb7dfd70					gps	2	1	GPS has to be within 20m
+14-07-87-98	948795d423da41168693d755fb7dfd70						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+36-49-72-24	f052e62397ab4128bf54863364a43395					gps	2	1	GPS has to be within 20m
+36-49-72-24	f052e62397ab4128bf54863364a43395						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+47-01-33-81	1307540bd8fd4239935623976c0f2457					gps	2	1	GPS has to be within 20m
+47-01-33-81	1307540bd8fd4239935623976c0f2457						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+58-65-75-27	afa7d583ff8e4eaf8f408ca8bb071473					gps	2	1	GPS has to be within 20m
+58-65-75-27	afa7d583ff8e4eaf8f408ca8bb071473						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+14-38-02-95	f7a417663c19449ab9de887ddbbf9a01					gps	2	1	GPS has to be within 20m
+14-38-02-95	f7a417663c19449ab9de887ddbbf9a01						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+71-34-08-01	0a531229dbaf49fba02372ee1ffff056						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+11-57-12-66	f8336efe230f453faed7405564c18bcc					gps	2	1	GPS has to be within 20m
+11-57-12-66	f8336efe230f453faed7405564c18bcc						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+89-91-66-15	150271281c5040b696d396061cdcb1ef					gps	2	1	GPS has to be within 20m
+89-91-66-15	150271281c5040b696d396061cdcb1ef						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+82-10-91-07	b2ceab36b975406b955047334c9dc7b1					gps	2	1	GPS has to be within 20m
+82-10-91-07	b2ceab36b975406b955047334c9dc7b1						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+48-85-10-61	383fe719a87f403f84ae777da5a625e6					gps	2	1	GPS has to be within 20m
+48-85-10-61	383fe719a87f403f84ae777da5a625e6						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+54-62-65-78	018c6270d0f644a0a84174bdd99c80f8					gps	2	1	GPS has to be within 20m
+54-62-65-78	018c6270d0f644a0a84174bdd99c80f8						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+42-87-90-21	27bc6e3b8956475fbf187fe4dc0f3ae5					gps	2	1	GPS has to be within 20m
+42-87-90-21	27bc6e3b8956475fbf187fe4dc0f3ae5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+84-06-71-70	dc5c46a5fbde42e2b9e30e1c9b8f1764					gps	2	1	GPS has to be within 20m
+84-06-71-70	dc5c46a5fbde42e2b9e30e1c9b8f1764						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+87-25-33-71	d1d765e03da94bf18779755d1d82ec10					gps	2	1	GPS has to be within 20m
+87-25-33-71	d1d765e03da94bf18779755d1d82ec10						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+71-00-52-01	d0d144752f5645588a70b34fdff55726					gps	2	1	GPS has to be within 20m
+71-00-52-01	d0d144752f5645588a70b34fdff55726						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+71-00-52-01	d0d144752f5645588a70b34fdff55726	oth_income_ros	21000			amount_cashIncome	2	1	The 12 months value entered for %rostertitle% seems unlikely. Please verify.
+18-29-47-23	e114f53fcdb8485ca1142446bd7ef4bd					gps	2	1	GPS has to be within 20m
+18-29-47-23	e114f53fcdb8485ca1142446bd7ef4bd						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+15-98-23-49	2c1621c9a3754be49eca2d23259cb2f7					gps	2	1	GPS has to be within 20m
+15-98-23-49	2c1621c9a3754be49eca2d23259cb2f7						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+18-77-65-88	ebd8ba836c844926a8674227688135f5					gps	2	1	GPS has to be within 20m
+18-77-65-88	ebd8ba836c844926a8674227688135f5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+18-77-65-88	ebd8ba836c844926a8674227688135f5	oth_income_ros	21000			amount_cashIncome	2	1	The 12 months value entered for %rostertitle% seems unlikely. Please verify.
+03-02-24-73	c512a9f8387e406fb0bd84921a77e764					gps	2	1	GPS has to be within 20m
+03-02-24-73	c512a9f8387e406fb0bd84921a77e764						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+51-11-49-88	11e1596c868d46b6bcad5d271419b70a						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+34-05-69-24	bf81c1b0f5e446be953373780b58fcc5					gps	2	1	GPS has to be within 20m
+34-05-69-24	bf81c1b0f5e446be953373780b58fcc5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+88-26-33-43	f1d9d45304b5401597f23c46802066c0					gps	2	1	GPS has to be within 20m
+88-26-33-43	f1d9d45304b5401597f23c46802066c0						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+73-69-82-54	016953b0bee0443a92fe37cb7a427595					gps	2	1	GPS has to be within 20m
+73-69-82-54	016953b0bee0443a92fe37cb7a427595						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+75-75-30-69	c6817849ff8743c1b95e8d6f11237612					gps	2	1	GPS has to be within 20m
+75-75-30-69	c6817849ff8743c1b95e8d6f11237612						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+71-30-46-70	e9f75b1c73844cdea9d3958cea1ae918					gps	2	1	GPS has to be within 20m
+71-30-46-70	e9f75b1c73844cdea9d3958cea1ae918						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+34-35-40-57	05d4715d7f2249c1b38eb3883379f5e5					gps	2	1	GPS has to be within 20m
+34-35-40-57	05d4715d7f2249c1b38eb3883379f5e5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+19-51-08-31	d531ff1d20ae45b58c9636bf529bb336					gps	2	1	GPS has to be within 20m
+19-51-08-31	d531ff1d20ae45b58c9636bf529bb336						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+06-11-13-03	5d7af1cd44274c9395e3c0eb2418b6a8					gps	2	1	GPS has to be within 20m
+06-11-13-03	5d7af1cd44274c9395e3c0eb2418b6a8						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+86-22-62-08	aa67c4da48d6470f8f317ed70e2828ed					gps	2	1	GPS has to be within 20m
+86-22-62-08	aa67c4da48d6470f8f317ed70e2828ed						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+09-99-60-09	563f9ffcc820491fb92af9ac23196b75					gps	2	1	GPS has to be within 20m
+09-99-60-09	563f9ffcc820491fb92af9ac23196b75						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+34-24-01-64	d0ffa3738cf44da1b3e6828abceaccec					gps	2	1	GPS has to be within 20m
+34-24-01-64	d0ffa3738cf44da1b3e6828abceaccec						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+72-16-16-28	78118a0df787489ab715e66c2c6bd343					gps	2	1	GPS has to be within 20m
+72-16-16-28	78118a0df787489ab715e66c2c6bd343						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+19-04-05-78	92e8888138b24726b93fa523db71bc39					gps	2	1	GPS has to be within 20m
+19-04-05-78	92e8888138b24726b93fa523db71bc39						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+48-86-06-59	be7da8d06422439d9585d00b1e55fcb9					gps	2	1	GPS has to be within 20m
+48-86-06-59	be7da8d06422439d9585d00b1e55fcb9						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+60-68-20-55	472681e12e954de5a45abcaeeaafe0ee					gps	2	1	GPS has to be within 20m
+60-68-20-55	472681e12e954de5a45abcaeeaafe0ee						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+95-37-17-73	d66cbe4c34a34ecb9bacf431ea19920a					gps	2	1	GPS has to be within 20m
+95-37-17-73	d66cbe4c34a34ecb9bacf431ea19920a						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+95-37-17-73	d66cbe4c34a34ecb9bacf431ea19920a					last_pmt_wasteDisposal	2	1	Please check and confirm the amount spend on this service as it is unlikely
+71-62-87-82	c13b7fc24d6b473fa375c05f55ded42b						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+40-86-40-92	ef5d56ffdd5c4736828de033736f223e					gps	2	1	GPS has to be within 20m
+40-86-40-92	ef5d56ffdd5c4736828de033736f223e						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+40-86-40-92	ef5d56ffdd5c4736828de033736f223e					expense_fuel_boat	2	1	The value entered for fuel seems unlikely. Please verify.
+59-33-54-20	141b76fe6a1e49f2b0b3c2af67c8c8f6					gps	2	1	GPS has to be within 20m
+59-33-54-20	141b76fe6a1e49f2b0b3c2af67c8c8f6						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+95-71-51-73	f15c23e60a264a8d8304f02ecf4dc048					gps	2	1	GPS has to be within 20m
+95-71-51-73	f15c23e60a264a8d8304f02ecf4dc048						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+95-71-51-73	f15c23e60a264a8d8304f02ecf4dc048	oth_income_ros	21000			amount_cashIncome	2	1	The 12 months value entered for %rostertitle% seems unlikely. Please verify.
+90-25-03-92	1be83355cd6f4b47bb04b5529dbbc103					gps	2	1	GPS has to be within 20m
+90-25-03-92	1be83355cd6f4b47bb04b5529dbbc103						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+70-30-30-86	1c5a6878a3004984a095d6cea34499ce					gps	2	1	GPS has to be within 20m
+70-30-30-86	1c5a6878a3004984a095d6cea34499ce						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+27-17-64-23	3f52c6171f794acab3429cf04635ea82					gps	2	1	GPS has to be within 20m
+27-17-64-23	3f52c6171f794acab3429cf04635ea82						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+81-43-82-63	29d5ffb272614f6da9dc161c22b1ff39					gps	2	1	GPS has to be within 20m
+81-43-82-63	29d5ffb272614f6da9dc161c22b1ff39						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+81-13-33-37	42a5a6427d1d42c989d541dd3b808a43					gps	2	1	GPS has to be within 20m
+81-13-33-37	42a5a6427d1d42c989d541dd3b808a43						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+65-28-55-20	2cc5c63a995945d2b2bdbf1bb4ef55fd					gps	2	1	GPS has to be within 20m
+65-28-55-20	2cc5c63a995945d2b2bdbf1bb4ef55fd						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+51-32-59-65	3c60ca1cc26f48fab2c41d32096e1229					gps	2	1	GPS has to be within 20m
+51-32-59-65	3c60ca1cc26f48fab2c41d32096e1229						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+34-42-44-42	6efca1b86d904fc3aee883b33b87f3ef					gps	2	1	GPS has to be within 20m
+34-42-44-42	6efca1b86d904fc3aee883b33b87f3ef						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+49-86-49-71	5abdc591cb694eaca8f721fdb7148a2f					gps	2	1	GPS has to be within 20m
+49-86-49-71	5abdc591cb694eaca8f721fdb7148a2f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+47-45-24-82	96cf15e5a48149978d33235ef5c1d185					gps	2	1	GPS has to be within 20m
+47-45-24-82	96cf15e5a48149978d33235ef5c1d185						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+55-00-30-07	ec1b74be9c314fa68885be8fcdc47e56					gps	2	1	GPS has to be within 20m
+49-34-70-67	67760222e321446dab7f875d2c3da69c					gps	2	1	GPS has to be within 20m
+49-34-70-67	67760222e321446dab7f875d2c3da69c						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+28-96-71-46	f1ff8cb02e7c47acbe61982ba4ae5962					gps	2	1	GPS has to be within 20m
+28-96-71-46	f1ff8cb02e7c47acbe61982ba4ae5962						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+57-72-24-94	779d9b01a5a2458cb593712273ad609f					gps	2	1	GPS has to be within 20m
+57-72-24-94	779d9b01a5a2458cb593712273ad609f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+35-30-70-26	7d4dcaa283bf450f965a87bdce4b19b0					gps	2	1	GPS has to be within 20m
+35-30-70-26	7d4dcaa283bf450f965a87bdce4b19b0						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+96-10-64-63	f31e2760376c41259cf778050c551ec0					gps	2	1	GPS has to be within 20m
+96-10-64-63	f31e2760376c41259cf778050c551ec0						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+93-50-36-92	843caa758a70498696f22d4d9ac4162c					gps	2	1	GPS has to be within 20m
+93-50-36-92	843caa758a70498696f22d4d9ac4162c						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+17-58-03-26	f9c761c0e3104bcda365b81da574a718					gps	2	1	GPS has to be within 20m
+17-58-03-26	f9c761c0e3104bcda365b81da574a718						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+30-54-55-25	94273a0e331144c2a9bf4e427a0c863b					gps	2	1	GPS has to be within 20m
+30-54-55-25	94273a0e331144c2a9bf4e427a0c863b						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+82-57-41-98	534de7cc97ba4202ab229fceb2a49fd5					gps	2	1	GPS has to be within 20m
+82-57-41-98	534de7cc97ba4202ab229fceb2a49fd5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+73-44-55-20	0cb7b9fb1dec4cedbec173776e57a67d					gps	2	1	GPS has to be within 20m
+73-44-55-20	0cb7b9fb1dec4cedbec173776e57a67d						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+94-26-46-53	19a385b3f607412881da422dc4502c92					gps	2	1	GPS has to be within 20m
+94-26-46-53	19a385b3f607412881da422dc4502c92						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+15-78-36-32	1d0b613ecfa446298ddcc76f6ceb8462					gps	2	1	GPS has to be within 20m
+15-78-36-32	1d0b613ecfa446298ddcc76f6ceb8462						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+70-90-72-89	1f2964610e48404782634541d1d09096					gps	2	1	GPS has to be within 20m
+70-90-72-89	1f2964610e48404782634541d1d09096						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+72-96-15-89	29a89d1f1e484700bdf4455e3697f25e					gps	2	1	GPS has to be within 20m
+72-96-15-89	29a89d1f1e484700bdf4455e3697f25e						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+72-96-15-89	29a89d1f1e484700bdf4455e3697f25e					expense_agrFuel	2	1	The 30 days value entered for other agricultural purposes seems unlikely. Please verify.
+92-90-63-35	332b631055fa4be19b7c514f6b4728dd					gps	2	1	GPS has to be within 20m
+92-90-63-35	332b631055fa4be19b7c514f6b4728dd						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+48-55-39-19	371f41a09bce401bb6920f3cb438b37f					gps	2	1	GPS has to be within 20m
+48-55-39-19	371f41a09bce401bb6920f3cb438b37f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+06-55-14-70	420b306656574d13abab4c4422540444					gps	2	1	GPS has to be within 20m
+06-55-14-70	420b306656574d13abab4c4422540444						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+88-46-76-60	441d65ab66b9478aae994386a8fcbb97					gps	2	1	GPS has to be within 20m
+88-46-76-60	441d65ab66b9478aae994386a8fcbb97						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+88-46-76-60	441d65ab66b9478aae994386a8fcbb97					expense_fuel_boat	2	1	The value entered for fuel seems unlikely. Please verify.
+13-33-60-77	54078b1723f74bda8980a3f0d4fa9b3a					gps	2	1	GPS has to be within 20m
+13-33-60-77	54078b1723f74bda8980a3f0d4fa9b3a						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+85-50-87-14	585df194f2fd4bd78a3bb86f1af132e7					gps	2	1	GPS has to be within 20m
+85-50-87-14	585df194f2fd4bd78a3bb86f1af132e7						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+20-28-10-63	6096222725af42e3bfea77f4f1234d22					gps	2	1	GPS has to be within 20m
+20-28-10-63	6096222725af42e3bfea77f4f1234d22						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+20-28-10-63	6096222725af42e3bfea77f4f1234d22					last_pmt_wasteDisposal	2	1	Please check and confirm the amount spend on this service as it is unlikely
+20-28-10-63	6096222725af42e3bfea77f4f1234d22					own_asset	2	1	ALL 'Yes/No' categories should be answered
+47-48-86-01	6b2f41354d5047cc825f2fe3d028cf6f					gps	2	1	GPS has to be within 20m
+47-48-86-01	6b2f41354d5047cc825f2fe3d028cf6f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+70-15-11-10	84e04caf10144d31b33da32d3d1fb72f					gps	2	1	GPS has to be within 20m
+70-15-11-10	84e04caf10144d31b33da32d3d1fb72f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+04-33-50-06	8c1073ac6ea149d6a97458fe3092e621					gps	2	1	GPS has to be within 20m
+04-33-50-06	8c1073ac6ea149d6a97458fe3092e621						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+08-79-98-74	8e2b75a3721744d38c35da6498f3cbf2					gps	2	1	GPS has to be within 20m
+08-79-98-74	8e2b75a3721744d38c35da6498f3cbf2						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+44-25-88-16	9123bd6660804a3cbfbde089828f179b					gps	2	1	GPS has to be within 20m
+44-25-88-16	9123bd6660804a3cbfbde089828f179b						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+56-02-33-18	972f6505018a49dca3ed4c6879954ae8					gps	2	1	GPS has to be within 20m
+56-02-33-18	972f6505018a49dca3ed4c6879954ae8						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+92-55-13-88	9acc2955fcc34f08a29fd9fd6abcc722					gps	2	1	GPS has to be within 20m
+92-55-13-88	9acc2955fcc34f08a29fd9fd6abcc722						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+56-88-48-65	9e2bf9e8c84c4f5ead6eb7ade4a64b4d					gps	2	1	GPS has to be within 20m
+56-88-48-65	9e2bf9e8c84c4f5ead6eb7ade4a64b4d						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+71-30-93-92	aadfbbbbb8fc4991a2e847e5d1650d37					gps	2	1	GPS has to be within 20m
+71-30-93-92	aadfbbbbb8fc4991a2e847e5d1650d37						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+98-28-02-73	ba2a506ea31a4fbdaac468e2bbec46f2					gps	2	1	GPS has to be within 20m
+98-28-02-73	ba2a506ea31a4fbdaac468e2bbec46f2						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+03-15-71-90	c76855712c014c7f888c38a784b74661					gps	2	1	GPS has to be within 20m
+03-15-71-90	c76855712c014c7f888c38a784b74661						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+03-15-71-90	c76855712c014c7f888c38a784b74661	hm_details	1			wifi_purchase_amount	2	1	The value entered for mobile wifi device seems unlikely. Please verify.
+62-59-91-17	cfd3ad52c8b042f6adcf8b296e8e321e					gps	2	1	GPS has to be within 20m
+62-59-91-17	cfd3ad52c8b042f6adcf8b296e8e321e						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+62-59-91-17	cfd3ad52c8b042f6adcf8b296e8e321e	hm_details	4			edu_expenditure	2	2	Please check again as this person has no education expenses but he/she is currently attending school
+97-22-58-47	dfe3cb93a250414b940b7afc0db6f796					gps	2	1	GPS has to be within 20m
+97-22-58-47	dfe3cb93a250414b940b7afc0db6f796						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+64-05-82-36	e0e37931ae354e8fac54a08b61ad0ced					gps	2	1	GPS has to be within 20m
+64-05-82-36	e0e37931ae354e8fac54a08b61ad0ced						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+02-43-60-73	e1c39fdd155c4e6a9d0b4ff441b70bec					gps	2	1	GPS has to be within 20m
+02-43-60-73	e1c39fdd155c4e6a9d0b4ff441b70bec						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+31-61-84-84	e54c23d1a0b3417eb222de5db9f85503					gps	2	1	GPS has to be within 20m
+31-61-84-84	e54c23d1a0b3417eb222de5db9f85503						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+30-19-91-85	e9be93f1d8d640ecbe23181074098718					gps	2	1	GPS has to be within 20m
+30-19-91-85	e9be93f1d8d640ecbe23181074098718						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+42-70-12-87	eb95dd669b0545e8a6769231779e01b6					gps	2	1	GPS has to be within 20m
+42-70-12-87	eb95dd669b0545e8a6769231779e01b6						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+69-76-83-14	efebf485e7ed4e72b15de8ea3cb92e37					gps	2	1	GPS has to be within 20m
+69-76-83-14	efebf485e7ed4e72b15de8ea3cb92e37						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+12-69-44-98	f56bc5e6f5ec4d7baacf53b53bd63847					gps	2	1	GPS has to be within 20m
+12-69-44-98	f56bc5e6f5ec4d7baacf53b53bd63847						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+18-34-78-53	12b66867f9734a0ba913e1f1aea38138					gps	2	1	GPS has to be within 20m
+18-34-78-53	12b66867f9734a0ba913e1f1aea38138						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+18-34-78-53	12b66867f9734a0ba913e1f1aea38138	narcotic_items_roster	1	231087099		amount_paid_cash	2	1	The amount seems unrealistic, please confirm and accept it if correct
+59-97-80-51	228f9a21a7be4c8abc59cc95ff25e88a					gps	2	1	GPS has to be within 20m
+59-97-80-51	228f9a21a7be4c8abc59cc95ff25e88a						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+54-96-61-49	2fbeb651735849a7ac9438b7d41f0a40					gps	2	1	GPS has to be within 20m
+54-96-61-49	2fbeb651735849a7ac9438b7d41f0a40						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+20-58-65-51	37e31b20d3fe4f34b6868dfe43027fcc					gps	2	1	GPS has to be within 20m
+20-58-65-51	37e31b20d3fe4f34b6868dfe43027fcc						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+87-19-41-64	75f421dd23b245ed8ab6b8b6c4ecb730					gps	2	1	GPS has to be within 20m
+87-19-41-64	75f421dd23b245ed8ab6b8b6c4ecb730						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+90-63-57-66	8c8871bc4ef448bf8250f8b09a1bc755					gps	2	1	GPS has to be within 20m
+90-63-57-66	8c8871bc4ef448bf8250f8b09a1bc755						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+49-09-09-24	9fa451cf87024f43a011e2eb7502fc89					gps	2	1	GPS has to be within 20m
+49-09-09-24	9fa451cf87024f43a011e2eb7502fc89						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+65-79-68-50	b946c8696a5047ff90df944db2739496					gps	2	1	GPS has to be within 20m
+65-79-68-50	b946c8696a5047ff90df944db2739496						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+97-04-50-97	037c6e6348eb4f6e8a809b5b86067392					gps	2	1	GPS has to be within 20m
+97-04-50-97	037c6e6348eb4f6e8a809b5b86067392						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+97-04-50-97	037c6e6348eb4f6e8a809b5b86067392	narcotic_items_roster	1	231087099		amount_paid_cash	2	1	The amount seems unrealistic, please confirm and accept it if correct
+85-92-46-20	19f3a3f4807d4ae9ad88e1f0c1256fb3					gps	2	1	GPS has to be within 20m
+85-92-46-20	19f3a3f4807d4ae9ad88e1f0c1256fb3						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+77-84-35-61	4abb95756f654302b9b2f7568cb906c6					gps	2	1	GPS has to be within 20m
+77-84-35-61	4abb95756f654302b9b2f7568cb906c6						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+63-03-78-87	3d3afbd92e964aed9d46cc348570a54f					gps	2	1	GPS has to be within 20m
+63-03-78-87	3d3afbd92e964aed9d46cc348570a54f						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+24-05-23-81	efa6570a55184252ab1852220bab61f5					gps	2	1	GPS has to be within 20m
+24-05-23-81	efa6570a55184252ab1852220bab61f5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+23-00-02-66	5d59fe46d94e467cbe5d52563450a0db					gps	2	1	GPS has to be within 20m
+23-00-02-66	5d59fe46d94e467cbe5d52563450a0db						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+80-43-12-85	5786877d660643c8b6c2c2e99d9247ec					gps	2	1	GPS has to be within 20m
+80-43-12-85	5786877d660643c8b6c2c2e99d9247ec						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+02-36-36-07	4fc97991554d447aa331fbb0a05c9125					gps	2	1	GPS has to be within 20m
+02-36-36-07	4fc97991554d447aa331fbb0a05c9125						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+25-07-35-09	06cb5b32cf1e44daa812e778e455d720					gps	2	1	GPS has to be within 20m
+25-07-35-09	06cb5b32cf1e44daa812e778e455d720						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+01-80-08-34	d979e486e8d945c399a3e61efd6d3be5					gps	2	1	GPS has to be within 20m
+01-80-08-34	d979e486e8d945c399a3e61efd6d3be5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+77-09-49-94	099ffbd7449c4b85a92301a90d34378e					gps	2	1	GPS has to be within 20m
+77-09-49-94	099ffbd7449c4b85a92301a90d34378e						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days
+46-15-30-37	ed2601c32d18403392ee7c4d7db353c5					gps	2	1	GPS has to be within 20m
+46-15-30-37	ed2601c32d18403392ee7c4d7db353c5						3	1	Please confirm that this household did not consume any food at home!!!!!! If it is correct do make sure they eat food away from home for the last days

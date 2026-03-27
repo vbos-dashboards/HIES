@@ -1377,9 +1377,13 @@
         // ============================================================
         //  LOAD DATA FILES
         // ============================================================
+        const DATA_VERSION = String(Date.now());
+
         async function loadFile(filename) {
             try {
-                const resp = await fetch(filename);
+                const sep = filename.includes('?') ? '&' : '?';
+                const url = `${filename}${sep}v=${DATA_VERSION}`;
+                const resp = await fetch(url, { cache: 'no-store' });
                 if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
                 return parseTSV(await resp.text());
             } catch (e) {

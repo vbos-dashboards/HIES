@@ -48,9 +48,12 @@
 
     /* ---------- data loading ---------- */
     let summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, foodData, listingData, marketData;
+    const DATA_VERSION = String(Date.now());
     try {
         async function loadJSON(path) {
-            const r = await fetch(path);
+            const sep = path.includes('?') ? '&' : '?';
+            const url = `${path}${sep}v=${DATA_VERSION}`;
+            const r = await fetch(url, { cache: 'no-store' });
             if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
             return r.json();
         }
