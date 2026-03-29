@@ -403,7 +403,64 @@ $marketJson | ConvertTo-Json -Depth 5 | Out-File (Join-Path $OutDir "market.json
 $mktWithData = ($hhProgress | Where-Object { $_.has_market -eq 1 }).Count
 Write-Host "  -> $($outlets.Count) outlets from $mktWithData households"
 
-# --- 10. Generate CSV Files ---
+# --- 10. Household assets (asset_details_roster.tab vs own_asset in main file) ---
+Write-Host "Processing household assets..."
+$assetRosterData = Read-TabFile (Join-Path $SourceDir "asset_details_roster.tab")
+$assetReportedByKey = @{}
+$assetLineCountByKey = @{}
+foreach ($row in $assetRosterData) {
+    $key = $row.interview__key
+    if (!$assetLineCountByKey.ContainsKey($key)) { $assetLineCountByKey[$key] = 0 }
+    $assetLineCountByKey[$key]++
+    $aid = [string]$row.asset_details_roster__id
+    $qty = 0
+    if ($row.number_asset_owned -and $row.number_asset_owned -ne "" -and $row.number_asset_owned -ne "-999999999") {
+        try { $qty = [int]$row.number_asset_owned } catch { $qty = 0 }
+    }
+    if ($qty -gt 0) {
+        if (!$assetReportedByKey.ContainsKey($key)) { $assetReportedByKey[$key] = @{} }
+        $assetReportedByKey[$key][$aid] = $true
+    }
+}
+
+$hhRawByKey = @{}
+foreach ($r in $hhData) {
+    $hhRawByKey[$r.interview__key] = $r
+}
+
+$assets = @()
+foreach ($hh in $households) {
+    $key = $hh.interview_key
+    $raw = $hhRawByKey[$key]
+    $ownedYes = 0
+    if ($raw) {
+        foreach ($p in $raw.PSObject.Properties) {
+            if ($p.Name -like 'own_asset__*' -and $p.Value -eq '1') { $ownedYes++ }
+        }
+    }
+    $reportedDistinct = 0
+    if ($assetReportedByKey.ContainsKey($key)) {
+        $reportedDistinct = $assetReportedByKey[$key].Keys.Count
+    }
+    $lines = if ($assetLineCountByKey.ContainsKey($key)) { $assetLineCountByKey[$key] } else { 0 }
+    $gap = [math]::Max(0, $ownedYes - $reportedDistinct)
+    $assets += [PSCustomObject]@{
+        interview_key        = $key
+        province             = $hh.province_name
+        ea                   = $hh.ea
+        team_id              = $hh.team_id
+        interview_status     = $hh.interview_status
+        owned_asset_types    = $ownedYes
+        roster_asset_types   = $reportedDistinct
+        asset_roster_lines   = $lines
+        unreported_asset_gap = $gap
+    }
+}
+$assets | ConvertTo-Json -Depth 3 | Out-File (Join-Path $OutDir "assets.json") -Encoding UTF8
+$gapPositive = ($assets | Where-Object { $_.unreported_asset_gap -gt 0 }).Count
+Write-Host "  -> $($assets.Count) asset records ($gapPositive with unreported asset gap > 0)"
+
+# --- 11. Generate CSV Files ---
 Write-Host "Generating CSV extracts..."
 
 # Build household head lookup

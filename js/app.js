@@ -47,7 +47,7 @@
     }
 
     /* ---------- data loading ---------- */
-    let summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, foodData, listingData, marketData;
+    let summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, foodData, listingData, marketData, assetsData;
     const DATA_VERSION = String(Date.now());
     try {
         async function loadJSON(path) {
@@ -57,7 +57,7 @@
             if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
             return r.json();
         }
-        [summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, foodData, listingData, marketData] = await Promise.all([
+        [summary, households, persons, lookup, targets, eaBoundaries, villagePoints, workplan, foodData, listingData, marketData, assetsData] = await Promise.all([
             loadJSON('data/summary.json'),
             loadJSON('data/households.json'),
             loadJSON('data/persons.json'),
@@ -68,7 +68,8 @@
             loadJSON('data/workplan.json'),
             loadJSON('data/food.json'),
             loadJSON('data/listing.json').catch(() => []),
-            loadJSON('data/market.json').catch(() => ({ outlets: [], hh_progress: [], categories: [] }))
+            loadJSON('data/market.json').catch(() => ({ outlets: [], hh_progress: [], categories: [] })),
+            loadJSON('data/assets.json').catch(() => [])
         ]);
     } catch (err) {
         showError('Could not load dashboard data.', String(err));
@@ -133,7 +134,9 @@
         foodconsumption: 'Food Consumption',
         workplan: 'Work Plan',
         listing: 'Household Listing',
-        market: 'Market Survey'
+        market: 'Market Survey',
+        assets: 'Household Assets',
+        underreporting: 'Underreporting checks'
     };
 
     const navItems = document.querySelectorAll('.nav-item');
@@ -178,6 +181,8 @@
             case 'workplan': renderWorkplan(); break;
             case 'listing': renderListing(); break;
             case 'market': renderMarket(); break;
+            case 'assets': renderAssets(); break;
+            case 'underreporting': renderUnderreporting(); break;
         }
     }
 
@@ -1878,6 +1883,241 @@
                 }
             });
             tr.innerHTML = cells;
+            tbody.appendChild(tr);
+        });
+    }
+
+    /* ========================================
+       15. HOUSEHOLD ASSETS (unreported gap + threshold)
+       ======================================== */
+    function renderAssets() {
+        if (!assetsData || !assetsData.length) {
+            setText('kpi-asset-total', '0');
+            setText('kpi-asset-max-gap', '—');
+            setText('kpi-asset-avg-owned', '—');
+            setText('kpi-asset-flagged', '—');
+            return;
+        }
+
+        const n = assetsData.length;
+        const gaps = assetsData.map(a => Number(a.unreported_asset_gap) || 0);
+        const maxGap = Math.max(...gaps, 0);
+        const sumOwned = assetsData.reduce((s, a) => s + (Number(a.owned_asset_types) || 0), 0);
+        const avgOwned = n > 0 ? (sumOwned / n).toFixed(1) : '0';
+
+        setText('kpi-asset-total', n);
+        setText('kpi-asset-max-gap', maxGap);
+        setText('kpi-asset-avg-owned', avgOwned);
+
+        const binLabels = ['0', '1', '2', '3', '4', '5+'];
+        const binCounts = [0, 0, 0, 0, 0, 0];
+        gaps.forEach(g => {
+            if (g <= 0) binCounts[0]++;
+            else if (g === 1) binCounts[1]++;
+            else if (g === 2) binCounts[2]++;
+            else if (g === 3) binCounts[3]++;
+            else if (g === 4) binCounts[4]++;
+            else binCounts[5]++;
+        });
+
+        makeChart('chart-asset-gap-hist', {
+            type: 'bar',
+            data: {
+                labels: binLabels.map(b => 'Gap ' + b),
+                datasets: [{ label: 'Households', data: binCounts, backgroundColor: '#3498db', borderRadius: 4 }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Households' } } } }
+        });
+
+        const atZero = binCounts[0];
+        const aboveZero = n - atZero;
+        makeChart('chart-asset-gap-pie', {
+            type: 'doughnut',
+            data: {
+                labels: ['Gap = 0', 'Gap ≥ 1'],
+                datasets: [{ data: [atZero, aboveZero], backgroundColor: ['#2ecc71', '#e67e22'] }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        const inp = el('asset-gap-threshold');
+        function refreshAssetTable() {
+            let thr = parseInt(inp.value, 10);
+            if (isNaN(thr) || thr < 0) thr = 0;
+            const flagged = assetsData.filter(a => (Number(a.unreported_asset_gap) || 0) >= thr);
+            flagged.sort((a, b) => (Number(b.unreported_asset_gap) || 0) - (Number(a.unreported_asset_gap) || 0));
+            setText('kpi-asset-flagged', flagged.length);
+
+            const tbody = el('table-assets').querySelector('tbody');
+            tbody.innerHTML = '';
+            flagged.forEach(r => {
+                const tr = document.createElement('tr');
+                const gap = Number(r.unreported_asset_gap) || 0;
+                if (gap > 0) tr.style.backgroundColor = '#fff8f0';
+                tr.innerHTML = '<td>' + esc(tName(r.team_id)) + '</td>' +
+                    '<td>' + esc(r.province) + '</td>' +
+                    '<td>' + esc(r.ea) + '</td>' +
+                    '<td>' + esc(r.interview_key) + '</td>' +
+                    '<td>' + (Number(r.owned_asset_types) || 0) + '</td>' +
+                    '<td>' + (Number(r.roster_asset_types) || 0) + '</td>' +
+                    '<td>' + (Number(r.asset_roster_lines) || 0) + '</td>' +
+                    '<td><strong>' + gap + '</strong></td>' +
+                    '<td><span class="status-badge status-' + esc(String(r.interview_status)) + '">' + statusLabel(r.interview_status) + '</span></td>';
+                tbody.appendChild(tr);
+            });
+        }
+        if (inp && !inp.dataset.wired) {
+            inp.dataset.wired = '1';
+            inp.addEventListener('input', refreshAssetTable);
+            inp.addEventListener('change', refreshAssetTable);
+        }
+        refreshAssetTable();
+    }
+
+    /* ========================================
+       16. UNDERREPORTING (assets & food vs regional/HH rules, by interviewer)
+       ======================================== */
+    function computeUnderreportingFlags() {
+        const eaUr = {};
+        if (targets && targets.eas) {
+            targets.eas.forEach(e => { eaUr[String(e.eahies)] = e.urban_rural; });
+        }
+        const assetByKey = {};
+        (assetsData || []).forEach(a => { assetByKey[a.interview_key] = a; });
+        const foodIdsByKey = {};
+        foodData.forEach(r => {
+            const k = r.interview_key;
+            if (!foodIdsByKey[k]) foodIdsByKey[k] = new Set();
+            foodIdsByKey[k].add(String(r.food_id));
+        });
+        const byInt = {};
+        let flagA = 0;
+        let flagF = 0;
+        let n = 0;
+        households.forEach(h => {
+            const k = h.interview_key;
+            const ur = eaUr[String(h.ea)] || 'R';
+            const isUrban = ur === 'U';
+            const hhSize = (personsByHH[k] || []).length;
+            const small = hhSize <= 5;
+            const acount = assetByKey[k] ? (Number(assetByKey[k].roster_asset_types) || 0) : 0;
+            const assetCut = isUrban ? 6 : 3;
+            const fAsset = acount < assetCut;
+            const foodCut = isUrban ? (small ? 25 : 30) : (small ? 20 : 25);
+            const nFood = foodIdsByKey[k] ? foodIdsByKey[k].size : 0;
+            const fFood = nFood < foodCut;
+            if (fAsset) flagA++;
+            if (fFood) flagF++;
+            n++;
+            const intv = String(h.interviewer_id || '').trim() || '(no id)';
+            if (!byInt[intv]) byInt[intv] = { n: 0, a: 0, f: 0, team_id: h.team_id };
+            byInt[intv].n++;
+            if (fAsset) byInt[intv].a++;
+            if (fFood) byInt[intv].f++;
+            if (h.team_id) byInt[intv].team_id = h.team_id;
+        });
+        const rows = Object.keys(byInt).sort((a, b) => a.localeCompare(b)).map(id => {
+            const v = byInt[id];
+            const pctA = v.n ? (100 * v.a / v.n) : 0;
+            const pctF = v.n ? (100 * v.f / v.n) : 0;
+            return {
+                interviewer_id: id,
+                team_id: v.team_id,
+                n: v.n,
+                a: v.a,
+                f: v.f,
+                pct_assets: pctA,
+                pct_food: pctF
+            };
+        });
+        return {
+            rows,
+            overall: {
+                n,
+                flagA,
+                flagF,
+                pctA: n ? (100 * flagA / n) : 0,
+                pctF: n ? (100 * flagF / n) : 0,
+                interviewerCount: rows.length
+            }
+        };
+    }
+
+    function renderUnderreporting() {
+        const { rows, overall } = computeUnderreportingFlags();
+        setText('kpi-ur-assets-pct', overall.n ? (overall.pctA.toFixed(1) + '%') : '—');
+        setText('kpi-ur-food-pct', overall.n ? (overall.pctF.toFixed(1) + '%') : '—');
+        setText('kpi-ur-interviewers', overall.interviewerCount);
+
+        const labels = rows.map(r => r.interviewer_id);
+        const pctA = rows.map(r => +r.pct_assets.toFixed(1));
+        const pctF = rows.map(r => +r.pct_food.toFixed(1));
+
+        makeChart('chart-underreport-assets-intv', {
+            type: 'bar',
+            data: {
+                labels,
+                datasets: [{
+                    label: '% interviews flagged',
+                    data: pctA,
+                    backgroundColor: '#e67e22',
+                    borderRadius: 4,
+                    maxBarThickness: 22
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { min: 0, max: 100, title: { display: true, text: '% of interviews' } },
+                    y: { ticks: { autoSkip: false } }
+                }
+            }
+        });
+
+        makeChart('chart-underreport-food-intv', {
+            type: 'bar',
+            data: {
+                labels,
+                datasets: [{
+                    label: '% interviews flagged',
+                    data: pctF,
+                    backgroundColor: '#3498db',
+                    borderRadius: 4,
+                    maxBarThickness: 22
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { min: 0, max: 100, title: { display: true, text: '% of interviews' } },
+                    y: { ticks: { autoSkip: false } }
+                }
+            }
+        });
+
+        const chartH = Math.min(2000, Math.max(360, rows.length * 26));
+        ['chart-underreport-assets-intv', 'chart-underreport-food-intv'].forEach(id => {
+            const c = el(id);
+            if (c && c.parentElement) c.parentElement.style.height = chartH + 'px';
+        });
+
+        const tbody = el('table-underreporting').querySelector('tbody');
+        tbody.innerHTML = '';
+        rows.forEach(r => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = '<td>' + esc(r.interviewer_id) + '</td>' +
+                '<td>' + esc(tName(r.team_id)) + '</td>' +
+                '<td>' + r.n + '</td>' +
+                '<td>' + r.a + '</td>' +
+                '<td>' + r.pct_assets.toFixed(1) + '%</td>' +
+                '<td>' + r.f + '</td>' +
+                '<td>' + r.pct_food.toFixed(1) + '%</td>';
             tbody.appendChild(tr);
         });
     }

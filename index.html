@@ -82,6 +82,12 @@
             <li class="nav-item" data-tab="market">
                 <span class="nav-icon">&#128722;</span> Market Survey
             </li>
+            <li class="nav-item" data-tab="assets">
+                <span class="nav-icon">&#128230;</span> Household Assets
+            </li>
+            <li class="nav-item" data-tab="underreporting">
+                <span class="nav-icon">&#9888;</span> Underreporting checks
+            </li>
         </ul>
         <div class="sidebar-footer">
             <p>Vanuatu Bureau of Statistics</p>
@@ -866,6 +872,154 @@
                                 <th>Crops</th>
                                 <th>Spice</th>
                                 <th>Takeaway</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== HOUSEHOLD ASSETS (unreported gap vs threshold) ===== -->
+        <section class="tab-content" id="tab-assets">
+            <div class="chart-card full" style="margin-bottom:16px;">
+                <h3>How unreported assets are measured</h3>
+                <p class="small" style="color:#64748b;line-height:1.5;max-width:900px;">
+                    For each household, we compare the number of asset types marked as owned in the main questionnaire
+                    (<code>own_asset__*</code> = yes) with the number of distinct asset types recorded in
+                    <code>asset_details_roster</code> with quantity greater than zero.
+                    The <strong>unreported asset gap</strong> is the shortfall (zero when the roster matches reported ownership).
+                    Use the threshold below to list households where the gap is at or above your chosen level.
+                </p>
+            </div>
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-asset-total">--</div>
+                    <div class="kpi-label">Households in export</div>
+                </div>
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-asset-max-gap">--</div>
+                    <div class="kpi-label">Largest gap observed</div>
+                </div>
+                <div class="kpi-card green">
+                    <div class="kpi-value" id="kpi-asset-avg-owned">--</div>
+                    <div class="kpi-label">Avg owned types (main form)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-asset-flagged">--</div>
+                    <div class="kpi-label">Households ≥ threshold</div>
+                </div>
+            </div>
+            <div class="chart-card full" style="margin-bottom:16px;">
+                <label for="asset-gap-threshold" style="display:block;font-weight:600;margin-bottom:8px;">
+                    Flag households with unreported asset gap ≥
+                </label>
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                    <input type="number" id="asset-gap-threshold" min="0" step="1" value="1"
+                        style="width:88px;padding:8px 10px;border-radius:6px;border:1px solid #cbd5e1;font-size:1rem;">
+                    <span class="small" style="color:#64748b;">Set to 0 to include all households in the table (gap may be 0).</span>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Distribution of unreported asset gap</h3>
+                    <canvas id="chart-asset-gap-hist"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Households by gap band</h3>
+                    <canvas id="chart-asset-gap-pie"></canvas>
+                </div>
+            </div>
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>Households at or above threshold</h3>
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-assets">
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Province</th>
+                                <th>EA</th>
+                                <th>Interview Key</th>
+                                <th>Owned types</th>
+                                <th>Roster types (qty &gt; 0)</th>
+                                <th>Roster lines</th>
+                                <th>Unreported gap</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== UNDERREPORTING (2019–20 style rules, by interviewer) ===== -->
+        <section class="tab-content" id="tab-underreporting">
+            <div class="chart-card full" style="margin-bottom:16px;">
+                <h3>Rules (reference)</h3>
+                <p class="small" style="color:#64748b;line-height:1.5;max-width:960px;">
+                    Urban/rural is taken from the sample frame (<code>targets.json</code>, EA <code>urban_rural</code>).
+                    <strong>Assets</strong> = distinct asset types in <code>asset_details_roster</code> with quantity &gt; 0.
+                    <strong>Food</strong> = distinct food line items in the 7-day recall (<code>food_recall_details</code>).
+                </p>
+                <div class="table-wrapper" style="max-width:720px;margin-top:12px;">
+                    <table class="data-table">
+                        <tbody>
+                            <tr><th colspan="2">Possible underreported assets (flag if count &lt; cutoff)</th></tr>
+                            <tr><th>Urban EA</th><td>&lt; 6 asset types</td></tr>
+                            <tr><th>Rural EA</th><td>&lt; 3 asset types</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-wrapper" style="max-width:720px;margin-top:12px;">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>HH size</th><th>Urban (food items)</th><th>Rural (food items)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>5 or fewer persons</td><td>&lt; 25 unique items</td><td>&lt; 20 unique items</td></tr>
+                            <tr><td>More than 5 persons</td><td>&lt; 30 unique items</td><td>&lt; 25 unique items</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="kpi-grid">
+                <div class="kpi-card orange">
+                    <div class="kpi-value" id="kpi-ur-assets-pct">--</div>
+                    <div class="kpi-label">Interviews flagged (assets)</div>
+                </div>
+                <div class="kpi-card blue">
+                    <div class="kpi-value" id="kpi-ur-food-pct">--</div>
+                    <div class="kpi-label">Interviews flagged (food)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-ur-interviewers">--</div>
+                    <div class="kpi-label">Interviewers (with ID)</div>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>% of interviews flagged (possible underreported assets) by interviewer</h3>
+                    <canvas id="chart-underreport-assets-intv"></canvas>
+                </div>
+                <div class="chart-card wide">
+                    <h3>% of interviews flagged (possible underreported consumption) by interviewer</h3>
+                    <canvas id="chart-underreport-food-intv"></canvas>
+                </div>
+            </div>
+            <div class="chart-card full" style="margin-top:16px;">
+                <h3>Detail by interviewer</h3>
+                <div class="table-wrapper">
+                    <table class="data-table" id="table-underreporting">
+                        <thead>
+                            <tr>
+                                <th>Interviewer</th>
+                                <th>Team</th>
+                                <th>Interviews</th>
+                                <th>Flagged assets (n)</th>
+                                <th>Flagged assets (%)</th>
+                                <th>Flagged food (n)</th>
+                                <th>Flagged food (%)</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
