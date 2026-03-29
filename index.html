@@ -994,16 +994,42 @@
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-value" id="kpi-ur-interviewers">--</div>
-                    <div class="kpi-label">Interviewers (with ID)</div>
+                    <div class="kpi-label">Interviewers (after grouping)</div>
                 </div>
+            </div>
+            <div class="chart-card full" style="margin-bottom:16px;">
+                <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;margin-bottom:8px;">
+                    <label style="display:flex;align-items:center;gap:8px;font-weight:600;">
+                        Charts show top
+                        <select id="ur-chart-topn" style="padding:6px 10px;border-radius:6px;border:1px solid #cbd5e1;font-size:0.95rem;">
+                            <option value="15" selected>15</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="9999">All</option>
+                        </select>
+                        interviewers
+                    </label>
+                    <label style="display:flex;align-items:center;gap:8px;font-weight:600;">
+                        Reference line at
+                        <input type="number" id="ur-ref-line" min="0" max="100" value="50" style="width:72px;padding:6px 8px;border-radius:6px;border:1px solid #cbd5e1;">
+                        % (optional)
+                    </label>
+                </div>
+                <p class="small" style="color:#64748b;line-height:1.5;margin:0;">
+                    Interviewers are sorted by <strong>average</strong> flag rate (assets + food) / 2, highest first.
+                    Invalid or missing interviewer codes (e.g. system placeholders) are grouped as <strong>Unknown</strong>.
+                    The full list remains in the table below.
+                </p>
             </div>
             <div class="chart-row">
                 <div class="chart-card wide">
-                    <h3>% of interviews flagged (possible underreported assets) by interviewer</h3>
+                    <h3>Assets — % of interviews flagged, by interviewer</h3>
+                    <p class="small" style="color:#64748b;margin:-8px 0 12px;">Same order as food chart (worst average flag rate at the top).</p>
                     <canvas id="chart-underreport-assets-intv"></canvas>
                 </div>
                 <div class="chart-card wide">
-                    <h3>% of interviews flagged (possible underreported consumption) by interviewer</h3>
+                    <h3>Food — % of interviews flagged, by interviewer</h3>
+                    <p class="small" style="color:#64748b;margin:-8px 0 12px;">Tooltips include interview counts for context.</p>
                     <canvas id="chart-underreport-food-intv"></canvas>
                 </div>
             </div>
@@ -1016,6 +1042,7 @@
                                 <th>Interviewer</th>
                                 <th>Team</th>
                                 <th>Interviews</th>
+                                <th>Avg flag %</th>
                                 <th>Flagged assets (n)</th>
                                 <th>Flagged assets (%)</th>
                                 <th>Flagged food (n)</th>

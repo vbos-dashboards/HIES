@@ -1977,6 +1977,46 @@
     /* ========================================
        16. UNDERREPORTING (assets & food vs regional/HH rules, by interviewer)
        ======================================== */
+    function normalizeInterviewerId(raw) {
+        const s = String(raw == null ? '' : raw).trim();
+        if (!s || s === '-999999999' || s === '(no id)') return 'Unknown';
+        return s;
+    }
+
+    let urRefLinePluginRegistered = false;
+    function registerUnderreportingRefLinePlugin() {
+        if (urRefLinePluginRegistered) return;
+        urRefLinePluginRegistered = true;
+        Chart.register({
+            id: 'urRefLine',
+            afterDatasetsDraw(chart) {
+                const opts = chart.options.plugins && chart.options.plugins.urRefLine;
+                if (!opts || opts.xPercent == null) return;
+                const xVal = Number(opts.xPercent);
+                if (isNaN(xVal) || xVal < 0) return;
+                const { ctx, chartArea, scales } = chart;
+                const xScale = scales.x;
+                if (!xScale) return;
+                const x = xScale.getPixelForValue(xVal);
+                if (!isFinite(x)) return;
+                ctx.save();
+                ctx.strokeStyle = opts.color || 'rgba(231, 76, 60, 0.88)';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([6, 4]);
+                ctx.beginPath();
+                ctx.moveTo(x, chartArea.top);
+                ctx.lineTo(x, chartArea.bottom);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = opts.color || 'rgba(231, 76, 60, 0.88)';
+                ctx.font = '600 11px Segoe UI, system-ui, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText(String(xVal) + '%', Math.min(x + 4, chartArea.right - 40), chartArea.top + 14);
+                ctx.restore();
+            }
+        });
+    }
+
     function computeUnderreportingFlags() {
         const eaUr = {};
         if (targets && targets.eas) {
@@ -2009,17 +2049,18 @@
             if (fAsset) flagA++;
             if (fFood) flagF++;
             n++;
-            const intv = String(h.interviewer_id || '').trim() || '(no id)';
+            const intv = normalizeInterviewerId(h.interviewer_id);
             if (!byInt[intv]) byInt[intv] = { n: 0, a: 0, f: 0, team_id: h.team_id };
             byInt[intv].n++;
             if (fAsset) byInt[intv].a++;
             if (fFood) byInt[intv].f++;
             if (h.team_id) byInt[intv].team_id = h.team_id;
         });
-        const rows = Object.keys(byInt).sort((a, b) => a.localeCompare(b)).map(id => {
+        const rows = Object.keys(byInt).map(id => {
             const v = byInt[id];
             const pctA = v.n ? (100 * v.a / v.n) : 0;
             const pctF = v.n ? (100 * v.f / v.n) : 0;
+            const avgPct = (pctA + pctF) / 2;
             return {
                 interviewer_id: id,
                 team_id: v.team_id,
@@ -2027,8 +2068,14 @@
                 a: v.a,
                 f: v.f,
                 pct_assets: pctA,
-                pct_food: pctF
+                pct_food: pctF,
+                avg_pct: avgPct
             };
+        });
+        rows.sort((a, b) => {
+            if (b.avg_pct !== a.avg_pct) return b.avg_pct - a.avg_pct;
+            if (b.n !== a.n) return b.n - a.n;
+            return String(a.interviewer_id).localeCompare(String(b.interviewer_id));
         });
         return {
             rows,
@@ -2044,68 +2091,123 @@
     }
 
     function renderUnderreporting() {
+        registerUnderreportingRefLinePlugin();
         const { rows, overall } = computeUnderreportingFlags();
         setText('kpi-ur-assets-pct', overall.n ? (overall.pctA.toFixed(1) + '%') : '—');
         setText('kpi-ur-food-pct', overall.n ? (overall.pctF.toFixed(1) + '%') : '—');
         setText('kpi-ur-interviewers', overall.interviewerCount);
 
-        const labels = rows.map(r => r.interviewer_id);
-        const pctA = rows.map(r => +r.pct_assets.toFixed(1));
-        const pctF = rows.map(r => +r.pct_food.toFixed(1));
+        function drawUrCharts() {
+            const topSel = el('ur-chart-topn');
+            const refInp = el('ur-ref-line');
+            let topN = parseInt(topSel && topSel.value, 10);
+            if (isNaN(topN) || topN < 1) topN = 15;
+            let refPct = parseFloat(refInp && refInp.value);
+            if (isNaN(refPct)) refPct = 50;
+            refPct = Math.max(0, Math.min(100, refPct));
 
-        makeChart('chart-underreport-assets-intv', {
-            type: 'bar',
-            data: {
-                labels,
-                datasets: [{
-                    label: '% interviews flagged',
-                    data: pctA,
-                    backgroundColor: '#e67e22',
-                    borderRadius: 4,
-                    maxBarThickness: 22
-                }]
-            },
-            options: {
+            const slice = topN >= 9999 ? rows : rows.slice(0, topN);
+            const labels = slice.map(r => r.interviewer_id);
+            const pctA = slice.map(r => +r.pct_assets.toFixed(1));
+            const pctF = slice.map(r => +r.pct_food.toFixed(1));
+            const refActive = refInp && refInp.value !== '' && !isNaN(parseFloat(refInp.value));
+
+            const barColor = (vals, hi, lo) => vals.map(v => (refActive && v >= refPct) ? hi : lo);
+
+            const commonOpts = {
                 indexAxis: 'y',
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
+                plugins: {
+                    legend: { display: false },
+                    urRefLine: refActive ? { xPercent: refPct, color: 'rgba(231, 76, 60, 0.88)' } : { xPercent: null },
+                    tooltip: {
+                        callbacks: {
+                            title(tooltipItems) {
+                                const i = tooltipItems[0].dataIndex;
+                                const r = slice[i];
+                                return r ? ('Interviewer ' + r.interviewer_id) : '';
+                            },
+                            label(ctx) {
+                                return ' Flagged: ' + ctx.parsed.x + '%';
+                            },
+                            afterLabel(ctx) {
+                                const r = slice[ctx.dataIndex];
+                                return r ? ('Interviews: ' + r.n) : '';
+                            }
+                        }
+                    }
+                },
                 scales: {
-                    x: { min: 0, max: 100, title: { display: true, text: '% of interviews' } },
-                    y: { ticks: { autoSkip: false } }
+                    x: {
+                        min: 0,
+                        max: 100,
+                        title: { display: true, text: '% of this interviewer’s interviews flagged' },
+                        ticks: { stepSize: 10, font: { size: 11 } }
+                    },
+                    y: {
+                        ticks: {
+                            autoSkip: false,
+                            font: { size: 12, weight: '500' },
+                            callback(value) {
+                                const s = value == null ? '' : String(value);
+                                return s.length > 16 ? s.slice(0, 14) + '…' : s;
+                            }
+                        }
+                    }
                 }
-            }
-        });
+            };
 
-        makeChart('chart-underreport-food-intv', {
-            type: 'bar',
-            data: {
-                labels,
-                datasets: [{
-                    label: '% interviews flagged',
-                    data: pctF,
-                    backgroundColor: '#3498db',
-                    borderRadius: 4,
-                    maxBarThickness: 22
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { min: 0, max: 100, title: { display: true, text: '% of interviews' } },
-                    y: { ticks: { autoSkip: false } }
-                }
-            }
-        });
+            makeChart('chart-underreport-assets-intv', {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: '% flagged',
+                        data: pctA,
+                        backgroundColor: barColor(pctA, '#c0392b', '#e67e22'),
+                        borderRadius: 4,
+                        maxBarThickness: 26
+                    }]
+                },
+                options: commonOpts
+            });
 
-        const chartH = Math.min(2000, Math.max(360, rows.length * 26));
-        ['chart-underreport-assets-intv', 'chart-underreport-food-intv'].forEach(id => {
-            const c = el(id);
-            if (c && c.parentElement) c.parentElement.style.height = chartH + 'px';
-        });
+            makeChart('chart-underreport-food-intv', {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: '% flagged',
+                        data: pctF,
+                        backgroundColor: barColor(pctF, '#1f6fad', '#3498db'),
+                        borderRadius: 4,
+                        maxBarThickness: 26
+                    }]
+                },
+                options: commonOpts
+            });
+
+            const chartH = Math.min(2200, Math.max(280, slice.length * 34));
+            ['chart-underreport-assets-intv', 'chart-underreport-food-intv'].forEach(id => {
+                const c = el(id);
+                if (c && c.parentElement) c.parentElement.style.height = chartH + 'px';
+            });
+        }
+
+        drawUrCharts();
+
+        const topSel = el('ur-chart-topn');
+        const refInp = el('ur-ref-line');
+        if (topSel && !topSel.dataset.wired) {
+            topSel.dataset.wired = '1';
+            topSel.addEventListener('change', drawUrCharts);
+        }
+        if (refInp && !refInp.dataset.wired) {
+            refInp.dataset.wired = '1';
+            refInp.addEventListener('input', drawUrCharts);
+            refInp.addEventListener('change', drawUrCharts);
+        }
 
         const tbody = el('table-underreporting').querySelector('tbody');
         tbody.innerHTML = '';
@@ -2114,6 +2216,7 @@
             tr.innerHTML = '<td>' + esc(r.interviewer_id) + '</td>' +
                 '<td>' + esc(tName(r.team_id)) + '</td>' +
                 '<td>' + r.n + '</td>' +
+                '<td><strong>' + r.avg_pct.toFixed(1) + '%</strong></td>' +
                 '<td>' + r.a + '</td>' +
                 '<td>' + r.pct_assets.toFixed(1) + '%</td>' +
                 '<td>' + r.f + '</td>' +
