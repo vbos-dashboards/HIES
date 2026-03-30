@@ -963,7 +963,7 @@
             </div>
         </section>
 
-        <!-- ===== UNDERREPORTING (2019–20 style rules, by interviewer) ===== -->
+        <!-- ===== UNDERREPORTING (by interviewer, team, stratum) ===== -->
         <section class="tab-content" id="tab-underreporting">
             <div class="chart-card full" style="margin-bottom:16px;">
                 <h3>Rules (reference)</h3>
@@ -996,12 +996,12 @@
                 <div class="kpi-card orange">
                     <div class="kpi-value" id="kpi-ur-assets-pct">--</div>
                     <div class="kpi-label">% of interviews flagged (possible underreported assets)</div>
-                    <div class="kpi-sub">Overall share; charts and table are by interviewer.</div>
+                    <div class="kpi-sub">Overall share; breakdowns below by interviewer, team, and stratum.</div>
                 </div>
                 <div class="kpi-card blue">
                     <div class="kpi-value" id="kpi-ur-food-pct">--</div>
                     <div class="kpi-label">% of interviews flagged (possible underreported consumption)</div>
-                    <div class="kpi-sub">Overall share; charts and table are by interviewer.</div>
+                    <div class="kpi-sub">Overall share; breakdowns below by interviewer, team, and stratum.</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-value" id="kpi-ur-interviewers">--</div>
@@ -1042,6 +1042,58 @@
                     <h3>Possible underreported consumption — % of interviews by interviewer</h3>
                     <p class="small" style="color:#64748b;margin:-8px 0 12px;">Each bar is the share of that interviewer’s interviews where unique 7-day recall items are below the HH-size and urban/rural cutoff. Tooltips show interview counts.</p>
                     <canvas id="chart-underreport-food-intv"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>By team — % of interviews flagged</h3>
+                    <p class="small" style="color:#64748b;margin:-8px 0 12px;">Each team: share of that team’s interviews meeting the asset rule (left bar) and consumption rule (right bar). Percentages are of interviews, not persons.</p>
+                    <canvas id="chart-underreport-team"></canvas>
+                </div>
+                <div class="chart-card wide">
+                    <h3>By stratum — % of interviews flagged</h3>
+                    <p class="small" style="color:#64748b;margin:-8px 0 12px;">Each stratum: share of interviews in that stratum (within the current sidebar filter). Same rules as above.</p>
+                    <canvas id="chart-underreport-strata"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card wide">
+                    <h3>Detail by team</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table" id="table-underreport-team">
+                            <thead>
+                                <tr>
+                                    <th>Team</th>
+                                    <th>Interviews</th>
+                                    <th>Assets %</th>
+                                    <th>Consumption %</th>
+                                    <th>Avg %</th>
+                                    <th>Flagged assets (n)</th>
+                                    <th>Flagged consumption (n)</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="chart-card wide">
+                    <h3>Detail by stratum</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table" id="table-underreport-strata">
+                            <thead>
+                                <tr>
+                                    <th>Stratum</th>
+                                    <th>Interviews</th>
+                                    <th>Assets %</th>
+                                    <th>Consumption %</th>
+                                    <th>Avg %</th>
+                                    <th>Flagged assets (n)</th>
+                                    <th>Flagged consumption (n)</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="chart-card full" style="margin-top:16px;">

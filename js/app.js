@@ -2189,6 +2189,8 @@
             foodIdsByKey[k].add(String(r.food_id));
         });
         const byInt = {};
+        const byTeam = {};
+        const byStrata = {};
         let flagA = 0;
         let flagF = 0;
         let n = 0;
@@ -2214,6 +2216,18 @@
             if (fAsset) byInt[intv].a++;
             if (fFood) byInt[intv].f++;
             if (h.team_id) byInt[intv].team_id = h.team_id;
+
+            const teamKey = h.team_id != null && h.team_id !== '' ? String(h.team_id) : '_none';
+            if (!byTeam[teamKey]) byTeam[teamKey] = { n: 0, a: 0, f: 0, team_id: h.team_id };
+            byTeam[teamKey].n++;
+            if (fAsset) byTeam[teamKey].a++;
+            if (fFood) byTeam[teamKey].f++;
+
+            const sl = h.strata_label || 'Unknown';
+            if (!byStrata[sl]) byStrata[sl] = { n: 0, a: 0, f: 0 };
+            byStrata[sl].n++;
+            if (fAsset) byStrata[sl].a++;
+            if (fFood) byStrata[sl].f++;
         });
         const rows = Object.keys(byInt).map(id => {
             const v = byInt[id];
@@ -2236,8 +2250,54 @@
             if (b.n !== a.n) return b.n - a.n;
             return String(a.interviewer_id).localeCompare(String(b.interviewer_id));
         });
+
+        function pctRow(v) {
+            const pctA = v.n ? (100 * v.a / v.n) : 0;
+            const pctF = v.n ? (100 * v.f / v.n) : 0;
+            return { pct_assets: pctA, pct_food: pctF, avg_pct: (pctA + pctF) / 2 };
+        }
+
+        const rowsTeam = Object.keys(byTeam).map(tkey => {
+            const v = byTeam[tkey];
+            const p = pctRow(v);
+            const label = tkey === '_none' ? '—' : tName(tkey);
+            return {
+                key: tkey,
+                team_id: tkey === '_none' ? null : tkey,
+                label,
+                n: v.n,
+                a: v.a,
+                f: v.f,
+                pct_assets: p.pct_assets,
+                pct_food: p.pct_food,
+                avg_pct: p.avg_pct
+            };
+        });
+        rowsTeam.sort((a, b) => {
+            if (b.avg_pct !== a.avg_pct) return b.avg_pct - a.avg_pct;
+            return String(a.label).localeCompare(String(b.label));
+        });
+
+        const strataOrder = orderedStrataKeys(byStrata);
+        const rowsStrata = strataOrder.map(sl => {
+            const v = byStrata[sl];
+            const p = pctRow(v);
+            return {
+                strata_label: sl,
+                label: sl,
+                n: v.n,
+                a: v.a,
+                f: v.f,
+                pct_assets: p.pct_assets,
+                pct_food: p.pct_food,
+                avg_pct: p.avg_pct
+            };
+        });
+
         return {
             rows,
+            rowsTeam,
+            rowsStrata,
             overall: {
                 n,
                 flagA,
@@ -2247,6 +2307,178 @@
                 interviewerCount: rows.length
             }
         };
+    }
+
+    function drawUrTeamStrataCharts() {
+        let { rowsTeam, rowsStrata } = computeUnderreportingFlags();
+        if (!rowsTeam.length) {
+            rowsTeam = [{ key: '_empty', label: '—', n: 0, a: 0, f: 0, pct_assets: 0, pct_food: 0, avg_pct: 0 }];
+        }
+        if (!rowsStrata.length) {
+            rowsStrata = [{ strata_label: '—', label: '—', n: 0, a: 0, f: 0, pct_assets: 0, pct_food: 0, avg_pct: 0 }];
+        }
+
+        const labelsTeam = rowsTeam.map(r => r.label);
+        const pctATeam = rowsTeam.map(r => +r.pct_assets.toFixed(1));
+        const pctFTeam = rowsTeam.map(r => +r.pct_food.toFixed(1));
+
+        makeChart('chart-underreport-team', {
+            type: 'bar',
+            data: {
+                labels: labelsTeam,
+                datasets: [
+                    {
+                        label: 'Possible underreported assets (%)',
+                        data: pctATeam,
+                        backgroundColor: 'rgba(192, 57, 43, 0.82)',
+                        borderRadius: 4,
+                        maxBarThickness: 22
+                    },
+                    {
+                        label: 'Possible underreported consumption (%)',
+                        data: pctFTeam,
+                        backgroundColor: 'rgba(52, 152, 219, 0.82)',
+                        borderRadius: 4,
+                        maxBarThickness: 22
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel(ctx) {
+                                if (ctx.datasetIndex !== 0) return '';
+                                const r = rowsTeam[ctx.dataIndex];
+                                return r ? ('Interviews: ' + r.n) : '';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        min: 0,
+                        max: 100,
+                        title: { display: true, text: '% of interviews' },
+                        ticks: { stepSize: 10, font: { size: 11 } }
+                    },
+                    y: {
+                        ticks: {
+                            autoSkip: false,
+                            font: { size: 11, weight: '500' }
+                        }
+                    }
+                }
+            }
+        });
+
+        const hTeam = Math.min(900, Math.max(200, rowsTeam.length * 34 + 100));
+        const elTeam = el('chart-underreport-team');
+        if (elTeam && elTeam.parentElement) elTeam.parentElement.style.height = hTeam + 'px';
+
+        const labelsStrata = rowsStrata.map(r => r.label);
+        const pctAStr = rowsStrata.map(r => +r.pct_assets.toFixed(1));
+        const pctFStr = rowsStrata.map(r => +r.pct_food.toFixed(1));
+
+        makeChart('chart-underreport-strata', {
+            type: 'bar',
+            data: {
+                labels: labelsStrata,
+                datasets: [
+                    {
+                        label: 'Possible underreported assets (%)',
+                        data: pctAStr,
+                        backgroundColor: 'rgba(192, 57, 43, 0.82)',
+                        borderRadius: 4,
+                        maxBarThickness: 22
+                    },
+                    {
+                        label: 'Possible underreported consumption (%)',
+                        data: pctFStr,
+                        backgroundColor: 'rgba(52, 152, 219, 0.82)',
+                        borderRadius: 4,
+                        maxBarThickness: 22
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel(ctx) {
+                                if (ctx.datasetIndex !== 0) return '';
+                                const r = rowsStrata[ctx.dataIndex];
+                                return r ? ('Interviews: ' + r.n) : '';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        min: 0,
+                        max: 100,
+                        title: { display: true, text: '% of interviews' },
+                        ticks: { stepSize: 10, font: { size: 11 } }
+                    },
+                    y: {
+                        ticks: {
+                            autoSkip: false,
+                            font: { size: 11, weight: '500' }
+                        }
+                    }
+                }
+            }
+        });
+
+        const hStr = Math.min(520, Math.max(220, rowsStrata.length * 38 + 100));
+        const elStr = el('chart-underreport-strata');
+        if (elStr && elStr.parentElement) elStr.parentElement.style.height = hStr + 'px';
+
+        const tbodyTeam = el('table-underreport-team');
+        if (tbodyTeam) {
+            const tb = tbodyTeam.querySelector('tbody');
+            if (tb) {
+                tb.innerHTML = '';
+                rowsTeam.forEach(r => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = '<td>' + esc(r.label) + '</td>' +
+                        '<td>' + r.n + '</td>' +
+                        '<td>' + r.pct_assets.toFixed(1) + '%</td>' +
+                        '<td>' + r.pct_food.toFixed(1) + '%</td>' +
+                        '<td><strong>' + r.avg_pct.toFixed(1) + '%</strong></td>' +
+                        '<td>' + r.a + '</td>' +
+                        '<td>' + r.f + '</td>';
+                    tb.appendChild(tr);
+                });
+            }
+        }
+
+        const tbodyStr = el('table-underreport-strata');
+        if (tbodyStr) {
+            const tb = tbodyStr.querySelector('tbody');
+            if (tb) {
+                tb.innerHTML = '';
+                rowsStrata.forEach(r => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = '<td>' + esc(r.label) + '</td>' +
+                        '<td>' + r.n + '</td>' +
+                        '<td>' + r.pct_assets.toFixed(1) + '%</td>' +
+                        '<td>' + r.pct_food.toFixed(1) + '%</td>' +
+                        '<td><strong>' + r.avg_pct.toFixed(1) + '%</strong></td>' +
+                        '<td>' + r.a + '</td>' +
+                        '<td>' + r.f + '</td>';
+                    tb.appendChild(tr);
+                });
+            }
+        }
     }
 
     function renderUnderreporting() {
@@ -2363,8 +2595,12 @@
             });
         }
 
-        redrawUnderreportCharts = drawUrCharts;
+        redrawUnderreportCharts = function () {
+            drawUrCharts();
+            drawUrTeamStrataCharts();
+        };
         drawUrCharts();
+        drawUrTeamStrataCharts();
 
         const topSel = el('ur-chart-topn');
         const refInp = el('ur-ref-line');
