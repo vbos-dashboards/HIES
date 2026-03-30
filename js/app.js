@@ -197,7 +197,23 @@
         return !!(rec && eaRecordMatchesStrataFilter(rec));
     }
 
-    function tName(id) { return teamNameMap[id] || ('Team ' + id); }
+    /** Overrides for survey team_id display (e.g. strata reporting labels). */
+    const TEAM_DISPLAY_LABELS = { '32': 'Pen 2' };
+
+    function tName(id) {
+        const k = id == null || id === '' ? '' : String(id);
+        if (TEAM_DISPLAY_LABELS[k]) return TEAM_DISPLAY_LABELS[k];
+        return teamNameMap[k] || ('Team ' + id);
+    }
+
+    /** Prefer numeric label overrides, then lookup team_name on the row, then tName(team_id). */
+    function displayTeamName(h) {
+        const k = h.team_id != null && h.team_id !== '' ? String(h.team_id) : '';
+        if (k && TEAM_DISPLAY_LABELS[k]) return TEAM_DISPLAY_LABELS[k];
+        const nm = h.team_name && String(h.team_name).trim();
+        if (nm) return nm;
+        return tName(h.team_id);
+    }
 
     /* ---------- chart registry (for cleanup) ---------- */
     const charts = {};
@@ -389,7 +405,7 @@
             const tr = document.createElement('tr');
             tr.innerHTML = `<td>${esc(h.interview_key)}</td><td>${esc(h.strata_label)}</td><td>${esc(h.island_name)}</td>` +
                 `<td>${esc(h.ac_name)}</td><td>${esc(h.ea)}</td><td>${esc(h.village_name)}</td>` +
-                `<td>${esc(h.team_name || h.team_id)}</td><td>${esc(h.interviewer_id)}</td><td>${esc(h.interview_date)}</td>` +
+                `<td>${esc(displayTeamName(h))}</td><td>${esc(h.interviewer_id)}</td><td>${esc(h.interview_date)}</td>` +
                 `<td><span class="status-badge status-${h.interview_status}">${statusLabel(h.interview_status)}</span></td>`;
             tbody.appendChild(tr);
         });
@@ -604,7 +620,7 @@
             const team = rows[0].team_id;
             const provs = [...new Set(rows.map(r => r.strata_label))].join(', ');
             const tr = document.createElement('tr');
-            const teamLabel = (eaLookup[rows[0].ea] || {}).team_name || ('Team ' + team);
+            const teamLabel = displayTeamName(rows[0]);
             tr.innerHTML = `<td>${esc(i)}</td><td>${esc(teamLabel)}</td><td>${rows.length}</td>` +
                 `<td>${rows.filter(r => r.interview_status === '100').length}</td>` +
                 `<td>${rows.filter(r => ['120', '130'].includes(r.interview_status)).length}</td>` +
@@ -716,7 +732,7 @@
                 '<b>' + esc(h.interview_key) + '</b><br>' +
                 'Strata: ' + esc(h.strata_label) + '<br>Province: ' + esc(h.province_name) + '<br>Island: ' + esc(h.island_name) +
                 '<br>AC: ' + esc(h.ac_name) + '<br>Village: ' + esc(h.village_name) +
-                '<br>EA: ' + esc(h.ea) + '<br>Team: ' + esc(h.team_name || h.team_id) +
+                '<br>EA: ' + esc(h.ea) + '<br>Team: ' + esc(displayTeamName(h)) +
                 '<br>Date: ' + esc(h.interview_date) + '<br>Status: ' + statusLabel(h.interview_status)
             ).addTo(hhLayer);
         });
