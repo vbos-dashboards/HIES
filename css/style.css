@@ -73,6 +73,49 @@ body {
     margin-top: 4px;
 }
 
+.nav-strata-section {
+    padding: 10px 12px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 42vh;
+    overflow-y: auto;
+}
+
+.nav-strata-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.55;
+    padding: 0 8px 6px;
+}
+
+.nav-strata {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-strata-item {
+    padding: 6px 12px 6px 16px;
+    margin: 2px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    border-left: 3px solid transparent;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.nav-strata-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-left-color: rgba(255, 255, 255, 0.35);
+}
+
+.nav-strata-item.active {
+    background: rgba(255, 255, 255, 0.14);
+    border-left-color: var(--accent);
+    font-weight: 600;
+}
+
 .nav-menu {
     list-style: none;
     padding: 12px 0;
@@ -432,6 +475,16 @@ body {
 .loading-overlay p {
     font-size: 0.95rem;
     color: var(--text-light);
+}
+
+/* Work plan: break / training rows when a stratum filter is active */
+tr.workplan-row-national td {
+    color: var(--text-light);
+    font-style: italic;
+}
+
+tr.workplan-row-national {
+    background: #f8f9fb !important;
 }
 
 /* ===== Progress Bars (EA Monitoring) ===== */

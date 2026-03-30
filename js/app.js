@@ -21,6 +21,13 @@
         'Torba': '#e74c3c', 'Sanma': '#3498db', 'Penama': '#2ecc71',
         'Malampa': '#f39c12', 'Shefa': '#9b59b6', 'Tafea': '#1abc9c'
     };
+    /** Display order matches survey strata (urban centres split out). */
+    const STRATA_ORDER = ['Torba', 'Sanma Rural', 'Penama', 'Malampa', 'Shefa Rural', 'Tafea', 'Port Vila', 'Luganville'];
+    const STRATA_COLORS = {
+        'Torba': '#e74c3c', 'Sanma Rural': '#3498db', 'Penama': '#2ecc71', 'Malampa': '#f39c12',
+        'Shefa Rural': '#9b59b6', 'Tafea': '#1abc9c', 'Port Vila': '#16a085', 'Luganville': '#2980b9',
+        'Unknown': '#95a5a6'
+    };
     const CHART_PALETTE = ['#3498db', '#2ecc71', '#e67e22', '#e74c3c', '#9b59b6',
         '#1abc9c', '#f39c12', '#34495e', '#d35400', '#2980b9',
         '#27ae60', '#8e44ad', '#c0392b', '#16a085', '#7f8c8d'];
@@ -82,6 +89,37 @@
     const acLookup = (lookup && lookup.area_council) || {};
     const foodItemLookup = (lookup && lookup.food_item) || {};
 
+    const eaToStrataRaw = {};
+    if (targets && targets.eas) {
+        targets.eas.forEach(e => { eaToStrataRaw[String(e.eahies)] = e.strata_name; });
+    }
+    function mapStrataRawToLabel(raw) {
+        if (!raw) return 'Unknown';
+        const m = {
+            'Torba': 'Torba',
+            'Sanma rural': 'Sanma Rural',
+            'Sanma urban': 'Luganville',
+            'Penama': 'Penama',
+            'Malampa': 'Malampa',
+            'Shefa rural': 'Shefa Rural',
+            'Shefa urban': 'Port Vila',
+            'Tafea': 'Tafea'
+        };
+        return m[raw] || raw;
+    }
+    function orderedStrataKeys(hhByStrata) {
+        const keys = new Set(Object.keys(hhByStrata));
+        const out = [];
+        STRATA_ORDER.forEach(s => { if (keys.has(s)) out.push(s); });
+        keys.forEach(k => {
+            if (!STRATA_ORDER.includes(k)) out.push(k);
+        });
+        return out;
+    }
+    function strataColor(label) {
+        return STRATA_COLORS[label] || CHART_PALETTE[Math.abs(String(label).length) % CHART_PALETTE.length];
+    }
+
     households.forEach(h => {
         h.interview_status = String(h.interview_status);
         const info = eaLookup[h.ea] || {};
@@ -89,28 +127,82 @@
         h.ac_name = info.ac_name || acLookup[h.area_council] || '';
         h.team_name = info.team_name || '';
         h.village_name = villageLookup[h.village] || '';
+        h.strata_label = mapStrataRawToLabel(eaToStrataRaw[String(h.ea)]);
     });
-    const hhByStatus = groupBy(households, 'interview_status');
-    const hhByTeam = groupBy(households, 'team_id');
-    const hhByInterviewer = groupBy(households, 'interviewer_id');
-    const hhByProvince = groupBy(households, 'province_name');
-    const hhByDate = groupBy(households, 'interview_date');
-    const dates = Object.keys(hhByDate).sort();
-    const personsByHH = groupBy(persons, 'interview_key');
+    const hhStrataLookup = {};
+    households.forEach(h => { hhStrataLookup[h.interview_key] = h.strata_label; });
 
-    const statusCodes = Object.keys(hhByStatus).sort();
+    /** null = all Vanuatu; otherwise display strata label (matches STRATA_ORDER). */
+    let strataScopeFilter = null;
+    let viewHH;
+    let hhByStatus, hhByTeam, hhByInterviewer, hhByStrata, hhByDate, dates, personsByHH, statusCodes;
+    let viewPersons, viewFoodData, viewListingData, viewMarketData, viewAssetsData;
+    let teamNameMap = {};
 
-    /* ---------- team name map ---------- */
-    const teamNameMap = {};
-    Object.keys(hhByTeam).forEach(tid => {
-        const rows = hhByTeam[tid];
-        const name = rows[0] && rows[0].team_name;
-        if (name) teamNameMap[tid] = name;
-    });
+    function rebuildStrataScope() {
+        viewHH = strataScopeFilter ? households.filter(h => h.strata_label === strataScopeFilter) : households;
+        const vk = new Set(viewHH.map(h => h.interview_key));
+        hhByStatus = groupBy(viewHH, 'interview_status');
+        hhByTeam = groupBy(viewHH, 'team_id');
+        hhByInterviewer = groupBy(viewHH, 'interviewer_id');
+        hhByStrata = groupBy(viewHH, 'strata_label');
+        hhByDate = groupBy(viewHH, 'interview_date');
+        dates = Object.keys(hhByDate).sort();
+        personsByHH = groupBy(persons.filter(p => vk.has(p.interview_key)), 'interview_key');
+        viewPersons = persons.filter(p => vk.has(p.interview_key));
+        viewFoodData = (foodData || []).filter(r => vk.has(r.interview_key));
+        viewListingData = (listingData || []).filter(r => vk.has(r.interview_key));
+        const mk = marketData || { outlets: [], hh_progress: [], categories: [] };
+        viewMarketData = {
+            outlets: (mk.outlets || []).filter(o => vk.has(o.interview_key)),
+            hh_progress: (mk.hh_progress || []).filter(h => vk.has(h.interview_key)),
+            categories: mk.categories || []
+        };
+        viewAssetsData = (assetsData || []).filter(a => vk.has(a.interview_key));
+        statusCodes = Object.keys(hhByStatus).sort();
+        teamNameMap = {};
+        Object.keys(hhByTeam).forEach(tid => {
+            const rows = hhByTeam[tid];
+            const name = rows[0] && rows[0].team_name;
+            if (name) teamNameMap[tid] = name;
+        });
+    }
+    rebuildStrataScope();
+
+    function getStrataTargetTotal() {
+        if (!targets || !targets.strata_targets) return targets && targets.total_target ? targets.total_target : 0;
+        if (!strataScopeFilter) return targets.total_target || 0;
+        let sum = 0;
+        Object.keys(targets.strata_targets).forEach(k => {
+            if (mapStrataRawToLabel(k) === strataScopeFilter) {
+                sum += targets.strata_targets[k].target;
+            }
+        });
+        return sum;
+    }
+    function getStrataEasCount() {
+        if (!targets || !targets.eas) return 0;
+        if (!strataScopeFilter) return targets.total_eas || targets.eas.length;
+        return targets.eas.filter(e => mapStrataRawToLabel(e.strata_name) === strataScopeFilter).length;
+    }
+    function eaRecordMatchesStrataFilter(e) {
+        if (!strataScopeFilter) return true;
+        return mapStrataRawToLabel(e.strata_name) === strataScopeFilter;
+    }
+    function workplanRowMatchesStrata(s) {
+        if (!strataScopeFilter) return true;
+        // Breaks / training apply to the whole survey — keep visible in every stratum view
+        if (s.eaid === null || s.eaid === undefined) return true;
+        const rec = targets && targets.eas && targets.eas.find(x => String(x.eahies) === String(s.eaid));
+        return !!(rec && eaRecordMatchesStrataFilter(rec));
+    }
+
     function tName(id) { return teamNameMap[id] || ('Team ' + id); }
 
     /* ---------- chart registry (for cleanup) ---------- */
     const charts = {};
+    /** Latest underreporting chart redraw (so dropdown listeners stay in sync after strata filter). */
+    let redrawUnderreportCharts = function () {};
     function makeChart(canvasId, config) {
         if (charts[canvasId]) charts[canvasId].destroy();
         const ctx = el(canvasId);
@@ -141,11 +233,20 @@
 
     const navItems = document.querySelectorAll('.nav-item');
     const tabs = document.querySelectorAll('.tab-content');
-    const rendered = {};
+    let rendered = {};
+    let activeTab = 'surveys';
+
+    function refreshAfterStrataChange() {
+        rebuildStrataScope();
+        rendered = {};
+        renderTab(activeTab, true);
+        setText('strataFilterBadge', strataScopeFilter || 'All Vanuatu');
+    }
 
     navItems.forEach(item => {
         item.addEventListener('click', () => {
             const tab = item.dataset.tab;
+            activeTab = tab;
             navItems.forEach(n => n.classList.remove('active'));
             item.classList.add('active');
             tabs.forEach(t => t.classList.remove('active'));
@@ -153,7 +254,18 @@
             if (target) target.classList.add('active');
             setText('pageTitle', TAB_TITLES[tab] || tab);
             renderTab(tab);
-            // close mobile sidebar
+            el('sidebar').classList.remove('open');
+        });
+    });
+
+    const strataNavItems = document.querySelectorAll('.nav-strata-item');
+    strataNavItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const s = item.dataset.strata;
+            strataScopeFilter = (s === '' || s === 'all') ? null : s;
+            strataNavItems.forEach(n => n.classList.remove('active'));
+            item.classList.add('active');
+            refreshAfterStrataChange();
             el('sidebar').classList.remove('open');
         });
     });
@@ -163,8 +275,8 @@
     });
 
     /* ---------- render dispatcher ---------- */
-    function renderTab(tab) {
-        if (rendered[tab]) return;
+    function renderTab(tab, force) {
+        if (!force && rendered[tab]) return;
         rendered[tab] = true;
         switch (tab) {
             case 'surveys': renderSurveys(); break;
@@ -194,11 +306,11 @@
         const fsBacklogStatuses = ['100', '65', '125']; // Completed + Rejected by SV + Rejected by HQ
         const hqBacklogStatuses = ['120'];               // Approved by SV
         const approvedStatuses = ['130'];                 // Approved by HQ
-        const fsBacklog = households.filter(h => fsBacklogStatuses.includes(h.interview_status)).length;
-        const hqBacklog = households.filter(h => hqBacklogStatuses.includes(h.interview_status)).length;
-        const approved = households.filter(h => approvedStatuses.includes(h.interview_status)).length;
+        const fsBacklog = viewHH.filter(h => fsBacklogStatuses.includes(h.interview_status)).length;
+        const hqBacklog = viewHH.filter(h => hqBacklogStatuses.includes(h.interview_status)).length;
+        const approved = viewHH.filter(h => approvedStatuses.includes(h.interview_status)).length;
 
-        setText('kpi-total-interviews', households.length);
+        setText('kpi-total-interviews', viewHH.length);
         setText('kpi-fs-backlog', fsBacklog);
         setText('kpi-hq-backlog', hqBacklog);
         setText('kpi-approved', approved);
@@ -272,9 +384,10 @@
 
         // table
         const tbody = el('table-surveys').querySelector('tbody');
-        households.forEach(h => {
+        tbody.innerHTML = '';
+        viewHH.forEach(h => {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${esc(h.interview_key)}</td><td>${esc(h.province_name)}</td><td>${esc(h.island_name)}</td>` +
+            tr.innerHTML = `<td>${esc(h.interview_key)}</td><td>${esc(h.strata_label)}</td><td>${esc(h.island_name)}</td>` +
                 `<td>${esc(h.ac_name)}</td><td>${esc(h.ea)}</td><td>${esc(h.village_name)}</td>` +
                 `<td>${esc(h.team_name || h.team_id)}</td><td>${esc(h.interviewer_id)}</td><td>${esc(h.interview_date)}</td>` +
                 `<td><span class="status-badge status-${h.interview_status}">${statusLabel(h.interview_status)}</span></td>`;
@@ -291,7 +404,7 @@
         const approvedStatuses = ['130'];
         const teamIds = Object.keys(hhByTeam).sort();
         const numTeams = teamIds.length;
-        const avgPerTeam = (households.length / numTeams).toFixed(1);
+        const avgPerTeam = (viewHH.length / numTeams).toFixed(1);
 
         // Compute per-team backlogs
         const teamFsBacklog = {};
@@ -350,6 +463,7 @@
 
         // table
         const tbody = el('table-teams').querySelector('tbody');
+        tbody.innerHTML = '';
         teamIds.forEach(t => {
             const rows = hhByTeam[t];
             const intvs = [...new Set(rows.map(r => r.interviewer_id))].length;
@@ -370,8 +484,8 @@
         const days = dates.length;
         const approvedTotal = (hhByStatus['120'] || []).length + (hhByStatus['130'] || []).length;
         const rejTotal = (hhByStatus['65'] || []).length + (hhByStatus['125'] || []).length;
-        const approvalRate = ((approvedTotal / households.length) * 100).toFixed(1) + '%';
-        const rejRate = ((rejTotal / households.length) * 100).toFixed(1) + '%';
+        const approvalRate = ((approvedTotal / viewHH.length) * 100).toFixed(1) + '%';
+        const rejRate = ((rejTotal / viewHH.length) * 100).toFixed(1) + '%';
         const pending = (hhByStatus['100'] || []).length;
 
         setText('kpi-fieldwork-days', days);
@@ -397,7 +511,7 @@
 
         // approval funnel (horizontal bar)
         const funnel = [
-            { label: 'Total', val: households.length },
+            { label: 'Total', val: viewHH.length },
             { label: 'Completed', val: (hhByStatus['100'] || []).length },
             { label: 'Approved SV', val: (hhByStatus['120'] || []).length },
             { label: 'Approved HQ', val: (hhByStatus['130'] || []).length }
@@ -445,9 +559,9 @@
     function renderDevices() {
         const intvIds = Object.keys(hhByInterviewer).sort();
         const numIntv = intvIds.length;
-        const avgPerIntv = (households.length / numIntv).toFixed(1);
+        const avgPerIntv = (viewHH.length / numIntv).toFixed(1);
         const topIntv = sortedEntries(Object.fromEntries(intvIds.map(i => [i, hhByInterviewer[i].length])))[0];
-        const provsCovered = [...new Set(households.map(h => h.province_name))].length;
+        const provsCovered = [...new Set(viewHH.map(h => h.strata_label))].length;
 
         setText('kpi-num-interviewers', numIntv);
         setText('kpi-avg-per-intv', avgPerIntv);
@@ -484,10 +598,11 @@
 
         // table
         const tbody = el('table-interviewers').querySelector('tbody');
+        tbody.innerHTML = '';
         intvIds.forEach(i => {
             const rows = hhByInterviewer[i];
             const team = rows[0].team_id;
-            const provs = [...new Set(rows.map(r => r.province_name))].join(', ');
+            const provs = [...new Set(rows.map(r => r.strata_label))].join(', ');
             const tr = document.createElement('tr');
             const teamLabel = (eaLookup[rows[0].ea] || {}).team_name || ('Team ' + team);
             tr.innerHTML = `<td>${esc(i)}</td><td>${esc(teamLabel)}</td><td>${rows.length}</td>` +
@@ -502,10 +617,15 @@
     /* ========================================
        5. MAP REPORT
        ======================================== */
+    let surveyMapInstance = null;
     function renderMap() {
-        const withGPS = households.filter(h => h.latitude && h.longitude && h.latitude !== '' && h.longitude !== '');
-        const eas = [...new Set(households.map(h => h.ea))].length;
-        const provs = [...new Set(households.map(h => h.province_name))].length;
+        if (surveyMapInstance) {
+            surveyMapInstance.remove();
+            surveyMapInstance = null;
+        }
+        const withGPS = viewHH.filter(h => h.latitude && h.longitude && h.latitude !== '' && h.longitude !== '');
+        const eas = [...new Set(viewHH.map(h => h.ea))].length;
+        const provs = [...new Set(viewHH.map(h => h.strata_label))].length;
 
         setText('kpi-map-hh', withGPS.length);
         setText('kpi-map-eas', eas);
@@ -514,7 +634,7 @@
 
         // Build actual count per EA
         const actualByEA = {};
-        households.forEach(h => {
+        viewHH.forEach(h => {
             const ea = String(h.ea);
             actualByEA[ea] = (actualByEA[ea] || 0) + 1;
         });
@@ -529,6 +649,7 @@
 
         // Leaflet map
         const map = L.map('survey-map').setView([-16.5, 168], 6);
+        surveyMapInstance = map;
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors', maxZoom: 18
         }).addTo(map);
@@ -593,7 +714,7 @@
                 radius: 5, fillColor: '#e74c3c', color: '#fff', weight: 1, fillOpacity: 0.85
             }).bindPopup(
                 '<b>' + esc(h.interview_key) + '</b><br>' +
-                'Province: ' + esc(h.province_name) + '<br>Island: ' + esc(h.island_name) +
+                'Strata: ' + esc(h.strata_label) + '<br>Province: ' + esc(h.province_name) + '<br>Island: ' + esc(h.island_name) +
                 '<br>AC: ' + esc(h.ac_name) + '<br>Village: ' + esc(h.village_name) +
                 '<br>EA: ' + esc(h.ea) + '<br>Team: ' + esc(h.team_name || h.team_id) +
                 '<br>Date: ' + esc(h.interview_date) + '<br>Status: ' + statusLabel(h.interview_status)
@@ -620,7 +741,7 @@
        6. CUMULATIVE INTERVIEW CHART
        ======================================== */
     function renderCumulative() {
-        const total = households.length;
+        const total = viewHH.length;
         const firstDate = dates[0] || '-';
         const lastDate = dates[dates.length - 1] || '-';
         const dailyAvg = (total / (dates.length || 1)).toFixed(1);
@@ -648,18 +769,18 @@
             options: { responsive: true, scales: { y: { beginAtZero: true } }, plugins: { legend: { display: false } } }
         });
 
-        // cumulative by province
-        const provNames = Object.keys(hhByProvince).sort();
+        // cumulative by strata
+        const strataKeys = orderedStrataKeys(hhByStrata);
         makeChart('chart-cumulative-province', {
             type: 'line',
             data: {
                 labels: dates,
-                datasets: provNames.map((p, i) => {
+                datasets: strataKeys.map((p, i) => {
                     let cum = 0;
                     return {
                         label: p,
-                        data: dates.map(d => { cum += (hhByDate[d] || []).filter(h => h.province_name === p).length; return cum; }),
-                        borderColor: PROV_COLORS[p] || CHART_PALETTE[i],
+                        data: dates.map(d => { cum += (hhByDate[d] || []).filter(h => h.strata_label === p).length; return cum; }),
+                        borderColor: strataColor(p) || CHART_PALETTE[i],
                         tension: 0.3, fill: false, pointRadius: 4
                     };
                 })
@@ -686,25 +807,25 @@
        7. QUANTITY
        ======================================== */
     function renderQuantity() {
-        const totalPersons = summary.total_persons;
-        const avgHH = summary.avg_hh_size;
+        const totalPersons = viewPersons.length;
+        const avgHH = viewHH.length ? (viewPersons.length / viewHH.length).toFixed(1) : '-';
         const peakDay = dates.reduce((mx, d) => Math.max(mx, (hhByDate[d] || []).length), 0);
 
-        setText('kpi-qty-total', households.length);
+        setText('kpi-qty-total', viewHH.length);
         setText('kpi-qty-persons', totalPersons);
         setText('kpi-qty-avg-hh', avgHH);
         setText('kpi-qty-peak', peakDay);
 
-        // by province
-        const provNames = Object.keys(hhByProvince).sort();
+        // by strata
+        const strataKeysQty = orderedStrataKeys(hhByStrata);
         makeChart('chart-qty-province', {
             type: 'bar',
             data: {
-                labels: provNames,
+                labels: strataKeysQty,
                 datasets: [{
                     label: 'Interviews',
-                    data: provNames.map(p => hhByProvince[p].length),
-                    backgroundColor: provNames.map(p => PROV_COLORS[p] || '#95a5a6')
+                    data: strataKeysQty.map(p => hhByStrata[p].length),
+                    backgroundColor: strataKeysQty.map(p => strataColor(p))
                 }]
             },
             options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
@@ -740,14 +861,17 @@
             options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
         });
 
-        // persons by province
+        // persons by strata
+        const strataKeysPersons = orderedStrataKeys(hhByStrata);
+        const personsPerStrata = strataKeysPersons.map(s =>
+            viewPersons.filter(p => hhStrataLookup[p.interview_key] === s).length);
         makeChart('chart-qty-persons-prov', {
             type: 'doughnut',
             data: {
-                labels: summary.provinces.map(p => p.name),
+                labels: strataKeysPersons,
                 datasets: [{
-                    data: summary.provinces.map(p => p.persons),
-                    backgroundColor: summary.provinces.map(p => PROV_COLORS[p.name] || '#95a5a6')
+                    data: personsPerStrata,
+                    backgroundColor: strataKeysPersons.map(s => strataColor(s))
                 }]
             },
             options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
@@ -761,9 +885,9 @@
         const numDays = dates.length || 1;
         const teamIds = Object.keys(hhByTeam);
         const intvIds = Object.keys(hhByInterviewer);
-        const dailyAvg = (households.length / numDays).toFixed(1);
-        const teamDayAvg = (households.length / numDays / teamIds.length).toFixed(2);
-        const intvDayAvg = (households.length / numDays / intvIds.length).toFixed(2);
+        const dailyAvg = (viewHH.length / numDays).toFixed(1);
+        const teamDayAvg = (viewHH.length / numDays / teamIds.length).toFixed(2);
+        const intvDayAvg = (viewHH.length / numDays / intvIds.length).toFixed(2);
         const peakDaily = dates.reduce((mx, d) => Math.max(mx, (hhByDate[d] || []).length), 0);
 
         setText('kpi-speed-daily', dailyAvg);
@@ -820,19 +944,20 @@
             options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
         });
 
-        // province speed
-        const provNames = Object.keys(hhByProvince).sort();
+        // strata speed
+        const strataKeysSp = orderedStrataKeys(hhByStrata);
         makeChart('chart-speed-province', {
             type: 'bar',
             data: {
-                labels: provNames,
+                labels: strataKeysSp,
                 datasets: [{
                     label: 'Interviews / Active Day',
-                    data: provNames.map(p => {
-                        const provDates = [...new Set(hhByProvince[p].map(h => h.interview_date))].length || 1;
-                        return (hhByProvince[p].length / provDates).toFixed(1);
+                    data: strataKeysSp.map(p => {
+                        const rows = hhByStrata[p].filter(Boolean);
+                        const provDates = [...new Set(rows.map(h => h.interview_date))].length || 1;
+                        return (rows.length / provDates).toFixed(1);
                     }),
-                    backgroundColor: provNames.map(p => PROV_COLORS[p] || '#95a5a6')
+                    backgroundColor: strataKeysSp.map(p => strataColor(p))
                 }]
             },
             options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
@@ -844,26 +969,26 @@
        ======================================== */
     function renderStatistics() {
         // Compute all stats from raw data
-        const totalHH = households.length;
-        const totalP = persons.length;
+        const totalHH = viewHH.length;
+        const totalP = viewPersons.length;
 
         // HH sizes from persons grouped by interview_key
         const hhSizes = {};
-        persons.forEach(p => { hhSizes[p.interview_key] = (hhSizes[p.interview_key] || 0) + 1; });
+        viewPersons.forEach(p => { hhSizes[p.interview_key] = (hhSizes[p.interview_key] || 0) + 1; });
         const sizeValues = Object.values(hhSizes);
         const avgHS = sizeValues.length > 0 ? (sizeValues.reduce((a, b) => a + b, 0) / sizeValues.length).toFixed(1) : '-';
 
         // Sex counts
-        const maleC = persons.filter(p => String(p.sex) === '1').length;
-        const femaleC = persons.filter(p => String(p.sex) === '2').length;
+        const maleC = viewPersons.filter(p => String(p.sex) === '1').length;
+        const femaleC = viewPersons.filter(p => String(p.sex) === '2').length;
         const sexRatio = femaleC > 0 ? ((maleC / femaleC) * 100).toFixed(0) : '-';
 
-        // Province data from households
-        const provHH = groupBy(households, 'province_name');
-        const provNames = Object.keys(provHH).filter(n => n).sort();
+        // Strata data from households
+        const strataHH = groupBy(viewHH, 'strata_label');
+        const strataNames = orderedStrataKeys(strataHH);
 
         setText('kpi-stat-hh', totalHH);
-        setText('kpi-stat-hh-sub', provNames.length + ' provinces');
+        setText('kpi-stat-hh-sub', strataNames.length + ' strata');
         setText('kpi-stat-persons', totalP);
         setText('kpi-stat-persons-sub', maleC + ' male, ' + femaleC + ' female');
         setText('kpi-stat-hhsize', avgHS);
@@ -880,7 +1005,7 @@
         }
         const pyramidData = {};
         ageBins.forEach(g => { pyramidData[g] = { male: 0, female: 0 }; });
-        persons.forEach(p => {
+        viewPersons.forEach(p => {
             const bin = ageBin(p.age);
             if (!bin) return;
             if (String(p.sex) === '1') pyramidData[bin].male++;
@@ -920,16 +1045,16 @@
             options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
         });
 
-        // Households by province
-        const provData = provNames.map(n => ({ name: n, households: provHH[n].length }));
+        // Households by strata
+        const strataData = strataNames.map(n => ({ name: n, households: strataHH[n].length }));
         makeChart('chart-stat-province', {
             type: 'bar',
             data: {
-                labels: provData.map(p => p.name),
+                labels: strataData.map(p => p.name),
                 datasets: [{
                     label: 'Households',
-                    data: provData.map(p => p.households),
-                    backgroundColor: provData.map(p => PROV_COLORS[p.name] || '#95a5a6')
+                    data: strataData.map(p => p.households),
+                    backgroundColor: strataData.map(p => strataColor(p.name))
                 }]
             },
             options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
@@ -952,15 +1077,14 @@
             options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
         });
 
-        // Province summary table
+        // Strata summary table
         const tbody = el('table-province-summary').querySelector('tbody');
-        const hhProvLookup = {};
-        households.forEach(h => { hhProvLookup[h.interview_key] = h.province_name; });
-        const personsWithProv = persons.map(p => ({ ...p, province_name: hhProvLookup[p.interview_key] || '' }));
-        const personsByProv = groupBy(personsWithProv, 'province_name');
-        provNames.forEach(name => {
-            const hhCount = provHH[name].length;
-            const provPersons = personsByProv[name] || [];
+        tbody.innerHTML = '';
+        const personsWithStrata = viewPersons.map(p => ({ ...p, strata_label: hhStrataLookup[p.interview_key] || 'Unknown' }));
+        const personsByStrata = groupBy(personsWithStrata, 'strata_label');
+        strataNames.forEach(name => {
+            const hhCount = strataHH[name].length;
+            const provPersons = personsByStrata[name] || [];
             const pCount = provPersons.length;
             const male = provPersons.filter(r => String(r.sex) === '1').length;
             const female = provPersons.filter(r => String(r.sex) === '2').length;
@@ -979,22 +1103,23 @@
     function renderMonitoring() {
         if (!targets || !targets.eas) return;
 
-        // Build actual count per EA from households
+        // Build actual count per EA from filtered households
         const actualByEA = {};
-        households.forEach(h => {
+        viewHH.forEach(h => {
             const ea = String(h.ea);
             actualByEA[ea] = (actualByEA[ea] || 0) + 1;
         });
 
-        const totalTarget = targets.total_target || 0;
-        const totalActual = households.length;
+        const totalTarget = getStrataTargetTotal();
+        const totalActual = viewHH.length;
         const pctOverall = totalTarget > 0 ? ((totalActual / totalTarget) * 100).toFixed(1) : '0.0';
         const easStarted = Object.keys(actualByEA).length;
+        const easDenom = getStrataEasCount();
 
         setText('kpi-mon-target', totalTarget.toLocaleString());
         setText('kpi-mon-actual', totalActual);
         setText('kpi-mon-pct', pctOverall + '%');
-        setText('kpi-mon-eas-active', easStarted + ' / ' + targets.total_eas);
+        setText('kpi-mon-eas-active', easStarted + ' / ' + easDenom);
 
         // Helper: build progress bar HTML
         function progressHTML(label, actual, target) {
@@ -1010,47 +1135,37 @@
                 '</div>';
         }
 
-        // Province progress bars
-        const provDiv = el('progress-province');
-        if (provDiv) {
-            // Map province names: targets use uppercase (TORBA), households use title case (Torba)
-            const provMap = {};
-            targets.eas.forEach(e => {
-                const norm = e.province.charAt(0) + e.province.slice(1).toLowerCase();
-                if (!provMap[norm]) provMap[norm] = { target: 0 };
-                provMap[norm].target += e.target_sample;
-            });
-            // Count actual by province
-            const hhByProv = groupBy(households, 'province_name');
-            let html = '';
-            Object.keys(provMap).sort().forEach(p => {
-                const actual = (hhByProv[p] || []).length;
-                html += progressHTML(p, actual, provMap[p].target);
-            });
-            provDiv.innerHTML = html;
-        }
-
-        // Strata progress bars
+        // Strata progress (canonical order; targets summed by display label)
         const strataDiv = el('progress-strata');
         if (strataDiv) {
             const strataTargets = targets.strata_targets || {};
-            // Build actual by strata: need to map each household's EA to its strata
-            const eaStrataMap = {};
-            targets.eas.forEach(e => { eaStrataMap[String(e.eahies)] = e.strata_name; });
-            const actualByStrata = {};
-            households.forEach(h => {
-                const s = eaStrataMap[String(h.ea)] || 'Unknown';
-                actualByStrata[s] = (actualByStrata[s] || 0) + 1;
+            const targetByDisplay = {};
+            Object.keys(strataTargets).forEach(k => {
+                const label = mapStrataRawToLabel(k);
+                targetByDisplay[label] = (targetByDisplay[label] || 0) + strataTargets[k].target;
             });
+            const actualByStrataDisplay = {};
+            viewHH.forEach(h => {
+                const s = h.strata_label;
+                actualByStrataDisplay[s] = (actualByStrataDisplay[s] || 0) + 1;
+            });
+            const keysUnion = new Set([...Object.keys(targetByDisplay), ...Object.keys(actualByStrataDisplay)]);
+            const mergedForOrder = {};
+            keysUnion.forEach(k => { mergedForOrder[k] = []; });
+            const strataKeysMon = orderedStrataKeys(mergedForOrder);
             let html = '';
-            Object.keys(strataTargets).sort().forEach(s => {
-                html += progressHTML(s, actualByStrata[s] || 0, strataTargets[s].target);
+            strataKeysMon.forEach(label => {
+                html += progressHTML(
+                    label,
+                    actualByStrataDisplay[label] || 0,
+                    targetByDisplay[label] || 0
+                );
             });
             strataDiv.innerHTML = html;
         }
 
         // Bar chart: active EAs actual vs target
-        const activeEAs = targets.eas.filter(e => actualByEA[String(e.eahies)]);
+        const activeEAs = targets.eas.filter(e => actualByEA[String(e.eahies)] && eaRecordMatchesStrataFilter(e));
         if (activeEAs.length > 0) {
             activeEAs.sort((a, b) => String(a.eahies).localeCompare(String(b.eahies)));
             makeChart('chart-mon-ea', {
@@ -1082,31 +1197,50 @@
             });
         }
 
-        // Doughnut: province completion
-        const provNames = Object.keys(targets.province_targets || {}).sort();
-        const provActual = provNames.map(p => {
-            const norm = p.charAt(0) + p.slice(1).toLowerCase();
-            return (groupBy(households, 'province_name')[norm] || []).length;
+        // Doughnut: strata completion (same targets as progress bars)
+        const strataTargetsD = targets.strata_targets || {};
+        const targetByDisplayD = {};
+        Object.keys(strataTargetsD).forEach(k => {
+            const label = mapStrataRawToLabel(k);
+            targetByDisplayD[label] = (targetByDisplayD[label] || 0) + strataTargetsD[k].target;
         });
-        const provTarget = provNames.map(p => targets.province_targets[p].target);
+        const mergedD = { ...hhByStrata };
+        Object.keys(targetByDisplayD).forEach(k => { if (!mergedD[k]) mergedD[k] = []; });
+        const strataKeysD = orderedStrataKeys(mergedD);
+        const actualD = strataKeysD.map(s => (hhByStrata[s] || []).length);
+        const targetD = strataKeysD.map(s => targetByDisplayD[s] || 0);
         makeChart('chart-mon-prov', {
             type: 'doughnut',
             data: {
-                labels: provNames.map(p => p.charAt(0) + p.slice(1).toLowerCase()),
+                labels: strataKeysD,
                 datasets: [{
-                    data: provActual,
-                    backgroundColor: provNames.map(p => {
-                        const norm = p.charAt(0) + p.slice(1).toLowerCase();
-                        return PROV_COLORS[norm] || '#95a5a6';
-                    })
+                    data: actualD,
+                    backgroundColor: strataKeysD.map(s => strataColor(s))
                 }]
             },
-            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel(ctx) {
+                                const i = ctx.dataIndex;
+                                const t = targetD[i];
+                                const a = actualD[i];
+                                return t ? (' Target: ' + t + ' | Actual: ' + a) : '';
+                            }
+                        }
+                    }
+                }
+            }
         });
 
-        // EA detail table — all 512 EAs
+        // EA detail table — full frame or current stratum
         const tbody = el('table-ea-monitoring').querySelector('tbody');
-        targets.eas.forEach(e => {
+        tbody.innerHTML = '';
+        const easForTable = strataScopeFilter ? targets.eas.filter(eaRecordMatchesStrataFilter) : targets.eas;
+        easForTable.forEach(e => {
             const code = String(e.eahies);
             const actual = actualByEA[code] || 0;
             const remaining = Math.max(0, e.target_sample - actual);
@@ -1116,7 +1250,7 @@
             tr.innerHTML = '<td>' + esc(code) + '</td>' +
                 '<td>' + esc(e.province) + '</td>' +
                 '<td>' + esc(e.ac_name) + '</td>' +
-                '<td>' + esc(e.strata_name) + '</td>' +
+                '<td>' + esc(mapStrataRawToLabel(e.strata_name)) + '</td>' +
                 '<td>' + esc(e.urban_rural) + '</td>' +
                 '<td>' + e.target_sample + '</td>' +
                 '<td>' + actual + '</td>' +
@@ -1136,9 +1270,9 @@
         const schedule = workplan.schedule;
         const teamNames = Object.keys(workplan.teams).sort();
 
-        // Only EA assignments (not breaks/training)
-        const eaEntries = schedule.filter(s => s.eaid !== null);
-        const breakEntries = schedule.filter(s => s.eaid === null);
+        // Only EA assignments (not breaks/training); optional stratum filter
+        const scheduleScoped = schedule.filter(workplanRowMatchesStrata);
+        const eaEntries = scheduleScoped.filter(s => s.eaid !== null);
 
         // Unique rounds
         const rounds = [...new Set(eaEntries.map(s => s.round))].sort((a, b) => {
@@ -1149,7 +1283,7 @@
 
         // Build actual count per EA from household data
         const actualByEA = {};
-        households.forEach(h => {
+        viewHH.forEach(h => {
             const ea = String(h.ea);
             actualByEA[ea] = (actualByEA[ea] || 0) + 1;
         });
@@ -1354,8 +1488,9 @@
 
         // Full schedule table
         const tbody = el('table-workplan').querySelector('tbody');
+        tbody.innerHTML = '';
         // Sort: by date, then team
-        const sorted = [...schedule].sort((a, b) => {
+        const sorted = [...scheduleScoped].sort((a, b) => {
             if (a.date !== b.date) return (a.date || '').localeCompare(b.date || '');
             return a.team.localeCompare(b.team);
         });
@@ -1364,8 +1499,12 @@
             // Determine row status
             let statusBadge = '';
             if (s.eaid === null) {
-                // Break or training
+                // Break or training (national calendar — shown in every stratum filter)
                 statusBadge = '<span class="status-badge" style="background:#95a5a6;color:#fff;">' + esc(s.round) + '</span>';
+                if (strataScopeFilter) {
+                    tr.classList.add('workplan-row-national');
+                    tr.title = 'Field calendar entry (not stratum-specific)';
+                }
             } else {
                 const actual = actualByEA[String(s.eaid)] || 0;
                 const d = new Date(s.date);
@@ -1403,14 +1542,14 @@
     function renderFoodConsumption() {
         // Build household size map from persons
         const hhSizeMap = {};
-        persons.forEach(p => {
+        viewPersons.forEach(p => {
             hhSizeMap[p.interview_key] = (hhSizeMap[p.interview_key] || 0) + 1;
         });
 
         // Build food items per household
         const foodPerHH = {};
         const foodIdCounts = {};
-        foodData.forEach(r => {
+        viewFoodData.forEach(r => {
             foodPerHH[r.interview_key] = (foodPerHH[r.interview_key] || 0) + 1;
             foodIdCounts[r.food_id] = (foodIdCounts[r.food_id] || 0) + 1;
         });
@@ -1430,8 +1569,8 @@
         // KPIs
         const uniqueFoodIds = Object.keys(foodIdCounts).length;
         setText('kpi-food-hh', hhKeys.length);
-        setText('kpi-food-items', foodData.length);
-        setText('kpi-food-avg', (foodData.length / hhKeys.length).toFixed(1));
+        setText('kpi-food-items', viewFoodData.length);
+        setText('kpi-food-avg', hhKeys.length ? (viewFoodData.length / hhKeys.length).toFixed(1) : '0');
         setText('kpi-food-unique', uniqueFoodIds);
 
         // Sizes sorted
@@ -1615,6 +1754,7 @@
 
         // Detail table
         const tbody = el('table-food-detail').querySelector('tbody');
+        tbody.innerHTML = '';
         sizes.forEach((s, i) => {
             const tr = document.createElement('tr');
             tr.innerHTML = '<td>' + s + '</td><td>' + countBySize[i] + '</td><td>' +
@@ -1628,12 +1768,18 @@
        13. HOUSEHOLD LISTING PROGRESS
        ======================================== */
     function renderListing() {
-        if (!listingData || !listingData.length) return;
+        if (!viewListingData || !viewListingData.length) {
+            setText('kpi-list-total', '0');
+            setText('kpi-list-completed', '0');
+            setText('kpi-list-pending', '0');
+            setText('kpi-list-photos', '0');
+            return;
+        }
 
-        const total = listingData.length;
-        const completed = listingData.filter(r => r.has_listing).length;
+        const total = viewListingData.length;
+        const completed = viewListingData.filter(r => r.has_listing).length;
         const pending = total - completed;
-        const totalPhotos = listingData.reduce((s, r) => s + r.listing_photos, 0);
+        const totalPhotos = viewListingData.reduce((s, r) => s + r.listing_photos, 0);
 
         setText('kpi-list-total', total);
         setText('kpi-list-completed', completed);
@@ -1641,7 +1787,7 @@
         setText('kpi-list-photos', totalPhotos);
 
         // By team
-        const byTeam = groupBy(listingData, 'team_id');
+        const byTeam = groupBy(viewListingData, 'team_id');
         const teamIds = Object.keys(byTeam).sort();
         const teamLabels = teamIds.map(t => tName(t));
         const teamCompleted = teamIds.map(t => byTeam[t].filter(r => r.has_listing).length);
@@ -1669,23 +1815,28 @@
             options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
         });
 
-        // By province
-        const byProv = groupBy(listingData, 'province');
-        const provNames = Object.keys(byProv).filter(Boolean).sort();
+        // By strata
+        const byStrataList = {};
+        viewListingData.forEach(r => {
+            const s = hhStrataLookup[r.interview_key] || 'Unknown';
+            if (!byStrataList[s]) byStrataList[s] = [];
+            byStrataList[s].push(r);
+        });
+        const strataKeysList = orderedStrataKeys(byStrataList);
         makeChart('chart-list-province', {
             type: 'bar',
             data: {
-                labels: provNames,
+                labels: strataKeysList,
                 datasets: [
-                    { label: 'Completed', data: provNames.map(p => byProv[p].filter(r => r.has_listing).length), backgroundColor: '#2ecc71' },
-                    { label: 'Pending', data: provNames.map(p => byProv[p].filter(r => !r.has_listing).length), backgroundColor: '#e74c3c' }
+                    { label: 'Completed', data: strataKeysList.map(p => byStrataList[p].filter(r => r.has_listing).length), backgroundColor: '#2ecc71' },
+                    { label: 'Pending', data: strataKeysList.map(p => byStrataList[p].filter(r => !r.has_listing).length), backgroundColor: '#e74c3c' }
                 ]
             },
             options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } } }
         });
 
         // Photos distribution
-        const withPhotos = listingData.filter(r => r.listing_photos > 0);
+        const withPhotos = viewListingData.filter(r => r.listing_photos > 0);
         const photoDist = {};
         withPhotos.forEach(r => { photoDist[r.listing_photos] = (photoDist[r.listing_photos] || 0) + 1; });
         const photoKeys = Object.keys(photoDist).map(Number).sort((a, b) => a - b);
@@ -1719,14 +1870,15 @@
 
         // Detail table
         var tbody = el('table-listing').querySelector('tbody');
-        listingData.forEach(function (r) {
+        tbody.innerHTML = '';
+        viewListingData.forEach(function (r) {
             var tr = document.createElement('tr');
             var badge = r.has_listing
                 ? '<span class="status-badge" style="background:#2ecc71;color:#fff;">Done</span>'
                 : '<span class="status-badge" style="background:#e74c3c;color:#fff;">Pending</span>';
             if (r.has_listing) tr.style.backgroundColor = '#f0fff0';
             tr.innerHTML = '<td>' + esc(tName(r.team_id)) + '</td>' +
-                '<td>' + esc(r.province) + '</td>' +
+                '<td>' + esc(hhStrataLookup[r.interview_key] || 'Unknown') + '</td>' +
                 '<td>' + esc(r.ea) + '</td>' +
                 '<td>' + esc(r.interview_key) + '</td>' +
                 '<td>' + r.listing_pages + '</td>' +
@@ -1742,11 +1894,11 @@
     function renderMarket() {
         if (!marketData || !marketData.outlets) return;
 
-        var outlets = marketData.outlets;
-        var hhProgress = marketData.hh_progress || [];
-        var categories = marketData.categories || [];
+        var outlets = viewMarketData.outlets;
+        var hhProgress = viewMarketData.hh_progress || [];
+        var categories = viewMarketData.categories || [];
 
-        var total = hhProgress.length || households.length;
+        var total = hhProgress.length || viewHH.length;
         var completed = hhProgress.filter(function (r) { return r.has_market; }).length;
         var pending = total - completed;
 
@@ -1802,16 +1954,21 @@
             }
         });
 
-        // By province
-        var byProv = groupBy(hhProgress, 'province');
-        var provNames = Object.keys(byProv).filter(Boolean).sort();
+        // By strata
+        var byStrataMkt = {};
+        hhProgress.forEach(function (r) {
+            var s = hhStrataLookup[r.interview_key] || 'Unknown';
+            if (!byStrataMkt[s]) byStrataMkt[s] = [];
+            byStrataMkt[s].push(r);
+        });
+        var strataKeysMkt = orderedStrataKeys(byStrataMkt);
         makeChart('chart-mkt-province', {
             type: 'bar',
             data: {
-                labels: provNames,
+                labels: strataKeysMkt,
                 datasets: [
-                    { label: 'Completed', data: provNames.map(function (p) { return byProv[p].filter(function (r) { return r.has_market; }).length; }), backgroundColor: '#2ecc71' },
-                    { label: 'Pending', data: provNames.map(function (p) { return byProv[p].filter(function (r) { return !r.has_market; }).length; }), backgroundColor: '#e74c3c' }
+                    { label: 'Completed', data: strataKeysMkt.map(function (p) { return byStrataMkt[p].filter(function (r) { return r.has_market; }).length; }), backgroundColor: '#2ecc71' },
+                    { label: 'Pending', data: strataKeysMkt.map(function (p) { return byStrataMkt[p].filter(function (r) { return !r.has_market; }).length; }), backgroundColor: '#e74c3c' }
                 ]
             },
             options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } } }
@@ -1869,10 +2026,11 @@
 
         // Outlet detail table
         var tbody = el('table-market').querySelector('tbody');
+        tbody.innerHTML = '';
         outlets.forEach(function (o) {
             var tr = document.createElement('tr');
             var cells = '<td>' + esc(tName(o.team_id)) + '</td>' +
-                '<td>' + esc(o.province) + '</td>' +
+                '<td>' + esc(hhStrataLookup[o.interview_key] || o.province) + '</td>' +
                 '<td>' + esc(o.outlet_name) + '</td>';
             categories.forEach(function (cat) {
                 var p = o.products[cat];
@@ -1891,7 +2049,7 @@
        15. HOUSEHOLD ASSETS (unreported gap + threshold)
        ======================================== */
     function renderAssets() {
-        if (!assetsData || !assetsData.length) {
+        if (!viewAssetsData || !viewAssetsData.length) {
             setText('kpi-asset-total', '0');
             setText('kpi-asset-max-gap', '—');
             setText('kpi-asset-avg-owned', '—');
@@ -1899,10 +2057,10 @@
             return;
         }
 
-        const n = assetsData.length;
-        const gaps = assetsData.map(a => Number(a.unreported_asset_gap) || 0);
+        const n = viewAssetsData.length;
+        const gaps = viewAssetsData.map(a => Number(a.unreported_asset_gap) || 0);
         const maxGap = Math.max(...gaps, 0);
-        const sumOwned = assetsData.reduce((s, a) => s + (Number(a.owned_asset_types) || 0), 0);
+        const sumOwned = viewAssetsData.reduce((s, a) => s + (Number(a.owned_asset_types) || 0), 0);
         const avgOwned = n > 0 ? (sumOwned / n).toFixed(1) : '0';
 
         setText('kpi-asset-total', n);
@@ -1944,7 +2102,7 @@
         function refreshAssetTable() {
             let thr = parseInt(inp.value, 10);
             if (isNaN(thr) || thr < 0) thr = 0;
-            const flagged = assetsData.filter(a => (Number(a.unreported_asset_gap) || 0) >= thr);
+            const flagged = viewAssetsData.filter(a => (Number(a.unreported_asset_gap) || 0) >= thr);
             flagged.sort((a, b) => (Number(b.unreported_asset_gap) || 0) - (Number(a.unreported_asset_gap) || 0));
             setText('kpi-asset-flagged', flagged.length);
 
@@ -1955,7 +2113,7 @@
                 const gap = Number(r.unreported_asset_gap) || 0;
                 if (gap > 0) tr.style.backgroundColor = '#fff8f0';
                 tr.innerHTML = '<td>' + esc(tName(r.team_id)) + '</td>' +
-                    '<td>' + esc(r.province) + '</td>' +
+                    '<td>' + esc(hhStrataLookup[r.interview_key] || r.province) + '</td>' +
                     '<td>' + esc(r.ea) + '</td>' +
                     '<td>' + esc(r.interview_key) + '</td>' +
                     '<td>' + (Number(r.owned_asset_types) || 0) + '</td>' +
@@ -2023,9 +2181,9 @@
             targets.eas.forEach(e => { eaUr[String(e.eahies)] = e.urban_rural; });
         }
         const assetByKey = {};
-        (assetsData || []).forEach(a => { assetByKey[a.interview_key] = a; });
+        (viewAssetsData || []).forEach(a => { assetByKey[a.interview_key] = a; });
         const foodIdsByKey = {};
-        foodData.forEach(r => {
+        viewFoodData.forEach(r => {
             const k = r.interview_key;
             if (!foodIdsByKey[k]) foodIdsByKey[k] = new Set();
             foodIdsByKey[k].add(String(r.food_id));
@@ -2034,7 +2192,7 @@
         let flagA = 0;
         let flagF = 0;
         let n = 0;
-        households.forEach(h => {
+        viewHH.forEach(h => {
             const k = h.interview_key;
             const ur = eaUr[String(h.ea)] || 'R';
             const isUrban = ur === 'U';
@@ -2098,6 +2256,7 @@
         setText('kpi-ur-interviewers', overall.interviewerCount);
 
         function drawUrCharts() {
+            const { rows: urRows } = computeUnderreportingFlags();
             const topSel = el('ur-chart-topn');
             const refInp = el('ur-ref-line');
             let topN = parseInt(topSel && topSel.value, 10);
@@ -2106,7 +2265,7 @@
             if (isNaN(refPct)) refPct = 50;
             refPct = Math.max(0, Math.min(100, refPct));
 
-            const slice = topN >= 9999 ? rows : rows.slice(0, topN);
+            const slice = topN >= 9999 ? urRows : urRows.slice(0, topN);
             const labels = slice.map(r => r.interviewer_id);
             const pctA = slice.map(r => +r.pct_assets.toFixed(1));
             const pctF = slice.map(r => +r.pct_food.toFixed(1));
@@ -2195,18 +2354,19 @@
             });
         }
 
+        redrawUnderreportCharts = drawUrCharts;
         drawUrCharts();
 
         const topSel = el('ur-chart-topn');
         const refInp = el('ur-ref-line');
         if (topSel && !topSel.dataset.wired) {
             topSel.dataset.wired = '1';
-            topSel.addEventListener('change', drawUrCharts);
+            topSel.addEventListener('change', () => redrawUnderreportCharts());
         }
         if (refInp && !refInp.dataset.wired) {
             refInp.dataset.wired = '1';
-            refInp.addEventListener('input', drawUrCharts);
-            refInp.addEventListener('change', drawUrCharts);
+            refInp.addEventListener('input', () => redrawUnderreportCharts());
+            refInp.addEventListener('change', () => redrawUnderreportCharts());
         }
 
         const tbody = el('table-underreporting').querySelector('tbody');

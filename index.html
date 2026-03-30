@@ -38,6 +38,21 @@
                 onerror="this.style.display='none'">
             <h2>HIES 2026-2027</h2>
             <p class="subtitle">Household Income &amp; Expenditure Survey</p>
+            <p class="small" style="opacity:0.85;margin-top:6px;">Reporting by survey strata (8)</p>
+        </div>
+        <div class="nav-strata-section">
+            <div class="nav-strata-label">Stratum</div>
+            <ul class="nav-strata">
+                <li class="nav-strata-item active" data-strata="" title="All households">All Vanuatu</li>
+                <li class="nav-strata-item" data-strata="Torba">Torba</li>
+                <li class="nav-strata-item" data-strata="Sanma Rural">Sanma Rural</li>
+                <li class="nav-strata-item" data-strata="Penama">Penama</li>
+                <li class="nav-strata-item" data-strata="Malampa">Malampa</li>
+                <li class="nav-strata-item" data-strata="Shefa Rural">Shefa Rural</li>
+                <li class="nav-strata-item" data-strata="Tafea">Tafea</li>
+                <li class="nav-strata-item" data-strata="Port Vila">Port Vila</li>
+                <li class="nav-strata-item" data-strata="Luganville">Luganville</li>
+            </ul>
         </div>
         <ul class="nav-menu">
             <li class="nav-item active" data-tab="surveys">
@@ -102,6 +117,7 @@
             <button class="menu-toggle" id="menuToggle">&#9776;</button>
             <h1 id="pageTitle">Survey Overview</h1>
             <div class="topbar-info">
+                <span class="badge" id="strataFilterBadge" title="Current stratum filter">All Vanuatu</span>
                 <span class="badge">Round 1</span>
                 <span class="badge accent">Fieldwork in Progress</span>
             </div>
@@ -154,7 +170,7 @@
                         <thead>
                             <tr>
                                 <th>Interview Key</th>
-                                <th>Province</th>
+                                <th>Strata</th>
                                 <th>Island</th>
                                 <th>Area Council</th>
                                 <th>EA</th>
@@ -280,7 +296,7 @@
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-value" id="kpi-provinces-covered">--</div>
-                    <div class="kpi-label">Provinces Covered</div>
+                    <div class="kpi-label">Strata covered</div>
                 </div>
             </div>
             <div class="chart-row">
@@ -305,7 +321,7 @@
                                 <th>Completed</th>
                                 <th>Approved</th>
                                 <th>Rejected</th>
-                                <th>Provinces</th>
+                                <th>Strata</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -327,7 +343,7 @@
                 </div>
                 <div class="kpi-card orange">
                     <div class="kpi-value" id="kpi-map-provinces">--</div>
-                    <div class="kpi-label">Provinces</div>
+                    <div class="kpi-label">Strata</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-value" id="kpi-map-gps">--</div>
@@ -376,7 +392,7 @@
             </div>
             <div class="chart-row" style="margin-top:16px;">
                 <div class="chart-card wide">
-                    <h3>Cumulative Interviews by Province</h3>
+                    <h3>Cumulative Interviews by Strata</h3>
                     <canvas id="chart-cumulative-province"></canvas>
                 </div>
                 <div class="chart-card">
@@ -408,7 +424,7 @@
             </div>
             <div class="chart-row">
                 <div class="chart-card wide">
-                    <h3>Interviews by Province</h3>
+                    <h3>Interviews by Strata</h3>
                     <canvas id="chart-qty-province"></canvas>
                 </div>
                 <div class="chart-card">
@@ -422,7 +438,7 @@
                     <canvas id="chart-qty-interviewer"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h3>Persons per Province</h3>
+                    <h3>Persons per Strata</h3>
                     <canvas id="chart-qty-persons-prov"></canvas>
                 </div>
             </div>
@@ -464,7 +480,7 @@
                     <canvas id="chart-speed-interviewer"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h3>Province Collection Speed</h3>
+                    <h3>Strata Collection Speed</h3>
                     <canvas id="chart-speed-province"></canvas>
                 </div>
             </div>
@@ -504,7 +520,7 @@
             </div>
             <div class="chart-row">
                 <div class="chart-card wide">
-                    <h3>Households by Province</h3>
+                    <h3>Households by Strata</h3>
                     <canvas id="chart-stat-province"></canvas>
                 </div>
                 <div class="chart-card">
@@ -513,12 +529,12 @@
                 </div>
             </div>
             <div class="chart-card full" style="margin-top:16px;">
-                <h3>Province Summary</h3>
+                <h3>Strata Summary</h3>
                 <div class="table-wrapper">
                     <table class="data-table" id="table-province-summary">
                         <thead>
                             <tr>
-                                <th>Province</th>
+                                <th>Strata</th>
                                 <th>Households</th>
                                 <th>Persons</th>
                                 <th>Avg HH Size</th>
@@ -553,13 +569,7 @@
                 </div>
             </div>
 
-            <!-- Province progress -->
-            <div class="chart-card full" style="margin-bottom:16px;">
-                <h3>Progress by Province</h3>
-                <div id="progress-province"></div>
-            </div>
-
-            <!-- Strata progress -->
+            <!-- Strata progress (sample frame targets) -->
             <div class="chart-card full" style="margin-bottom:16px;">
                 <h3>Progress by Strata</h3>
                 <div id="progress-strata"></div>
@@ -572,7 +582,7 @@
                     <canvas id="chart-mon-ea"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h3>Province Completion</h3>
+                    <h3>Strata completion (actual vs target)</h3>
                     <canvas id="chart-mon-prov"></canvas>
                 </div>
             </div>
@@ -766,7 +776,7 @@
             </div>
             <div class="chart-row">
                 <div class="chart-card wide">
-                    <h3>Listing Progress by Province</h3>
+                    <h3>Listing Progress by Strata</h3>
                     <canvas id="chart-list-province"></canvas>
                 </div>
                 <div class="chart-card">
@@ -785,7 +795,7 @@
                         <thead>
                             <tr>
                                 <th>Team</th>
-                                <th>Province</th>
+                                <th>Strata</th>
                                 <th>EA</th>
                                 <th>Interview Key</th>
                                 <th>Pages</th>
@@ -835,7 +845,7 @@
                     <canvas id="chart-mkt-products"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h3>Market Survey by Province</h3>
+                    <h3>Market Survey by Strata</h3>
                     <canvas id="chart-mkt-province"></canvas>
                 </div>
             </div>
@@ -860,7 +870,7 @@
                         <thead>
                             <tr>
                                 <th>Team</th>
-                                <th>Province</th>
+                                <th>Strata</th>
                                 <th>Outlet Name</th>
                                 <th>Bread</th>
                                 <th>Meat</th>
@@ -937,7 +947,7 @@
                         <thead>
                             <tr>
                                 <th>Team</th>
-                                <th>Province</th>
+                                <th>Strata</th>
                                 <th>EA</th>
                                 <th>Interview Key</th>
                                 <th>Owned types</th>
