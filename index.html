@@ -970,7 +970,7 @@
                 <p class="small" style="color:#64748b;line-height:1.5;max-width:960px;">
                     Urban/rural is taken from the sample frame (<code>targets.json</code>, EA <code>urban_rural</code>).
                     <strong>Assets</strong> = distinct asset types in <code>asset_details_roster</code> with quantity &gt; 0.
-                    <strong>Food</strong> = distinct food line items in the 7-day recall (<code>food_recall_details</code>).
+                    <strong>Consumption (7-day recall)</strong> = number of <em>unique</em> food items consumed in the last 7 days from the Food Recall section (<code>food_recall_details</code>); quantity does not matter (e.g. 1 tomato or 25 tomatoes counts as one item).
                 </p>
                 <div class="table-wrapper" style="max-width:720px;margin-top:12px;">
                     <table class="data-table">
@@ -983,12 +983,11 @@
                 </div>
                 <div class="table-wrapper" style="max-width:720px;margin-top:12px;">
                     <table class="data-table">
-                        <thead>
-                            <tr><th>HH size</th><th>Urban (food items)</th><th>Rural (food items)</th></tr>
-                        </thead>
                         <tbody>
-                            <tr><td>5 or fewer persons</td><td>&lt; 25 unique items</td><td>&lt; 20 unique items</td></tr>
-                            <tr><td>More than 5 persons</td><td>&lt; 30 unique items</td><td>&lt; 25 unique items</td></tr>
+                            <tr><th colspan="3">Possible underreported consumption (flag if unique items &lt; cutoff)</th></tr>
+                            <tr><th>Household (HH) size</th><th>Urban HH (# unique items)</th><th>Rural HH (# unique items)</th></tr>
+                            <tr><td>5 or fewer persons</td><td>&lt; 25</td><td>&lt; 20</td></tr>
+                            <tr><td>More than 5 persons</td><td>&lt; 30</td><td>&lt; 25</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -996,11 +995,13 @@
             <div class="kpi-grid">
                 <div class="kpi-card orange">
                     <div class="kpi-value" id="kpi-ur-assets-pct">--</div>
-                    <div class="kpi-label">Interviews flagged (assets)</div>
+                    <div class="kpi-label">% of interviews flagged (possible underreported assets)</div>
+                    <div class="kpi-sub">Overall share; charts and table are by interviewer.</div>
                 </div>
                 <div class="kpi-card blue">
                     <div class="kpi-value" id="kpi-ur-food-pct">--</div>
-                    <div class="kpi-label">Interviews flagged (food)</div>
+                    <div class="kpi-label">% of interviews flagged (possible underreported consumption)</div>
+                    <div class="kpi-sub">Overall share; charts and table are by interviewer.</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-value" id="kpi-ur-interviewers">--</div>
@@ -1026,20 +1027,20 @@
                     </label>
                 </div>
                 <p class="small" style="color:#64748b;line-height:1.5;margin:0;">
-                    Interviewers are sorted by <strong>average</strong> flag rate (assets + food) / 2, highest first.
+                    Interviewers are sorted by <strong>average</strong> flag rate (assets + consumption) / 2, highest first.
                     Invalid or missing interviewer codes (e.g. system placeholders) are grouped as <strong>Unknown</strong>.
                     The full list remains in the table below.
                 </p>
             </div>
             <div class="chart-row">
                 <div class="chart-card wide">
-                    <h3>Assets — % of interviews flagged, by interviewer</h3>
-                    <p class="small" style="color:#64748b;margin:-8px 0 12px;">Same order as food chart (worst average flag rate at the top).</p>
+                    <h3>Possible underreported assets — % of interviews by interviewer</h3>
+                    <p class="small" style="color:#64748b;margin:-8px 0 12px;">Each bar is the share of that interviewer’s interviews below the urban (6) or rural (3) asset-type cutoff. Same interviewer order as the food chart (worst combined average first).</p>
                     <canvas id="chart-underreport-assets-intv"></canvas>
                 </div>
                 <div class="chart-card wide">
-                    <h3>Food — % of interviews flagged, by interviewer</h3>
-                    <p class="small" style="color:#64748b;margin:-8px 0 12px;">Tooltips include interview counts for context.</p>
+                    <h3>Possible underreported consumption — % of interviews by interviewer</h3>
+                    <p class="small" style="color:#64748b;margin:-8px 0 12px;">Each bar is the share of that interviewer’s interviews where unique 7-day recall items are below the HH-size and urban/rural cutoff. Tooltips show interview counts.</p>
                     <canvas id="chart-underreport-food-intv"></canvas>
                 </div>
             </div>
@@ -1055,8 +1056,8 @@
                                 <th>Avg flag %</th>
                                 <th>Flagged assets (n)</th>
                                 <th>Flagged assets (%)</th>
-                                <th>Flagged food (n)</th>
-                                <th>Flagged food (%)</th>
+                                <th>Flagged consumption (n)</th>
+                                <th>Flagged consumption (%)</th>
                             </tr>
                         </thead>
                         <tbody></tbody>

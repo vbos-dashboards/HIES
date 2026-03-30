@@ -2201,6 +2201,7 @@
             const acount = assetByKey[k] ? (Number(assetByKey[k].roster_asset_types) || 0) : 0;
             const assetCut = isUrban ? 6 : 3;
             const fAsset = acount < assetCut;
+            /* 7-day recall: unique food_id count; cutoffs by EA urban/rural × HH size (<=5 vs >5). */
             const foodCut = isUrban ? (small ? 25 : 30) : (small ? 20 : 25);
             const nFood = foodIdsByKey[k] ? foodIdsByKey[k].size : 0;
             const fFood = nFood < foodCut;
@@ -2273,63 +2274,68 @@
 
             const barColor = (vals, hi, lo) => vals.map(v => (refActive && v >= refPct) ? hi : lo);
 
-            const commonOpts = {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    urRefLine: refActive ? { xPercent: refPct, color: 'rgba(231, 76, 60, 0.88)' } : { xPercent: null },
-                    tooltip: {
-                        callbacks: {
-                            title(tooltipItems) {
-                                const i = tooltipItems[0].dataIndex;
-                                const r = slice[i];
-                                return r ? ('Interviewer ' + r.interviewer_id) : '';
-                            },
-                            label(ctx) {
-                                return ' Flagged: ' + ctx.parsed.x + '%';
-                            },
-                            afterLabel(ctx) {
-                                const r = slice[ctx.dataIndex];
-                                return r ? ('Interviews: ' + r.n) : '';
+            function urBarOptions(xTitle, tooltipLabelPrefix) {
+                return {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        urRefLine: refActive ? { xPercent: refPct, color: 'rgba(231, 76, 60, 0.88)' } : { xPercent: null },
+                        tooltip: {
+                            callbacks: {
+                                title(tooltipItems) {
+                                    const i = tooltipItems[0].dataIndex;
+                                    const r = slice[i];
+                                    return r ? ('Interviewer ' + r.interviewer_id) : '';
+                                },
+                                label(ctx) {
+                                    return ' ' + tooltipLabelPrefix + ctx.parsed.x + '%';
+                                },
+                                afterLabel(ctx) {
+                                    const r = slice[ctx.dataIndex];
+                                    return r ? ('Interviews in scope: ' + r.n) : '';
+                                }
                             }
                         }
-                    }
-                },
-                scales: {
-                    x: {
-                        min: 0,
-                        max: 100,
-                        title: { display: true, text: '% of this interviewer’s interviews flagged' },
-                        ticks: { stepSize: 10, font: { size: 11 } }
                     },
-                    y: {
-                        ticks: {
-                            autoSkip: false,
-                            font: { size: 12, weight: '500' },
-                            callback(value) {
-                                const s = value == null ? '' : String(value);
-                                return s.length > 16 ? s.slice(0, 14) + '…' : s;
+                    scales: {
+                        x: {
+                            min: 0,
+                            max: 100,
+                            title: { display: true, text: xTitle },
+                            ticks: { stepSize: 10, font: { size: 11 } }
+                        },
+                        y: {
+                            ticks: {
+                                autoSkip: false,
+                                font: { size: 12, weight: '500' },
+                                callback(value) {
+                                    const s = value == null ? '' : String(value);
+                                    return s.length > 16 ? s.slice(0, 14) + '…' : s;
+                                }
                             }
                         }
                     }
-                }
-            };
+                };
+            }
 
             makeChart('chart-underreport-assets-intv', {
                 type: 'bar',
                 data: {
                     labels,
                     datasets: [{
-                        label: '% flagged',
+                        label: '% interviews flagged (assets)',
                         data: pctA,
                         backgroundColor: barColor(pctA, '#c0392b', '#e67e22'),
                         borderRadius: 4,
                         maxBarThickness: 26
                     }]
                 },
-                options: commonOpts
+                options: urBarOptions(
+                    '% of this interviewer’s interviews flagged (possible underreported assets)',
+                    'Possible underreported assets: '
+                )
             });
 
             makeChart('chart-underreport-food-intv', {
@@ -2337,14 +2343,17 @@
                 data: {
                     labels,
                     datasets: [{
-                        label: '% flagged',
+                        label: '% interviews flagged (consumption)',
                         data: pctF,
                         backgroundColor: barColor(pctF, '#1f6fad', '#3498db'),
                         borderRadius: 4,
                         maxBarThickness: 26
                     }]
                 },
-                options: commonOpts
+                options: urBarOptions(
+                    '% of this interviewer’s interviews flagged (possible underreported consumption)',
+                    'Possible underreported consumption: '
+                )
             });
 
             const chartH = Math.min(2200, Math.max(280, slice.length * 34));
