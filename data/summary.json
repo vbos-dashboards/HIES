@@ -1,173 +1,173 @@
 ﻿{
-    "total_households":  859,
-    "total_persons":  3072,
-    "avg_hh_size":  3.6,
-    "male_count":  1556,
-    "female_count":  1516,
-    "total_food_purchase":  6304324,
-    "total_home_production":  4219919,
-    "total_food_items":  21596,
-    "total_nonfood_items":  4144,
-    "total_livestock":  625,
-    "total_enterprises":  150,
+    "total_households":  1108,
+    "total_persons":  3933,
+    "avg_hh_size":  3.5,
+    "male_count":  1994,
+    "female_count":  1939,
+    "total_food_purchase":  7982914,
+    "total_home_production":  5548339,
+    "total_food_items":  27865,
+    "total_nonfood_items":  5400,
+    "total_livestock":  821,
+    "total_enterprises":  186,
     "provinces":  [
                       {
                           "code":  "1",
                           "name":  "Torba",
-                          "households":  69,
-                          "persons":  257
+                          "households":  91,
+                          "persons":  335
                       },
                       {
                           "code":  "2",
                           "name":  "Sanma",
-                          "households":  207,
-                          "persons":  727
+                          "households":  267,
+                          "persons":  930
                       },
                       {
                           "code":  "3",
                           "name":  "Penama",
-                          "households":  110,
-                          "persons":  368
+                          "households":  128,
+                          "persons":  419
                       },
                       {
                           "code":  "4",
                           "name":  "Malampa",
-                          "households":  104,
-                          "persons":  363
+                          "households":  142,
+                          "persons":  505
                       },
                       {
                           "code":  "5",
                           "name":  "Shefa",
-                          "households":  203,
-                          "persons":  748
+                          "households":  265,
+                          "persons":  974
                       },
                       {
                           "code":  "6",
                           "name":  "Tafea",
-                          "households":  166,
-                          "persons":  609
+                          "households":  215,
+                          "persons":  770
                       }
                   ],
     "age_pyramid":  [
                         {
                             "group":  "0-4",
-                            "male":  198,
-                            "female":  187
+                            "male":  248,
+                            "female":  235
                         },
                         {
                             "group":  "5-9",
-                            "male":  230,
-                            "female":  165
+                            "male":  287,
+                            "female":  223
                         },
                         {
                             "group":  "10-14",
-                            "male":  185,
-                            "female":  166
+                            "male":  230,
+                            "female":  214
                         },
                         {
                             "group":  "15-19",
-                            "male":  118,
-                            "female":  143
+                            "male":  163,
+                            "female":  177
                         },
                         {
                             "group":  "20-24",
-                            "male":  99,
-                            "female":  116
+                            "male":  127,
+                            "female":  143
                         },
                         {
                             "group":  "25-29",
-                            "male":  135,
-                            "female":  146
+                            "male":  178,
+                            "female":  187
                         },
                         {
                             "group":  "30-34",
-                            "male":  123,
-                            "female":  118
+                            "male":  162,
+                            "female":  160
                         },
                         {
                             "group":  "35-39",
-                            "male":  86,
-                            "female":  92
+                            "male":  119,
+                            "female":  118
                         },
                         {
                             "group":  "40-44",
-                            "male":  88,
-                            "female":  81
+                            "male":  113,
+                            "female":  103
                         },
                         {
                             "group":  "45-49",
-                            "male":  72,
-                            "female":  81
+                            "male":  94,
+                            "female":  107
                         },
                         {
                             "group":  "50-54",
-                            "male":  69,
-                            "female":  73
+                            "male":  83,
+                            "female":  84
                         },
                         {
                             "group":  "55-59",
-                            "male":  45,
-                            "female":  39
+                            "male":  50,
+                            "female":  49
                         },
                         {
                             "group":  "60-64",
-                            "male":  38,
-                            "female":  43
+                            "male":  52,
+                            "female":  53
                         },
                         {
                             "group":  "65+",
-                            "male":  70,
-                            "female":  66
+                            "male":  88,
+                            "female":  86
                         }
                     ],
     "fies":  [
                  {
                      "item":  "Worried about food",
-                     "yes":  191,
-                     "no":  668,
-                     "pct":  22.2
+                     "yes":  257,
+                     "no":  851,
+                     "pct":  23.2
                  },
                  {
                      "item":  "Unable to eat healthy",
-                     "yes":  195,
-                     "no":  664,
-                     "pct":  22.7
+                     "yes":  266,
+                     "no":  842,
+                     "pct":  24
                  },
                  {
                      "item":  "Ate only few kinds",
-                     "yes":  217,
-                     "no":  642,
-                     "pct":  25.3
+                     "yes":  286,
+                     "no":  822,
+                     "pct":  25.8
                  },
                  {
                      "item":  "Skipped a meal",
-                     "yes":  141,
-                     "no":  718,
-                     "pct":  16.4
+                     "yes":  186,
+                     "no":  922,
+                     "pct":  16.8
                  },
                  {
                      "item":  "Ate less than should",
-                     "yes":  171,
-                     "no":  688,
-                     "pct":  19.9
+                     "yes":  226,
+                     "no":  882,
+                     "pct":  20.4
                  },
                  {
                      "item":  "Ran out of food",
-                     "yes":  113,
-                     "no":  746,
-                     "pct":  13.2
+                     "yes":  156,
+                     "no":  952,
+                     "pct":  14.1
                  },
                  {
                      "item":  "Hungry but did not eat",
-                     "yes":  87,
-                     "no":  772,
-                     "pct":  10.1
+                     "yes":  117,
+                     "no":  991,
+                     "pct":  10.6
                  },
                  {
                      "item":  "Went without eating all day",
-                     "yes":  68,
-                     "no":  791,
-                     "pct":  7.9
+                     "yes":  97,
+                     "no":  1011,
+                     "pct":  8.8
                  }
              ],
     "interview_timeline":  [
@@ -341,45 +341,81 @@
                                },
                                {
                                    "date":  "2026-05-04",
-                                   "count":  13
+                                   "count":  15
                                },
                                {
                                    "date":  "2026-05-05",
-                                   "count":  30
+                                   "count":  49
+                               },
+                               {
+                                   "date":  "2026-05-06",
+                                   "count":  50
+                               },
+                               {
+                                   "date":  "2026-05-07",
+                                   "count":  37
+                               },
+                               {
+                                   "date":  "2026-05-08",
+                                   "count":  18
+                               },
+                               {
+                                   "date":  "2026-05-09",
+                                   "count":  3
+                               },
+                               {
+                                   "date":  "2026-05-10",
+                                   "count":  2
+                               },
+                               {
+                                   "date":  "2026-05-11",
+                                   "count":  22
+                               },
+                               {
+                                   "date":  "2026-05-12",
+                                   "count":  49
+                               },
+                               {
+                                   "date":  "2026-05-13",
+                                   "count":  36
+                               },
+                               {
+                                   "date":  "2026-05-14",
+                                   "count":  11
                                }
                            ],
     "hh_size_distribution":  [
                                  {
                                      "size":  1,
-                                     "count":  40
+                                     "count":  49
                                  },
                                  {
                                      "size":  2,
-                                     "count":  90
+                                     "count":  128
                                  },
                                  {
                                      "size":  3,
-                                     "count":  139
+                                     "count":  185
                                  },
                                  {
                                      "size":  4,
-                                     "count":  163
+                                     "count":  202
                                  },
                                  {
                                      "size":  5,
-                                     "count":  109
+                                     "count":  144
                                  },
                                  {
                                      "size":  6,
-                                     "count":  90
+                                     "count":  115
                                  },
                                  {
                                      "size":  7,
-                                     "count":  44
+                                     "count":  56
                                  },
                                  {
                                      "size":  8,
-                                     "count":  22
+                                     "count":  27
                                  },
                                  {
                                      "size":  9,
@@ -391,7 +427,7 @@
                                  },
                                  {
                                      "size":  11,
-                                     "count":  5
+                                     "count":  8
                                  },
                                  {
                                      "size":  12,
